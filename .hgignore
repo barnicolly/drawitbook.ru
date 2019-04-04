@@ -1,0 +1,6 @@
+syntax: glob
+.idea
+.hg
+.env
+www/vendor/
+www/storage/
