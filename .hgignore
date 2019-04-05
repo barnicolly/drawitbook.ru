@@ -4,3 +4,5 @@ syntax: glob
 .env
 www/vendor/
 www/storage/
+www/node_modules/
+www/public/build/
