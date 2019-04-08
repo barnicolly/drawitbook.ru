@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\Content\Models;
+namespace App\Http\Modules\Moderate\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ImagesModel extends Model
+class PicturesModel extends Model
 {
     protected $table = 'pages';
 

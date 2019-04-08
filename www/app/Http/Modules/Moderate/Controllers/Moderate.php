@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Content\Controllers;
+namespace App\Http\Modules\Moderate\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Moderate\Models\PicturesModel;
+use App\Http\Modules\Moderate\Models\PicturesModel;
 
-class Content extends Controller
+class Moderate extends Controller
 {
 
     public function __construct()
