@@ -16,7 +16,8 @@ class Moderate extends Controller
     public function index()
     {
         $template = new Template();
-        $images = PagesModel::take(10)
+        $images = PagesModel::where('id', '=', 1)
+            ->with(['queries'])
             ->get();
         return $template->loadView('Admin::moderate.index', ['images' => $images]);
     }

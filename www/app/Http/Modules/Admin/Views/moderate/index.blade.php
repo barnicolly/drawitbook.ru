@@ -17,6 +17,9 @@
                         Описание
                     </td>
                     <td>
+                        Запросы
+                    </td>
+                    <td>
 
                     </td>
                 </tr>
@@ -41,6 +44,15 @@
                             </a>
                         </td>
                         <td></td>
+                        <td>
+                            @if ($image->queries()->count())
+                                @foreach($image->queries as $query)
+                                    <p>
+                                        {{ $query->query }}
+                                    </p>
+                                @endforeach
+                            @endif
+                        </td>
                         <td>
                             <button type="button" class="btn btn-danger">-</button>
                         </td>
