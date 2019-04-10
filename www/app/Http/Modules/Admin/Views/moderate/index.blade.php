@@ -30,14 +30,14 @@
                         <td>
                             {{ $image->id }}
                         </td>
-                        <td style="max-height: 100px;height: 100px;">
+                        <td style="max-height: 50px;height: 50px;">
                             <a data-fancybox="gallery"
                                data-caption="123"
                                itemprop="contentUrl"
                                href="{{ asset('moderate/in_moderate/' . $image->file_name) }}"
                             >
                                 <img itemprop="thumbnailUrl"
-                                     style="height: 100px; max-width: 200px;"
+                                     style="height: 50px; max-width: 100px;"
                                      alt="123"
                                      src="{{ asset('moderate/in_moderate/' . $image->file_name) }}"
                                 />
@@ -45,16 +45,11 @@
                         </td>
                         <td></td>
                         <td>
-                            @if ($image->queries()->count())
-                                @foreach($image->queries as $query)
-                                    <p>
-                                        {{ $query->query }}
-                                    </p>
-                                @endforeach
-                            @endif
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger">-</button>
+                            <button type="button" class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 @endforeach
@@ -68,3 +63,8 @@
         </div>
     </div>
 @endsection
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" media="screen" />
+<script type="text/javascript" src="/fancybox/jquery.fancybox.min.js"></script>
