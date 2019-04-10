@@ -10,7 +10,6 @@ class ModulesServiceProvider extends ServiceProvider
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         parent::__construct($app);
-        $this->defer = true;
     }
 
     public function boot()
