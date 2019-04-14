@@ -8,4 +8,6 @@ Route::group(
     ],
     function () {
         Route::get('/moderate', ['uses' => 'Moderate@index']);
+        Route::post('/moderate/delete_image', ['uses' => 'Moderate@deleteImage']);
+        Route::post('/moderate/save_image', ['uses' => 'Moderate@saveImage']);
     });
