@@ -2,9 +2,9 @@
 
 Route::group(
     [
-//        'middleware' => 'web',
+        'middleware' => 'web',
         'namespace' => 'App\Http\Modules\Content\Controllers'
     ],
     function () {
-        Route::get('/', ['uses' => 'Content@index']);
+        Route::get('/', ['uses' => 'Content@index'])->name('home');
     });
