@@ -25,7 +25,10 @@ function sendRequest(type, url, data, callback) {
 $(function () {
     $('body').on('click', '.add-tag', function () {
         var tagsContainer = $(this).closest('td').find('.tags');
+        createTagContainer(createTagContainer(tagsContainer));
+    });
 
+    function createTagContainer(tagsContainer, content = '') {
         var div = $('<div>').attr({
             class: 'tag form-group input-group',
         });
@@ -33,6 +36,7 @@ $(function () {
         $('<input>').attr({
             type: 'text',
             class: 'form-control',
+            value: content,
         }).appendTo(div);
 
         var group = $('<div>').attr({
@@ -51,11 +55,84 @@ $(function () {
         button.appendTo(group);
         group.appendTo(div);
         div.appendTo(tagsContainer);
-    })
+        if (!content) {
+            $(tagsContainer).find('.tag:last input').focus();
+        }
+    }
 
     $('body')
         .on('click', '.delete-tag', function () {
             $(this).closest('.tag').remove();
+        })
+        .on('click', '.checkbox-padding', function () {
+            $(this).find('.selected').prop('checked', !$(this).find('.selected').prop('checked'));
+        })
+        .on('click', '.delete-selected', function () {
+            if ($('.moderate-table .selected:checked').length) {
+                var data = {
+                    ids: []
+                };
+                $('.moderate-table .selected:checked').each(function () {
+                    var closestRow = $(this).closest('tr');
+                    data.ids.push($(closestRow).attr('data-id'))
+                });
+                sendRequest('post', '/admin/moderate/delete_images', data, function (res) {
+                    if (res.success) {
+                        $('.moderate-table .selected:checked').each(function () {
+                            var closestRow = $(this).closest('tr');
+                            $(closestRow).remove();
+                        });
+                    } else {
+                        showInfo(res.message);
+                    }
+                })
+            }
+        })
+        .on('click', '.unselect-all', function () {
+            $('.moderate-table .selected:checked').prop('checked', false);
+            $('.operation-with-selected').hide();
+        })
+        .on('click', '.select-all', function () {
+            $('.moderate-table .selected').prop('checked', true);
+            $('.operation-with-selected').show();
+        })
+        .on('change', '.selected', function () {
+            if ($('.moderate-table .selected:checked').length) {
+                $('.operation-with-selected').show();
+            } else {
+                $('.operation-with-selected').hide();
+            }
+        })
+        .on('click', '.copyToClipboard', function () {
+            var content = $(this).closest('tr').find('.content').text();
+            if ($('.moderate-table .selected:checked').length) {
+                $('.moderate-table .selected:checked').each(function () {
+                    var closestRow = $(this).closest('tr');
+                    var itHas = false;
+                    var emptyRow = null;
+                    $(closestRow).find('.tag').each(function () {
+                        var tag = $(this).find('input');
+                        if ($(tag).val() && $(tag).val() === content) {
+                            itHas = true;
+                        } else {
+                            if (!$(tag).val() && emptyRow === null) {
+                                emptyRow = $(tag);
+                            }
+                        }
+                    });
+                    if (!itHas) {
+                        if (emptyRow !== null) {
+                            emptyRow.val(content);
+                        } else {
+                            createTagContainer($(closestRow).find('.tags'), content);
+                        }
+                    }
+                });
+                $('.unselect-all').trigger('click');
+            }
+            var dt = new clipboard.DT();
+            dt.setData("text/plain", content);
+            clipboard.write(dt);
         })
         .on('click', '.refresh-page', function () {
             window.location.reload();
@@ -70,7 +147,21 @@ $(function () {
                 }
             })
         })
+        .on('click', '.save-all', function () {
+            var timerId = setInterval(function() {
+                $('.save-image:not(:disabled):first').trigger('click');
+                if (!$('.save-image:not(:disabled):first').length) {
+                    clearInterval(timerId);
+                }
+            }, 1000);
+        })
+        .on('click', '.popular-tag', function () {
+            var row = $(this).closest('tr');
+            $(row).find('button').trigger('click');
+        })
         .on('click', '.save-image', function () {
+            var saveButton = $(this);
+            saveButton.attr('disabled', true);
             var row = $(this).closest('tr');
             var data = {
                 id: $(row).attr('data-picture-id'),

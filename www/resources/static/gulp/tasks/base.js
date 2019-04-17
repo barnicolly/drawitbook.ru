@@ -3,7 +3,28 @@ var base = {
         append: [
             path.src.plugin + 'jquery/jquery-3.1.1.min.js',
             path.src.plugin + 'bootstrap/js/bootstrap.min.js',
+        ],
+        minify: [
+            path.src.self + 'files/dummy.js',
+        ]
+    },
+    css: {
+        append: [
+            path.src.plugin + 'bootstrap/css/bootstrap.min.css',
+        ],
+        minify: [
+            path.src.self + 'css/content/*.css',
+        ]
+    }
+};
+
+var admin = {
+    js: {
+        append: [
+            path.src.plugin + 'jquery/jquery-3.1.1.min.js',
+            path.src.plugin + 'bootstrap/js/bootstrap.min.js',
             path.src.plugin + 'fancybox/jquery.fancybox.min.js',
+            path.src.plugin + 'clipboard/clipboard.js',
         ],
         minify: [
             path.src.self + 'js/main.js',

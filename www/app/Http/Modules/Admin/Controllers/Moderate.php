@@ -24,7 +24,7 @@ class Moderate extends Controller
             ->count();
 
         $template = new Template();
-        $images = PagesModel::take(10)
+        $images = PagesModel::take(20)
             ->where('is_del', '=', 0)
             ->where('status', '=', 1)
             ->get();
@@ -43,24 +43,39 @@ class Moderate extends Controller
         return response(['success' => true]);
     }
 
+    public function deleteImages(Request $request)
+    {
+        PagesModel::whereIn('id', $request->input('ids'))->update(['is_del' => 1]);
+        return response(['success' => true]);
+    }
+
     public function saveImage(Request $request)
     {
-        $picture = PictureModel::findOrNew($request->input('id'));
+        $data = [
+           'description' => $request->input('description'),
+           'tags' => $request->input('tags'),
+        ];
+        $saveResult = $this->_saveImage($request->input('id'), $data, $request->input('donor_id'));
+        return response($saveResult);
+    }
+
+    private function _saveImage(int $id, array $data, int $donorId)
+    {
+        $picture = PictureModel::findOrNew($id);
         if (!$picture->path) {
-            $image = PagesModel::find($request->input('donor_id'));
+            $image = PagesModel::find($donorId);
             $path = base_path('public/moderate/in_moderate/' . $image->file_name);
             $uniqueFileName = $this->_copyFileFromModerateFolderToArt($path, base_path('public/art/'));
             $image->status = 2;
             $image->save();
             $picture->path = $uniqueFileName;
         }
-        $picture->description = $request->input('description');
+        $picture->description = $data['description'];
         $picture->save();
-        $tagsPayload = trimData($request->input('tags'));
+        $tagsPayload = array_unique(trimData($data['tags']));
         if (!$tagsPayload) {
-            return response(['success' => false, 'message' => 'Нет тегов']);
+            return ['success' => false, 'message' => 'Нет тегов'];
         }
-
         $savedTags = $picture->tags;
         if (!$savedTags->count()) {
             $tagsToSave = $tagsPayload;
@@ -85,12 +100,16 @@ class Moderate extends Controller
             $tags[] = $tag;
         }
         $picture->tags()->saveMany($tags);
-
-        return response(['success' => true, 'picture_id' => $picture->id]);
+        return ['success' => true, 'picture_id' => $picture->id];
     }
 
     private function _popularTags()
     {
+        $big = [
+            'еда',
+            'животные',
+        ];
+
         return [
            'для девочек',
            'майнкрафт',
@@ -98,31 +117,32 @@ class Moderate extends Controller
            'в тетради',
            'легкие',
            'сложные',
-           'фрукты',
-           'цветы',
+           'фрукт',
+           'цветок',
            'большие',
            'красивые',
-           'животные',
            'для детей',
-           'еда',
            'для дошкольников',
-           'котики',
+           'котик',
            'аниме',
            'черно-белые',
            'цветные',
            'для мальчиков',
            'оружие',
            'на 8 марта',
-           'машины',
+           'машина',
            'новый год',
            'графити',
            'гравити фолз',
            'карандашом',
-           'девушки',
+           'девушка',
            'прикольные',
            'интересные',
            'милые и няшные',
            'дом',
+           'рыба',
+           'прическа',
+           'сердце',
         ];
     }
 

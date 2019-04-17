@@ -2,17 +2,12 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12 form-group">
-            Количество записей для модерации: {{ $countNonModeratedRecords }}
-        </div>
         <div class="col-md-9">
-            <table class="table">
+            <table class="table moderate-table">
                 <thead>
                 <tr>
                     <td>
                         #
-                    </td>
-                    <td>
                     </td>
                     <td>
                         Изображение
@@ -22,6 +17,8 @@
                     </td>
                     <td>
                         Теги
+                    </td>
+                    <td>
                     </td>
                     <td>
 
@@ -34,9 +31,6 @@
                         <td width="5%">
                             {{ $image->id }}
                         </td>
-                        <td width="5%">
-                            <input type="checkbox" value="{{ $image->id }}">
-                        </td>
                         <td width="15%" style="max-height: 50px;height: 50px;">
                             <a data-fancybox="gallery"
                                data-caption="123"
@@ -44,7 +38,7 @@
                                href="{{ asset('moderate/in_moderate/' . $image->file_name) }}"
                             >
                                 <img itemprop="thumbnailUrl"
-                                     style="max-width: 100px;"
+                                     style="max-width: 100px;max-height: 100px;"
                                      alt="123"
                                      src="{{ asset('moderate/in_moderate/' . $image->file_name) }}"
                                 />
@@ -70,12 +64,18 @@
                             </div>
                         </td>
                         <td width="15%">
-                            <button type="button" class="btn btn-success btn-sm save-image">
+                            <button type="button" class="btn btn-success save-image">
                                 <i class="fa fa-save"></i>
                             </button>
-                            <button type="button" class="btn btn-default btn-sm delete-image">
+                            <button type="button" class="btn btn-default delete-image">
                                 <i class="fa fa-trash"></i>
                             </button>
+                        </td>
+                        <td width="5%" class="checkbox-padding">
+                            <label class="container-checkbox">
+                                <input type="checkbox" class="selected" value="{{ $image->id }}">
+                                <span class="checkmark"></span>
+                            </label>
                         </td>
                     </tr>
                 @endforeach
@@ -83,9 +83,39 @@
             </table>
         </div>
         <div class="col-md-3" style="right: 0;position: fixed">
+            Количество записей для модерации: {{ $countNonModeratedRecords }}
             <div style="padding-top: 20px">
-                <button type="button" class="btn btn-danger btn-sm">Удалить выбранные</button>
-                <button type="button" class="btn btn-danger btn-sm refresh-page">Обновить</button>
+                <div class="form-group">
+                    <button type="button" class="btn btn-info btn-sm refresh-page">Обновить страницу</button>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-info btn-sm save-all">Сохранить все</button>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-info btn-sm select-all">Выбрать все</button>
+                </div>
+                <div class="form-group operation-with-selected" style="display: none">
+                    <button type="button" class="btn btn-danger btn-sm delete-selected">Удалить выбранные</button>
+                </div>
+                <div class="form-group operation-with-selected" style="display: none">
+                    <button type="button" class="btn btn-default btn-sm unselect-all">Снять выделение</button>
+                </div>
+            </div>
+            <div>
+                <table>
+                    <tbody>
+                    @foreach($popular as $tag)
+                    <tr>
+                        <td class="content popular-tag">{{ $tag }}</td>
+                        <td>
+                            <button type="button" class=" btn btn-xs copyToClipboard">
+                                <span class="fa fa-copy"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
