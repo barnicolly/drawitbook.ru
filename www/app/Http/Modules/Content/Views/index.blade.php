@@ -21,8 +21,8 @@
             border: 2px solid #fcfcfc;
             box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
             margin: 0 2px 15px;
-            padding: 15px;
-            padding-bottom: 10px;
+            padding: 5px;
+            padding-bottom: 5px;
             transition: opacity .4s ease-in-out;
             display: inline-block;
             column-break-inside: avoid;
@@ -32,7 +32,7 @@
             width: 100%;
             height: auto;
             border-bottom: 1px solid #ccc;
-            padding-bottom: 15px;
+            padding-bottom: 5px;
             margin-bottom: 5px;
         }
 
@@ -55,8 +55,8 @@
             transition: .4s color;
         }
 
-        div#columns:hover figure:not(:hover) {
-            opacity: 0.4;
+        figure {
+            cursor: pointer;
         }
 
         @media screen and (max-width: 750px) {
@@ -73,19 +73,23 @@
     <div id="columns">
         @foreach($pictures as $picture)
             <figure>
-                <img src="{{ asset('art/' . $picture->path) }}">
+                <a href="{{ route('art', ['id' => $picture->id]) }}" title="">
+                    <img src="{{ asset('art/' . $picture->path) }}">
+                </a>
+                {{--<img src="{{ asset('art/' . $picture->path) }}">--}}
                 @if ($picture->tags->count())
                     @foreach($picture->tags as $tag)
                         <a href="" class="btn btn-default">{{ $tag->name }}</a>
                     @endforeach
                 @endif
-                <figcaption>
-                    Belle, based on 1770’s French court fashion
-                </figcaption>
+                @if($picture->description)
+                    <figcaption>
+                        {{ $picture->description }}
+                    </figcaption>
+                @endif
             </figure>
         @endforeach
     </div>
-    <small>Art &copy; <a href="//clairehummel.com">Claire Hummel</a></small>
 @endsection
 
 

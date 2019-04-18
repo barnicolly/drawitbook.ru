@@ -2,9 +2,10 @@
 
 Route::group(
     [
-        'middleware' => 'web',
+        'middleware' => ['web', 'roles'],
         'prefix' => '/admin',
-        'namespace' => 'App\Http\Modules\Admin\Controllers'
+        'namespace' => 'App\Http\Modules\Admin\Controllers',
+        'roles' => ['Admin']
     ],
     function () {
         Route::get('/moderate', ['uses' => 'Moderate@index']);

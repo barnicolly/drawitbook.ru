@@ -1,12 +1,11 @@
 <div class="container-fluid no-padding">
-    <header>
-       @include('layouts/header')
-    </header>
+    @include('layouts/header')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <main class="col-md-12">
                 @yield('content')
-            </div>
+            </main>
         </div>
     </div>
+    @include('layouts/footer')
 </div>
