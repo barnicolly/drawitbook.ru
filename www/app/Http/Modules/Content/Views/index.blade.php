@@ -74,7 +74,7 @@
         @foreach($pictures as $picture)
             <figure>
                 <a href="{{ route('art', ['id' => $picture->id]) }}" title="">
-                    <img src="{{ asset('art/' . $picture->path) }}">
+                    <img src="{{ asset('arts/' . $picture->path) }}">
                 </a>
                 {{--<img src="{{ asset('art/' . $picture->path) }}">--}}
                 @if ($picture->tags->count())

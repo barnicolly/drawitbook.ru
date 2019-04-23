@@ -19,7 +19,7 @@ class Content extends Controller
     public function index()
     {
         $template = new Template();
-        $pictures = PictureModel::take(20)->with(['tags'])->get();
+        $pictures = PictureModel::take(40)->with(['tags'])->get();
 
         $viewData['pictures'] = $pictures;
         return $template->loadView('Content::index', $viewData);
@@ -41,10 +41,11 @@ class Content extends Controller
         }
         $viewData = ['picture' => $picture, 'relativePictures' => $relativePictures];
         $template = new Template();
+        $template->setTitle('Art #' . $id . ' Drawitbook.ru');
         return $template->loadView('Content::art', $viewData);
     }
 
-    private function _getTagIds(PictureModel $picture)
+    private function _getTagIds(PictureModel $picture):array
     {
         $hidden = [];
         $shown = [];
@@ -63,29 +64,36 @@ class Content extends Controller
         $sphinx = new SphinxSearch();
         $sphinx->search('', 'drawItBookSearchByTag')
             ->limit(20)
-            ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED2);
-//        if ($hidden) {
-//            $sphinx->filter('hidden_tag', $hidden);
-//        }
+            ->setFieldWeights(
+                array(
+                    'hidden_tag'  => 3,
+                    'tag'    => 8,
+                )
+            )
+            ->setSortMode(\Sphinx\SphinxClient::SPH_SORT_RELEVANCE, '@relevance DESC')
+            ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED);
+        if ($hidden) {
+            $sphinx->filter('hidden_tag', $hidden);
+        }
         if ($shown) {
             $sphinx->filter('tag', $shown);
         }
         $results = $sphinx->query();
         if (!empty($results['matches'])) {
             $pictureIds = array_keys($results['matches']);
-            if (count($pictureIds) < 20 && $hidden) {
-                $sphinx = new SphinxSearch();
-                $sphinx->search('', 'drawItBookSearchByTag')
-                    ->limit(20)
-                    ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED2)
-                    ->filter('hidden_tag', $hidden);
-                $resultsHidden = $sphinx->query();
-                if (!empty($resultsHidden['matches'])) {
-                    $pictureIds = array_merge($pictureIds, array_keys($results['matches']));
-                    $pictureIds = array_unique($pictureIds);
-                    $pictureIds = array_slice($pictureIds, 0, 20);
-                }
-            }
+//            if (count($pictureIds) < 20 && $hidden) {
+//                $sphinx = new SphinxSearch();
+//                $sphinx->search('', 'drawItBookSearchByTag')
+//                    ->limit(20)
+//                    ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED2)
+//                    ->filter('hidden_tag', $hidden);
+//                $resultsHidden = $sphinx->query();
+//                if (!empty($resultsHidden['matches'])) {
+//                    $pictureIds = array_merge($pictureIds, array_keys($results['matches']));
+//                    $pictureIds = array_unique($pictureIds);
+//                    $pictureIds = array_slice($pictureIds, 0, 20);
+//                }
+//            }
 
             return $pictureIds;
         }

@@ -3,9 +3,11 @@ var base = {
         append: [
             path.src.plugin + 'jquery/jquery-3.1.1.min.js',
             path.src.plugin + 'bootstrap/js/bootstrap.min.js',
+            path.src.plugin + 'sticky/ResizeSensor.js',
+            path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
         ],
         minify: [
-            path.src.self + 'files/dummy.js',
+            path.src.self + 'js/init_plugins.js',
         ]
     },
     css: {
