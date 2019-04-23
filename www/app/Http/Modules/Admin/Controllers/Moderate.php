@@ -65,7 +65,7 @@ class Moderate extends Controller
         if (!$picture->path) {
             $image = PagesModel::find($donorId);
             $path = base_path('public/moderate/in_moderate/' . $image->file_name);
-            $uniqueFileName = $this->_copyFileFromModerateFolderToArt($path, base_path('public/art/'));
+            $uniqueFileName = $this->_copyFileFromModerateFolderToArt($path, base_path('public/arts/'));
             $image->status = 2;
             $image->save();
             $picture->path = $uniqueFileName;

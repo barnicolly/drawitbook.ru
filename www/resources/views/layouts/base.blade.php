@@ -8,9 +8,21 @@
     <link rel="icon" href="favicon.ico">
     <title>{{ $title }}</title>
     <link rel="stylesheet" href="{{  asset('build/css/master.min.css') }}">
+    @stack('styles')
 </head>
 <body>
-{!! $content !!}
+<div class="container-fluid no-padding">
+    @include('layouts/header')
+    <div class="container">
+        <div class="row">
+            <main class="col-md-12">
+                @yield('content')
+            </main>
+        </div>
+    </div>
+    @include('layouts/footer')
+</div>
 <script src="{{ asset('build/js/master.min.js') }}" defer></script>
+@stack('scripts')
 </body>
 </html>

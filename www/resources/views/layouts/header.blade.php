@@ -30,11 +30,6 @@
                                 <li>
                                     <a href="{{ route('login') }}">Войти</a>
                                 </li>
-                                @if (Route::has('register'))
-                                    <li>
-                                        <a href="{{ route('register') }}">Регистрация</a>
-                                    </li>
-                                @endif
                             @else
                                 <li>
                                     <a href="#"></a>

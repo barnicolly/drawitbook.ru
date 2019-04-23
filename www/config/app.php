@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ModulesServiceProvider::class,
+        sngrl\SphinxSearch\SphinxSearchServiceProvider::class
     ],
 
     /*

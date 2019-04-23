@@ -21,9 +21,7 @@ var base = {
 var admin = {
     js: {
         append: [
-            path.src.plugin + 'jquery/jquery-3.1.1.min.js',
-            path.src.plugin + 'bootstrap/js/bootstrap.min.js',
-            path.src.plugin + 'fancybox/jquery.fancybox.min.js',
+            // path.src.plugin + 'fancybox/jquery.fancybox.min.js',
             path.src.plugin + 'clipboard/clipboard.js',
         ],
         minify: [
@@ -32,12 +30,11 @@ var admin = {
     },
     css: {
         append: [
-            path.src.plugin + 'bootstrap/css/bootstrap.min.css',
             path.src.plugin + 'font-awesome-4.7.0/css/font-awesome.min.css',
-            path.src.plugin + 'fancybox/jquery.fancybox.min.css',
+            // path.src.plugin + 'fancybox/jquery.fancybox.min.css',
         ],
         minify: [
-            path.src.self + 'css/*.css',
+            path.src.self + 'files/dummy.css',
         ]
     }
 };
@@ -70,6 +67,37 @@ gulp.task('scripts:base', function () {
     return stream
         .pipe(plugins.plumber())
         .pipe(plugins.concat('master.min.js'))
+        .pipe(gulp.dest(path.build + 'js/'));
+});
+
+gulp.task('styles:admin-base', function () {
+    var stream;
+    if (typeof admin.css.minify !== 'undefined' && Object.keys(admin.css.minify).length) {
+        if (environment === 'development') {
+            initWatcher(admin.css.minify, 'styles:admin-base')
+        }
+        stream = prepareCssStream('styles:admin-base', admin.css);
+    } else {
+        stream = gulp.src(admin.css.append);
+    }
+    return stream
+        .pipe(plugins.concat('admin.min.css'))
+        .pipe(gulp.dest(path.build + 'css/'));
+});
+
+gulp.task('scripts:admin-base', function () {
+    var stream;
+    if (typeof admin.js.minify !== 'undefined' && Object.keys(admin.js.minify).length) {
+        if (environment === 'development') {
+            initWatcher(admin.js.minify, 'scripts:admin-base')
+        }
+        stream = prepareJsStream('scripts:admin-base', admin.js);
+    } else {
+        stream = gulp.src(admin.js.append);
+    }
+    return stream
+        .pipe(plugins.plumber())
+        .pipe(plugins.concat('admin.min.js'))
         .pipe(gulp.dest(path.build + 'js/'));
 });
 

@@ -13,9 +13,6 @@ class Template
 
     private $_metadata = array();
 
-    private $_js = array();
-    private $_css = array();
-
     /**
      * Set page layout view (1 column, 2 column...)
      *
@@ -65,30 +62,6 @@ class Template
     }
 
     /**
-     * Add js file path
-     *
-     * @access  public
-     * @param   string $js
-     * @return  void
-     */
-    public function addJs($js)
-    {
-        $this->_js[$js] = $js;
-    }
-
-    /**
-     * Add css file path
-     *
-     * @access  public
-     * @param   string $css
-     * @return  void
-     */
-    public function addCss($css)
-    {
-        $this->_css[$css] = $css;
-    }
-
-    /**
      * @param $view
      * @param array $data
      * @return array|mixed|string
@@ -115,24 +88,7 @@ class Template
         }
         $metadata = implode('', $metadata);
 
-        // Javascript
-        $js = array();
-        foreach ($this->_js as $js_file) {
-            $js[] = '<script src="' . asset('js/' . $js_file) . '" defer></script>';
-        }
-        $js = implode('', $js);
-
-        // CSS
-        $css = array();
-        foreach ($this->_css as $css_file) {
-            $css[] = '<link rel="stylesheet" href="' . asset('css/' . $css_file) . '">';
-        }
-        $css = implode('', $css);
-
-        $content = view($view, $data)->render();
-
-        $content = view($this->_layout)->with([
-            'content' => $content,
+        $content = view($view, $data)->with([
             'title' => $title,
             'metadata' => $metadata,
         ])->render();

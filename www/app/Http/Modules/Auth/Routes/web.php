@@ -8,5 +8,6 @@ Route::group(
     ],
     function () {
         Route::get('/login', ['uses' => 'Login@showLoginForm'])->name('login');
-//        Route::get('/register', ['uses' => 'Register@showRegistrationForm'])->name('register');
+        Route::get('/register', ['uses' => 'Register@showRegistrationForm'])
+            ->name('register');
     });

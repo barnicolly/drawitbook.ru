@@ -1,4 +1,11 @@
-@extends('layouts.admin')
+@extends('layouts.base')
+
+@push('scripts')
+    <script src="{{ asset('build/js/admin.min.js') }}" defer></script>
+@endpush
+@push('styles')
+    <link rel="stylesheet" href="{{  asset('build/css/admin.min.css') }}">
+@endpush
 
 @section('content')
     <div class="row">
@@ -105,14 +112,14 @@
                 <table>
                     <tbody>
                     @foreach($popular as $tag)
-                    <tr>
-                        <td class="content popular-tag">{{ $tag }}</td>
-                        <td>
-                            <button type="button" class=" btn btn-xs copyToClipboard">
-                                <span class="fa fa-copy"></span>
-                            </button>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="content popular-tag">{{ $tag }}</td>
+                            <td>
+                                <button type="button" class=" btn btn-xs copyToClipboard">
+                                    <span class="fa fa-copy"></span>
+                                </button>
+                            </td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>
