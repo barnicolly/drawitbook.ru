@@ -42,7 +42,7 @@ class Content extends Controller
         $viewData = ['picture' => $picture, 'relativePictures' => $relativePictures];
         $template = new Template();
         $template->setTitle('Art #' . $id . ' Drawitbook.ru');
-        return $template->loadView('Content::art', $viewData);
+        return $template->loadView('Content::art.index', $viewData);
     }
 
     private function _getTagIds(PictureModel $picture):array
