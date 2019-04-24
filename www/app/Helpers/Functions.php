@@ -16,6 +16,24 @@ if (!function_exists('listDir')) {
     }
 }
 
+if (!function_exists('isLocal')) {
+    function isLocal()
+    {
+        return !(app()->runningInConsole() || !in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '192.168.1.5'], true));
+    }
+}
+
+if (!function_exists('loadAd')) {
+    function loadAd(string $path)
+    {
+        if (isLocal()) {
+            return view('Content::template.ads.dummy')->render();
+        } else {
+            return view('Content::template.ads.' . $path)->render();
+        }
+    }
+}
+
 if (!function_exists('trimData')) {
     function trimData($data)
     {

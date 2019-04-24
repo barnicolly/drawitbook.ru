@@ -1,0 +1,35 @@
+.social-icons {
+    list-style-type: none;
+    /*padding-top: 40px;*/
+    padding: 25px 0 0 5px;
+}
+
+.social-icons a svg {
+    fill: #377af2;
+}
+
+.social-icons a svg:hover {
+    fill: #135fe6;
+}
+
+.social-icons li {
+    display: block;
+}
+
+.social-icons li a {
+    position: relative;
+    height: 65px;
+    line-height: 67px;
+    display: block;
+    text-align: center;
+}
+
+.social-icons li a:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAABAQMAAADHB02zAAAABlBMV…BcQqtDijn8AAAAAnRSTlMATX7+8BUAAAAKSURBVAjXY2gAAACCAIHdQ2r0AAAAAElFTkSuQmCC);
+}

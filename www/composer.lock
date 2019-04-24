@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57535877b81d5e94d22b71b3882dc4f4",
+    "content-hash": "b14a4101cc459a9ddd3f24dd8a173619",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2674,6 +2674,58 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+        },
+        {
+            "name": "torann/laravel-meta-tags",
+            "version": "v3.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Torann/laravel-meta-tags.git",
+                "reference": "cca556e54a0a9ed829668d5fea78a0e4a5fd4556"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Torann/laravel-meta-tags/zipball/cca556e54a0a9ed829668d5fea78a0e4a5fd4556",
+                "reference": "cca556e54a0a9ed829668d5fea78a0e4a5fd4556",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.1",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.4",
+                "phpunit/phpunit": "~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Torann\\LaravelMetaTags\\": "src/Torann/LaravelMetaTags/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Stainback",
+                    "email": "daniel@lyften.com"
+                },
+                {
+                    "name": "Lito",
+                    "email": "lito@eordes.com"
+                }
+            ],
+            "description": "A package to manage Header Meta Tags",
+            "keywords": [
+                "head",
+                "laravel",
+                "meta",
+                "meta tags",
+                "tags"
+            ],
+            "time": "2018-06-27T15:03:26+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
