@@ -2,6 +2,12 @@
     padding: 0px !important;
 }
 
+.sidebar {
+    padding-top: 25px;
+}
+
+button[type="button"]:focus {outline:0;}
+
 body {
     font-size: 18px;
     color: #222;

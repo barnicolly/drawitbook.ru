@@ -5,6 +5,7 @@ namespace App\Http\Modules\Content\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use App\Libraries\Template;
+use MetaTag;
 use Illuminate\Http\Request;
 use Validator;
 use sngrl\SphinxSearch\SphinxSearch;
@@ -28,10 +29,7 @@ class Content extends Controller
     public function art(int $id)
     {
         $picture = PictureModel::with(['tags'])->findOrFail($id);
-
-
         list($shown, $hidden) = $this->_getTagIds($picture);
-//        $tagIds = $picture->tags->pluck('id')->toArray();
         $relativePictures = [];
         if ($shown || $hidden) {
             $pictureIds = $this->_searchRelatedPicturesIds($shown, $hidden);
@@ -41,7 +39,9 @@ class Content extends Controller
         }
         $viewData = ['picture' => $picture, 'relativePictures' => $relativePictures];
         $template = new Template();
-        $template->setTitle('Art #' . $id . ' Drawitbook.ru');
+        MetaTag::set('title', 'Art #' . $id . ' Drawitbook.ru');
+        MetaTag::set('description', 'This is my home. Enjoy!');
+        MetaTag::set('image', asset('arts/' . $picture->path));
         return $template->loadView('Content::art.index', $viewData);
     }
 

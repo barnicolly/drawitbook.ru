@@ -11,7 +11,7 @@
                     <h1 class="title form-group">
                         Art #{{ $picture->id }}
                     </h1>
-                    <div class="form-group">
+                    <div>
                         @include('Content::template.tag_list', ['tags' => $picture->tags])
                     </div>
                     <div class="form-group">
@@ -24,6 +24,18 @@
                                 </figcaption>
                             @endif
                         </figure>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-link rate-button">
+                            <svg role="img" xmlns="http://www.w3.org/2000/svg" width="23" height="32" viewBox="0 0 23 32">
+                                <use xlink:href="{{ asset('img/sprites.svg#like') }}"></use>
+                            </svg>
+                        </button>
+                        <button type="button" class="btn btn-link rate-button">
+                            <svg role="img" xmlns="http://www.w3.org/2000/svg" width="23" height="32" viewBox="0 0 23 32">
+                                <use xlink:href="{{ asset('img/sprites.svg#unlike') }}"></use>
+                            </svg>
+                        </button>
                     </div>
                     <div>
                         {!! loadAd('after_picture') !!}

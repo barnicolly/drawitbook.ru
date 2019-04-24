@@ -1,7 +1,15 @@
 .social-icons {
     list-style-type: none;
     /*padding-top: 40px;*/
-    padding: 40px 0 0 0;
+    padding: 25px 0 0 5px;
+}
+
+.social-icons a svg {
+    fill: #377af2;
+}
+
+.social-icons a svg:hover {
+    fill: #135fe6;
 }
 
 .social-icons li {
@@ -14,7 +22,6 @@
     line-height: 67px;
     display: block;
     text-align: center;
-    color: #5c42ab;
 }
 
 .social-icons li a:before {

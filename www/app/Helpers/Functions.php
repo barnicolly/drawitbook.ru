@@ -19,7 +19,7 @@ if (!function_exists('listDir')) {
 if (!function_exists('isLocal')) {
     function isLocal()
     {
-        return !(app()->runningInConsole() || $_SERVER["REMOTE_ADDR"] != '127.0.0.1');
+        return !(app()->runningInConsole() || !in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '192.168.1.5'], true));
     }
 }
 
