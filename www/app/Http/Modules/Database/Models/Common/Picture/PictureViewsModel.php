@@ -4,20 +4,16 @@ namespace App\Http\Modules\Database\Models\Common\Picture;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PictureModel extends Model
+class PictureViewsModel extends Model
 {
-    protected $table = 'picture';
-
+    protected $table = 'picture_views';
+    public $timestamps = false;
+    protected $dates = ['updated_at'];
     protected $fillable = [];
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-    }
-
-    public function tags()
-    {
-        return $this->belongsToMany('App\Http\Modules\Database\Models\Common\Spr\SprTagsModel', 'picture_tags', 'picture_id', 'tag_id');
     }
 
 }

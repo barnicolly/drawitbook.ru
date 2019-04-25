@@ -4,9 +4,12 @@ namespace App\Http\Modules\Content\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
+use App\Http\Modules\Database\Models\Common\Raw\PictureViewModel as RawPictureViewModel;
+use App\Http\Modules\Database\Models\Common\Picture\PictureViewsModel as PictureViewModel;
 use App\Libraries\Template;
 use MetaTag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
 use sngrl\SphinxSearch\SphinxSearch;
 
@@ -42,10 +45,26 @@ class Content extends Controller
         MetaTag::set('title', 'Art #' . $id . ' Drawitbook.ru');
         MetaTag::set('description', 'This is my home. Enjoy!');
         MetaTag::set('image', asset('arts/' . $picture->path));
+
+        $this->_insertUserView($picture->id);
         return $template->loadView('Content::art.index', $viewData);
     }
 
-    private function _getTagIds(PictureModel $picture):array
+    private function _insertUserView(int $pictureId)
+    {
+        $ip = request()->ip();
+        $ip = DB::connection()->getPdo()->quote($ip);
+
+        if (!in_array($ip, ['127.0.0.1'])) {
+            $rawView = new RawPictureViewModel();
+            $rawView->picture_id = $pictureId;
+            $rawView->user_id = auth()->id();
+            $rawView->ip = DB::raw("inet_aton($ip)");
+            $rawView->save();
+        }
+    }
+
+    private function _getTagIds(PictureModel $picture): array
     {
         $hidden = [];
         $shown = [];
@@ -66,8 +85,8 @@ class Content extends Controller
             ->limit(20)
             ->setFieldWeights(
                 array(
-                    'hidden_tag'  => 3,
-                    'tag'    => 8,
+                    'hidden_tag' => 3,
+                    'tag' => 8,
                 )
             )
             ->setSortMode(\Sphinx\SphinxClient::SPH_SORT_RELEVANCE, '@relevance DESC')
