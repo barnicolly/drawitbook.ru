@@ -5,8 +5,3 @@ $('.social-fixed-sidebar').theiaStickySidebar({
 $('.sidebar').theiaStickySidebar({
     additionalMarginTop: 20,
 });
-
-$('.rate-button')
-    .on('click', function () {
-        console.log(this);
-    });
