@@ -16,7 +16,7 @@
             margin: 50px auto;
         }
 
-        div#columns figure {
+        div#columns .art-container {
             background: #fefefe;
             border: 2px solid #fcfcfc;
             box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
@@ -72,35 +72,24 @@
 
     <div id="columns">
         @foreach($pictures as $picture)
-            <figure style="position: relative">
-                <a href="{{ route('art', ['id' => $picture->id]) }}" title="">
-                    <img src="{{ asset('arts/' . $picture->path) }}">
-                </a>
-                <div style="position: absolute; bottom: 5px; right: 5px">
-                    <button type="button" class="btn btn-link rate-button like" title="Нравится">
-                        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="23" height="32" viewBox="0 0 23 32">
-                            <use xlink:href="{{ asset('img/sprites.svg#like') }}"></use>
-                        </svg>
-                    </button>
-                    <button type="button" class="btn btn-link rate-button dislike" title="Не нравится">
-                        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="23" height="32" viewBox="0 0 23 32">
-                            <use xlink:href="{{ asset('img/sprites.svg#dislike') }}"></use>
-                        </svg>
-                    </button>
-                </div>
-                @if($picture->description)
-                    <figcaption>
-                        {{ $picture->description }}
-                    </figcaption>
+            <div class="art-container">
+                <figure style="position: relative">
+                    <a href="{{ route('art', ['id' => $picture->id]) }}" title="">
+                        <img src="{{ asset('arts/' . $picture->path) }}">
+                    </a>
+                    <div style="position: absolute; bottom: 5px; right: 5px">
+                        @include('Content::template.rate', ['pictureId' => $picture->id])
+                    </div>
+                    @if($picture->description)
+                        <figcaption>
+                            {{ $picture->description }}
+                        </figcaption>
+                    @endif
+                </figure>
+                @if ($picture->tags->count())
+                    @include('Content::template.tag_list', ['tags' => $picture->tags])
                 @endif
-            </figure>
-
-            {{--<img src="{{ asset('art/' . $picture->path) }}">--}}
-            @if ($picture->tags->count())
-                @foreach($picture->tags as $tag)
-                    <a href="" class="btn btn-default">{{ $tag->name }}</a>
-                @endforeach
-            @endif
+            </div>
         @endforeach
     </div>
 @endsection
