@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use App\Http\Modules\Database\Models\Common\User\UserActivityModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use Illuminate\Validation\Rule;
@@ -42,11 +43,21 @@ class Rate extends Controller
 
     private function _createOrModifyUserActivity(PictureModel $picture, bool $like, bool $off): bool
     {
-        $activity = UserActivityModel::whereIn('activity', [1, 2])->where('picture_id', '=', $picture->id)->first();
+        $ip = request()->ip();
+        $ip = DB::connection()->getPdo()->quote($ip);
+        if (Auth::check()) {
+            $activity = UserActivityModel::whereIn('activity', [1, 2])
+                ->where('user_id', '=', auth()->id())
+                ->where('picture_id', '=', $picture->id)
+                ->first();
+        } else {
+            $activity = UserActivityModel::whereIn('activity', [1, 2])
+                ->whereRaw("ip = inet_aton($ip)")
+                ->where('picture_id', '=', $picture->id)
+                ->first();
+        }
         if ($activity === null) {
             if (!$off) {
-                $ip = request()->ip();
-                $ip = DB::connection()->getPdo()->quote($ip);
                 $activity = UserActivityModel::create();
                 $activity->picture_id = $picture->id;
                 $activity->ip = DB::raw("inet_aton($ip)");
