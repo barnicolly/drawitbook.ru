@@ -27,12 +27,12 @@
                         </figure>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-link rate-button like">
+                        <button type="button" class="btn btn-link rate-button like" title="Нравится">
                             <svg role="img" xmlns="http://www.w3.org/2000/svg" width="23" height="32" viewBox="0 0 23 32">
                                 <use xlink:href="{{ asset('img/sprites.svg#like') }}"></use>
                             </svg>
                         </button>
-                        <button type="button" class="btn btn-link rate-button dislike">
+                        <button type="button" class="btn btn-link rate-button dislike" title="Не нравится">
                             <svg role="img" xmlns="http://www.w3.org/2000/svg" width="23" height="32" viewBox="0 0 23 32">
                                 <use xlink:href="{{ asset('img/sprites.svg#dislike') }}"></use>
                             </svg>
