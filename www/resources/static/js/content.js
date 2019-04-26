@@ -24,6 +24,14 @@ function showInfo(message) {
     console.log(message);
 }
 
+var currentRequests = {};
+$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+    if (currentRequests[options.url]) {
+        currentRequests[options.url].abort();
+    }
+    currentRequests[options.url] = jqXHR;
+});
+
 $(function () {
     $('.rate-container').each(function () {
         $(this).customRate('init');
