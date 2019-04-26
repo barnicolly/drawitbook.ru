@@ -29,7 +29,7 @@ var admin = {
             path.src.plugin + 'clipboard/clipboard.js',
         ],
         minify: [
-            path.src.self + 'js/main.js',
+            path.src.self + 'js/admin/main.js',
         ]
     },
     css: {
