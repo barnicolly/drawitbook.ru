@@ -28,6 +28,10 @@
 
         function showClaimForm() {
             $(self.art).after(getClaimContainer());
+
+            $('html, body').animate({
+                scrollTop: $(self.artContainer).find('.title').offset().top
+            }, 'fast');
         }
 
         function initListeners() {

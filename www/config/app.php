@@ -1,5 +1,8 @@
 <?php
 
+$packageJson = file_get_contents('../package.json');
+$packageJson = json_decode($packageJson, true);
+
 return [
 
     /*
@@ -40,6 +43,8 @@ return [
     */
 
     'debug' => env('APP_DEBUG', true),
+
+    'version' => $packageJson['version'],
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +98,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +111,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'ru_RU',
 
     /*
     |--------------------------------------------------------------------------
@@ -228,6 +233,22 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Modules' => App\Providers\ModulesServiceProvider::class,
         'MetaTag'   => Torann\LaravelMetaTags\Facades\MetaTag::class,
+    ],
+
+    'debug_blacklist' => [
+        '_ENV' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+        ],
+
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+        ],
+
+        '_POST' => [
+            'password',
+        ],
     ],
 
 ];

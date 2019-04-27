@@ -44,7 +44,7 @@ $(function () {
 function getClaimContainer() {
     var claimContainer = $('<form>', {class: 'claim-container form-group'});
     var wrapper = $('<div>', {class: 'list-group-item'});
-    wrapper.append($('<p>').html('Помогите нам сделать контент на проекте чище. Обращение будет обязательно рассмотрено модератором.'));
+    wrapper.append($('<p>').html('Помогите нам сделать проект лучше. Обращение обязательно будет рассмотрено модератором.'));
     wrapper.append($('<span>').html('Причина жалобы:'));
     var claimList = $('<div>', {class: 'claim-list form-group'});
     var sprClaim = {
@@ -62,6 +62,7 @@ function getClaimContainer() {
         } else {
             label.append($('<input>', {type: 'radio', name: 'reason', value: claimIndex}));
         }
+        label.append('&nbsp;');
         label.append(sprClaim[claimIndex]);
         radio.append(label);
         claimList.append(radio);

@@ -34,6 +34,15 @@ if (!function_exists('loadAd')) {
     }
 }
 
+if (!function_exists('buildUrl')) {
+    function buildUrl(string $path)
+    {
+        return asset($path) . '?' . config('app.version');
+    }
+}
+
+
+
 if (!function_exists('trimData')) {
     function trimData($data)
     {

@@ -5,6 +5,7 @@ var base = {
             path.src.plugin + 'bootstrap/js/bootstrap.min.js',
             path.src.plugin + 'sticky/ResizeSensor.js',
             path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
+            path.src.plugin + 'masonry/masonry.min.js',
         ],
         minify: [
             path.src.self + 'js/init_plugins.js',
@@ -131,7 +132,7 @@ function prepareCssStream(name, files) {
 gulp.task('fonts:cp', function () {
     return gulp.src(
         [
-            path.src.plugin + 'bootstrap/fonts/*',
+            // path.src.plugin + 'bootstrap/fonts/*',
             path.src.plugin + 'font-awesome-4.7.0/fonts/*',
         ])
         .pipe(plugins.plumber())

@@ -1,10 +1,10 @@
 @extends('layouts.base')
 
 @push('scripts')
-    <script src="{{ asset('build/js/admin.min.js') }}" defer></script>
+    <script src="{{ buildUrl('build/js/admin.min.js') }}" defer></script>
 @endpush
 @push('styles')
-    <link rel="stylesheet" href="{{  asset('build/css/admin.min.css') }}">
+    <link rel="stylesheet" href="{{ buildUrl('build/css/admin.min.css') }}">
 @endpush
 
 @section('content')

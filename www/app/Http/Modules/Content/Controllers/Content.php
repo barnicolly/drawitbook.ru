@@ -20,7 +20,7 @@ class Content extends Controller
     public function index()
     {
         $template = new Template();
-        $pictures = PictureModel::take(40)->with(['tags'])->get();
+        $pictures = PictureModel::take(21)->with(['tags'])->get();
 
         $viewData['pictures'] = $pictures;
         return $template->loadView('Content::index', $viewData);
