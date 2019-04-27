@@ -9,3 +9,10 @@
     text-transform: uppercase;
 }
 
+.claim-container span {
+    color: #939393;
+}
+
+.claim-container .claim-list {
+    padding-left: 20px;
+}
