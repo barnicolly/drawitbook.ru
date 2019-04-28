@@ -233,6 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Modules' => App\Providers\ModulesServiceProvider::class,
         'MetaTag'   => Torann\LaravelMetaTags\Facades\MetaTag::class,
+        'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
     ],
 
     'debug_blacklist' => [

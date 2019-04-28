@@ -24,7 +24,12 @@
             </main>
         </div>
     </div>
-    @include('layouts/footer')
+    <?php $footer = Cache::store('file')->get('footer');
+    if (!$footer) {
+        $footer = view('layouts/footer')->render();
+        Cache::store('file')->put('footer', $footer, config('cache.expiration'));
+    } ?>
+    {!! $footer !!}
 </div>
 <script src="{{ buildUrl('build/js/master.min.js') }}" defer></script>
 @stack('scripts')

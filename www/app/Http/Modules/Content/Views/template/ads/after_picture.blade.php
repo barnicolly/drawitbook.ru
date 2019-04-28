@@ -1,1 +1,1 @@
-ad after picture
+<div id="after_picture"></div>

@@ -40,6 +40,7 @@ var admin = {
         ],
         minify: [
             path.src.self + 'files/dummy.css',
+            path.src.self + 'css/admin/main.css',
         ]
     }
 };

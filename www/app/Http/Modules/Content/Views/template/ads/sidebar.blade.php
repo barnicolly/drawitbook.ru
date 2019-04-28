@@ -1,1 +1,1 @@
-ad in sidebar
+<div id="in_sidebar"></div>

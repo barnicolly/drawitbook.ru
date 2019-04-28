@@ -1,110 +1,14 @@
-function showInfo(message) {
-    alert(message);
-}
-
-function sendRequest(type, url, data, callback) {
-    return $.ajax({
-        type: type,
-        url: url,
-        dataType: 'json',
-        data: data,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (response, textStatus, jqXHR) {
-            if (callback) {
-                callback.call(self, response);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            showInfo('Произошла ошибка на стороне сервера');
-        }
-    });
-}
-
 $(function () {
-    $('body').on('click', '.add-tag', function () {
-        var tagsContainer = $(this).closest('td').find('.tags');
-        createTagContainer(createTagContainer(tagsContainer));
-    });
-
-    function createTagContainer(tagsContainer, content = '') {
-        var div = $('<div>').attr({
-            class: 'tag form-group input-group',
-        });
-
-        $('<input>').attr({
-            type: 'text',
-            class: 'form-control',
-            value: content,
-        }).appendTo(div);
-
-        var group = $('<div>').attr({
-            class: 'input-group-btn',
-        });
-
-        var button = $('<button>').attr({
-            type: 'button',
-            class: 'btn btn-danger delete-tag input-group-append',
-        });
-
-        $('<span>').attr({
-            class: 'fa fa-trash',
-        }).appendTo(button);
-
-        button.appendTo(group);
-        group.appendTo(div);
-        div.appendTo(tagsContainer);
-        if (!content) {
-            $(tagsContainer).find('.tag:last input').focus();
-        }
-    }
-
     $('body')
-        .on('click', '.delete-tag', function () {
-            $(this).closest('.tag').remove();
-        })
-        .on('click', '.checkbox-padding', function () {
-            $(this).find('.selected').prop('checked', !$(this).find('.selected').prop('checked'));
-        })
-        .on('click', '.delete-selected', function () {
+        .on('change', '.moderate-table .selected', function () {
             if ($('.moderate-table .selected:checked').length) {
-                var data = {
-                    ids: []
-                };
-                $('.moderate-table .selected:checked').each(function () {
-                    var closestRow = $(this).closest('tr');
-                    data.ids.push($(closestRow).attr('data-id'))
-                });
-                sendRequest('post', '/admin/moderate/delete_images', data, function (res) {
-                    if (res.success) {
-                        $('.moderate-table .selected:checked').each(function () {
-                            var closestRow = $(this).closest('tr');
-                            $(closestRow).remove();
-                        });
-                    } else {
-                        showInfo(res.message);
-                    }
-                })
-            }
-        })
-        .on('click', '.unselect-all', function () {
-            $('.moderate-table .selected:checked').prop('checked', false);
-            $('.operation-with-selected').hide();
-        })
-        .on('click', '.select-all', function () {
-            $('.moderate-table .selected').prop('checked', true);
-            $('.operation-with-selected').show();
-        })
-        .on('change', '.selected', function () {
-            if ($('.moderate-table .selected:checked').length) {
-                $('.operation-with-selected').show();
+                $('.operation-with-selected').addClass('d-inline').show();
             } else {
-                $('.operation-with-selected').hide();
+                $('.operation-with-selected').removeClass('d-inline').hide();
             }
         })
         .on('click', '.copyToClipboard', function () {
-            var content = $(this).closest('tr').find('.content').text();
+            var content = $(this).closest('.popular-tag-container').find('.content').text();
             if ($('.moderate-table .selected:checked').length) {
                 $('.moderate-table .selected:checked').each(function () {
                     var closestRow = $(this).closest('tr');
@@ -128,36 +32,46 @@ $(function () {
                         }
                     }
                 });
-                $('.unselect-all').trigger('click');
             }
             var dt = new clipboard.DT();
             dt.setData("text/plain", content);
             clipboard.write(dt);
         })
+        .on('click', '.popular-tag', function () {
+            var row = $(this).closest('.popular-tag-container');
+            $(row).find('button').trigger('click');
+        })
+});
+
+$(function () {
+    $('body')
         .on('click', '.refresh-page', function () {
             window.location.reload();
         })
-        .on('click', '.delete-image', function () {
-            var row = $(this).closest('tr');
-            sendRequest('post', '/admin/moderate/delete_image', {id: row.data('id')}, function (res) {
-                if (res.success) {
-                    row.remove();
-                } else {
-                    showInfo(res.message);
-                }
-            })
+        .on('click', '.unselect-all', function () {
+            $('.moderate-table .selected:checked').prop('checked', false);
+            $('.operation-with-selected').hide();
         })
-        .on('click', '.save-all', function () {
-            var timerId = setInterval(function() {
-                $('.save-image:not(:disabled):first').trigger('click');
-                if (!$('.save-image:not(:disabled):first').length) {
-                    clearInterval(timerId);
-                }
-            }, 1000);
-        })
-        .on('click', '.popular-tag', function () {
-            var row = $(this).closest('tr');
-            $(row).find('button').trigger('click');
+        .on('click', '.delete-selected', function () {
+            if ($('.moderate-table .selected:checked').length) {
+                var data = {
+                    ids: []
+                };
+                $('.moderate-table .selected:checked').each(function () {
+                    var closestRow = $(this).closest('tr');
+                    data.ids.push($(closestRow).attr('data-id'))
+                });
+                sendRequest('post', '/admin/moderate/delete_images', data, function (res) {
+                    if (res.success) {
+                        $('.moderate-table .selected:checked').each(function () {
+                            var closestRow = $(this).closest('tr');
+                            $(closestRow).remove();
+                        });
+                    } else {
+                        showInfo(res.message);
+                    }
+                })
+            }
         })
         .on('click', '.save-image', function () {
             var saveButton = $(this);
@@ -179,6 +93,7 @@ $(function () {
                 });
                 if (data.tags.length) {
                     sendRequest('post', '/admin/moderate/save_image', data, function (res) {
+                        saveButton.attr('disabled', false);
                         if (res.success) {
                             row.remove();
                             $(row).attr('data-picture-id', res.picture_id);
@@ -194,3 +109,67 @@ $(function () {
             }
         })
 });
+
+$(function () {
+    $('body')
+        .on('click', '.add-tag', function () {
+            var tagsContainer = $(this).closest('tr').find('.tags');
+            createTagContainer(createTagContainer(tagsContainer));
+        })
+        .on('click', '.delete-tag', function () {
+            $(this).closest('.tag').remove();
+        })
+        .on('click', '.delete-image', function () {
+            var row = $(this).closest('tr');
+            sendRequest('post', '/admin/moderate/delete_image', {id: row.data('id')}, function (res) {
+                if (res.success) {
+                    row.remove();
+                } else {
+                    showInfo(res.message);
+                }
+            })
+        })
+        .on('click', '.checkbox-padding', function () {
+            var selected = $(this).find('.selected').attr('checked') ? '' : 'checked';
+            if (!selected) {
+                $(this).find('.selected').removeAttr('checked').prop('checked', false);
+            } else {
+                $(this).find('.selected')
+                    .attr('checked', selected)
+                    .prop('checked', true);
+            }
+            $(this).find('.selected').trigger('change');
+        })
+});
+
+function createTagContainer(tagsContainer, content = '') {
+    var div = $('<div>').attr({
+        class: 'tag form-group input-group',
+    });
+
+    $('<input>').attr({
+        type: 'text',
+        class: 'form-control',
+        value: content,
+    }).appendTo(div);
+
+    var group = $('<div>').attr({
+        class: 'input-group-btn',
+    });
+
+    var button = $('<button>').attr({
+        type: 'button',
+        class: 'btn btn-danger btn-xs delete-tag input-group-append',
+    });
+
+    $('<span>').attr({
+        class: 'fa fa-trash',
+    }).appendTo(button);
+
+    button.appendTo(group);
+    group.appendTo(div);
+    div.appendTo(tagsContainer);
+    if (!content) {
+        $(tagsContainer).find('.tag:last input').focus();
+    }
+}
