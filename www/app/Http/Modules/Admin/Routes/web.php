@@ -23,6 +23,7 @@ Route::group(
     ],
     function () {
         Route::get('/', ['uses' => 'Index@index'])->name('show_articles');
-        Route::get('/create', ['uses' => 'Index@index'])->name('create_article');
-        Route::get('/edit/{id}', ['uses' => 'Index@index'])->name('edit_article');
+        Route::get('/create', ['uses' => 'Index@create'])->name('create_article');
+        Route::get('/edit/{id}', ['uses' => 'Index@edit'])->name('edit_article');
+        Route::post('/save', ['uses' => 'Article@save'])->name('save_article');
     });

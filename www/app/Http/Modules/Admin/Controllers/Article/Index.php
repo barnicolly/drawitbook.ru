@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Libraries\Template;
 use Validator;
 
-
 class Index extends Controller
 {
 
@@ -25,14 +24,14 @@ class Index extends Controller
     {
         $template = new Template();
         $viewData = [];
-        return $template->loadView('Admin::article.show', $viewData);
+        return $template->loadView('Admin::article.show.index', $viewData);
     }
 
     public function edit($id)
     {
         $template = new Template();
         $viewData = [];
-        return $template->loadView('Admin::article.show', $viewData);
+        return $template->loadView('Admin::article.show.index', $viewData);
     }
 
 }

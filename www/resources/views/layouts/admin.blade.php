@@ -17,7 +17,15 @@
 <body>
 <div class="container-fluid no-padding">
     @include('layouts/header')
-    @yield('content')
+    <div class="clearfix" id="content-wrapper">
+        @yield('content')
+    </div>
+    <?php $footer = Cache::store('file')->get('footer');
+    if (!$footer) {
+        $footer = view('layouts/footer')->render();
+        Cache::store('file')->put('footer', $footer, config('cache.expiration'));
+    } ?>
+    {!! $footer !!}
 </div>
 <script src="{{ buildUrl('build/js/master.min.js') }}" defer></script>
 @stack('scripts')
