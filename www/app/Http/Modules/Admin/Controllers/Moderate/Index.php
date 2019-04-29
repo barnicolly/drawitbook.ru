@@ -22,7 +22,7 @@ class Index extends Controller
             ->count();
 
         $template = new Template();
-        $images = PagesModel::take(7)
+        $images = PagesModel::take(20)
             ->where('is_del', '=', 0)
             ->where('status', '=', 1)
             ->get();
@@ -36,18 +36,18 @@ class Index extends Controller
     private function _popularTags()
     {
         $popular = [
+            'сложные',
+            'красивые',
+            'черно-белые',
             'для девочек',
+            'прикольные',
+            'интересные',
             'в тетради',
-            'легкие',
+            'милые и няшные',
             'фрукт',
             'цветок',
             'большие',
-            'красивые',
-            'для детей',
-            'для дошкольников',
             'аниме',
-            'черно-белые',
-            'цветные',
             'для мальчиков',
             'на 8 марта',
             'машина',
@@ -56,15 +56,10 @@ class Index extends Controller
             'гравити фолз',
             'карандашом',
             'девушка',
-            'прикольные',
-            'интересные',
-            'милые и няшные',
-            'дом',
-            'рыба',
-            'прическа',
             'сердце',
+            'из мультфильма',
         ];
-        sort($popular);
+//        sort($popular);
         return $popular;
     }
 
