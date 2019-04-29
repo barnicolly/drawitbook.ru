@@ -28,6 +28,7 @@ class Content extends Controller
 
     public function art(int $id)
     {
+        $id = (int) $id;
         $picture = PictureModel::with(['tags'])->findOrFail($id);
         list($shown, $hidden) = $this->_getTagIds($picture);
         $relativePictures = [];

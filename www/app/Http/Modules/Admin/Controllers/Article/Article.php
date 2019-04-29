@@ -40,7 +40,12 @@ class Article extends Controller
         try {
             $article = ArticleModel::findOrNew($data['id']);
             unset($data['id']);
-            $article->save($data);
+            $article->title = $data['title'];
+            $article->description = $data['description'];
+            $article->key_words = $data['key_words'];
+            $article->template = $data['template'];
+            $article->link = $data['link'];
+            $article->save();
             $defaultTransaction->commit();
         } catch (\Exception $e) {
             $defaultTransaction->rollBack();

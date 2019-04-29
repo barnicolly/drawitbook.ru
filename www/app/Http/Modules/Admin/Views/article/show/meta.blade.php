@@ -42,7 +42,7 @@
                class="form-control"
                placeholder="Ссылка"
                name="link"
-               value="{{ !empty($article) ? $article->title : '' }}"
+               value="{{ !empty($article) ? $article->link : '' }}"
         />
     </div>
     <div class="col-1">

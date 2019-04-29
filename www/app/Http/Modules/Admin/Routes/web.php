@@ -27,3 +27,15 @@ Route::group(
         Route::get('/edit/{id}', ['uses' => 'Index@edit'])->name('edit_article');
         Route::post('/save', ['uses' => 'Article@save'])->name('save_article');
     });
+
+Route::group(
+    [
+        'middleware' => ['web', 'roles'],
+        'prefix' => '/admin/article/',
+        'namespace' => 'App\Http\Modules\Admin\Controllers\Article',
+        'roles' => ['Admin']
+    ],
+    function () {
+        Route::post('/{id}/detach/{artId}', ['uses' => 'Article_picture@detach']);
+        Route::get('/getModal', ['uses' => 'Article_picture@getModal']);
+    });

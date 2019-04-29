@@ -26,6 +26,12 @@
                         </figcaption>
                     @endif
                 </figure>
+                @guest
+                @else
+                    <span>
+                        {{ $picture->id }}
+                    </span>
+                @endif
                 @if ($picture->tags->count())
                     @include('Content::template.tag_list', ['tags' => $picture->tags])
                 @endif

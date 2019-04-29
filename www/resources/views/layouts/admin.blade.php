@@ -12,6 +12,7 @@
     {!! MetaTag::openGraph() !!}
     {!! MetaTag::twitterCard() !!}
     <link rel="stylesheet" href="{{ buildUrl('build/css/master.min.css') }}">
+    <link rel="stylesheet" href="{{ buildUrl('build/css/admin.min.css') }}">
     @stack('styles')
 </head>
 <body>
