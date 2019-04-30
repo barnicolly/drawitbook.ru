@@ -24,7 +24,7 @@ class ArticleModel extends Model
     public function pictures()
     {
         return $this->belongsToMany('App\Http\Modules\Database\Models\Common\Picture\PictureModel', 'article_pictures', 'article_id', 'picture_id')
-            ->withPivot('caption', 'sort_id');
+            ->withPivot('caption', 'sort_id', 'id');
     }
 
 }

@@ -9,6 +9,7 @@ class ArticlePictureModel extends Model
     protected $table = 'article_pictures';
 
     protected $fillable = [];
+    public $timestamps = false;
 
     public function __construct(array $attributes = [])
     {

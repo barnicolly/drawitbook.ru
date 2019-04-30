@@ -38,4 +38,6 @@ Route::group(
     function () {
         Route::post('/{id}/detach/{artId}', ['uses' => 'Article_picture@detach']);
         Route::get('/getModal', ['uses' => 'Article_picture@getModal']);
+        Route::get('/{id}/refreshList', ['uses' => 'Article_picture@refreshList']);
+        Route::post('/pictures/save', ['uses' => 'Article_picture@save']);
     });
