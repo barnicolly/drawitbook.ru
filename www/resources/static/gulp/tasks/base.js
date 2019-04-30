@@ -30,7 +30,7 @@ var admin = {
             path.src.plugin + 'clipboard/clipboard.js',
         ],
         minify: [
-            path.src.self + 'js/admin/main.js',
+            path.src.self + 'files/dummy.js',
         ]
     },
     css: {
@@ -39,11 +39,28 @@ var admin = {
             // path.src.plugin + 'fancybox/jquery.fancybox.min.css',
         ],
         minify: [
-            path.src.self + 'files/dummy.css',
             path.src.self + 'css/admin/main.css',
         ]
     }
 };
+
+gulp.task('scripts:admin-common', function () {
+    var files = [
+        path.src.self + 'js/admin/**/*.js'
+    ];
+    if (environment === 'development') {
+        initWatcher(files, 'scripts:admin-common')
+    }
+    return gulp.src(files)
+        .pipe(plugins.plumber())
+        .pipe(plugins.cached('scripts:admin-common'))
+        .pipe(plugins.if(env.sourcemaps, plugins.sourcemaps.init()))
+        .pipe(plugins.babel())
+        .pipe(plugins.if(env.minify, plugins.uglify()))
+        .pipe(plugins.remember('scripts:admin-common'))
+        .pipe(plugins.if(env.sourcemaps, plugins.sourcemaps.write()))
+        .pipe(gulp.dest(path.build + 'js/admin'));
+});
 
 gulp.task('styles:base', function () {
     var stream;

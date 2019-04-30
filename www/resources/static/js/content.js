@@ -76,6 +76,25 @@ function getClaimContainer() {
     return claimContainer;
 }
 
+function NewModal(modal) {
+    this.modal = $(modal);
+    this.save = false;
+    this.close = false;
+}
+
+NewModal.prototype.showModal = function () {
+    var body = $('body');
+    body.append(this.modal);
+    this.modal.modal('show');
+    this.modal.modal({backdrop: 'static'})
+        .on('hidden.bs.modal', function () {
+            $(this).remove();
+        })
+        .on('hide.bs.modal', function () {
+            $(this).remove();
+        });
+    return this.modal;
+};
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;

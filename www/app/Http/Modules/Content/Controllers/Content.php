@@ -20,14 +20,14 @@ class Content extends Controller
     public function index()
     {
         $template = new Template();
-        $pictures = PictureModel::with(['tags'])->get();
-
+        $pictures = PictureModel::take(15)->with(['tags'])->get();
         $viewData['pictures'] = $pictures;
         return $template->loadView('Content::index', $viewData);
     }
 
-    public function art(int $id)
+    public function art($id)
     {
+        $id = (int) $id;
         $picture = PictureModel::with(['tags'])->findOrFail($id);
         list($shown, $hidden) = $this->_getTagIds($picture);
         $relativePictures = [];
