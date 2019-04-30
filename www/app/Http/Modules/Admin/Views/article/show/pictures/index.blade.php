@@ -11,7 +11,7 @@
         <th></th>
         </thead>
         <tbody id="article-pictures-body">
-        @include('Admin::article.show.article_pictures_body', ['article' => !empty($article) ? $article : []])
+        @include('Admin::article.show.pictures.body', ['article' => !empty($article) ? $article : []])
         </tbody>
     </table>
 </div>

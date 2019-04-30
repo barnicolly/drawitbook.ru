@@ -7,7 +7,6 @@
 
 @section('content')
     <div class="container">
-
         <div class="col-12 ">
             <h4>
                 {{ !empty($article) ? 'Редактирование': 'Создание' }}
@@ -20,6 +19,9 @@
             <a class="btn btn-sm btn-link back-article-list" href="{{ route('show_articles') }}">
                 К списку статей
             </a>
+            <button type="button" class="btn btn-sm btn-link preview-article" {{ empty($article) ? 'disabled': '' }}>
+                Предпросмотр
+            </button>
         </div>
         <div class="col-12 form-group">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -62,7 +64,7 @@
                 </div>
                 <div class="tab-pane fade" id="pictures" role="tabpanel" aria-labelledby="pictures-tab">
                     <div class="col-12">
-                        @include('Admin::article.show.pictures', ['article' => !empty($article) ? $article : []])
+                        @include('Admin::article.show.pictures.index', ['article' => !empty($article) ? $article : []])
                     </div>
                 </div>
             </div>

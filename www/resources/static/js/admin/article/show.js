@@ -11,11 +11,15 @@ $('body')
                     articleForm.find('[name="id"]').val(articleId);
                     history.pushState(null, null, '/admin/article/edit/' + articleId);
                     $('.add-picture').prop('disabled', false);
+                    $('.preview-article').prop('disabled', false);
                 }
             } else {
                 showInfo(res.message);
             }
         });
+    })
+    .on('click', '.preview-article', function () {
+        window.open('/admin/article/preview/' + articleId, '_blank');
     });
 
 function cleanHtml(html) {

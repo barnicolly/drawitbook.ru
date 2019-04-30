@@ -21,12 +21,11 @@ class Content extends Controller
     {
         $template = new Template();
         $pictures = PictureModel::take(15)->with(['tags'])->get();
-
         $viewData['pictures'] = $pictures;
         return $template->loadView('Content::index', $viewData);
     }
 
-    public function art(int $id)
+    public function art($id)
     {
         $id = (int) $id;
         $picture = PictureModel::with(['tags'])->findOrFail($id);

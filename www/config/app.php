@@ -1,6 +1,6 @@
 <?php
 
-$packageJson = file_get_contents('../package.json');
+$packageJson = file_get_contents(base_path('package.json'));
 $packageJson = json_decode($packageJson, true);
 
 return [
@@ -182,6 +182,7 @@ return [
         App\Providers\ModulesServiceProvider::class,
         sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
         Torann\LaravelMetaTags\MetaTagsServiceProvider::class,
+        Waavi\Sanitizer\Laravel\SanitizerServiceProvider::class,
     ],
 
     /*
@@ -234,6 +235,7 @@ return [
         'Modules' => App\Providers\ModulesServiceProvider::class,
         'MetaTag'   => Torann\LaravelMetaTags\Facades\MetaTag::class,
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
+        'Sanitizer' => Waavi\Sanitizer\Laravel\Facade::class,
     ],
 
     'debug_blacklist' => [

@@ -3,6 +3,7 @@
 namespace App\Http\Modules\Admin\Controllers\Article;
 
 use App\Http\Controllers\Controller;
+use App\Http\Modules\Admin\Requests\Article\ArticlePictureSaveRequest;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use Validator;
 use App\Http\Modules\Database\Models\Common\Article\ArticleModel;
@@ -39,11 +40,10 @@ class Article_picture extends Controller
         return ['success' => true, 'data' => $modal];
     }
 
-    public function save(Request $request)
+    public function save(ArticlePictureSaveRequest $request)
     {
         $result = ['success' => false];
-        $data = $request->all();
-        //валидация входных параметров
+        $data = $request->validated();
         $picture = PictureModel::find($data['picture_id']);
         if ($picture === null) {
             return response($result);
@@ -65,7 +65,7 @@ class Article_picture extends Controller
         if ($article === null) {
             return response(['success' => false]);
         }
-        $articlePicturesList = view('Admin::article.show.article_pictures_body', ['article' => $article])->render();
+        $articlePicturesList = view('Admin::article.show.pictures.body', ['article' => $article])->render();
         return response(['success' => true, 'data' => $articlePicturesList]);
     }
 

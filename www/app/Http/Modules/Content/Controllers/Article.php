@@ -17,7 +17,7 @@ class Article extends Controller
         $template = new Template();
         $article = ArticleModel::with(['pictures' => function ($q) {
             $q->orderBy('pivot_sort_id', 'asc');
-        }])->where('link', '=', $url)->firstOrFail();
+        }])->where('link', '=', $url)->where('is_show', '=', 1)->firstOrFail();
 
         $artList = view('Content::article.show.art_list', ['article' => $article])->render();
         $article->template = str_ireplace('$artList$', $artList, $article->template);

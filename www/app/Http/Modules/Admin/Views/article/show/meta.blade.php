@@ -51,3 +51,14 @@
         </button>
     </div>
 </div>
+<div class="row form-group">
+    <label class="col-4 control-label">
+        Показывать
+    </label>
+    <div class="col-8">
+        <input type="checkbox"
+               name="is_show"
+               {{ !empty($article->is_show) ? 'checked' : '' }}
+        />
+    </div>
+</div>

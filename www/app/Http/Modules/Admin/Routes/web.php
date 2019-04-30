@@ -8,7 +8,7 @@ Route::group(
         'roles' => ['Admin']
     ],
     function () {
-        Route::get('/moderate', ['uses' => 'Index@index']);
+        Route::get('/moderate', ['uses' => 'Index@index'])->name('moderate');
         Route::post('/moderate/delete_image', ['uses' => 'DeleteImage@deleteImage']);
         Route::post('/moderate/delete_images', ['uses' => 'DeleteImage@deleteImages']);
         Route::post('/moderate/save_image', ['uses' => 'SaveImage@saveImage']);
@@ -25,6 +25,7 @@ Route::group(
         Route::get('/', ['uses' => 'Index@index'])->name('show_articles');
         Route::get('/create', ['uses' => 'Index@create'])->name('create_article');
         Route::get('/edit/{id}', ['uses' => 'Index@edit'])->name('edit_article');
+        Route::get('/preview/{id}', ['uses' => 'Index@preview'])->name('preview_article');
         Route::post('/save', ['uses' => 'Article@save'])->name('save_article');
     });
 

@@ -10,7 +10,6 @@
                 </div>
             </div>
         @endif
-
         <div class="art-container">
             <div class="art-wrapper">
                 <figure>
@@ -26,9 +25,8 @@
                         </figcaption>
                     @endif
                 </figure>
-                @guest
-                @else
-                    <span>
+                @if (!empty(session('is_admin')))
+                    <span class="badge badge-secondary">
                         {{ $picture->id }}
                     </span>
                 @endif
