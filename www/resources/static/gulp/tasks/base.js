@@ -6,6 +6,7 @@ var base = {
             path.src.plugin + 'sticky/ResizeSensor.js',
             path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
             path.src.plugin + 'masonry/masonry.min.js',
+            path.src.plugin + 'share-this/test.js',
         ],
         minify: [
             path.src.self + 'js/init_plugins.js',
@@ -79,14 +80,10 @@ gulp.task('styles:base', function () {
 
 gulp.task('scripts:base', function () {
     var stream;
-    if (typeof base.js.minify !== 'undefined' && Object.keys(base.js.minify).length) {
-        if (environment === 'development') {
-            initWatcher(base.js.minify, 'scripts:base')
-        }
-        stream = prepareJsStream('scripts:base', base.js);
-    } else {
-        stream = gulp.src(base.js.append);
+    if (environment === 'development') {
+        initWatcher(base.js.minify, 'scripts:base')
     }
+    stream = prepareJsStream('scripts:base', base.js);
     return stream
         .pipe(plugins.plumber())
         .pipe(plugins.concat('master.min.js'))

@@ -1,6 +1,5 @@
 <?php
 $url = Request::url();
-//$title = urlencode(MetaTag::get('title'));
 $socialLinks = [
     [
         'a.href' => 'http://vk.com/share.php?url=' . $url,

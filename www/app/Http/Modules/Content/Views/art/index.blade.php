@@ -17,7 +17,7 @@
                         </div>
                         <div>
                             <figure>
-                                <img style="margin: 0 auto; max-height: 755px" class="img-fluid"
+                                <img style="margin: 0 auto; max-height: 755px" class="img-fluid shared-image"
                                      src="{{ asset('arts/' . $picture->path) }}">
                                 @if($picture->description)
                                     <figcaption>
