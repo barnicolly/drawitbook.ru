@@ -99,14 +99,3 @@ NewModal.prototype.showModal = function () {
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
-
-$('.shared-image img').sti({
-    // selector: "#img1, #img2",
-    // fb_app: "738997149501946",
-    orientation: "horizontal",
-    style: "flat-small",
-    always_show: true,
-    // sharer:"https://share-this-image.com/wp-content/themes/sti/framework/sharer.php",
-    is_mobile: false,
-    primary_menu: ["facebook", "twitter", "vkontakte", "pinterest"]
-});

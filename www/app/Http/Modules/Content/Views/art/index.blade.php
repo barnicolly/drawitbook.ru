@@ -15,25 +15,13 @@
                         <div>
                             @include('Content::template.tag_list', ['tags' => $picture->tags])
                         </div>
-                        <div>
-                            <figure>
-                                <img style="margin: 0 auto; max-height: 755px" class="img-fluid shared-image"
-                                     src="{{ asset('arts/' . $picture->path) }}">
-                                @if($picture->description)
-                                    <figcaption>
-                                        {{ $picture->description }}
-                                    </figcaption>
-                                @endif
-                            </figure>
-                        </div>
+                        @include('Content::template.img_social', ['picture' => $picture])
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-6">
-                                @include('Content::template.rate', ['pictureId' => $picture->id])
-                            </div>
-                            <div class="col-5">
-                                <button type="button" class="btn btn-link float-right claim-button" data-id="{{ $picture->id }}">
+                            <div class="col-12 float-right">
+                                <button type="button" class="btn btn-link float-right claim-button"
+                                        data-id="{{ $picture->id }}">
                                     Пожаловаться
                                 </button>
                             </div>

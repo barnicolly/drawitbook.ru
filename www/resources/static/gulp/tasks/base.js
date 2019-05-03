@@ -6,7 +6,7 @@ var base = {
             path.src.plugin + 'sticky/ResizeSensor.js',
             path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
             path.src.plugin + 'masonry/masonry.min.js',
-            path.src.plugin + 'share-this/test.js',
+            path.src.plugin + 'share-this/share-this.min.js',
         ],
         minify: [
             path.src.self + 'js/init_plugins.js',
@@ -152,6 +152,12 @@ gulp.task('fonts:cp', function () {
         ])
         .pipe(plugins.plumber())
         .pipe(gulp.dest(path.build + 'fonts'))
+});
+
+gulp.task('img:compress', function () {
+    return gulp.src([path.src.arts + '**/*.gif'])
+        .pipe(plugins.imagemin(({ optimizationLevel: 7})))
+        .pipe(gulp.dest(path.public + 'arts', {overwrite: false}))
 });
 
 /*gulp.task('scripts:load_ads', function () {

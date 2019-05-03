@@ -31,4 +31,17 @@ $(function () {
         }
         return masonryWidth;
     }
+
+
+
+    $('.shared-image img').sti({
+        // selector: "#img1, #img2",
+        // fb_app: "738997149501946",
+        orientation: "horizontal",
+        style: "flat-small",
+        always_show: false,
+        // sharer:"https://share-this-image.com/wp-content/themes/sti/framework/sharer.php",
+        is_mobile: false,
+        primary_menu: [ "vkontakte", "pinterest", 'odnoklassniki', "facebook", "twitter"]
+    });
 });

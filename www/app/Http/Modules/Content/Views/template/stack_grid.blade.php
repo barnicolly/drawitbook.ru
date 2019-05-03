@@ -12,19 +12,7 @@
         @endif
         <div class="art-container">
             <div class="art-wrapper">
-                <figure>
-                    <a href="{{ route('art', ['id' => $picture->id]) }}">
-                        <img class="img-fluid" src="{{ asset('arts/' . $picture->path) }}">
-                    </a>
-                    <div class="rate-footer">
-                        @include('Content::template.rate', ['pictureId' => $picture->id])
-                    </div>
-                    @if($picture->description)
-                        <figcaption>
-                            {{ $picture->description }}
-                        </figcaption>
-                    @endif
-                </figure>
+                @include('Content::template.img_social', ['picture' => $picture, 'activeLink' => true])
                 @if (!empty(session('is_admin')))
                     <span class="badge badge-secondary">
                         {{ $picture->id }}
