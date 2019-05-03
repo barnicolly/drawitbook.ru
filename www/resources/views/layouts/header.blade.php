@@ -11,16 +11,17 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <form class="form-inline search-form col-md-8">
-                    <input class="form-control" type="search" placeholder="Поиск">
+                <form action="{{ route('search') }}" method="GET" class="form-inline search-form col-md-8">
+                    <input class="form-control"
+                           name="query"
+                           type="search"
+                           placeholder="Поиск"
+                           value="{{ !empty($filters['query']) ? $filters['query']: '' }}">
                     <button class="btn btn-outline-success" type="submit">Поиск</button>
                 </form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">Главная</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('sample') }}">Подборки</a>
                     </li>
                     @guest
                     @else

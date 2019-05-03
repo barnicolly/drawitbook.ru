@@ -14,6 +14,7 @@
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "sngrl/sphinxsearch": "dev-master",
+        "spatie/laravel-sitemap": "^5.3",
         "torann/laravel-meta-tags": "^3.0",
         "waavi/sanitizer": "~1.0"
     },

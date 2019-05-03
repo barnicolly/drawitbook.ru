@@ -2,7 +2,7 @@
 
 @push('scripts')
     <script src="{{ buildUrl('build/js/admin.min.js') }}" defer></script>
-    <script src="{{ buildUrl('build/js/admin/main.js') }}" defer></script>
+    <script src="{{ buildUrl('build/js/admin/moderate/main.js') }}" defer></script>
 @endpush
 @push('styles')
     <link rel="stylesheet" href="{{ buildUrl('build/css/admin.min.css') }}">

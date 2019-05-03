@@ -3,14 +3,6 @@
     margin-bottom: 10px;
 }
 
-.stack-grid figure {
-    position: relative;
-}
-
-.stack-grid .rate-footer {
-    position: absolute; bottom: 5px; right: 5px
-}
-
 .stack-grid .art-wrapper {
     background: #fefefe;
     border: 2px solid #fcfcfc;

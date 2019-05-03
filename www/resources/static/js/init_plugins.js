@@ -31,4 +31,12 @@ $(function () {
         }
         return masonryWidth;
     }
+
+    $('.shared-image img').sti({
+        orientation: "horizontal",
+        style: "flat-small",
+        always_show: false,
+        is_mobile: false,
+        primary_menu: [ "vkontakte", "pinterest", 'odnoklassniki', "facebook", "twitter"]
+    });
 });

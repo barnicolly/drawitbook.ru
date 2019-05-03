@@ -6,6 +6,7 @@ www/vendor/
 www/node_modules/
 www/public/build/
 www/public/arts/
+www/resources/static/arts/
 www/public/moderate/
 
 #файл xdebug'a
