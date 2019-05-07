@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <span class="app-name">{{ config('app.name') }}</span> {{ date('Y') }} г.
+                    <span class="app-name">{{ config('app.name') }}</span> {{ date('Y') }} г. Приветствуется копирование и распространение материалов.
                 </div>
             </div>
         </div>

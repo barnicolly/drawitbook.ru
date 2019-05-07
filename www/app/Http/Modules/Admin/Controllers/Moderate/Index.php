@@ -17,20 +17,46 @@ class Index extends Controller
 
     public function index()
     {
+        $queryId = 4052;
+
         $countNonModeratedRecords = PagesModel::where('status', '=', 1)
             ->where('is_del', '=', 0)
+            ->where('query_id', '=', $queryId)
             ->count();
 
         $template = new Template();
-        $images = PagesModel::take(20)
+        $images = PagesModel::take(50)
             ->where('is_del', '=', 0)
+            ->where('query_id', '=', $queryId)
             ->where('status', '=', 1)
             ->get();
 
         $viewData['countNonModeratedRecords'] = $countNonModeratedRecords;
         $viewData['images'] = $images;
-        $viewData['popular'] = $this->_popularTags();
+        $viewData['popular'] = $this->_getHighlySpecializedTags();
+        $viewData['defaultTags'] = [
+            'фрукт',
+        ];
         return $template->loadView('Admin::moderate.index', $viewData);
+    }
+
+    private function _getHighlySpecializedTags()
+    {
+        $tags = [
+            'сложные',
+            'красивые',
+            'черно-белые',
+            'интересные',
+            'из мультфильма',
+            'из фильма',
+            'из игр',
+        ];
+        $tags = array_merge($tags, [
+        ]);
+        if (!$tags) {
+            return $this->_popularTags();
+        }
+        return $tags;
     }
 
     private function _popularTags()

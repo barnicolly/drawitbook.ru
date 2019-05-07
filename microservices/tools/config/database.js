@@ -8,7 +8,9 @@ module.exports = {
         database: 'kartinki_new',
         inflection: {
             pages: 'pages',
+            new_pages: 'new_pages',
             queries: 'query',
+            pages_queries: 'pages_query',
         }
     },
 };

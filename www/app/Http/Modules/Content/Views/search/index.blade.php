@@ -19,7 +19,7 @@
                 @elseif (!empty($filters['tag']))
                     Результаты поиска по тегам
                     @foreach($filters['tag'] as $tag)
-                        #{{ $tag}} }}
+                        #{{ $tag }}
                     @endforeach
                 @endif
             </h2>

@@ -11,23 +11,15 @@
 @section('content')
     <div class="col-12">
         <div class="row">
-            <div class="col-12">
-                @include('Admin::moderate.moderate-panel')
-            </div>
-        </div>
-        <div class="row">
             <div class="col-7">
                 @include('Admin::moderate.moderate-table', ['images' => $images])
             </div>
             <div class="col-md-5 sidebar">
                 <div class="row">
                     <div class="col-12">
-
-                    </div>
-                    <div class="col-12">
-                        <div class="row">
+                        <div class="row form-group">
                             <?php $columns = 2;
-                            $pie = ceil(count($popular) / $columns) + 1;
+                            $pie = ceil(count($popular) / $columns);
                             $chunkedPopular = array_chunk($popular, $pie);
                             ?>
                             @foreach($chunkedPopular as $popular)
@@ -44,6 +36,11 @@
                                     @endforeach
                                 </div>
                             @endforeach
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                @include('Admin::moderate.moderate-panel')
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -53,12 +53,23 @@
             <td>
                 <div class="tags">
                     {{--первый по умолчанию--}}
-                    <div class="tag form-group input-group"><input type="text" class="form-control">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-danger btn-xs delete-tag input-group-append">
-                                <span class="fa fa-trash"></span></button>
+                    @if (!empty($defaultTags))
+                        @foreach($defaultTags as $tag)
+                            <div class="tag form-group input-group"><input type="text" class="form-control" value="{{ $tag }}">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-danger btn-xs delete-tag input-group-append">
+                                        <span class="fa fa-trash"></span></button>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="tag form-group input-group"><input type="text" class="form-control">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-xs delete-tag input-group-append">
+                                    <span class="fa fa-trash"></span></button>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </td>
             <td width="13%">

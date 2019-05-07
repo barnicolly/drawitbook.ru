@@ -18,6 +18,7 @@
     "puppeteer-cluster": "^0.15.2",
     "puppeteer-pool": "^1.0.3",
     "random-useragent": "^0.3.1",
+    "recognize": "^0.2.4",
     "request": "^2.88.0",
     "socks5-http-client": "^1.0.3",
     "socks5-https-client": "^1.2.1"

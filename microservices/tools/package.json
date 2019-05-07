@@ -16,13 +16,15 @@
     "emoji-strip": "^1.0.1",
     "html-entities": "^1.2.1",
     "js-beautify": "^1.8.8",
+    "js-file-download": "^0.4.5",
     "lodash": "^4.17.11",
-    "mysql": "^2.16.0",
+    "mysql": "^2.17.1",
     "mysql-activerecord": "^0.8.6",
-    "openrecord": "^2.8.3",
+    "openrecord": "^2.10.0",
     "pg": "^7.7.1",
+    "recognize": "^0.2.4",
+    "request": "^2.88.0",
     "transliter": "^2.2.1",
-    "util": "^0.11.0",
-    "xml-stream": "^0.4.5"
+    "util": "^0.11.0"
   }
 }

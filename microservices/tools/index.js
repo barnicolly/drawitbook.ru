@@ -1,5 +1,5 @@
 global.appConfig = require('./config/config');
 
-var core = require ('./modules/services/parse_stack_code/controllers/index');
+var core = require ('./modules/services/get_pict/controllers/index');
 
 core.init();

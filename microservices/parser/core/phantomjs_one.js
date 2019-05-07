@@ -98,7 +98,8 @@ async function f() {
 
 function renderOne(url) {
     return new Promise(async function (resolve, reject) {
-        const instance = await phantom.create(['--proxy=127.0.0.1:9050 --proxy-type=socks5']);
+        var args = ['--proxy=127.0.0.1:9050 --proxy-type=socks5'];
+        const instance = await phantom.create();
         const page = await instance.createPage();
         page.property('userAgent', randomUseragent.getRandom(function (ua) {
             return ua.deviceType !== 'mobile' && ua.deviceType !== 'tablet';
@@ -122,7 +123,8 @@ function renderOne(url) {
                     // window.document.body.scrollTop = document.body.scrollHeight;
                 });
                 console.log('жду 3 минут');
-                await timeout(180000);
+                await timeout(1800);
+                // await timeout(180000);
                 console.log('подождал 3 минут');
             }
 
@@ -135,6 +137,7 @@ function renderOne(url) {
             // });
             // console.log(content);
             await instance.exit();
+            console.log(content);
             resolve(content);
         }
 

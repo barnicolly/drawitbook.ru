@@ -1,16 +1,16 @@
 var _ = require('lodash');
 var async = require('async');
+var axios = require('axios');
 var actions = require('../constants/primary').actions;
 var constants = require('../constants/primary').constants;
 var helper = require('../../../../helpers/functions');
-var request = require('../../../../../parser/core/phantomjs_one');
+var request = require('../../../../../parser/core/puppeteer_yandex');
 var parser = require('./parser');
 var time = null;
 var donor = require('../../../db/dynamic/controllers/donor');
 var emojiStrip = require('emoji-strip');
 var doneAll = false;
 var parsed = 0;
-
 
 module.exports = {
     init: async function () {
@@ -22,6 +22,24 @@ module.exports = {
         // var data = {url: 'https://yandex.ru/images/search?text=' + encodeURI(string), query: string};
         // pushTask(actions.parseUrl(), data);
         pushTask(actions.getQueries());
+
+        // const FileDownload = require('js-file-download');
+        // axios.get('https://ext.captcha.yandex.net/image?key=003ysKVe9EfvGoajUwTd1MyO2UPsnltP')
+        //     .then((response) => {
+        //         // console.log(response);
+        //         response.data.pipe(file);
+        //         // FileDownload(response.data, 'C:\\OSPanel\\domains\\laravel\\drawitbook\\microservices\\tools\\data\\captcha.jpg');
+        //     });
+
+        /*axios({
+            method: 'post',
+            url: 'http://rucaptcha.com/in.php',
+            data: {
+                firstName: 'Fred',
+                lastName: 'Flintstone'
+            }
+        });*/
+
     }
 };
 
@@ -30,7 +48,7 @@ var taskHandler = function (work, done) {
         var afterSuccess = function (res, work, done) {
             console.log('Получил поисковые запросы');
             if (_.size(res)) {
-                parsed += 3;
+                parsed += 1;
                 _.each(res, function (item) {
                     var data = {url: 'https://yandex.ru/images/search?text=' + encodeURI(item.query), queryId: item.id};
                     pushTask(actions.parseUrl(), data);
@@ -42,13 +60,14 @@ var taskHandler = function (work, done) {
             done();
         };
         tryDone(donor.get('query', appConfig.database.kartinki, {
-            status: 0,
-        }, ['id', 'query'], {limit: 3}), work, afterSuccess, function () {
+            status: 3,
+        }, ['id', 'query'], {limit: 1}), work, afterSuccess, function () {
             done();
         });
     } else if (work.type === constants.PARSE_URL) {
         var afterSuccess = function (res, work, done) {
             console.log('Получил контент');
+            // console.log(res);
             pushTask(actions.parseInfo(), {content: res, queryId: work.data.queryId});
             done();
         };
@@ -64,10 +83,11 @@ var taskHandler = function (work, done) {
                     if (_.size(item.img_href) < 1000) {
                         insertData.push({
                             url: item.img_href,
-                            title: item.title.replace(/([\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, ''),
-                            query_id: work.data.queryId})
+                            query_id: work.data.queryId
+                        })
                     }
                 });
+                // console.log(_.size(insertData));
                 pushTask(actions.insertData(), {insertData: insertData, queryId: work.data.queryId});
             } else {
                 console.log('не смог обработать контент');
@@ -80,10 +100,10 @@ var taskHandler = function (work, done) {
     } else if (work.type === constants.INSERT_DATA) {
         var afterSuccess = function (res, work, done) {
             console.log('Вставил ссылки');
-            pushTask(actions.updateDonor(), {updateData: {id: work.data.queryId, status: 1}});
+            pushTask(actions.updateDonor(), {updateData: {id: work.data.queryId, status: 4}});
             done();
         };
-        tryDone(donor.insertBatch('pages', appConfig.database.kartinki, work.data.insertData), work, afterSuccess, function () {
+        tryDone(donor.insertBatch('new_pages', appConfig.database.kartinki, work.data.insertData), work, afterSuccess, function () {
             done();
         });
     } else if (work.type === constants.UPDATE_DONOR) {
@@ -116,6 +136,7 @@ async function start() {
     query = async.priorityQueue(taskHandler, 15);
     query.drain = function () {
         if (doneAll === true || parsed >= 200) {
+            request.close();
             process.exit();
         } else {
             pushTask(actions.getQueries());

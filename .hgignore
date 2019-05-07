@@ -3,7 +3,7 @@ syntax: glob
 .hg
 .env
 www/vendor/
-www/node_modules/
+node_modules
 www/public/build/
 www/public/arts/
 www/resources/static/arts/

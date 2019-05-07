@@ -52,6 +52,10 @@ $(function () {
             $('.moderate-table .selected:checked').prop('checked', false);
             $('.operation-with-selected').hide();
         })
+        .on('click', '.select-all', function () {
+            $('.moderate-table .selected').prop('checked', true);
+            $('.operation-with-selected').addClass('d-inline').show();
+        })
         .on('click', '.delete-selected', function () {
             if ($('.moderate-table .selected:checked').length) {
                 var data = {
