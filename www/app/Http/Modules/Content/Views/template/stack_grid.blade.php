@@ -1,6 +1,6 @@
 <div class="stack-grid">
     @foreach($pictures as $index => $picture)
-        @if(in_array($index, [5, 12]))
+        @if(in_array($index, [5, 12, 18], true))
             <div class="art-container">
                 <div class="art-wrapper clearfix">
                     {!! loadAd('integrated-' . $index) !!}

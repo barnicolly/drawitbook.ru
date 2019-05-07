@@ -7,6 +7,7 @@ var base = {
             path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
             path.src.plugin + 'masonry/masonry.min.js',
             path.src.plugin + 'share-this/share-this.min.js',
+            path.src.plugin + 'menu/menu.min.js',
         ],
         minify: [
             path.src.self + 'js/init_plugins.js',
@@ -17,6 +18,8 @@ var base = {
     css: {
         append: [
             path.src.plugin + 'bootstrap/css/bootstrap.min.css',
+            path.src.plugin + 'font-awesome-4.7.0/css/font-awesome.min.css',
+            path.src.plugin + 'menu/menu.min.css',
         ],
         minify: [
             path.src.self + 'css/content/*.css',

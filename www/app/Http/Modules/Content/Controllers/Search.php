@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use MetaTag;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use sngrl\SphinxSearch\SphinxSearch;
-
+use Illuminate\Support\Facades\DB;
 class Search extends Controller
 {
 
@@ -26,7 +26,9 @@ class Search extends Controller
         if ($query || $tags) {
             $relativePictureIds = $this->_searchByQuery($query, $tags);
             if ($relativePictureIds) {
-                $relativePictures = PictureModel::with(['tags'])->whereIn('id', $relativePictureIds)->get();
+                $relativePictures = PictureModel::with(['tags'])
+                    ->whereIn('id', $relativePictureIds)
+                    ->get();
             }
         }
         $viewData['filters'] = [

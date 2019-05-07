@@ -33,5 +33,8 @@
 </div>
 <script src="{{ buildUrl('build/js/master.min.js') }}" defer></script>
 @stack('scripts')
+<a id="button">
+    <span class="fa fa-arrow-up"></span>
+</a>
 </body>
 </html>

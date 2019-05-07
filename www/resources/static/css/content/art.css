@@ -17,3 +17,7 @@
 .claim-container .claim-list {
     padding-left: 20px;
 }
+
+.tag-list .tag {
+    padding: 5px !important;
+}

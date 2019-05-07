@@ -20,7 +20,7 @@ class Content extends Controller
     public function index()
     {
         $template = new Template();
-        $pictures = PictureModel::take(30)->with(['tags'])->get();
+        $pictures = PictureModel::take(25)->with(['tags'])->get();
         $viewData['pictures'] = $pictures;
         return $template->loadView('Content::index', $viewData);
     }
@@ -32,10 +32,10 @@ class Content extends Controller
         list($shown, $hidden) = $this->_getTagIds($picture);
         $relativePictures = [];
         if ($shown || $hidden) {
-            $pictureIds = $this->_searchRelatedPicturesIds($shown, $hidden);
+          /*  $pictureIds = $this->_searchRelatedPicturesIds($shown, $hidden);
             if ($pictureIds) {
                 $relativePictures = PictureModel::with(['tags'])->whereIn('id', $pictureIds)->get();
-            }
+            }*/
         }
         $viewData = ['picture' => $picture, 'relativePictures' => $relativePictures];
         $template = new Template();
@@ -66,7 +66,7 @@ class Content extends Controller
     {
         $sphinx = new SphinxSearch();
         $sphinx->search('', 'drawItBookSearchByTag')
-            ->limit(20)
+            ->limit(15)
             ->setFieldWeights(
                 array(
                     'hidden_tag' => 3,
