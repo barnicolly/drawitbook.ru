@@ -21,3 +21,7 @@
         width: 300px
     }
 }
+
+.stack-grid .ad {
+    min-height: 240px;
+}

@@ -41,8 +41,6 @@ if (!function_exists('buildUrl')) {
     }
 }
 
-
-
 if (!function_exists('trimData')) {
     function trimData($data)
     {

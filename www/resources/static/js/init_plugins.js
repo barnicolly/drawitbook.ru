@@ -7,19 +7,32 @@ $('.sidebar').theiaStickySidebar({
 });
 
 $(function () {
-    var $grid = $('.stack-grid').imagesLoaded(function() {
-        $grid.masonry({
-            itemSelector: '.art-container',
-            columnWidth: getMasonryWidth(),
-            gutter: 10,
-        });
-    });
+    var $grid = $('.stack-grid');
 
-    $(window).resize(function(){
+    $grid.find('.shared-image img').imagesLoaded()
+        .progress(onProgress)
+        .always(function () {
+            $grid.closest('.stack-grid-wrapper')
+                .find('.stack-loader-wrapper').remove();
+            $grid.show();
+            $grid.masonry({
+                itemSelector: '.art-container',
+                columnWidth: getMasonryWidth(),
+                gutter: 10,
+            });
+        });
+
+    $(window).resize(function () {
         $grid.masonry({
             columnWidth: getMasonryWidth(),
         })
     });
+
+    function onProgress(imgLoad, image) {
+        if (!image.isLoaded) {
+            $(image.img).closest('.art-container').remove();
+        }
+    }
 
     function getMasonryWidth() {
         var masonryWidth = 362;
@@ -37,6 +50,14 @@ $(function () {
         style: "flat-small",
         always_show: false,
         is_mobile: false,
-        primary_menu: [ "vkontakte", "pinterest", 'odnoklassniki', "facebook", "twitter"]
+        primary_menu: ["vkontakte", "pinterest", 'odnoklassniki', "facebook", "twitter"]
     });
+
+    $(document).ready(function () {
+        $(".megamenu").on("click", function (e) {
+            e.stopPropagation();
+        });
+    });
+
 });
+

@@ -7,7 +7,7 @@ var base = {
             path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
             path.src.plugin + 'masonry/masonry.min.js',
             path.src.plugin + 'share-this/share-this.min.js',
-            path.src.plugin + 'menu/menu.min.js',
+            path.src.plugin + 'menu/jquery.dmenu.js',
         ],
         minify: [
             path.src.self + 'js/init_plugins.js',
@@ -19,7 +19,7 @@ var base = {
         append: [
             path.src.plugin + 'bootstrap/css/bootstrap.min.css',
             path.src.plugin + 'font-awesome-4.7.0/css/font-awesome.min.css',
-            path.src.plugin + 'menu/menu.min.css',
+            path.src.plugin + 'menu/jquery.dmenu.css',
         ],
         minify: [
             path.src.self + 'css/content/*.css',
@@ -48,22 +48,35 @@ var admin = {
     }
 };
 
-gulp.task('scripts:admin-common', function () {
-    var files = [
-        path.src.self + 'js/admin/**/*.js'
-    ];
-    if (environment === 'development') {
-        initWatcher(files, 'scripts:admin-common')
+gulp.task('scripts:admin-base', function () {
+    var stream;
+    if (typeof admin.js.minify !== 'undefined' && Object.keys(admin.js.minify).length) {
+        if (environment === 'development') {
+            initWatcher(admin.js.minify, 'scripts:admin-base')
+        }
+        stream = prepareJsStream('scripts:admin-base', admin.js);
+    } else {
+        stream = gulp.src(admin.js.append);
     }
-    return gulp.src(files)
+    return stream
         .pipe(plugins.plumber())
-        .pipe(plugins.cached('scripts:admin-common'))
-        .pipe(plugins.if(env.sourcemaps, plugins.sourcemaps.init()))
-        .pipe(plugins.babel())
-        .pipe(plugins.if(env.minify, plugins.uglify()))
-        .pipe(plugins.remember('scripts:admin-common'))
-        .pipe(plugins.if(env.sourcemaps, plugins.sourcemaps.write()))
-        .pipe(gulp.dest(path.build + 'js/admin'));
+        .pipe(plugins.concat('admin.min.js'))
+        .pipe(gulp.dest(path.build + 'js/'));
+});
+
+gulp.task('styles:admin-base', function () {
+    var stream;
+    if (typeof admin.css.minify !== 'undefined' && Object.keys(admin.css.minify).length) {
+        if (environment === 'development') {
+            initWatcher(admin.css.minify, 'styles:admin-base')
+        }
+        stream = prepareCssStream('styles:admin-base', admin.css);
+    } else {
+        stream = gulp.src(admin.css.append);
+    }
+    return stream
+        .pipe(plugins.concat('admin.min.css'))
+        .pipe(gulp.dest(path.build + 'css/'));
 });
 
 gulp.task('styles:base', function () {
@@ -90,37 +103,6 @@ gulp.task('scripts:base', function () {
     return stream
         .pipe(plugins.plumber())
         .pipe(plugins.concat('master.min.js'))
-        .pipe(gulp.dest(path.build + 'js/'));
-});
-
-gulp.task('styles:admin-base', function () {
-    var stream;
-    if (typeof admin.css.minify !== 'undefined' && Object.keys(admin.css.minify).length) {
-        if (environment === 'development') {
-            initWatcher(admin.css.minify, 'styles:admin-base')
-        }
-        stream = prepareCssStream('styles:admin-base', admin.css);
-    } else {
-        stream = gulp.src(admin.css.append);
-    }
-    return stream
-        .pipe(plugins.concat('admin.min.css'))
-        .pipe(gulp.dest(path.build + 'css/'));
-});
-
-gulp.task('scripts:admin-base', function () {
-    var stream;
-    if (typeof admin.js.minify !== 'undefined' && Object.keys(admin.js.minify).length) {
-        if (environment === 'development') {
-            initWatcher(admin.js.minify, 'scripts:admin-base')
-        }
-        stream = prepareJsStream('scripts:admin-base', admin.js);
-    } else {
-        stream = gulp.src(admin.js.append);
-    }
-    return stream
-        .pipe(plugins.plumber())
-        .pipe(plugins.concat('admin.min.js'))
         .pipe(gulp.dest(path.build + 'js/'));
 });
 
