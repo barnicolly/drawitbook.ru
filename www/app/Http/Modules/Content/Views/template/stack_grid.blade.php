@@ -19,10 +19,7 @@
                     </div>
                 </div>
             @endif
-            @include('Content::template.stack_grid_art_container', ['picture' => $picture])
+            @include('Content::template.stack_grid_art_container', ['picture' => $picture, 'showAllTags' => $showAllTags ?? false])
         @endforeach
     </div>
-</div>
-<div class="form-group">
-    {!! loadAd('after_first_stack') !!}
 </div>

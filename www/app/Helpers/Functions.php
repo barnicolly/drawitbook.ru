@@ -34,6 +34,14 @@ if (!function_exists('loadAd')) {
     }
 }
 
+if (!function_exists('pluralForm')) {
+    function pluralForm($number, $after)
+    {
+        $cases = array(2, 0, 1, 1, 1, 2);
+        return $number . ' ' . $after[($number % 100 > 4 && $number % 100 < 20) ? 2 : $cases[min($number % 10, 5)]];
+    }
+}
+
 if (!function_exists('buildUrl')) {
     function buildUrl(string $path)
     {

@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Modules\Database\Models\Common\Spr\SprTagsModel;
 use App\Libraries\Template;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use MetaTag;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use sngrl\SphinxSearch\SphinxSearch;
 use Illuminate\Support\Facades\DB;
+
 class Search extends Controller
 {
 
@@ -23,18 +25,36 @@ class Search extends Controller
         //фильтрация
         $query = $request->input('query') ?? '';
         $relativePictures = [];
+        $countSearchResults = 0;
         if ($query || $tags) {
             $relativePictureIds = $this->_searchByQuery($query, $tags);
             if ($relativePictureIds) {
+                $countSearchResults = count($relativePictureIds);
+                $page = $request->input('page');
+                $perPage = 50;
+                $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);
+
                 $relativePictures = PictureModel::with(['tags'])
                     ->whereIn('id', $relativePictureIds)
                     ->get();
+                $paginate = new LengthAwarePaginator($relativePictures->forPage($page, $perPage), $countSearchResults, $perPage, $page, ['path' => url('search')]);
+
+                if ($query) {
+                    $paginate->appends(['query' => $query]);
+                }
+                if ($tags) {
+                    foreach ($tags as $tag) {
+                        $paginate->appends(['tag[]' => $tag]);
+                    }
+                }
             }
         }
         $viewData['filters'] = [
             'query' => $query,
             'tag' => $tags,
         ];
+        $viewData['paginate'] = $paginate ?? [];
+        $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;
         return $template->loadView('Content::search.index', $viewData);
     }

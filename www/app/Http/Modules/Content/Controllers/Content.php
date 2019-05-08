@@ -2,6 +2,7 @@
 
 namespace App\Http\Modules\Content\Controllers;
 
+use app\Core\Constants;
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use App\Libraries\Template;
@@ -21,6 +22,7 @@ class Content extends Controller
         $template = new Template();
         $pictures = PictureModel::take(25)
             ->where('is_del', '=', 0)
+            ->where('in_common', '=', IN_MAIN_PAGE)
             ->with(['tags'])->get();
         $viewData['pictures'] = $pictures;
         return $template->loadView('Content::index', $viewData);
@@ -45,7 +47,7 @@ class Content extends Controller
         $template = new Template();
         $raw = new Raw();
         MetaTag::set('title', 'Art #' . $id . ' Drawitbook.ru');
-        MetaTag::set('description', 'This is my home. Enjoy!');
+//        MetaTag::set('description', 'This is my home. Enjoy!');
         MetaTag::set('image', asset('arts/' . $picture->path));
 
         $raw->insertUserView($picture->id);
