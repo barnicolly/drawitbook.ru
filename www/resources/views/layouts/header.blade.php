@@ -23,25 +23,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">Главная</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            ...
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <div class="row">
-                                <div class="col-4">
-                                    2134
-                                </div>
-                                <div class="col-4">
-                                    2134
-                                </div>
-                                <div class="col-4">
-                                    2134
-                                </div>
-                            </div>
-                        </div>
-                    </li>
                     @guest
                     @else
                         <li class="nav-item dropdown">
