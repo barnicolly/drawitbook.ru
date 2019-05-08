@@ -11,7 +11,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <form action="{{ route('search') }}" method="GET" class="form-inline search-form col-md-8">
+                <form action="{{ route('search') }}" method="GET" class="form-inline search-form col-md-6">
                     <input class="form-control"
                            name="query"
                            type="search"
@@ -23,6 +23,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">Главная</a>
                     </li>
+                    @include('layouts.header-mega')
                     @guest
                     @else
                         <li class="nav-item dropdown">

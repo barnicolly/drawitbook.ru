@@ -1,3 +1,15 @@
 header .search-form input {
     width: 80% !important;
 }
+
+.megamenu-li {
+    position: static;
+}
+
+.megamenu {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    padding: 15px;
+}
