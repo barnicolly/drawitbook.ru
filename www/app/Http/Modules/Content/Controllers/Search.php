@@ -7,10 +7,12 @@ use App\Http\Modules\Database\Models\Common\Spr\SprTagsModel;
 use App\Libraries\Template;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use MetaTag;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use sngrl\SphinxSearch\SphinxSearch;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Search extends Controller
 {
@@ -37,6 +39,9 @@ class Search extends Controller
                 $relativePictures = PictureModel::with(['tags'])
                     ->whereIn('id', $relativePictureIds)
                     ->get();
+
+                $relativePictures = $this->checkExistArts($relativePictures);
+
                 $paginate = new LengthAwarePaginator($relativePictures->forPage($page, $perPage), $countSearchResults, $perPage, $page, ['path' => url('search')]);
 
                 if ($query) {
@@ -100,6 +105,17 @@ class Search extends Controller
         return [];
     }
 
+    public function checkExistArts(Collection $pictures)
+    {
+        foreach ($pictures as $key => $picture) {
+            if (!file_exists(base_path('public/arts/') . $picture->path)) {
+                $pictures->forget($key);
+                Log::info('Не найдено изображение', ['art' => $picture->toArray()]);
+            }
+        }
+        return $pictures;
+    }
+
     private function _searchByQuery(string $query, array $tags = [])
     {
         $sphinx = new SphinxSearch();
@@ -109,6 +125,9 @@ class Search extends Controller
             ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED);
         if ($tags) {
             $tags = SprTagsModel::whereIn('name', $tags)->pluck('id')->toArray();
+            if (!$tags) {
+               return [];
+            }
             foreach ($tags as $item) {
                 $sphinx->filter('tag', $item);
             }

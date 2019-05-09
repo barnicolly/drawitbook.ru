@@ -2,7 +2,7 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand " href="{{ route('home') }}">
-                <img style="max-width: 100px" class="img-responsive" src="{{ asset('img/logo.png') }}"
+                <img style="max-width: 100px" class="img-fluid" src="{{ asset('img/logo.jpg') }}"
                      alt="">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
@@ -11,19 +11,23 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <form action="{{ route('search') }}" method="GET" class="form-inline search-form col-md-6">
-                    <input class="form-control"
-                           name="query"
-                           type="search"
-                           placeholder="Поиск"
-                           value="{{ !empty($filters['query']) ? $filters['query']: '' }}">
-                    <button class="btn btn-outline-success" type="submit">Поиск</button>
+                <form action="{{ route('search') }}" method="GET" class="form-inline search-form col-md-8">
+                    <div class="input-group">
+                        <input class="form-control"
+                               name="query"
+                               type="search"
+                               placeholder="Поиск"
+                               value="{{ !empty($filters['query']) ? $filters['query']: '' }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-info" type="submit">Поиск</button>
+                        </div>
+                    </div>
                 </form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">Главная</a>
                     </li>
-                    @include('layouts.header-mega')
+                    @include('layouts.menu.header-mega')
                     @guest
                     @else
                         <li class="nav-item dropdown">

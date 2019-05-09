@@ -18,10 +18,18 @@ main {
     min-height: 80% !important;
 }
 
+p {
+    margin: 0 !important;
+}
+
 figure {
     margin: 0 0 0;
 }
 
 .ad-label {
     color: #939393;
+}
+
+.no-padding {
+    padding: 0px;
 }

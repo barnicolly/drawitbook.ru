@@ -1,9 +1,11 @@
 <div class="stack-grid-wrapper">
-    <div class="stack-loader-wrapper">
-        <div class="stack-loader-text">
-            Загрузка
+    <div class="stack-loader-container">
+        <div class="stack-loader-wrapper">
+            <div class="stack-loader-text">
+                Загрузка
+            </div>
+            <div class="stack-loader"></div>
         </div>
-        <div class="stack-loader"></div>
     </div>
     <div class="stack-grid" style="display: none">
         @foreach($pictures as $index => $picture)

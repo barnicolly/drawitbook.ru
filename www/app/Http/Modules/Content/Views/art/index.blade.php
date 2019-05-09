@@ -13,7 +13,7 @@
                     </h1>
                     <div class="art form-group">
                         <div>
-                            @include('Content::template.tag_list', ['tags' => $picture->tags])
+                            @include('Content::template.tag_list', ['tags' => $picture->tags, 'showAllTags' => false])
                         </div>
                         @include('Content::template.img_social', ['picture' => $picture])
                     </div>
