@@ -1,11 +1,13 @@
 <div class="stack-grid-wrapper">
-    <div class="stack-loader-wrapper">
-        <div class="stack-loader-text">
-            Загрузка
+    <div class="stack-loader-container">
+        <div class="stack-loader-wrapper">
+            <div class="stack-loader-text">
+                Загрузка
+            </div>
+            <div class="stack-loader"></div>
         </div>
-        <div class="stack-loader"></div>
     </div>
-    <div class="stack-grid" style="display: none">
+    <div class="stack-grid" style="display: none" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
         @foreach($pictures as $index => $picture)
             @if(in_array($index, [5, 12, 18], true))
                 <div class="art-container">
@@ -19,10 +21,7 @@
                     </div>
                 </div>
             @endif
-            @include('Content::template.stack_grid_art_container', ['picture' => $picture])
+            @include('Content::template.stack_grid_art_container', ['picture' => $picture, 'showAllTags' => $showAllTags ?? false])
         @endforeach
     </div>
-</div>
-<div class="form-group">
-    {!! loadAd('after_first_stack') !!}
 </div>

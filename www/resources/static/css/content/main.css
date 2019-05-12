@@ -11,11 +11,19 @@ button[type="button"]:focus {outline:0;}
 body {
     font-size: 18px;
     color: #222;
-    line-height: 180%;
+    line-height: 160%;
+}
+
+h1 {
+    font-size: 24px;
 }
 
 main {
     min-height: 80% !important;
+}
+
+p {
+    margin: 0 !important;
 }
 
 figure {
@@ -24,4 +32,8 @@ figure {
 
 .ad-label {
     color: #939393;
+}
+
+.no-padding {
+    padding: 0px;
 }

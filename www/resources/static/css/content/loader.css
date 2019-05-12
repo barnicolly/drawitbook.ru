@@ -1,79 +1,32 @@
 .stack-loader {
-    position: relative;
     width: 50px;
     height: 50px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50px;
-    top: 100px;
-    left: 50%;
-    margin-left: -25px;
-    animation-name: spinner 0.7s linear infinite;
-    -webkit-animation: spinner 0.7s linear infinite;
-    -moz-animation: spinner 0.7s linear infinite;
-}
-
-.stack-loader:before {
-    position: absolute;
-    content: '';
-    display: block;
-    width: 80px;
-    height: 80px;
-    border-radius: 80px;
-    top: -15px;
-    left: -15px;
+    border: 3px solid rgba(9, 68, 62, 0.3);
+    border-radius: 50%;
+    margin: auto;
+    border-top-color: #105ce5;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
 }
 
 .stack-loader-text {
-    position: relative;
-    width: 8%;
-    margin: 0 auto;
+    text-align: center;
     color: #377af2;
     text-transform: uppercase;
     font-weight: bold;
-    top: 100px;
-}
-
-.stack-loader:after {
-    position: absolute;
-    content: '';
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-    border-top: 3px solid #1653c1;
-    border-bottom: 3px solid #0851d4;
-    border-left: 3px solid #377af2;
-    border-right: 3px solid transparent;
-    top: -2px;
-    left: -2px;
 }
 
 .stack-loader-wrapper {
-    height: 200px
+    padding-top: 30px;
+    position: relative;
 }
 
-@keyframes spinner {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.stack-loader-container {
+    height: 150px
 }
-
-@-webkit-keyframes spinner {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+@keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
 }
-
-@-moz-keyframes spinner {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+@-webkit-keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
 }

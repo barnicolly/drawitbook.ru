@@ -13,7 +13,7 @@ $(function () {
         .progress(onProgress)
         .always(function () {
             $grid.closest('.stack-grid-wrapper')
-                .find('.stack-loader-wrapper').remove();
+                .find('.stack-loader-container').remove();
             $grid.show();
             $grid.masonry({
                 itemSelector: '.art-container',
@@ -46,6 +46,7 @@ $(function () {
     }
 
     $('.shared-image img').sti({
+        selector: '.shared-image img',
         orientation: "horizontal",
         style: "flat-small",
         always_show: false,

@@ -9,6 +9,9 @@ www/public/arts/
 www/resources/static/arts/
 www/public/moderate/
 
+#vendor
+storage/debugbar/
+
 #файл xdebug'a
 www/none
 none

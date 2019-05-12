@@ -7,7 +7,6 @@ var base = {
             path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
             path.src.plugin + 'masonry/masonry.min.js',
             path.src.plugin + 'share-this/share-this.min.js',
-            path.src.plugin + 'menu/jquery.dmenu.js',
         ],
         minify: [
             path.src.self + 'js/init_plugins.js',
@@ -19,7 +18,6 @@ var base = {
         append: [
             path.src.plugin + 'bootstrap/css/bootstrap.min.css',
             path.src.plugin + 'font-awesome-4.7.0/css/font-awesome.min.css',
-            path.src.plugin + 'menu/jquery.dmenu.css',
         ],
         minify: [
             path.src.self + 'css/content/*.css',
@@ -62,6 +60,24 @@ gulp.task('scripts:admin-base', function () {
         .pipe(plugins.plumber())
         .pipe(plugins.concat('admin.min.js'))
         .pipe(gulp.dest(path.build + 'js/'));
+});
+
+gulp.task('scripts:admin-common', function () {
+    var files = [
+        path.src.self + 'js/admin/**/*.js'
+    ];
+    if (environment === 'development') {
+        initWatcher(files, 'scripts:admin-common')
+    }
+    return gulp.src(files)
+        .pipe(plugins.plumber())
+        .pipe(plugins.cached('scripts:admin-common'))
+        .pipe(plugins.if(env.sourcemaps, plugins.sourcemaps.init()))
+        .pipe(plugins.babel())
+        .pipe(plugins.if(env.minify, plugins.uglify()))
+        .pipe(plugins.remember('scripts:admin-common'))
+        .pipe(plugins.if(env.sourcemaps, plugins.sourcemaps.write()))
+        .pipe(gulp.dest(path.build + 'js/admin'));
 });
 
 gulp.task('styles:admin-base', function () {
@@ -140,8 +156,11 @@ gulp.task('fonts:cp', function () {
 });
 
 gulp.task('img:compress', function () {
-    return gulp.src([path.src.arts + '**/*.gif'])
-        .pipe(plugins.imagemin(({ optimizationLevel: 7})))
+    return gulp.src(path.src.arts + '/**/*')
+        .pipe(plugins.image({
+            gifsicle: false,
+            concurrent: 2,
+        }))
         .pipe(gulp.dest(path.public + 'arts', {overwrite: false}))
 });
 
@@ -182,6 +201,15 @@ gulp.task('createIndex', plugins.recursiveFolder({
         .pipe(plugins.plumber())
         .pipe(gulp.dest(path.build + folderFound.pathTarget));
 }));
+
+gulp.task('createIndexImg', plugins.recursiveFolder({
+    base: path.public + 'arts',
+}, function (folderFound) {
+    return gulp.src(path.src.files + "index.html")
+        .pipe(plugins.plumber())
+        .pipe(gulp.dest(folderFound.path));
+}));
+
 
 var watches = [];
 
