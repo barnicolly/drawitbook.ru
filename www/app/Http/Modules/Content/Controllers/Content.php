@@ -27,6 +27,9 @@ class Content extends Controller
             ->with(['tags'])->get();
         $pictures = $search->checkExistArts($pictures);
         $viewData['pictures'] = $pictures;
+        MetaTag::set('title', 'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями');
+        MetaTag::set('image', asset('arts/8f/cb/8fcb97c102bf07cd5977f55f7bdabc37.png'));
+        MetaTag::set('description', 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.');
         return $template->loadView('Content::index', $viewData);
     }
 
@@ -51,7 +54,8 @@ class Content extends Controller
         $template = new Template();
         $raw = new Raw();
         MetaTag::set('title', 'Art #' . $id . ' | Drawitbook.ru');
-//        MetaTag::set('description', 'This is my home. Enjoy!');
+        MetaTag::set('robots', 'noindex');
+        MetaTag::set('description', 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.');
         MetaTag::set('image', asset('arts/' . $picture->path));
 
         $raw->insertUserView($picture->id);

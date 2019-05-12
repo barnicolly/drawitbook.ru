@@ -62,6 +62,24 @@ gulp.task('scripts:admin-base', function () {
         .pipe(gulp.dest(path.build + 'js/'));
 });
 
+gulp.task('scripts:admin-common', function () {
+    var files = [
+        path.src.self + 'js/admin/**/*.js'
+    ];
+    if (environment === 'development') {
+        initWatcher(files, 'scripts:admin-common')
+    }
+    return gulp.src(files)
+        .pipe(plugins.plumber())
+        .pipe(plugins.cached('scripts:admin-common'))
+        .pipe(plugins.if(env.sourcemaps, plugins.sourcemaps.init()))
+        .pipe(plugins.babel())
+        .pipe(plugins.if(env.minify, plugins.uglify()))
+        .pipe(plugins.remember('scripts:admin-common'))
+        .pipe(plugins.if(env.sourcemaps, plugins.sourcemaps.write()))
+        .pipe(gulp.dest(path.build + 'js/admin'));
+});
+
 gulp.task('styles:admin-base', function () {
     var stream;
     if (typeof admin.css.minify !== 'undefined' && Object.keys(admin.css.minify).length) {
@@ -189,7 +207,7 @@ gulp.task('createIndexImg', plugins.recursiveFolder({
 }, function (folderFound) {
     return gulp.src(path.src.files + "index.html")
         .pipe(plugins.plumber())
-        .pipe(gulp.dest(path.build + folderFound.pathTarget));
+        .pipe(gulp.dest(folderFound.path));
 }));
 
 

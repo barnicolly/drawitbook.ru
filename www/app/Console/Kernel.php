@@ -13,7 +13,6 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\UserStatistics',
         'App\Console\Commands\CreateSitemap',
     ];
 
@@ -25,8 +24,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('statistics:user')->everyMinute();
-
         /**
          * Ежедневно в полночь
          */

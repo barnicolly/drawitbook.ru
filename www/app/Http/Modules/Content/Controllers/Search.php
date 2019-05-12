@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use MetaTag;
+use Validator;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use sngrl\SphinxSearch\SphinxSearch;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class Search extends Controller
@@ -24,8 +24,22 @@ class Search extends Controller
         if (is_string($tags)) {
             $tags = [$tags];
         }
-        //фильтрация
+        if (is_string($tags)) {
+            $tags = [$tags];
+        }
         $query = $request->input('query') ?? '';
+        $validator = Validator::make([
+            'tags' => $tags,
+            'query' => $query,
+        ], [
+            'query' => 'string|max:255',
+            'tags' => 'array',
+            'tags.*' => 'string',
+        ]);
+        if ($validator->fails()) {
+            abort(404);
+        }
+        $query = strip_tags($query);
         $relativePictures = [];
         $countSearchResults = 0;
         if ($query || $tags) {
@@ -61,6 +75,8 @@ class Search extends Controller
         $viewData['paginate'] = $paginate ?? [];
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;
+
+        MetaTag::set('robots', 'noindex');
         return $template->loadView('Content::search.index', $viewData);
     }
 
@@ -86,20 +102,6 @@ class Search extends Controller
         $results = $sphinx->query();
         if (!empty($results['matches'])) {
             $pictureIds = array_keys($results['matches']);
-//            if (count($pictureIds) < 20 && $hidden) {
-//                $sphinx = new SphinxSearch();
-//                $sphinx->search('', 'drawItBookSearchByTag')
-//                    ->limit(20)
-//                    ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED2)
-//                    ->filter('hidden_tag', $hidden);
-//                $resultsHidden = $sphinx->query();
-//                if (!empty($resultsHidden['matches'])) {
-//                    $pictureIds = array_merge($pictureIds, array_keys($results['matches']));
-//                    $pictureIds = array_unique($pictureIds);
-//                    $pictureIds = array_slice($pictureIds, 0, 20);
-//                }
-//            }
-
             return $pictureIds;
         }
         return [];

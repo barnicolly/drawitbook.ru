@@ -14,13 +14,6 @@ use Carbon\Carbon;
 class Cron extends Controller
 {
 
-    public function stat()
-    {
-        $test = new TestModel();
-        $test->name = 1;
-        $test->save();
-    }
-
     public function createSitemap()
     {
         $base = config('app.url');

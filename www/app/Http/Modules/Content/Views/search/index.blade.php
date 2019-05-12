@@ -76,7 +76,7 @@
                 <p>
                     Популярные запросы
                     @foreach($popularQueries as $popularQuery)
-                        <a href="{{ route('search') . '?query=' . urlencode($popularQuery) }}">{{ $popularQuery }}</a>
+                        <a itemprop="url" rel="nofollow" href="{{ route('search') . '?query=' . urlencode($popularQuery) }}">{{ $popularQuery }}</a>
                     @endforeach
                 </p>
             </div>

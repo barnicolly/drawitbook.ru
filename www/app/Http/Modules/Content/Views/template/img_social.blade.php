@@ -1,30 +1,35 @@
 <div class="shared-image">
-    <figure>
+    <figure itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+        <?php $alt = '';
+        list($width, $height) = getimagesize(public_path('arts/' . $picture->path));
+        if (!empty($isArticle) && $picture->pivot->caption) {
+            $alt = $picture->pivot->caption;
+        } else if ($picture->description) {
+            $alt = $picture->description;
+        }        ?>
         <div class="img-wrapper">
             @if (isset($activeLink) && $activeLink === true)
-                <a href="{{ route('art', ['id' => $picture->id]) }}">
-                    <img class="img-fluid " src="{{ asset('arts/' . $picture->path) }}">
+                <a itemprop="url" href="{{ route('art', ['id' => $picture->id]) }}" rel="nofollow">
+                    <img itemprop="contentUrl" class="img-fluid " src="{{ asset('arts/' . $picture->path) }}"
+                         alt="{{ $alt }}">
                 </a>
             @else
-                <img class="img-fluid "
-                     src="{{ asset('arts/' . $picture->path) }}">
+                <img class="img-fluid"
+                     itemprop="contentUrl"
+                     src="{{ asset('arts/' . $picture->path) }}" alt="Рисунки по клеточкам {{ $alt }}">
             @endif
             <div class="rate-footer">
                 @include('Content::template.rate', ['pictureId' => $picture->id])
             </div>
         </div>
-        @if (!empty($isArticle))
-            @if($picture->pivot->caption)
-                <figcaption class="img-caption">
-                    {{ $picture->pivot->caption }}
-                </figcaption>
-            @endif
-        @else
-            @if($picture->description)
-                <figcaption class="img-caption">
-                    {{ $picture->description }}
-                </figcaption>
-            @endif
+        @if (!empty($alt))
+            <figcaption class="img-caption" itemprop="caption">
+                {{ $alt }}
+            </figcaption>
         @endif
+        <link itemprop="url" href="{{ asset('arts/' . $picture->path) }}">
+        <meta itemprop="height" content="{{ $height }}px">
+        <meta itemprop="width" content="{{ $width }}px">
+        <meta itemprop="representativeOfPage" content="True">
     </figure>
 </div>

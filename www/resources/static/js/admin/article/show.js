@@ -33,6 +33,7 @@ $(function () {
     articleId = articleForm.find('[name="id"]').val();
     CKEDITOR.config.fillEmptyBlocks = false;
     CKEDITOR.config.basicEntities = false;
+    CKEDITOR.config.height = 700;
     CKEDITOR.replace('template-editor');
 });
 

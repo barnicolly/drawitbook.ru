@@ -7,8 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <link rel="icon" href="/favicon.ico">
     <title>{{ MetaTag::get('title') }}</title>
-    {!! MetaTag::tag('description') !!}
-    {!! MetaTag::tag('image') !!}
+    @stack('head')
+    {!! MetaTag::get('keywords') ? MetaTag::tag('keywords') : '' !!}
+    {!! MetaTag::get('image') ? MetaTag::tag('image') : '' !!}
+    {!! MetaTag::get('robots') ? MetaTag::tag('robots') : '' !!}
+    {!! MetaTag::get('description') ? MetaTag::tag('description') : '' !!}
     {!! MetaTag::openGraph() !!}
     {!! MetaTag::twitterCard() !!}
     <link rel="stylesheet" href="{{ buildUrl('build/css/master.min.css') }}">

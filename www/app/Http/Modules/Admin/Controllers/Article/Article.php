@@ -23,7 +23,7 @@ class Article extends Controller
             $article->key_words = $data['key_words'];
             $article->template = $data['template'];
             $article->link = $data['link'];
-            $article->is_show = isset($data['is_show']) ? 1 : 0;
+            $article->is_show = !empty($data['is_show']) ? 1 : 0;
             $article->save();
             $defaultTransaction->commit();
         } catch (\Exception $e) {

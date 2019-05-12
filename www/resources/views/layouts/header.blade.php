@@ -1,7 +1,7 @@
 <header class="form-group">
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand " href="{{ route('home') }}">
+        <nav class="navbar navbar-expand-lg navbar-light" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
+            <a class="navbar-brand " href="{{ route('home') }}" rel="nofollow">
                 <img style="max-width: 100px" class="img-fluid" src="{{ asset('img/logo.jpg') }}"
                      alt="">
             </a>
@@ -25,7 +25,7 @@
                 </form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Главная</a>
+                        <a class="nav-link" href="{{ route('home') }}" rel="nofollow" itemprop="url"><span itemprop="name">Главная</span></a>
                     </li>
                     @include('layouts.menu.header-mega')
                     @guest
@@ -37,15 +37,15 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @if (!empty(session('is_admin')))
-                                    <a class="dropdown-item" href="{{ route('show_articles') }}">
+                                    <a class="dropdown-item" href="{{ route('show_articles') }}" rel="nofollow">
                                         Статьи
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('moderate') }}">
+                                    <a class="dropdown-item" href="{{ route('moderate') }}" rel="nofollow">
                                         Модерация артов
                                     </a>
                                 @endif
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                <a class="dropdown-item" href="{{ route('logout') }}" rel="nofollow"
                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     Выход
                                 </a>

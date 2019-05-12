@@ -7,7 +7,7 @@
             <div class="stack-loader"></div>
         </div>
     </div>
-    <div class="stack-grid" style="display: none">
+    <div class="stack-grid" style="display: none" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
         @foreach($pictures as $index => $picture)
             @if(in_array($index, [5, 12, 18], true))
                 <div class="art-container">

@@ -1,5 +1,5 @@
 <li class="nav-item dropdown megamenu-li">
-    <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+    <a class="nav-link dropdown-toggle" href="" rel="nofollow" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
        aria-expanded="false">Категории</a>
     <div class="dropdown-menu megamenu" aria-labelledby="dropdown01">
         <div class="row">
