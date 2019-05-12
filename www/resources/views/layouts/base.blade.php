@@ -17,6 +17,9 @@
     {!! MetaTag::openGraph() !!}
     {!! MetaTag::twitterCard() !!}
     <link rel="stylesheet" href="{{ buildUrl('build/css/master.min.css') }}">
+    @if ($_SERVER["REMOTE_ADDR"] !== '127.0.0.1')
+        @include('layout.metrics')
+    @endif
     @stack('styles')
 </head>
 <body>
