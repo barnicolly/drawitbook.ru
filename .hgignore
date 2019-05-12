@@ -8,6 +8,7 @@ www/public/build/
 www/public/arts/
 www/resources/static/arts/
 www/public/moderate/
+www/
 
 #vendor
 storage/debugbar/
