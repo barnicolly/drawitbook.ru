@@ -9,7 +9,6 @@ function showAds() {
         }
     }
     if (document.getElementById('after_picture')) {
-
     }
 }
 
