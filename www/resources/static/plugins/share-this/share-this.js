@@ -3,28 +3,28 @@
  * http://codecanyon.net/item/share-this-image-jquery-image-sharing-plugin/7416929
  * by ILLID
  */
-(function ( $ ) {
+(function ($) {
     "use strict";
 
-    $.fn.sti = function( options ) {
+    $.fn.sti = function (options) {
 
         var opts = $.extend({
             selector: 'img',
             dontshow: '.dontshow',
-            title: '',
-            summary: '',
+            // title: '',
+            // summary: '',
             minWidth: 200,
             minHeight: 200,
             fb_app: '',
             scroll: true,
-            align: { x: 'left', y: 'bottom' },
-            offset: { x: 0, y: 0 },
+            align: {x: 'left', y: 'bottom'},
+            offset: {x: 0, y: 0},
             orientation: 'vertical',
             style: 'box',
             is_mobile: false,
             always_show: false,
-            primary_menu: [ "facebook", "twitter", "google", "linkedin", "pinterest" ],
-        }, options );
+            primary_menu: ["facebook", "twitter", "google", "linkedin", "pinterest"],
+        }, options);
 
         var methods = {
             setStyle: function (e) {
@@ -264,8 +264,8 @@
                 data.w_size = methods.windowSize(network);
                 data.media = e.data('media') ? e.data('media') : e[0].src;
                 data.hash = opts.scroll ? '#' + methods.createImgHash(data.media) : '';
-                data.title = methods.getSources(e, opts.title_source);
-                data.summary = methods.getSources(e, opts.desc_source);
+                data.title = e.data('title') ? e.data('title') : methods.getSources(e, opts.title_source);
+                data.summary = e.data('summary') ? e.data('summary') : methods.getSources(e, opts.desc_source);
                 data.local = location.href.replace(/\?img.*$/, '').replace(/\&img.*$/, '').replace(/#.*$/, '');
                 data.schar = (data.local.indexOf("?") != -1) ? '&' : '?';
                 data.ssl = data.media.indexOf('https://') >= 0 ? '&ssl=true' : '';
@@ -395,4 +395,4 @@
         methods.scrollToImage(this);
     };
 
-}( jQuery ));
+}(jQuery));
