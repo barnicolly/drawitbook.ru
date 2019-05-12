@@ -9,11 +9,13 @@ set :scm, :hg
 
 # Default value for :linked_files is []
 set :linked_files, fetch(:linked_files, []).push(
-	'www/env'
+	'www/.env'
 )
 
 # Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push()
+set :linked_dirs, fetch(:linked_dirs, []).push(
+    'www/public/arts'
+)
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
