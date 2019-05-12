@@ -1,0 +1,45 @@
+.social-icons {
+    list-style-type: none;
+    padding: 0 0 0 5px;
+}
+
+.social-icons a svg {
+    fill: #377af2;
+}
+
+.social-icons a svg:hover {
+    fill: #135fe6;
+}
+
+.social-icons li {
+    display: block;
+}
+
+.social-icons li a {
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    display: block;
+    text-align: center;
+}
+
+@media only screen and (max-width: 992px) {
+    .social-icons {
+        list-style-type: none;
+        /*padding-top: 40px;*/
+        padding: 5px 0 0 5px;
+    }
+
+    .social-icons li {
+        display: inline-block;
+        padding: 10px;
+    }
+
+    .social-icons li a {
+        position: relative;
+        height: 20px;
+        line-height: 20px;
+        display: block;
+        text-align: center;
+    }
+}

@@ -1,0 +1,23 @@
+.relative-title {
+    text-transform: uppercase;
+    font-weight: bolder;
+    color: #377af2;
+    padding-top: 40px;
+}
+
+.title {
+    text-transform: uppercase;
+    color: #1a2038;
+}
+
+.claim-container span {
+    color: #939393;
+}
+
+.claim-container .claim-list {
+    padding-left: 20px;
+}
+
+.tag-list .tag {
+    padding: 5px !important;
+}

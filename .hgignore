@@ -3,6 +3,29 @@ syntax: glob
 .hg
 .env
 www/vendor/
-www/storage/
-www/node_modules/
+node_modules
 www/public/build/
+www/public/arts/
+www/resources/static/arts/
+www/public/moderate/
+
+#vendor
+storage/debugbar/
+
+#файл xdebug'a
+www/none
+none
+
+#laravel cache
+^bootstrap/cache/(?!\.gitignore).+$
+bootstrap/cache/
+^storage/logs/(?!\.gitignore).+$
+storage/logs/
+^storage/app/(?!\.gitignore).+$
+storage/app/
+^storage/framework/views/(?!\.gitignore).+$
+storage/framework/views
+^storage/framework/sessions/(?!\.gitignore).+$
+storage/framework/sessions
+^storage/framework/cache/(?!\.gitignore).+$
+storage/framework/cache

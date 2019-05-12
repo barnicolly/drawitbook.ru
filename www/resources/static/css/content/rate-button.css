@@ -1,0 +1,11 @@
+.rate-button {
+    padding: 5px;
+}
+
+.rate-button svg {
+    fill: #1a2038;
+}
+
+.rate-button.active svg {
+    fill: #377af2;
+}

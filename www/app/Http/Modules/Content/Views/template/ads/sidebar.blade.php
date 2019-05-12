@@ -1,0 +1,1 @@
+<div id="in_sidebar"></div>

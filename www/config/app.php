@@ -1,5 +1,8 @@
 <?php
 
+$packageJson = file_get_contents(base_path('package.json'));
+$packageJson = json_decode($packageJson, true);
+
 return [
 
     /*
@@ -39,7 +42,9 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
+
+    'version' => $packageJson['version'],
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +72,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Moscow',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +85,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +111,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'ru_RU',
 
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +180,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ModulesServiceProvider::class,
+        sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
+        Torann\LaravelMetaTags\MetaTagsServiceProvider::class,
+        Waavi\Sanitizer\Laravel\SanitizerServiceProvider::class,
     ],
 
     /*
@@ -189,7 +197,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -226,6 +233,27 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Modules' => App\Providers\ModulesServiceProvider::class,
+        'MetaTag'   => Torann\LaravelMetaTags\Facades\MetaTag::class,
+        'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
+        'Sanitizer' => Waavi\Sanitizer\Laravel\Facade::class,
+
+        'Constants' => app\Core\Constants::class,
+    ],
+
+    'debug_blacklist' => [
+        '_ENV' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+        ],
+
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+        ],
+
+        '_POST' => [
+            'password',
+        ],
     ],
 
 ];
