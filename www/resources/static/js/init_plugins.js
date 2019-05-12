@@ -20,6 +20,7 @@ $(function () {
                 columnWidth: getMasonryWidth(),
                 gutter: 10,
             });
+            showStackGridAd();
         });
 
     $(window).resize(function () {

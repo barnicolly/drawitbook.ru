@@ -165,7 +165,7 @@ gulp.task('img:compress', function () {
         .pipe(gulp.dest(path.public + 'arts', {overwrite: false}))
 });
 
-/*gulp.task('scripts:load_ads', function () {
+gulp.task('scripts:load_ads', function () {
     var files = {
         minify: [
             path.src.self + 'js/ads.js',
@@ -181,7 +181,7 @@ gulp.task('img:compress', function () {
     return stream
         .pipe(plugins.concat('loader.min.js'))
         .pipe(gulp.dest(path.build + 'js/'));
-});*/
+});
 
 /**
  * Вспомогательные таски
