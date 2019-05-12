@@ -1,5 +1,5 @@
 <?php
-$url = Request::url();
+$url = urlencode(Request::url());
 $socialLinks = [
     [
         'a.href' => 'http://vk.com/share.php?url=' . $url,
