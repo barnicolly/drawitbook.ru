@@ -114,6 +114,7 @@ gulp.task('scripts:base', function () {
     var stream;
     if (environment === 'development') {
         initWatcher(base.js.minify, 'scripts:base')
+        initWatcher(base.js.append, 'scripts:base', 'scripts:base-append')
     }
     stream = prepareJsStream('scripts:base', base.js);
     return stream
@@ -164,7 +165,7 @@ gulp.task('img:compress', function () {
         .pipe(gulp.dest(path.public + 'arts', {overwrite: false}))
 });
 
-/*gulp.task('scripts:load_ads', function () {
+gulp.task('scripts:load_ads', function () {
     var files = {
         minify: [
             path.src.self + 'js/ads.js',
@@ -180,7 +181,7 @@ gulp.task('img:compress', function () {
     return stream
         .pipe(plugins.concat('loader.min.js'))
         .pipe(gulp.dest(path.build + 'js/'));
-});*/
+});
 
 /**
  * Вспомогательные таски
@@ -213,9 +214,10 @@ gulp.task('createIndexImg', plugins.recursiveFolder({
 
 var watches = [];
 
-function initWatcher(files, taskName) {
-    if (watches.indexOf(taskName) === -1) {
-        watches.push(taskName);
+function initWatcher(files, taskName, watchName) {
+    var task = watchName ? watchName : taskName;
+    if (watches.indexOf(task) === -1) {
+        watches.push(task);
         var watcher = gulp.watch(files, gulp.series(taskName));
         watcher.on('change', function (event) {
             if (event.type === 'deleted') {

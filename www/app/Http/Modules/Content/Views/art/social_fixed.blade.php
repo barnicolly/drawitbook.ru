@@ -1,5 +1,5 @@
 <?php
-$url = Request::url();
+$url = urlencode(Request::url());
 $socialLinks = [
     [
         'a.href' => 'http://vk.com/share.php?url=' . $url,
@@ -20,7 +20,7 @@ $socialLinks = [
         'svg.attrs' => 'width="16" height="16" viewBox="0 0 16 16"',
     ],
     [
-        'a.href' => 'https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&amp;st.shareUrl=' . $url,
+        'a.href' => 'https://connect.ok.ru/offer?url=' . $url,
         'a.class' => 'm-ok',
         'svg.href' => asset('img/sprites.svg#soc_ok'),
         'svg.attrs' => 'width="11" height="19" viewBox="0 0 11 19"',

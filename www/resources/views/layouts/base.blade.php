@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    <meta name="yandex-verification" content="e78a61097fbbb899" />
+    <meta name="google-site-verification" content="44qvqCqXAJ59PJZMKJB4zmk8zDa57Ff1mpau2pNfm3Q" />
     <link rel="icon" href="/favicon.ico">
     <title>{{ MetaTag::get('title') }}</title>
     @stack('head')
@@ -14,7 +16,11 @@
     {!! MetaTag::get('description') ? MetaTag::tag('description') : '' !!}
     {!! MetaTag::openGraph() !!}
     {!! MetaTag::twitterCard() !!}
+    <script src="{{ buildUrl('build/js/loader.min.js') }}" defer></script>
     <link rel="stylesheet" href="{{ buildUrl('build/css/master.min.css') }}">
+    @if ($_SERVER["REMOTE_ADDR"] !== '127.0.0.1')
+        @include('layouts/metrics')
+    @endif
     @stack('styles')
 </head>
 <body>

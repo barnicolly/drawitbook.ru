@@ -20,6 +20,7 @@ $(function () {
                 columnWidth: getMasonryWidth(),
                 gutter: 10,
             });
+            showStackGridAd();
         });
 
     $(window).resize(function () {
@@ -48,6 +49,7 @@ $(function () {
     $('.shared-image img').sti({
         selector: '.shared-image img',
         orientation: "horizontal",
+        title: 'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями',
         style: "flat-small",
         always_show: false,
         is_mobile: false,

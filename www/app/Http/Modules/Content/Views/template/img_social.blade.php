@@ -10,11 +10,15 @@
         <div class="img-wrapper">
             @if (isset($activeLink) && $activeLink === true)
                 <a itemprop="url" href="{{ route('art', ['id' => $picture->id]) }}" rel="nofollow">
-                    <img itemprop="contentUrl" class="img-fluid " src="{{ asset('arts/' . $picture->path) }}"
+                    <img data-url="{{ route('art', ['id' => $picture->id]) }}"
+                         data-title="Art #{{ $picture->id }} | Drawitbook.ru" itemprop="contentUrl" class="img-fluid "
+                         src="{{ asset('arts/' . $picture->path) }}"
                          alt="{{ $alt }}">
                 </a>
             @else
                 <img class="img-fluid"
+                     data-url="{{ route('art', ['id' => $picture->id]) }}"
+                     data-title="Art #{{ $picture->id }} | Drawitbook.ru"
                      itemprop="contentUrl"
                      src="{{ asset('arts/' . $picture->path) }}" alt="Рисунки по клеточкам {{ $alt }}">
             @endif
