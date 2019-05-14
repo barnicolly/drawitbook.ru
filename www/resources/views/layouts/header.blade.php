@@ -1,6 +1,7 @@
 <header class="form-group">
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
+        <nav class="navbar navbar-expand-lg navbar-light" itemscope=""
+             itemtype="http://schema.org/SiteNavigationElement">
             <a class="navbar-brand " href="{{ route('home') }}" rel="nofollow">
                 <img style="max-width: 100px" class="img-fluid" src="{{ asset('img/logo.jpg') }}"
                      alt="">
@@ -24,10 +25,15 @@
                     </div>
                 </form>
                 <ul class="navbar-nav">
+                    <?php $megaMenu = Cache::store('file')->remember('header.mega_menu', config('cache.expiration'), function () {
+                        return view('layouts.menu.header-mega')->render();
+                    }); ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}" rel="nofollow" itemprop="url"><span itemprop="name">Главная</span></a>
+                        <a class="nav-link" href="{{ route('home') }}" rel="nofollow" itemprop="url">
+                            <span itemprop="name">Главная</span>
+                        </a>
                     </li>
-                    @include('layouts.menu.header-mega')
+                    {!! $megaMenu !!}
                     @guest
                     @else
                         <li class="nav-item dropdown">

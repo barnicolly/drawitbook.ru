@@ -3,6 +3,7 @@
 namespace App\Http\Modules\Admin\Controllers\Article;
 
 use App\Http\Controllers\Controller;
+use App\Http\Modules\Content\Controllers\Search;
 use App\Libraries\Template;
 use Validator;
 use App\Http\Modules\Database\Models\Common\Article\ArticleModel;
@@ -31,6 +32,9 @@ class Index extends Controller
         $article = ArticleModel::with(['pictures' => function ($q) {
             $q->orderBy('pivot_sort_id', 'asc');
         }])->findOrFail($id);
+
+        $search = new Search();
+        $article->pictures = $search->checkExistArts($article->pictures);
 
         $artList = view('Content::article.show.art_list', ['article' => $article])->render();
         $article->template = str_ireplace('$artList$', $artList, $article->template);
