@@ -21,10 +21,10 @@
     <div class="clearfix" id="content-wrapper">
         @yield('content')
     </div>
-    <?php $footer = Cache::store('file')->get('footer');
+    <?php $footer = Cache::get('footer');
     if (!$footer) {
         $footer = view('layouts/footer')->render();
-        Cache::store('file')->put('footer', $footer, config('cache.expiration'));
+        Cache::put('footer', $footer, config('cache.expiration'));
     } ?>
     {!! $footer !!}
 </div>
