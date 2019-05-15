@@ -27,5 +27,8 @@
         <div itemprop="articleBody">
             {!! $article->template !!}
         </div>
+        <div>
+            {!! loadAd('after_article') !!}
+        </div>
     </article>
 </div>
