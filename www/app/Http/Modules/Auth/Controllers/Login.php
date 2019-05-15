@@ -16,6 +16,6 @@ class Login extends LoginController
     public function showLoginForm()
     {
         $template = new Template();
-        return $template->loadView('Auth.login', []);
+        return $template->loadView('auth.login', []);
     }
 }
