@@ -46,16 +46,18 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="container">
-                <p class="relative-title">
-                    Похожие
-                </p>
+    @if ($relativePictures->count())
+        <div class="row">
+            <div class="col-12">
+                <div class="container">
+                    <p class="relative-title">
+                        Похожие
+                    </p>
+                </div>
+            </div>
+            <div class="col-12">
+                @include('Content::template.stack_grid', ['pictures' => $relativePictures])
             </div>
         </div>
-        <div class="col-12">
-            @include('Content::template.stack_grid', ['pictures' => $relativePictures])
-        </div>
-    </div>
+    @endif
 @endsection
