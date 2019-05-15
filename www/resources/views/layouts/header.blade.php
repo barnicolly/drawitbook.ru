@@ -25,7 +25,7 @@
                     </div>
                 </form>
                 <ul class="navbar-nav">
-                    <?php $megaMenu = Cache::store('file')->remember('header.mega_menu', config('cache.expiration'), function () {
+                    <?php $megaMenu = Cache::remember('header.mega_menu', config('cache.expiration'), function () {
                         return view('layouts.menu.header-mega')->render();
                     }); ?>
                     <li class="nav-item">

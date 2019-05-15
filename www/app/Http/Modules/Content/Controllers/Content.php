@@ -39,9 +39,9 @@ class Content extends Controller
     public function art($id)
     {
         $id = (int) $id;
-        $picture = Cache::store('file')->get('art.' . $id);
+        $picture = Cache::get('art.' . $id);
         if (!$picture) {
-            $picture = Cache::store('file')->remember('art.' . $id, config('cache.expiration'), function () use ($id) {
+            $picture = Cache::remember('art.' . $id, config('cache.expiration'), function () use ($id) {
                 return PictureModel::with(['tags'])
                     ->where('is_del', '=', 0)
                     ->findOrFail($id);
