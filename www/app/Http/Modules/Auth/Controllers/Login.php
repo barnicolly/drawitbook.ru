@@ -18,4 +18,9 @@ class Login extends LoginController
         $template = new Template();
         return $template->loadView('auth.login', []);
     }
+
+    public function dump()
+    {
+        return redirect()->route('login');
+    }
 }
