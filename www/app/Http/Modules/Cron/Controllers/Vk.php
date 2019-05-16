@@ -53,7 +53,7 @@ limit 1'));
             try {
                 $artId = $results[0]->id;
                 $this->_post($artId);
-                $this->_addHistoryVkPosting(247);
+                $this->_addHistoryVkPosting($artId);
             } catch (\Exception $e) {
 
             }
