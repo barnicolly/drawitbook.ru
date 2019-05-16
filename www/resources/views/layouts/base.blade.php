@@ -18,7 +18,7 @@
     {!! MetaTag::twitterCard() !!}
     <script src="{{ buildUrl('build/js/loader.min.js') }}" defer></script>
     <link rel="stylesheet" href="{{ buildUrl('build/css/master.min.css') }}">
-    @if ($_SERVER["REMOTE_ADDR"] !== '127.0.0.1')
+    @if ($_SERVER["REMOTE_ADDR"] !== '127.0.0.1' && config('app.debug') === false)
         @include('layouts/metrics')
     @endif
     @stack('styles')
