@@ -29,8 +29,8 @@ class Kernel extends ConsoleKernel
             ->weeklyOn(1, '8:00');
 
         $schedule->command('vk:posting')
-            ->hourly()
-            ->unlessBetween('1:00', '6:00');
+            ->cron('1 */2 * * *')
+            ->unlessBetween('1:00', '5:00');
     }
 
     /**
