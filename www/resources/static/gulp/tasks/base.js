@@ -2,6 +2,7 @@ var base = {
     js: {
         append: [
             path.src.plugin + 'jquery/jquery-3.1.1.min.js',
+            path.src.plugin + 'bootstrap/js/popper.min.js',
             path.src.plugin + 'bootstrap/js/bootstrap.min.js',
             path.src.plugin + 'sticky/ResizeSensor.js',
             path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
