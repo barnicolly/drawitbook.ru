@@ -42,3 +42,15 @@ Route::group(
         Route::get('/{id}/refreshList', ['uses' => 'Article_picture@refreshList']);
         Route::post('/pictures/save', ['uses' => 'Article_picture@save']);
     });
+
+Route::group(
+    [
+        'middleware' => ['web', 'roles'],
+        'prefix' => '/admin/art',
+        'namespace' => 'App\Http\Modules\Admin\Controllers\Art',
+        'roles' => ['Admin']
+    ],
+    function () {
+        Route::post('/setVkPostingOn', ['uses' => 'Art@setVkPostingOnRequest']);
+        Route::post('/setVkPostingOff', ['uses' => 'Art@setVkPostingOffRequest']);
+    });

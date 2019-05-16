@@ -39,6 +39,9 @@ $(function () {
     $('.claim-button').each(function () {
         $(this).customClaim('init');
     });
+    $('.art-control').each(function () {
+        $(this).customArtControl('init');
+    });
 });
 
 function getClaimContainer() {
