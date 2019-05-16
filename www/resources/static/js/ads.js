@@ -1,6 +1,12 @@
+
 var bvw = document.getElementsByTagName("body")[0].offsetWidth;
-showAds();
 var turnAds = true;
+
+window.addEventListener('load', initLoader, false);
+
+function initLoader() {
+    showAds.call(this);
+}
 
 function showAds() {
     if (turnAds) {
@@ -135,7 +141,7 @@ function showAds() {
                 })(this, this.document, "yandexContextAsyncCallbacks");
             }
         }
-        showArticleAd();
+        showArticleAd.call(this);
     }
 }
 
@@ -183,7 +189,7 @@ function showArticleAd() {
             w[n].push(function() {
                 Ya.Context.AdvManager.render({
                     blockId: "R-A-400272-11",
-                    renderTo: "yandex_rtb_R-A-400272-11",
+                    renderTo: "integrated_article_2",
                     async: true
                 });
             });

@@ -10,7 +10,7 @@
     <div class="stack-grid" style="display: none" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
         @foreach($pictures as $index => $picture)
             @if(in_array($index, [5, 12, 18], true))
-                <div class="art-container">
+                <div class="art-container art-container-ad">
                     <div class="art-wrapper clearfix">
                         <div class="ad">
                             {!! loadAd('integrated-' . $index) !!}

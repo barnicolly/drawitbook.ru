@@ -14,7 +14,7 @@ Route::group(
 
 
         Route::get('/search', ['uses' => 'Search@index'])->name('search');
-        /*Route::get('/{url}', ['uses' => 'Article@show'])
+        Route::get('/{url}', ['uses' => 'Article@show'])
             ->where('url', '.*')
-            ->name('showArticle');*/
+            ->name('showArticle');
     });

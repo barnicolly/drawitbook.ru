@@ -3,6 +3,11 @@
     margin-bottom: 10px;
 }
 
+.stack-grid .art-container-ad .art-wrapper {
+    border: none !important;
+    box-shadow: none !important;
+}
+
 .stack-grid .art-wrapper {
     background: #fefefe;
     border: 2px solid #fcfcfc;
@@ -23,5 +28,13 @@
 }
 
 .stack-grid .ad {
-    min-height: 240px;
+    position: relative;
+    min-height: 300px;
+}
+
+.stack-grid .ad > div:first-child {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
 }
