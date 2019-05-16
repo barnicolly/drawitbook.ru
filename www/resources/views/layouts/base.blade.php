@@ -18,7 +18,7 @@
     {!! MetaTag::twitterCard() !!}
     <script src="{{ buildUrl('build/js/loader.min.js') }}" defer></script>
     <link rel="stylesheet" href="{{ buildUrl('build/css/master.min.css') }}">
-    @if ($_SERVER["REMOTE_ADDR"] !== '127.0.0.1')
+    @if ($_SERVER["REMOTE_ADDR"] !== '127.0.0.1' && config('app.debug') === false)
         @include('layouts/metrics')
     @endif
     @stack('styles')
@@ -33,10 +33,10 @@
             </main>
         </div>
     </div>
-    <?php $footer = Cache::store('file')->get('footer');
+    <?php $footer = Cache::get('footer');
     if (!$footer) {
         $footer = view('layouts/footer')->render();
-        Cache::store('file')->put('footer', $footer, config('cache.expiration'));
+        Cache::put('footer', $footer, config('cache.expiration'));
     } ?>
     {!! $footer !!}
 </div>

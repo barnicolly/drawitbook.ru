@@ -6,7 +6,7 @@
             $alt = $picture->pivot->caption;
         } else if ($picture->description) {
             $alt = $picture->description;
-        }        ?>
+        } ?>
         <div class="img-wrapper">
             @if (isset($activeLink) && $activeLink === true)
                 <a itemprop="url" href="{{ route('art', ['id' => $picture->id]) }}" rel="nofollow">
