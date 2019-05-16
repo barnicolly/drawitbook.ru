@@ -3,6 +3,7 @@
 namespace App\Http\Modules\Cron\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\PostWallVkImage;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use ATehnix\VkClient\Client;
 
@@ -21,10 +22,24 @@ class Vk extends Controller
         $this->_api->setDefaultToken($this->_key);
     }
 
+    public static function posting()
+    {
+        try {
+            throw new \Exception('227');
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+    }
+
     public function postImage()
     {
+        PostWallVkImage::dispatch(2651);
+        return '1234';
+    }
+
+    private function _post()
+    {
         //2585  2501 672 1671 2651
-        exit;
         $picture = PictureModel::with(['tags' => function ($q) {
             $q->where('spr_tags.hidden_vk', '=', 0);
         }])->find(2651);
@@ -35,27 +50,7 @@ class Vk extends Controller
         }
 
         $hashTags = '#рисунки #рисункипоклеточкам #' . implode(' #', $tags) . ' #drawitbook';
-
-        /*  $response = $api->request('wall.post', ['owner_id' => $groupId, 'from_group' => 1, 'message' => 'testing']);*/
-
         $uploadUrl = $this->_getUploadServer();
-//        $client = new \GuzzleHttp\Client();
-//        $exploded = explode('/', $path);
-//        $filename = end($exploded);
-//        $res = $client->post($uploadUrl, ['multipart' => [
-//            [
-//                'name' => 'upload',
-//                'contents' => $fileContent,
-//                'filename' => $filename,
-//            ],
-//        ]
-//        ]);
-//        $request = $client->post($uploadUrl, array('photo' => $path),('Content-Type: multipart/form-data'));
-//        $body = fopen($path, 'r');
-//        $r = $client->request('POST', 'http://httpbin.org/post', ['photo' => $body]);
-//        $this->client->request("POST", $uploadUrl, array('Content-Type => multipart/form-data'),'photo'=>$path);
-
-//        $request = \Illuminate\Http\Request::create($uploadUrl, 'POST', ['photo' => '@' . $path]);
         $client = new \GuzzleHttp\Client();
         $res = $client->post($uploadUrl, [
             'multipart' => [
@@ -69,7 +64,6 @@ class Vk extends Controller
         $uploadedPhoto = $this->_saveWallPhoto($server);
         $attachments = 'photo' . $uploadedPhoto['owner_id'] . '_' . $uploadedPhoto['id'] . ',' . 'https://drawitbook.ru';
         $res = $this->_wallPost(['message' => $hashTags, 'attachments' => $attachments]);
-        return '1234';
     }
 
     private function _saveWallPhoto(array $photo)
