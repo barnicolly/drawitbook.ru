@@ -30,7 +30,7 @@ namespace :deploy do
 	  task :after_deploy do
 		on roles(:all) do
              execute "cd #{fetch(:release_path)}/www; composer install && npm i && gulp build --env production"
-             execute "cd #{fetch(:release_path)}/www; php artisan config:cache && php artisan route:cache && php artisan optimize --force && composer dumpautoload -o"
+             execute "cd #{fetch(:release_path)}/www; php artisan config:cache && php artisan route:cache && php artisan optimize && composer dumpautoload -o"
 		end
 	end
 end
