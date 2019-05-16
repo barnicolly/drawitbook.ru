@@ -3,9 +3,10 @@
 namespace App\Http\Modules\Cron\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\PostWallVkImage;
+use App\Http\Modules\Database\Models\Common\Raw\HistoryVkPostingModel;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use ATehnix\VkClient\Client;
+use Illuminate\Support\Facades\DB;
 
 class Vk extends Controller
 {
@@ -22,33 +23,60 @@ class Vk extends Controller
         $this->_api->setDefaultToken($this->_key);
     }
 
-    public static function posting()
+    public function posting()
     {
-        try {
-            throw new \Exception('227');
-        } catch (\Exception $exception) {
-            throw $exception;
+        $results = DB::select(DB::raw('select
+  picture.id,
+  IF(lastPostingDate.dayDiff IS NULL,
+     (select DATEDIFF(MAX(history_vk_posting.created_at), NOW()) as dayDiff
+      from history_vk_posting
+      group by picture_id
+      order by dayDiff DESC
+      limit 1) + 1,
+     lastPostingDate.dayDiff
+  ) as dayDiff
+from picture
+  left join (select
+               picture_id,
+               MAX(history_vk_posting.created_at)                  as dateTime,
+               COUNT(history_vk_posting.id),
+               DATEDIFF(MAX(history_vk_posting.created_at), NOW()) as dayDiff
+             from history_vk_posting
+             group by picture_id) as lastPostingDate on picture.id = lastPostingDate.picture_id
+where picture.in_vk_posting = 1 and picture.is_del = 0
+      and (dayDiff > 10 or dayDiff is null)
+group by picture.id
+order by dayDiff DESC
+limit 1'));
+
+        if ($results) {
+            try {
+                $artId = $results[0]->id;
+                $this->_post($artId);
+                $this->_addHistoryVkPosting(247);
+            } catch (\Exception $e) {
+
+            }
         }
     }
 
-    public function postImage()
+    private function _addHistoryVkPosting(int $artId)
     {
-        PostWallVkImage::dispatch(2651);
-        return '1234';
+        $historyVkPostingRecord = new HistoryVkPostingModel();
+        $historyVkPostingRecord->picture_id = $artId;
+        $historyVkPostingRecord->save();
     }
 
-    private function _post()
+    private function _post(int $artId)
     {
-        //2585  2501 672 1671 2651
         $picture = PictureModel::with(['tags' => function ($q) {
             $q->where('spr_tags.hidden_vk', '=', 0);
-        }])->find(2651);
+        }])->find($artId);
         $path = base_path('public/arts/') . $picture->path;
         $tags = $picture->tags->pluck('name')->toArray();
         foreach ($tags as $key => $tag) {
             $tags[$key] = preg_replace('/\s+/', '', $tag);
         }
-
         $hashTags = '#рисунки #рисункипоклеточкам #' . implode(' #', $tags) . ' #drawitbook';
         $uploadUrl = $this->_getUploadServer();
         $client = new \GuzzleHttp\Client();
@@ -63,7 +91,7 @@ class Vk extends Controller
         $server = json_decode($res->getBody()->getContents(), true);
         $uploadedPhoto = $this->_saveWallPhoto($server);
         $attachments = 'photo' . $uploadedPhoto['owner_id'] . '_' . $uploadedPhoto['id'] . ',' . 'https://drawitbook.ru';
-        $res = $this->_wallPost(['message' => $hashTags, 'attachments' => $attachments]);
+        $this->_wallPost(['message' => $hashTags, 'attachments' => $attachments]);
     }
 
     private function _saveWallPhoto(array $photo)

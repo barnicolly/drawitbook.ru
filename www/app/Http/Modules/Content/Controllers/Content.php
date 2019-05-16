@@ -2,7 +2,6 @@
 
 namespace App\Http\Modules\Content\Controllers;
 
-use app\Core\Constants;
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use App\Libraries\Template;
@@ -28,7 +27,7 @@ class Content extends Controller
         $pictures = $search->checkExistArts($pictures);
         $viewData['pictures'] = $pictures;
         MetaTag::set('title', 'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями');
-        MetaTag::set('image', asset('arts/8f/cb/8fcb97c102bf07cd5977f55f7bdabc37.png'));
+        MetaTag::set('image', asset('arts/d4/11/d4113a118447cb7650a7a7d84b45b153.jpeg'));
         MetaTag::set('description', 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.');
         return $template->loadView('Content::index', $viewData);
     }

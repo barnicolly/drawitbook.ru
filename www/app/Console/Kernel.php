@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\Console\Commands\CreateSitemap',
+        'App\Console\Commands\VkPosting',
     ];
 
     /**
@@ -24,10 +25,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        /**
-         * Ежедневно в полночь
-         */
-        $schedule->command('sitemap:generate')->daily();
+        $schedule->command('sitemap:generate')
+            ->weeklyOn(1, '8:00');
+
+        $schedule->command('vk:posting')
+            ->hourly()
+            ->unlessBetween('1:00', '6:00');
     }
 
     /**
