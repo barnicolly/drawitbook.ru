@@ -8,7 +8,7 @@ use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use ATehnix\VkClient\Client;
 use Illuminate\Support\Facades\DB;
 
-class Vk extends Controller
+class Vk_album extends Controller
 {
 
     protected $_key;
@@ -25,64 +25,70 @@ class Vk extends Controller
 
     public function posting()
     {
-        $results = DB::select(DB::raw('select picture.id,
-  IF(lastPostingDate.dayDiff IS NULL,
-     IF((select DATEDIFF(NOW(), MAX(history_vk_posting.created_at)) as dayDiff
-         from history_vk_posting
-         group by picture_id
-         order by dayDiff DESC
-         limit 1) <= 10, 10 + 1, (select DATEDIFF(NOW(), MAX(history_vk_posting.created_at)) as dayDiff
-                                  from history_vk_posting
-                                  group by picture_id
-                                  order by dayDiff DESC
-                                  limit 1) + 1),
-     lastPostingDate.dayDiff
-  ) as dayDiff
-from picture
-  left join (select picture_id,
-               MAX(history_vk_posting.created_at) as dateTime,
-               COUNT(history_vk_posting.id),
-               NOW(),
-               DATEDIFF(NOW(), MAX(history_vk_posting.created_at)) as dayDiff
-             from history_vk_posting
-             group by picture_id) as lastPostingDate on picture.id = lastPostingDate.picture_id
-where picture.in_vk_posting = 1
-      and (lastPostingDate.dayDiff > 10 or lastPostingDate.dayDiff is null)
-group by picture.id
-order by dayDiff DESC
-limit 1'));
-
-        if ($results) {
             try {
-                $artId = $results[0]->id;
-                $this->_post($artId);
-                $this->_addHistoryVkPosting($artId);
+                $this->_post([2608]);
             } catch (\Exception $e) {
 
             }
-        }
     }
 
-    private function _addHistoryVkPosting(int $artId)
+    private function _post(array $artIds)
     {
-        $historyVkPostingRecord = new HistoryVkPostingModel();
-        $historyVkPostingRecord->picture_id = $artId;
-        $historyVkPostingRecord->save();
-    }
-
-    private function _post(int $artId)
-    {
-        $picture = PictureModel::with(['tags' => function ($q) {
+        $pictures = PictureModel::with(['tags' => function ($q) {
             $q->where('spr_tags.hidden_vk', '=', 0);
-        }])->find($artId);
-        $path = base_path('public/arts/') . $picture->path;
+        }])->whereIn('id', $artIds)->get();
+
+        $uploadUrl = $this->_getUploadServer();
+
+        $url = 'tag[]=домашние животные';
+        $url = 'https://drawitbook.ru/search?' . urlencode($url);
+        $url = str_ireplace('%3D', '=', $url);
+
+        foreach ($pictures as $picture) {
+            $path = base_path('public/arts/') . $picture->path;
+            $tags = $picture->tags->pluck('name')->toArray();
+            foreach ($tags as $key => $tag) {
+                $tags[$key] = preg_replace('/\s+/', '', $tag);
+                $tags[$key] = str_ireplace('-', '', $tags[$key]);
+            }
+            $hashTags = '#рисунки #рисункипоклеточкам';
+            if ($tags) {
+                $hashTags .= ' #' . implode(' #', $tags);
+            }
+            $hashTags .= ' #drawitbook';
+
+          /*  if (empty($payload[$picture->id])) {
+                $payload[$picture->id] = [];
+            }*/
+//            $payload[$picture->id]['caption'] = $hashTags . '%0A' . 'Ещё больше рисунков на ' . $url;
+
+        /*    $client = new \GuzzleHttp\Client();
+            $res = $client->post($uploadUrl, [
+                'multipart' => [
+                    [
+                        'name' => 'photo',
+                        'contents' => fopen($path, 'r')
+                    ],
+                ],
+            ]);
+            $server = json_decode($res->getBody()->getContents(), true);*/
+//            $payload[$picture->id] = ['id' => $server];
+
+//            $photoId = $this->_savePhoto($server);
+            $photoId = 456239067;
+
+            $this->_editPhoto($photoId, ['caption' => $hashTags . "\n\n" . ' Ещё больше рисунков на ' . $url]);
+
+        }
+
+        /*$path = base_path('public/arts/') . $picture->path;
         $tags = $picture->tags->pluck('name')->toArray();
         foreach ($tags as $key => $tag) {
             $tags[$key] = preg_replace('/\s+/', '', $tag);
             $tags[$key] = str_ireplace('-', '', $tags[$key]);
-        }
+        }*/
 
-        $hashTags = '#рисунки #рисункипоклеточкам';
+      /*  $hashTags = '#рисунки #рисункипоклеточкам';
         if ($tags) {
             $hashTags .= ' #' . implode(' #', $tags);
         }
@@ -97,15 +103,30 @@ limit 1'));
                 ],
             ],
         ]);
-        $server = json_decode($res->getBody()->getContents(), true);
-        $uploadedPhoto = $this->_saveWallPhoto($server);
+        $server = json_decode($res->getBody()->getContents(), true);*/
+      /*  $uploadedPhoto = $this->_saveWallPhoto($server);
         $attachments = 'photo' . $uploadedPhoto['owner_id'] . '_' . $uploadedPhoto['id'] . ',' . 'https://drawitbook.ru';
-        $postId = $this->_wallPost(['message' => $hashTags, 'attachments' => $attachments]);
-        sleep(25);
+        $postId = $this->_wallPost(['message' => $hashTags, 'attachments' => $attachments]);*/
+       /* sleep(25);
         $lastWallPhotoId = $this->_getLastWallPhoto();
         if ($lastWallPhotoId) {
             $attachments = 'photo-' . $this->_groupId . '_' . $lastWallPhotoId . ',' . 'https://drawitbook.ru';
             $this->_editPost($postId, ['message' => $hashTags, 'attachments' => $attachments]);
+        }*/
+    }
+
+    private function _editPhoto(int $photoId, array $data)
+    {
+        $data = array_merge([
+            'owner_id' => '-' . $this->_groupId,
+            'photo_id' => $photoId,
+        ], $data);
+        try {
+            $response = $this->_api->request('photos.edit', $data);
+        } catch (\Exception $e) {
+            if ($data) {
+
+            }
         }
     }
 
@@ -118,9 +139,9 @@ limit 1'));
         try {
             $response = $this->_api->request('wall.edit', $data);
         } catch (\Exception $e) {
-            if ($data) {
+           if ($data) {
 
-            }
+           }
         }
     }
 
@@ -142,18 +163,27 @@ limit 1'));
         }
     }
 
-    private function _saveWallPhoto(array $photo)
+    private function _savePhoto(array $photo)
     {
         $data = [
             'group_id' => $this->_groupId,
-            'photo' => $photo['photo'],
+            'album_id' => 263036803,
+            'photos_list' => $photo['photos_list'],
             'server' => $photo['server'],
             'hash' => $photo['hash'],
         ];
-        $response = $this->_api->request('photos.saveWallPhoto', $data);
-        if ($response) {
-            return $response['response'][0];
+        try {
+            $response = $this->_api->request('photos.save', $data);
+            if ($response) {
+                return $response['response'][0]['id'];
+            }
+        } catch (\Exception $e) {
+            if ($data) {
+
+            }
         }
+
+
     }
 
     private function _wallPost(array $data)
@@ -169,7 +199,7 @@ limit 1'));
 
     private function _getUploadServer()
     {
-        $response = $this->_api->request('photos.getWallUploadServer', ['group_id' => $this->_groupId]);
+        $response = $this->_api->request('photos.getUploadServer', ['group_id' => $this->_groupId, 'album_id' => 263036803]);
         return $response['response']['upload_url'];
     }
 }
