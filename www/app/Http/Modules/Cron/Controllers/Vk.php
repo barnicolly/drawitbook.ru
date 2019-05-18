@@ -25,26 +25,29 @@ class Vk extends Controller
 
     public function posting()
     {
-        $results = DB::select(DB::raw('select
-  picture.id,
+        $results = DB::select(DB::raw('select picture.id,
   IF(lastPostingDate.dayDiff IS NULL,
-     (select DATEDIFF(MAX(history_vk_posting.created_at), NOW()) as dayDiff
-      from history_vk_posting
-      group by picture_id
-      order by dayDiff DESC
-      limit 1) + 1,
+     IF((select DATEDIFF(NOW(), MAX(history_vk_posting.created_at)) as dayDiff
+         from history_vk_posting
+         group by picture_id
+         order by dayDiff DESC
+         limit 1) <= 10, 10 + 1, (select DATEDIFF(NOW(), MAX(history_vk_posting.created_at)) as dayDiff
+                                  from history_vk_posting
+                                  group by picture_id
+                                  order by dayDiff DESC
+                                  limit 1) + 1),
      lastPostingDate.dayDiff
   ) as dayDiff
 from picture
-  left join (select
-               picture_id,
-               MAX(history_vk_posting.created_at)                  as dateTime,
+  left join (select picture_id,
+               MAX(history_vk_posting.created_at) as dateTime,
                COUNT(history_vk_posting.id),
-               DATEDIFF(MAX(history_vk_posting.created_at), NOW()) as dayDiff
+               NOW(),
+               DATEDIFF(NOW(), MAX(history_vk_posting.created_at)) as dayDiff
              from history_vk_posting
              group by picture_id) as lastPostingDate on picture.id = lastPostingDate.picture_id
-where picture.in_vk_posting = 1 and picture.is_del = 0
-      and (dayDiff > 10 or dayDiff is null)
+where picture.in_vk_posting = 1
+      and (lastPostingDate.dayDiff > 10 or lastPostingDate.dayDiff is null)
 group by picture.id
 order by dayDiff DESC
 limit 1'));
@@ -76,8 +79,14 @@ limit 1'));
         $tags = $picture->tags->pluck('name')->toArray();
         foreach ($tags as $key => $tag) {
             $tags[$key] = preg_replace('/\s+/', '', $tag);
+            $tags[$key] = str_ireplace('-', '', $tags[$key]);
         }
-        $hashTags = '#рисунки #рисункипоклеточкам #' . implode(' #', $tags) . ' #drawitbook';
+
+        $hashTags = '#рисунки #рисункипоклеточкам';
+        if ($tags) {
+            $hashTags .= ' #' . implode(' #', $tags);
+        }
+        $hashTags .= ' #drawitbook';
         $uploadUrl = $this->_getUploadServer();
         $client = new \GuzzleHttp\Client();
         $res = $client->post($uploadUrl, [
@@ -91,7 +100,39 @@ limit 1'));
         $server = json_decode($res->getBody()->getContents(), true);
         $uploadedPhoto = $this->_saveWallPhoto($server);
         $attachments = 'photo' . $uploadedPhoto['owner_id'] . '_' . $uploadedPhoto['id'] . ',' . 'https://drawitbook.ru';
-        $this->_wallPost(['message' => $hashTags, 'attachments' => $attachments]);
+        $postId = $this->_wallPost(['message' => $hashTags, 'attachments' => $attachments]);
+
+        $lastWallPhotoId = $this->_getLastWallPhoto();
+        if ($lastWallPhotoId) {
+            $attachments = 'photo-' . $this->_groupId . '_' . $lastWallPhotoId . ',' . 'https://drawitbook.ru';
+            $this->_editPost($postId, ['attachments' => $attachments]);
+        }
+    }
+
+    private function _editPost(int $postId, array $data)
+    {
+        $data = array_merge([
+            'owner_id' => '-' . $this->_groupId,
+        ], $data);
+        $response = $this->_api->request('wall.post', $data);
+    }
+
+    private function _getLastWallPhoto()
+    {
+        $data = [
+            'owner_id' => '-' . $this->_groupId,
+            'album_id' => 'wall',
+            'rev' => 1,
+            'count' => 1,
+        ];
+        try {
+            $response = $this->_api->request('photos.get', $data);
+            return $response['response']['items'][0]['id'];
+        } catch (\Exception $e) {
+            if ($data) {
+
+            }
+        }
     }
 
     private function _saveWallPhoto(array $photo)
@@ -114,7 +155,9 @@ limit 1'));
             'owner_id' => '-' . $this->_groupId, 'from_group' => 1
         ], $data);
         $response = $this->_api->request('wall.post', $data);
-        return $response;
+        if ($response) {
+            return $response['response']['post_id'];
+        }
     }
 
     private function _getUploadServer()
