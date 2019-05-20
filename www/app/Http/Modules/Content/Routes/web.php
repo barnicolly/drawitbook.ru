@@ -13,8 +13,9 @@ Route::group(
         Route::post('/art/claim/{id}', ['uses' => 'Claim@register']);
 
 
-        Route::get('/search', ['uses' => 'Search@index'])->name('search');
-        /*Route::get('/{url}', ['uses' => 'Article@show'])
+        Route::get('/search', ['uses' => 'Search@index'])
+            ->name('search');
+        Route::get('/{url}', ['uses' => 'Article@show'])
             ->where('url', '.*')
-            ->name('showArticle');*/
+            ->name('showArticle');
     });

@@ -1,11 +1,3 @@
-$('.social-fixed-sidebar').theiaStickySidebar({
-    additionalMarginTop: 40,
-});
-
-$('.sidebar').theiaStickySidebar({
-    additionalMarginTop: 20,
-});
-
 $(function () {
     var $grid = $('.stack-grid');
 
@@ -20,7 +12,7 @@ $(function () {
                 columnWidth: getMasonryWidth(),
                 gutter: 10,
             });
-            showStackGridAd();
+            showStackGridAd.call(this);
         });
 
     $(window).resize(function () {
@@ -59,6 +51,14 @@ $(function () {
     $(document).ready(function () {
         $(".megamenu").on("click", function (e) {
             e.stopPropagation();
+        });
+
+        $('.social-fixed-sidebar').theiaStickySidebar({
+            additionalMarginTop: 40,
+        });
+
+        $('.sidebar').theiaStickySidebar({
+            additionalMarginTop: 20,
         });
     });
 

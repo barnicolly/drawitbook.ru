@@ -236,8 +236,6 @@ return [
         'MetaTag'   => Torann\LaravelMetaTags\Facades\MetaTag::class,
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
         'Sanitizer' => Waavi\Sanitizer\Laravel\Facade::class,
-
-        'Constants' => app\Core\Constants::class,
     ],
 
     'debug_blacklist' => [

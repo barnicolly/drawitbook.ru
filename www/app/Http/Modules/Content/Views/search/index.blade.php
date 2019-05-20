@@ -1,13 +1,6 @@
 @extends('layouts.base')
 
 @section('content')
-    @if (!empty($relativePictures))
-        <div class="row form-group">
-            <div class="col-12">
-                {!! loadAd('before_stack') !!}
-            </div>
-        </div>
-    @endif
     <div class="row">
         <div class="col-12">
             <h1 class="title">
@@ -40,8 +33,16 @@
                 Результатов:
                 <span class="badge badge-info">{{ $countRelatedPictures }}</span>
             </div>
+            @if (!empty($relativePictures))
+                <div class="col-12 form-group">
+                    {!! loadAd('before_stack') !!}
+                </div>
+            @endif
             <div class="col-12 form-group">
                 @include('Content::template.stack_grid', ['pictures' => $relativePictures])
+            </div>
+            <div class="col-12 form-group">
+                {!! loadAd('after_first_stack') !!}
             </div>
             @if ($paginate)
                 <div class="row">
@@ -50,9 +51,6 @@
                     </div>
                 </div>
             @endif
-            <div class="col-12 form-group">
-                {!! loadAd('after_first_stack') !!}
-            </div>
         </div>
     @else
         <div class="row">
@@ -76,7 +74,8 @@
                 <p>
                     Популярные запросы
                     @foreach($popularQueries as $popularQuery)
-                        <a itemprop="url" rel="nofollow" href="{{ route('search') . '?query=' . urlencode($popularQuery) }}">{{ $popularQuery }}</a>
+                        <a itemprop="url" rel="nofollow"
+                           href="{{ route('search') . '?query=' . urlencode($popularQuery) }}">{{ $popularQuery }}</a>
                     @endforeach
                 </p>
             </div>
