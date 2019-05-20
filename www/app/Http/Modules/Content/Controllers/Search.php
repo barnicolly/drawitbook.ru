@@ -48,8 +48,14 @@ class Search extends Controller
                 $countSearchResults = count($relativePictureIds);
                 $page = $request->input('page');
                 $perPage = 50;
+                if (!$page) {
+                    $page = 1;
+                }
                 $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);
 
+                if (!$relativePictureIds) {
+                   abort(404);
+                }
                 $relativePictures = PictureModel::with(['tags'])
                     ->whereIn('id', $relativePictureIds)
                     ->get();
