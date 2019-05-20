@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Modules\Content\Controllers;
+namespace App\Http\Modules\Content\Controllers\Open\Article;
 
 use App\Http\Controllers\Controller;
 use App\Libraries\Template;
@@ -28,9 +28,9 @@ class Article extends Controller
         $search = new Search();
         $article->pictures = $search->checkExistArts($article->pictures);
         $viewData['articleBody'] = Cache::remember('article.body.' . $url, 60*60, function () use ($article) {
-            $artList = view('Content::article.show.art_list', ['article' => $article])->render();
+            $artList = view('Open::article.show.art_list', ['article' => $article])->render();
             $article->template = str_ireplace('$artList$', $artList, $article->template);
-            return view('Content::article.show.article_body', ['article' => $article])->render();
+            return view('Open::article.show.article_body', ['article' => $article])->render();
         });
         $viewData['article'] = $article;
         $firstPicture = $article->pictures->first();
@@ -38,7 +38,7 @@ class Article extends Controller
         MetaTag::set('description', $article->description);
         MetaTag::set('keywords', $article->key_words);
         MetaTag::set('image', asset('arts/' . $firstPicture->path));
-        return $template->loadView('Content::article.show.index', $viewData);
+        return $template->loadView('Open::article.show.index', $viewData);
     }
 
 }

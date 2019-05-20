@@ -1,24 +1,19 @@
 <?php
 
-//Article
 Route::group(
     [
         'middleware' => 'web',
-        'namespace' => 'App\Http\Modules\Open\Controllers'
+        'prefix' => '/',
+        'namespace' => 'App\Http\Modules\Open\Controllers\Auth'
     ],
     function () {
-        /*Route::get('/', ['uses' => 'Content@index'])->name('home');
-        Route::get('/art/{id}', ['uses' => 'Content@art'])->name('art');
-        Route::post('/art/like/{id}', ['uses' => 'Rate@like']);
-        Route::post('/art/dislike/{id}', ['uses' => 'Rate@dislike']);
-        Route::post('/art/claim/{id}', ['uses' => 'Claim@register']);
-
-
-        Route::get('/search', ['uses' => 'Search@index'])
-            ->name('search');
-        Route::get('/{url}', ['uses' => 'Article@show'])
-            ->where('url', '.*')
-            ->name('showArticle');*/
+        Route::get('/login', ['uses' => 'Login@showLoginForm'])->name('login');
+        Route::get('/register', ['uses' => 'Login@dump']);
+        Route::post('/register', ['uses' => 'Login@dump']);
+        Route::get('/password/reset', ['uses' => 'Login@dump']);
+        Route::post('password/email', ['uses' => 'Login@dump']);
+        Route::get('password/reset/{token}', ['uses' => 'Login@dump']);
+        Route::post('password/reset', ['uses' => 'Login@dump']);
     });
 
 //Art
@@ -31,14 +26,17 @@ Route::group(
         Route::get('/art/{id}', ['uses' => 'Picture@index'])->name('art');
         Route::post('/art/{id}/like', ['uses' => 'Rate@likeJson'])->middleware(['ajax']);
         Route::post('/art/{id}/dislike', ['uses' => 'Rate@dislikeJson'])->middleware(['ajax']);
-//        Route::post('/art/claim/{id}', ['uses' => 'Claim@register']);
+        Route::post('/art/{id}/claim', ['uses' => 'Claim@register']);
+    });
 
-
-       /* Route::get('/search', ['uses' => 'Search@index'])
-            ->name('search');
-        Route::get('/{url}', ['uses' => 'Article@show'])
-            ->where('url', '.*')
-            ->name('showArticle');*/
+Route::group(
+    [
+        'middleware' => 'web',
+        'namespace' => 'App\Http\Modules\Open\Controllers\Search'
+    ],
+    function () {
+         Route::get('/search', ['uses' => 'Search@index'])
+             ->name('search');
     });
 
 Route::group(
@@ -47,17 +45,19 @@ Route::group(
         'namespace' => 'App\Http\Modules\Open\Controllers'
     ],
     function () {
-        /*Route::get('/', ['uses' => 'Content@index'])->name('home');
-        Route::get('/art/{id}', ['uses' => 'Content@art'])->name('art');
-        Route::post('/art/like/{id}', ['uses' => 'Rate@like']);
-        Route::post('/art/dislike/{id}', ['uses' => 'Rate@dislike']);
-        Route::post('/art/claim/{id}', ['uses' => 'Claim@register']);
+        Route::get('/', ['uses' => 'Content@index'])
+            ->name('home');
+    });
 
-
-        Route::get('/search', ['uses' => 'Search@index'])
-            ->name('search');
-        Route::get('/{url}', ['uses' => 'Article@show'])
+//Article
+Route::group(
+    [
+        'middleware' => 'web',
+        'namespace' => 'App\Http\Modules\Open\Controllers\Article'
+    ],
+    function () {
+        /*Route::get('/{url}', ['uses' => 'Article@show'])
             ->where('url', '.*')
             ->name('showArticle');*/
-
     });
+

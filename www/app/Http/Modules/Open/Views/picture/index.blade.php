@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="col-12">
-                @include('Content::template.stack_grid', ['pictures' => $relativePictures])
+                @include('Open::template.stack_grid', ['pictures' => $relativePictures])
             </div>
         </div>
     @endif

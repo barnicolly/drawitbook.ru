@@ -27,9 +27,9 @@ if (!function_exists('loadAd')) {
     function loadAd(string $path)
     {
         if (isLocal()) {
-            return view('Content::template.ads.dummy')->render();
+            return view('Open::template.ads.dummy')->render();
         } else {
-            return view('Content::template.ads.' . $path)->render();
+            return view('Open::template.ads.' . $path)->render();
         }
     }
 }

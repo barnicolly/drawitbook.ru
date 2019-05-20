@@ -8,6 +8,6 @@
         <span class="numeric badge badge-dark">
         <?= ++$key ?>
         </span>
-        @include('Content::template.img_social', ['picture' => $picture, 'isArticle' => true])
+        @include('Open::template.img_social', ['picture' => $picture, 'isArticle' => true])
     </div>
 @endforeach

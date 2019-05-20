@@ -1,6 +1,6 @@
 <div class="art-container">
     <div class="art-wrapper">
-        @include('Content::template.img_social', ['picture' => $picture, 'activeLink' => true])
+        @include('Open::template.img_social', ['picture' => $picture, 'activeLink' => true])
         @if (!empty(session('is_admin')))
             <div class="admin-panel" data-picture-id="{{ $picture->id }}">
                 <i class="art-control d-inline-block">
@@ -24,7 +24,7 @@
         <div class="stack-grid-footer">
             <div class="stack-grid-tags d-inline-block" style="width: 88%">
                 @if ($picture->tags->count())
-                    @include('Content::template.tag_list', ['tags' => $picture->tags, 'showAllTags' => $showAllTags])
+                    @include('Open::template.tag_list', ['tags' => $picture->tags, 'showAllTags' => $showAllTags])
                 @endif
             </div>
             <div class="stack-grid-external-link d-inline-block text-right"

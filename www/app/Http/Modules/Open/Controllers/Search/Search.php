@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Modules\Content\Controllers;
+namespace App\Http\Modules\Open\Controllers\Search;
 
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Database\Models\Common\Spr\SprTagsModel;
@@ -83,7 +83,7 @@ class Search extends Controller
         $viewData['relativePictures'] = $relativePictures;
 
         MetaTag::set('robots', 'noindex');
-        return $template->loadView('Content::search.index', $viewData);
+        return $template->loadView('Open::search.index', $viewData);
     }
 
     public function searchRelatedPicturesIds(array $shown, array $hidden)

@@ -39,7 +39,7 @@
                 </div>
             @endif
             <div class="col-12 form-group">
-                @include('Content::template.stack_grid', ['pictures' => $relativePictures])
+                @include('Open::template.stack_grid', ['pictures' => $relativePictures])
             </div>
             <div class="col-12 form-group">
                 {!! loadAd('after_first_stack') !!}

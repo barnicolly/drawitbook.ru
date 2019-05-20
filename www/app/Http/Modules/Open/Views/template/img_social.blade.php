@@ -23,7 +23,7 @@
                      src="{{ asset('arts/' . $picture->path) }}" alt="Рисунки по клеточкам {{ $alt }}">
             @endif
             <div class="rate-footer">
-                @include('Content::template.rate', ['pictureId' => $picture->id])
+                @include('Open::template.rate', ['pictureId' => $picture->id])
             </div>
         </div>
         @if (!empty($alt))

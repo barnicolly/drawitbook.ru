@@ -1,1 +1,0 @@
-<div id="integrated_article_7"></div>
