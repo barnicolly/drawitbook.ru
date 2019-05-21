@@ -104,7 +104,6 @@ limit 1'));
         sleep(25);
         $lastWallPhotoId = $this->_getLastWallPhoto();
         if ($lastWallPhotoId) {
-
             $url = 'https://drawitbook.ru';
             $this->_editPhoto($lastWallPhotoId, ['caption' => $hashTags . "\n\n" . 'Ещё больше рисунков на ' . $url . "\n\n" . 'Рисуйте)']);
 

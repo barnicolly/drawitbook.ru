@@ -1,8 +1,6 @@
 <div class="row">
     <div class="col-12 col-md-1 social-fixed-sidebar order-1">
-        <?php $socialFixed = Cache::remember('social_fixed', config('cache.expiration'), function () {
-            return view('Content::art.social_fixed')->render();
-        }); ?>
+        <?php $socialFixed = view('Content::art.social_fixed')->render(); ?>
         {!! $socialFixed !!}
     </div>
     <article class="col-12 col-md-11 order-md-1 article" itemscope="" itemtype="http://schema.org/Article">
