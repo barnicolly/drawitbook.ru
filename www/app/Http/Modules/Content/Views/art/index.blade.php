@@ -43,7 +43,7 @@
             </div>
         </div>
     </div>
-    @if ($relativePictures->count())
+    @if ($relativePictures && $relativePictures->count())
         <div class="row">
             <div class="col-12">
                 <div class="container">
