@@ -178,7 +178,9 @@ limit 1'));
     private function _wallPost(array $data)
     {
         $data = array_merge([
-            'owner_id' => '-' . $this->_groupId, 'from_group' => 1
+            'owner_id' => '-' . $this->_groupId,
+            'from_group' => 1,
+            'close_comments' => 1,
         ], $data);
         $response = $this->_api->request('wall.post', $data);
         if ($response) {
