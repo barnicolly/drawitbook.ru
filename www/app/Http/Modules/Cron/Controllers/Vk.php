@@ -17,7 +17,7 @@ class Vk extends Controller
 
     public function __construct()
     {
-        $this->_key = '079d803758e75cf27ebf0d41fd280ab5aef30c1a2af76a831c9f5bb5d0da08d9e7ce6ee33f211deafc89a';
+        $this->_key = 'd2c07ad4d74dcb74808356195ccec7db8c75b25c12106e632265a9e646b7d36588a0355ebe364f8bf4907';
         $this->_groupId = '182256925';
         $this->_api = new Client('5.95');
         $this->_api->setDefaultToken($this->_key);
