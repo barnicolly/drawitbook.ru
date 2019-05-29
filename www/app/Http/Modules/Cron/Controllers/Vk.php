@@ -101,13 +101,13 @@ limit 1'));
         $uploadedPhoto = $this->_saveWallPhoto($server);
         $attachments = 'photo' . $uploadedPhoto['owner_id'] . '_' . $uploadedPhoto['id'] . ',' . 'https://drawitbook.ru';
         $postId = $this->_wallPost(['message' => $hashTags, 'attachments' => $attachments]);
+        sleep(25);
         $lastWallPhotoId = $this->_getLastWallPhoto();
         if ($lastWallPhotoId) {
 
             $url = 'https://drawitbook.ru';
             $this->_editPhoto($lastWallPhotoId, ['caption' => $hashTags . "\n\n" . 'Ещё больше рисунков на ' . $url . "\n\n" . 'Рисуйте)']);
 
-            sleep(25);
 
             $attachments = 'photo-' . $this->_groupId . '_' . $lastWallPhotoId . ',' . 'https://drawitbook.ru';
             $this->_editPost($postId, ['message' => $hashTags, 'attachments' => $attachments]);

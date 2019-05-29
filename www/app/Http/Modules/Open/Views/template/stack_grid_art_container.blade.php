@@ -9,7 +9,7 @@
                         <div class="dropdown-menu"></div>
                     </div>
                     <div class="d-inline-block art-control-icons">
-                        @if ($picture->in_vk_posting === ON_VK_POSTING)
+                        @if ((int) $picture->in_vk_posting === ON_VK_POSTING)
                             <span class="vk-posting fa fa-vk " title="Учавствует в постинге VK"></span>
                         @endif
                     </div>
