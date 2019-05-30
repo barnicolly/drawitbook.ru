@@ -47,9 +47,15 @@
                                             <td>{{ $vkAlbum->album_id }}</td>
                                             <td>{{ $vkAlbum->description }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-link add-to-vk-album">
-                                                    Добавить в альбом
-                                                </button>
+                                                @if ($issetInVkAlbums && in_array($vkAlbum->id, $issetInVkAlbums, true))
+                                                    <button type="button" class="btn btn-link remove-from-vk-album">
+                                                        Убрать из альбома
+                                                    </button>
+                                                @else
+                                                    <button type="button" class="btn btn-link add-to-vk-album">
+                                                        Добавить в альбом
+                                                    </button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

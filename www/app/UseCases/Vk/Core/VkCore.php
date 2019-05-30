@@ -73,4 +73,13 @@ class VkCore
         $response = $this->_api->request('photos.edit', $data);
     }
 
+    protected function _deletePhoto(int $photoId)
+    {
+        $data =[
+            'owner_id' => '-' . $this->_groupId,
+            'photo_id' => $photoId,
+        ];
+        $response = $this->_api->request('photos.delete', $data);
+    }
+
 }

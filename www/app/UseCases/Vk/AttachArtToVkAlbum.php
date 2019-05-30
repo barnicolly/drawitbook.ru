@@ -7,8 +7,6 @@ use App\Entities\Vk\VkAlbumPictureModel;
 use App\UseCases\Picture\GetPicture;
 use App\UseCases\Vk\Core\VkCore;
 
-//use ;
-
 class AttachArtToVkAlbum extends VkCore
 {
 

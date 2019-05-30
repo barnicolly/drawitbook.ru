@@ -76,9 +76,24 @@
                                 };
                                 sendRequest('post', '/admin/art/' + self.artId + '/postInVkAlbum', data, function (res) {
                                     if (res.success) {
-                                        // button.removeClass('add-to-vk-album')
-                                        //     .addClass('remove-from-vk-album')
-                                        //     .text('Убрать из альбома')
+                                        button.removeClass('add-to-vk-album')
+                                            .addClass('remove-from-vk-album')
+                                            .text('Убрать из альбома')
+                                    } else {
+                                        showInfo(res.message);
+                                    }
+                                });
+                            })
+                            .on('click', '.remove-from-vk-album', function () {
+                                var button = $(this);
+                                var data = {
+                                    'album_id': $(this).closest('tr').data('vk-album-id'),
+                                };
+                                sendRequest('post', '/admin/art/' + self.artId + '/removeFromVkAlbum', data, function (res) {
+                                    if (res.success) {
+                                        button.addClass('add-to-vk-album')
+                                            .removeClass('remove-from-vk-album')
+                                            .text('Добавить в альбом')
                                     } else {
                                         showInfo(res.message);
                                     }
