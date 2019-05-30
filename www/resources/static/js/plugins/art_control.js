@@ -63,6 +63,33 @@
                     });
                 }
             });
+            $(self.container).on('click', '.picture-settings', function () {
+                sendRequest('get', '/admin/art/' + self.artId + '/getSettingsModal', {}, function (res) {
+                    if (res.success) {
+                        var modal = new NewModal(res.data);
+                        var modalHTML = modal.showModal();
+                        modalHTML
+                            .on('click', '.add-to-vk-album', function () {
+                                var button = $(this);
+                                var data = {
+                                   'album_id': $(this).closest('tr').data('vk-album-id'),
+                                };
+                                sendRequest('post', '/admin/art/' + self.artId + '/postInVkAlbum', data, function (res) {
+                                    if (res.success) {
+                                        button.removeClass('add-to-vk-album')
+                                            .addClass('remove-from-vk-album')
+                                            .text('Убрать из альбома')
+                                    } else {
+                                        showInfo(res.message);
+                                    }
+                                });
+                            })
+                    } else {
+                        showInfo(res.message);
+                    }
+                });
+
+            })
         }
 
         function addDropdowns() {
@@ -81,47 +108,6 @@
                 }).text((!self.params.vkPosting ? 'Постить' : 'Не постить') + ' в ВК');
             self.dropdownContainer.find('.dropdown-menu').append(vkPostingButton);
         }
-
-        /*  function lockClaimButton() {
-              self.container.prop('disabled', true);
-          }
-
-          function unlockClaimButton() {
-              self.container.prop('disabled', false);
-          }
-
-          function showClaimForm() {
-              $(self.art).after(getClaimContainer());
-
-              $('html, body').animate({
-                  scrollTop: $(self.artContainer).find('.title').offset().top
-              }, 'fast');
-          }*/
-
-        /* function initListeners() {
-             self.container
-                 .on('click', function () {
-                     lockClaimButton();
-                     if (!$(self.artContainer).find('.claim-container').length) {
-                         self.art.hide();
-                         showClaimForm();
-                     }
-                 });
-             self.artContainer
-                 .on('click', '.cancel-claim', function () {
-                     self.art.show();
-                     unlockClaimButton();
-                     $(self.artContainer).find('.claim-container').remove();
-                 })
-                 .on('click', '.submit-claim', function () {
-                     if ($(self.artContainer).find('.claim-container').length) {
-                         var data = $(self.artContainer).find('.claim-container').serialize();
-                         sendRequest('post', '/art/claim/' + self.artId, data, function () {
-                             $(self.artContainer).find('.cancel-claim').trigger('click');
-                         })
-                     }
-                 })
-         }*/
     }
 
     var methods = {

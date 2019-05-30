@@ -8,6 +8,11 @@
                         <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown"></button>
                         <div class="dropdown-menu"></div>
                     </div>
+                    <div class="d-inline-block">
+                        <button class="btn btn-link picture-settings" data-picture-id="{{ $picture->id }}">
+                            <span class="fa fa-cog"></span>
+                        </button>
+                    </div>
                     <div class="d-inline-block art-control-icons">
                         @if ((int) $picture->in_vk_posting === ON_VK_POSTING)
                             <span class="vk-posting fa fa-vk " title="Учавствует в постинге VK"></span>
