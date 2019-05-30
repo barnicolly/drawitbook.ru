@@ -10,6 +10,7 @@ class GetPicture
 
     private $_id;
     private $_cacheName;
+    protected $_withHiddenVkTag = false;
 
     public function __construct(int $id)
     {
@@ -17,9 +18,20 @@ class GetPicture
         $this->_cacheName = 'art.' . $id;
     }
 
+    public function withHiddenVkTag()
+    {
+        $this->_withHiddenVkTag = true;
+        return $this;
+    }
+
     public function get()
     {
-        $picture = PictureModel::with(['tags'])
+        $withHiddenVkTag = $this->_withHiddenVkTag;
+        $picture = PictureModel::with(['tags' => function ($q) use ($withHiddenVkTag) {
+            if ($withHiddenVkTag) {
+                $q->where('spr_tags.hidden_vk', '=', 0);
+            }
+        }])
             ->where('is_del', '=', 0)
             ->find($this->_id);
         if (!$picture) {

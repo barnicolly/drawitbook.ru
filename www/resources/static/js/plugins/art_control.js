@@ -76,9 +76,9 @@
                                 };
                                 sendRequest('post', '/admin/art/' + self.artId + '/postInVkAlbum', data, function (res) {
                                     if (res.success) {
-                                        button.removeClass('add-to-vk-album')
-                                            .addClass('remove-from-vk-album')
-                                            .text('Убрать из альбома')
+                                        // button.removeClass('add-to-vk-album')
+                                        //     .addClass('remove-from-vk-album')
+                                        //     .text('Убрать из альбома')
                                     } else {
                                         showInfo(res.message);
                                     }

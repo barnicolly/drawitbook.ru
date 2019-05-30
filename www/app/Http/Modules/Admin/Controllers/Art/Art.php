@@ -7,6 +7,7 @@ use App\Http\Modules\Admin\Requests\Art\ArtSetVkPostingOffRequest;
 use App\Http\Modules\Admin\Requests\Art\ArtSetVkPostingOnRequest;
 use App\Http\Modules\Admin\Requests\Art\PostInVkAlbumRequest;
 use App\UseCases\Picture\GetPicture;
+use App\UseCases\Vk\AttachArtToVkAlbum;
 use App\UseCases\Vk\GetVkAlbums;
 use Validator;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
@@ -64,10 +65,11 @@ class Art extends Controller
     public function postInVkAlbum($artId, PostInVkAlbumRequest $request)
     {
         try {
-            $getPicture = new GetPicture($artId);
-            $picture = $getPicture->get();
             $data = $request->validated();
             $albumId = $data['album_id'];
+
+            $attachArtToVkAlbum = new AttachArtToVkAlbum($albumId, $artId);
+            $attachArtToVkAlbum->attach();
 
 //            $getVkAlbum = new GetVkAlbums();
 //            $viewData['vkAlbums'] = $getVkAlbum->get();
