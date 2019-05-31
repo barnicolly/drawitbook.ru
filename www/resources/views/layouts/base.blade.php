@@ -29,6 +29,7 @@
     <div class="container">
         <div class="row">
             <main class="col-12">
+                @yield('breadcrumbs')
                 @yield('content')
             </main>
         </div>

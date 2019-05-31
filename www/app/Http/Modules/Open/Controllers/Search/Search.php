@@ -4,12 +4,14 @@ namespace App\Http\Modules\Open\Controllers\Search;
 
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Database\Models\Common\Spr\SprTagsModel;
+use App\Http\Modules\Open\Requests\Search\SearchRisunkiPoKletochkamRequest;
 use App\Libraries\Template;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use MetaTag;
 use Validator;
+use Breadcrumbs;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use sngrl\SphinxSearch\SphinxSearch;
 use Illuminate\Support\Facades\Log;
@@ -81,6 +83,47 @@ class Search extends Controller
         $viewData['paginate'] = $paginate ?? [];
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;
+
+        MetaTag::set('robots', 'noindex');
+        return $template->loadView('Open::search.index', $viewData);
+    }
+
+    public function risunkiPoKletochkam(SearchRisunkiPoKletochkamRequest $request)
+    {
+        $template = new Template();
+
+        $data = $request->validated();
+        $filters = [];
+        if (!$filters) {
+
+        }
+        $relativePictures = [];
+        $countSearchResults = 0;
+
+        $viewData['filters'] = [
+//            'query' => $query,
+//            'tag' => $tags,
+        ];
+//        $viewData['paginate'] = $paginate ?? [];
+        $viewData['countRelatedPictures'] = $countSearchResults;
+        $viewData['relativePictures'] = $relativePictures;
+
+        Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Главная', '/');
+        });
+
+        Breadcrumbs::for('risunkiPoKletochkam', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Рисунки по клеточкам', '/risunki-po-kletochkam');
+        });
+
+        Breadcrumbs::for('search.risunkiPoKletochkam', function ($trail, $tag) {
+            $trail->parent('risunkiPoKletochkam');
+            $trail->push('Поиск', '/risunki-po-kletochkam/search');
+            if ($tag) {
+                $trail->push($tag);
+            }
+        });
 
         MetaTag::set('robots', 'noindex');
         return $template->loadView('Open::search.index', $viewData);

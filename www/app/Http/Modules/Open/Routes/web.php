@@ -37,6 +37,7 @@ Route::group(
     function () {
          Route::get('/search', ['uses' => 'Search@index'])
              ->name('search');
+         Route::get('/risunki-po-kletochkam/tagged/{tag}', ['uses' => 'RisunkiPoKletochkam@tagged']);
     });
 
 Route::group(

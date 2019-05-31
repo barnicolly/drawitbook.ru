@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('search.risunkiPoKletochkam', 'Gjcn') }}
+    {{ Breadcrumbs::render('risunkiPoKletochkam.search.tagged', 'Gjcn') }}
 @endsection
 
 @section('content')
