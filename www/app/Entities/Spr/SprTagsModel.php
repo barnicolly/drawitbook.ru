@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Http\Modules\Database\Models\Common\Spr;
+namespace App\Entities\Spr;
 
 use Illuminate\Database\Eloquent\Model;
 

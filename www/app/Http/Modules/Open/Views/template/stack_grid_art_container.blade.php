@@ -1,6 +1,6 @@
 <div class="art-container">
     <div class="art-wrapper">
-        @include('Open::template.img_social', ['picture' => $picture, 'activeLink' => true])
+        @include('Open::template.img_social', ['picture' => $picture, 'activeLink' => true, 'tagged' => $tagged ?? false])
         @if (!empty(session('is_admin')))
             <div class="admin-panel" data-picture-id="{{ $picture->id }}">
                 <i class="art-control d-inline-block">

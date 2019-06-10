@@ -3,7 +3,7 @@
 namespace App\Http\Modules\Open\Controllers\Search;
 
 use App\Http\Controllers\Controller;
-use App\Http\Modules\Database\Models\Common\Spr\SprTagsModel;
+use App\Entities\Spr\SprTagsModel;
 use App\Http\Modules\Open\Requests\Search\SearchRisunkiPoKletochkamRequest;
 use App\Libraries\Template;
 use Illuminate\Http\Request;

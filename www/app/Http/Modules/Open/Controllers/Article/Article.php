@@ -9,7 +9,7 @@ use MetaTag;
 //use Validator;
 use App\Http\Modules\Content\Controllers\Search;
 
-use App\Http\Modules\Database\Models\Common\Article\ArticleModel;
+use App\Entities\Article\ArticleModel;
 
 class Article extends Controller
 {

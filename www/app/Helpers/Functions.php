@@ -49,6 +49,14 @@ if (!function_exists('buildUrl')) {
     }
 }
 
+if (!function_exists('mbUcfirst')) {
+    function mbUcfirst($string, $enc = 'UTF-8')
+    {
+        return mb_strtoupper(mb_substr($string, 0, 1, $enc), $enc) .
+            mb_substr($string, 1, mb_strlen($string, $enc), $enc);
+    }
+}
+
 if (!function_exists('trimData')) {
     function trimData($data)
     {

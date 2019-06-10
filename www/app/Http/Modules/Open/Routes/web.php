@@ -1,20 +1,5 @@
 <?php
 
-Route::group(
-    [
-        'middleware' => 'web',
-        'prefix' => '/',
-        'namespace' => 'App\Http\Modules\Open\Controllers\Auth'
-    ],
-    function () {
-        Route::get('/login', ['uses' => 'Login@showLoginForm'])->name('login');
-        Route::get('/register', ['uses' => 'Login@dump']);
-        Route::post('/register', ['uses' => 'Login@dump']);
-        Route::get('/password/reset', ['uses' => 'Login@dump']);
-        Route::post('password/email', ['uses' => 'Login@dump']);
-        Route::get('password/reset/{token}', ['uses' => 'Login@dump']);
-        Route::post('password/reset', ['uses' => 'Login@dump']);
-    });
 
 //Art
 Route::group(
@@ -29,16 +14,9 @@ Route::group(
         Route::post('/art/{id}/claim', ['uses' => 'Claim@register']);
     });
 
-Route::group(
-    [
-        'middleware' => 'web',
-        'namespace' => 'App\Http\Modules\Open\Controllers\Search'
-    ],
-    function () {
-         Route::get('/search', ['uses' => 'Search@index'])
-             ->name('search');
-         Route::get('/risunki-po-kletochkam/tagged/{tag}', ['uses' => 'RisunkiPoKletochkam@tagged']);
-    });
+require_once 'Auth/web.php';
+
+require_once 'Search/risunki-po-kletochkam.php';
 
 Route::group(
     [

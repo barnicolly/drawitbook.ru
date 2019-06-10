@@ -17,7 +17,7 @@ class PictureModel extends Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Http\Modules\Database\Models\Common\Spr\SprTagsModel', 'picture_tags', 'picture_id', 'tag_id');
+        return $this->belongsToMany('App\Entities\Spr\SprTagsModel', 'picture_tags', 'picture_id', 'tag_id');
     }
 
 }

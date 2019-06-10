@@ -10,6 +10,7 @@
     <link rel="icon" href="/favicon.ico">
     <title>{{ MetaTag::get('title') }}</title>
     @stack('head')
+    @stack('links')
     {!! MetaTag::get('keywords') ? MetaTag::tag('keywords') : '' !!}
     {!! MetaTag::get('image') ? MetaTag::tag('image') : '' !!}
     {!! MetaTag::get('robots') ? MetaTag::tag('robots') : '' !!}
