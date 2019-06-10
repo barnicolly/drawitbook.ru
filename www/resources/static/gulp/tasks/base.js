@@ -8,6 +8,7 @@ var base = {
             path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
             path.src.plugin + 'masonry/masonry.min.js',
             path.src.plugin + 'share-this/share-this.min.js',
+            path.src.plugin + 'lazy/jquery.lazy.min.js',
         ],
         minify: [
             path.src.self + 'js/init_plugins.js',
