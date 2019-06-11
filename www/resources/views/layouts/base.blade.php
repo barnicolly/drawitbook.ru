@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    <meta name="yandex-verification" content="e78a61097fbbb899" />
-    <meta name="google-site-verification" content="44qvqCqXAJ59PJZMKJB4zmk8zDa57Ff1mpau2pNfm3Q" />
+    <meta name="yandex-verification" content="e78a61097fbbb899"/>
+    <meta name="google-site-verification" content="44qvqCqXAJ59PJZMKJB4zmk8zDa57Ff1mpau2pNfm3Q"/>
     <link rel="icon" href="/favicon.ico">
     <title>{{ MetaTag::get('title') }}</title>
     @stack('head')
@@ -29,6 +29,9 @@
     @include('layouts/header')
     <div class="container">
         <div class="row">
+            <nav class="col-12">
+                <a href="{{ route('arts.cell') }}">Рисунки по клеточкам</a>
+            </nav>
             <main class="col-12">
                 @yield('breadcrumbs')
                 @yield('content')

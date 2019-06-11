@@ -16,7 +16,8 @@ Route::group(
 
 require_once 'Auth/web.php';
 
-require_once 'Search/risunki_po_kletochkam.php';
+require_once 'Search/arts.cell.php';
+require_once 'Arts/Cell.php';
 
 Route::group(
     [

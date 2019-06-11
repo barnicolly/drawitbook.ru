@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('risunkiPoKletochkam.search.tagged', mbUcfirst($tag->name)) }}
+    {{ Breadcrumbs::render('arts.cell.search.tagged', mbUcfirst($tag->name)) }}
 @endsection
 
 @push('links')
