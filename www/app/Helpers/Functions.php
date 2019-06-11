@@ -85,3 +85,21 @@ if (!function_exists('cleaner')) {
         return deleteLongSpace($row);
     }
 }
+if (!function_exists('b64img')) {
+    function b64img($str, $fs = 10, $w = 250, $h = 200, $b = array('r' => 255, 'g' => 255, 'b' => 255), $t = array('r' => 0, 'g' => 0, 'b' => 0))
+    {
+        $tmp = tempnam(sys_get_temp_dir(), 'img');
+
+        $image = imagecreate($w, $h);
+        $bck = imagecolorallocate($image, $b['r'], $b['g'], $b['b']);
+        $txt = imagecolorallocate($image, $t['r'], $t['g'], $t['b']);
+
+        imagestring($image, $fs, 0, 0, $str, $txt);
+        imagepng($image, $tmp);
+        imagedestroy($image);
+
+        $data = base64_encode(file_get_contents($tmp));
+        @unlink($tmp);
+        return $data;
+    }
+}
