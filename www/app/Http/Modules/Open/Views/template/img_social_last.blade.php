@@ -11,7 +11,7 @@
             @if (isset($activeLink) && $activeLink === true)
                 <a itemprop="url" href="{{ route('art', ['id' => $picture->id]) }}" rel="nofollow">
                     <img data-url="{{ route('art', ['id' => $picture->id]) }}"
-                         data-title="Art #{{ $picture->id }} | Drawitbook.ru" itemprop="contentUrl" class="img-fluid "
+                         data-title="Art #{{ $picture->id }} | Drawitbook.ru" itemprop="contentUrl" class="img-fluid lazy"
                          src="{{ asset('arts/' . $picture->path) }}"
                          alt="{{ $alt }}">
                 </a>

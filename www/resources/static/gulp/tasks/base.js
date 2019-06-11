@@ -161,6 +161,8 @@ gulp.task('fonts:cp', function () {
 gulp.task('img:compress', function () {
     return gulp.src(path.src.arts + '/**/*')
         .pipe(plugins.image({
+            jpegRecompress: ['--quality', 'low', '--min', 30, '--max', 50],
+            optipng: ['-i 1', '-strip all', '-fix', '-o7', '-force'],
             gifsicle: false,
             concurrent: 2,
         }))
