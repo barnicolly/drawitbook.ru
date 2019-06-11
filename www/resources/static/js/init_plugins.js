@@ -1,8 +1,34 @@
+(function($,sr){
+    var debounce = function (func, threshold, execAsap) {
+        var timeout;
+
+        return function debounced () {
+            var obj = this, args = arguments;
+            function delayed () {
+                if (!execAsap)
+                    func.apply(obj, args);
+                timeout = null;
+            };
+
+            if (timeout)
+                clearTimeout(timeout);
+            else if (execAsap)
+                func.apply(obj, args);
+
+            timeout = setTimeout(delayed, threshold || 300);
+        };
+    }
+    // smartresize
+    jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
+
+})(jQuery,'smartresize');
+
 $(function () {
     var $grid = $('.stack-grid');
 
+
+
     $grid.find('.shared-image img').imagesLoaded()
-        .progress(onProgress)
         .always(function () {
             $grid.closest('.stack-grid-wrapper')
                 .find('.stack-loader-container').remove();
@@ -12,20 +38,16 @@ $(function () {
                 columnWidth: getMasonryWidth(),
                 gutter: 10,
             });
+            $('.shared-image img').addClass('not-loaded');
+            $grid.find('.shared-image img').lazy({});
             showStackGridAd.call(this);
         });
 
-    $(window).resize(function () {
+    $(window).smartresize(function () {
         $grid.masonry({
             columnWidth: getMasonryWidth(),
         })
     });
-
-    function onProgress(imgLoad, image) {
-        if (!image.isLoaded) {
-            $(image.img).closest('.art-container').remove();
-        }
-    }
 
     function getMasonryWidth() {
         var masonryWidth = 362;
