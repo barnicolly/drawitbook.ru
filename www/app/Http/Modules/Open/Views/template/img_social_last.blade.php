@@ -9,14 +9,10 @@
         } ?>
         <div class="img-wrapper">
             @if (isset($activeLink) && $activeLink === true)
-                <?php $img = b64img('', 6, $width, $height); ?>
                 <a itemprop="url" href="{{ route('art', ['id' => $picture->id]) }}" rel="nofollow">
                     <img data-url="{{ route('art', ['id' => $picture->id]) }}"
-                         width="{{ $width }}"
-                         height="{{ $height }}"
                          data-title="Art #{{ $picture->id }} | Drawitbook.ru" itemprop="contentUrl" class="img-fluid lazy"
-                         data-src="{{ asset('arts/' . $picture->path) }}"
-                         src="data:image/png;base64,{{$img}}"
+                         src="{{ asset('arts/' . $picture->path) }}"
                          alt="{{ $alt }}">
                 </a>
             @else

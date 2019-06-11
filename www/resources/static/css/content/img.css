@@ -19,3 +19,9 @@
     margin: auto;
     color: #999;
 }
+
+img.lazy {
+    background-image:url(http://i.imgur.com/0LXPeq0.gif);
+    background-repeat:no-repeat;
+    background-position:center;
+}
