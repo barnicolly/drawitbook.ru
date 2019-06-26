@@ -1,7 +1,7 @@
 <?php
 
 namespace App\UseCases\Search;
-
+use Illuminate\Support\Arr;
 use App\Entities\Spr\SprTagsModel;
 
 class SearchBySeoTag

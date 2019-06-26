@@ -19,7 +19,7 @@
     {!! MetaTag::twitterCard() !!}
     <script src="{{ buildUrl('build/js/loader.min.js') }}" defer></script>
     <link rel="stylesheet" href="{{ buildUrl('build/css/master.min.css') }}">
-    @if ($_SERVER["REMOTE_ADDR"] !== '127.0.0.1' && config('app.debug') === false)
+    @if (!isLocal() && config('app.debug') === false && empty(session('is_admin')))
         @include('layouts/metrics')
     @endif
     @stack('styles')
@@ -29,9 +29,6 @@
     @include('layouts/header')
     <div class="container">
         <div class="row">
-            <nav class="col-12">
-                <a href="{{ route('arts.cell') }}">Рисунки по клеточкам</a>
-            </nav>
             <main class="col-12">
                 @yield('breadcrumbs')
                 @yield('content')

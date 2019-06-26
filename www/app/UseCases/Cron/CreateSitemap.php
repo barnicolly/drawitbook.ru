@@ -29,7 +29,7 @@ class CreateSitemap
         $taggedRisunkiPoKletochkam = $this->_getTags();
         if ($taggedRisunkiPoKletochkam) {
             foreach ($taggedRisunkiPoKletochkam as $item) {
-                $sitemap->add(Url::create(route('risunkiPoKletochkam.tagged', $item->seo))
+                $sitemap->add(Url::create(route('arts.cell.tagged', $item->seo))
                     ->setPriority(0.9)
                 );
             }

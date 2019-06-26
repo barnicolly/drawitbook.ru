@@ -55,7 +55,7 @@ class ArtsCell extends Controller
         $relativePictures = new GetPicturesWithTags($relativePictureIds);
         $relativePictures = $relativePictures->get();
 
-        $paginate = new LengthAwarePaginator($relativePictures->forPage($page, $perPage), $countSearchResults, $perPage, $page, ['path' => route('risunkiPoKletochkam.tagged', $tag)]);
+        $paginate = new LengthAwarePaginator($relativePictures->forPage($page, $perPage), $countSearchResults, $perPage, $page, ['path' => route('arts.cell.tagged', $tag)]);
 
         $viewData['paginate'] = $paginate ?? [];
         $title = 'Рисунки по клеточкам «' . mbUcfirst($tagInfo->name) . '»‎';
@@ -73,8 +73,8 @@ class ArtsCell extends Controller
         $viewData['tag'] = $tagInfo;
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;
-        $viewData['links'] = $this->_getPaginateLinks($page, (int)($countSearchResults / $perPage) + 1, route('risunkiPoKletochkam.tagged', $tag));
-        return $template->loadView('Open::search.risunki_po_kletochkam.tagged', $viewData);
+        $viewData['links'] = $this->_getPaginateLinks($page, (int)($countSearchResults / $perPage) + 1, route('arts.cell.tagged', $tag));
+        return $template->loadView('Open::search.cell.tagged', $viewData);
     }
 
     private function _getPaginateLinks(int $page, int $maxPage, string $path)

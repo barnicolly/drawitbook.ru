@@ -2,7 +2,7 @@
     <div class="tag-list">
         @if ($showAllTags)
             @foreach($tags as $tag)
-                @if ($tagged)
+                @if (!empty($tagged))
                     <a href="{{$tagged . '/' . $tag->seo }}"
                        rel="nofollow"
                        itemprop="url"
@@ -19,7 +19,7 @@
             @endforeach
         @else
             @foreach($tags->where('hidden', 0) as $tag)
-                @if ($tagged)
+                @if (!empty($tagged))
                     <a href="{{$tagged . '/' . $tag->seo }}"
                        rel="nofollow"
                        itemprop="url"

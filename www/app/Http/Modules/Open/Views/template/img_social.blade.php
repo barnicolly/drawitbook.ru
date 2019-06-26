@@ -7,19 +7,19 @@
             $alt = $picture->description;
         } ?>
         <div class="img-wrapper">
+            <?php $img = b64img('', 6, $picture->width, $picture->height); ?>
             @if (isset($activeLink) && $activeLink === true)
-                <?php $img = b64img('', 6, $picture->width, $picture->height); ?>
                 <a itemprop="url" href="{{ route('art', ['id' => $picture->id]) }}" rel="nofollow">
                     <img data-url="{{ route('art', ['id' => $picture->id]) }}"
-                         width="{{ $width }}"
-                         height="{{ $height }}"
-                         data-title="Art #{{ $picture->id }} | Drawitbook.ru" itemprop="contentUrl" class="img-fluid lazy"
+                         width="{{ $picture->width }}"
+                         height="{{ $picture->height }}"
+                         data-title="Art #{{ $picture->id }} | Drawitbook.ru" itemprop="contentUrl" class="img-fluid lazy not-loaded"
                          data-src="{{ asset('arts/' . $picture->path) }}"
                          src="data:image/png;base64,{{$img}}"
                          alt="{{ $alt }}">
                 </a>
             @else
-                <img class="img-fluid lazy"
+                <img class="img-fluid lazy not-loaded"
                      data-url="{{ route('art', ['id' => $picture->id]) }}"
                      data-title="Art #{{ $picture->id }} | Drawitbook.ru"
                      itemprop="contentUrl"

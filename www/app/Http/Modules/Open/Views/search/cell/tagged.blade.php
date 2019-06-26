@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('arts.cell.search.tagged', mbUcfirst($tag->name)) }}
+    {{ Breadcrumbs::render('arts.cell.tagged', mbUcfirst($tag->name)) }}
 @endsection
 
 @push('links')
@@ -32,11 +32,14 @@
             {!! loadAd('before_stack') !!}
         </div>
         <div class="col-12 form-group">
-            @include('Open::template.stack_grid', ['pictures' => $relativePictures, 'tagged' => route('risunkiPoKletochkam.tagged', '')])
+            @include('Open::template.stack_grid', ['pictures' => $relativePictures, 'tagged' => route('arts.cell.tagged', '')])
         </div>
         <div class="col-12 form-group">
             {!! loadAd('after_first_stack') !!}
         </div>
+{{--        //TODO-misha добавить сео текста только на первую страницу пагинации --}}
+
+{{--        //TODO-misha Заинтересовать чем-то еще в конце --}}
         @if ($paginate)
             <div class="row">
                 <div class="col-12">
