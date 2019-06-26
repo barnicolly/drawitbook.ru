@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.6.1'
 
-set :application, 'db-nica'
+set :application, 'drawitbook'
 set :repo_url, 'ssh://hg@bitbucket.org/MishaRatnikov/drawitbook'
 
 # Default value for :scm is :git

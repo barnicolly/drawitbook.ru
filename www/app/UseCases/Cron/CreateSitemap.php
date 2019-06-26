@@ -2,7 +2,6 @@
 
 namespace App\UseCases\Cron;
 
-use App\Entities\Article\ArticleModel;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapIndex;
 use Spatie\Sitemap\Tags\Url;
@@ -23,9 +22,6 @@ class CreateSitemap
         $sitemap = Sitemap::create()
             ->add(Url::create($base));
 
-        $articles = ArticleModel::whereIsShow(1)->get();
-
-
         $taggedRisunkiPoKletochkam = $this->_getTags();
         if ($taggedRisunkiPoKletochkam) {
             foreach ($taggedRisunkiPoKletochkam as $item) {
@@ -33,11 +29,6 @@ class CreateSitemap
                     ->setPriority(0.9)
                 );
             }
-        }
-        foreach ($articles as $article) {
-            $sitemap->add(Url::create($base . $article->link)
-                ->setPriority(0.9)
-            );
         }
 
         $sitemap->writeToFile(public_path('sitemaps/sitemap.xml'));

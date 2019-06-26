@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use MetaTag;
 use Validator;
 use Breadcrumbs;
-use sngrl\SphinxSearch\SphinxSearch;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ArtsCell extends Controller

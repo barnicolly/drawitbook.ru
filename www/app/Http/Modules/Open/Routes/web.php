@@ -28,16 +28,3 @@ Route::group(
         Route::get('/', ['uses' => 'Content@index'])
             ->name('home');
     });
-
-//Article
-Route::group(
-    [
-        'middleware' => 'web',
-        'namespace' => 'App\Http\Modules\Open\Controllers\Article'
-    ],
-    function () {
-        /*Route::get('/{url}', ['uses' => 'Article@show'])
-            ->where('url', '.*')
-            ->name('showArticle');*/
-    });
-

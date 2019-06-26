@@ -42,6 +42,7 @@ $(function () {
     $('.art-control').each(function () {
         $(this).customArtControl('init');
     });
+    $('#button').backUpButton('init');
 });
 
 function getClaimContainer() {
@@ -98,22 +99,3 @@ NewModal.prototype.showModal = function () {
         });
     return this.modal;
 };
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
-var btn = $('#button');
-
-$(window).scroll(function() {
-    if ($(window).scrollTop() > 300) {
-        btn.addClass('show');
-    } else {
-        btn.removeClass('show');
-    }
-});
-
-btn.on('click', function(e) {
-    e.preventDefault();
-    $('html, body').animate({scrollTop:0}, '300');
-});
