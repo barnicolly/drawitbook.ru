@@ -13,6 +13,7 @@ var base = {
         minify: [
             path.src.self + 'js/init_plugins.js',
             path.src.self + 'js/content.js',
+            path.src.self + 'js/helpers.js',
             path.src.self + 'js/plugins/*.js',
         ]
     },
