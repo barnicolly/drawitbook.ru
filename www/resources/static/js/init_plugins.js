@@ -57,7 +57,11 @@ $(function () {
     function lazyLoad() {
         $('body').find('.shared-image img').lazy({
             visibleOnly: true,
-            threshold: 50,
+            effect: 'fadeIn',
+            effectTime: 200,
+            threshold: 100,
+            enableThrottle: true,
+            throttle: 550,
             afterLoad: function(element) {
                 $(element).removeClass('not-loaded');
             },
