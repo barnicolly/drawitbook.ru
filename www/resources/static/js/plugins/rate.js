@@ -1,8 +1,8 @@
 (function ($) {
     $.rateContainer = $.rateContainer || [];
     var routes = {
-        like: '/art/like/',
-        dislike: '/art/dislike/',
+        like: '/art/{id}/like',
+        dislike: '/art/{id}/dislike',
     };
 
     function rateContainer() {
@@ -42,16 +42,18 @@
         }
 
         function like(button) {
-            fetch(button, routes.like);
+            var route = routes.like.replace('{id}', self.artId);
+            fetch(button, route);
         }
 
         function dislike(button) {
-            fetch(button, routes.dislike);
+            var route = routes.dislike.replace('{id}', self.artId);
+            fetch(button, route);
         }
 
         function fetch(button, route) {
             let activeOff = $(button).hasClass('active');
-            sendRequest('post', route + self.artId, {off: activeOff}, function (res) {
+            sendRequest('post', route, {off: activeOff}, function (res) {
                 unlockRateButtons();
                 if (res.success) {
                     if (!activeOff) {

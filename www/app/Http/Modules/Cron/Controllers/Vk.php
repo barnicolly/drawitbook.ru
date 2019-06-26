@@ -104,6 +104,11 @@ limit 1'));
         sleep(25);
         $lastWallPhotoId = $this->_getLastWallPhoto();
         if ($lastWallPhotoId) {
+
+            $url = 'https://drawitbook.ru';
+            $this->_editPhoto($lastWallPhotoId, ['caption' => $hashTags . "\n\n" . 'Ещё больше рисунков на ' . $url . "\n\n" . 'Рисуйте)']);
+
+
             $attachments = 'photo-' . $this->_groupId . '_' . $lastWallPhotoId . ',' . 'https://drawitbook.ru';
             $this->_editPost($postId, ['message' => $hashTags, 'attachments' => $attachments]);
         }
@@ -117,6 +122,21 @@ limit 1'));
         ], $data);
         try {
             $response = $this->_api->request('wall.edit', $data);
+        } catch (\Exception $e) {
+            if ($data) {
+
+            }
+        }
+    }
+
+    private function _editPhoto(int $photoId, array $data)
+    {
+        $data = array_merge([
+            'owner_id' => '-' . $this->_groupId,
+            'photo_id' => $photoId,
+        ], $data);
+        try {
+            $response = $this->_api->request('photos.edit', $data);
         } catch (\Exception $e) {
             if ($data) {
 

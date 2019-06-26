@@ -36,10 +36,10 @@ class Index extends Controller
         $search = new Search();
         $article->pictures = $search->checkExistArts($article->pictures);
 
-        $artList = view('Content::article.show.art_list', ['article' => $article])->render();
+        $artList = view('Open::article.show.art_list', ['article' => $article])->render();
         $article->template = str_ireplace('$artList$', $artList, $article->template);
         $viewData['article'] = $article;
-        return $template->loadView('Content::article.show.index', $viewData);
+        return $template->loadView('Open::article.show.index', $viewData);
     }
 
     public function edit($id)

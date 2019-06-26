@@ -53,4 +53,8 @@ Route::group(
     function () {
         Route::post('/setVkPostingOn', ['uses' => 'Art@setVkPostingOnRequest']);
         Route::post('/setVkPostingOff', ['uses' => 'Art@setVkPostingOffRequest']);
+        Route::get('/{id}/getSettingsModal', ['uses' => 'Art@getSettingsModal']);
+        Route::post('/{id}/postInVkAlbum', ['uses' => 'Art@postInVkAlbum']);
+        Route::post('/{id}/removeFromVkAlbum', ['uses' => 'Art@removeFromVkAlbum']);
     });
+
