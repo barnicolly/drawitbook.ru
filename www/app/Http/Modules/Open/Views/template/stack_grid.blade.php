@@ -21,7 +21,7 @@
                     </div>
                 </div>
             @endif
-            @include('Open::template.stack_grid_art_container', ['picture' => $picture, 'showAllTags' => $showAllTags ?? false])
+            @include('Open::template.stack_grid_art_container', ['picture' => $picture, 'showAllTags' => $showAllTags ?? false, 'tagged' => $tagged ?? false])
         @endforeach
     </div>
 </div>

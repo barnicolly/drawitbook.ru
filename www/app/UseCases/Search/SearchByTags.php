@@ -6,16 +6,18 @@ use sngrl\SphinxSearch\SphinxSearch;
 
 class SearchByTags
 {
+    private $_limit;
 
-    public function __construct()
+    public function __construct(int $limit = 15)
     {
+        $this->_limit = $limit;
     }
 
-    public function searchRelatedPicturesIds(array $shown, array $hidden)
+    public function searchRelatedPicturesIds(array $shown, array $hidden = [])
     {
         $sphinx = new SphinxSearch();
         $sphinx->search('', 'drawItBookSearchByTag')
-            ->limit(15)
+            ->limit($this->_limit)
             ->setFieldWeights(
                 array(
                     'hidden_tag' => 3,

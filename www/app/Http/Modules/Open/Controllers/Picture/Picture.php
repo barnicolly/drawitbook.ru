@@ -26,7 +26,7 @@ class Picture extends Controller
             $getTagsFromPictures = new GetTagsFromPicture();
             list($shown, $hidden) = $getTagsFromPictures->getTagIds($picture);
             $relativePictures = [];
-            if ($shown || $hidden) {
+           if ($shown || $hidden) {
                 $search = new SearchByTags();
                 $pictureIds = $search->searchRelatedPicturesIds($shown, $hidden);
                 if ($pictureIds) {
@@ -45,7 +45,8 @@ class Picture extends Controller
             $this->_commandsAfterView($id);
             return $template->loadView('Open::picture.index', $viewData);
         } catch (\Throwable $exception) {
-            abort(404);
+            info($exception->getMessage());
+            abort(500);
         }
     }
 

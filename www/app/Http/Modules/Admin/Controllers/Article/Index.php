@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Modules\Content\Controllers\Search;
 use App\Libraries\Template;
 use Validator;
-use App\Http\Modules\Database\Models\Common\Article\ArticleModel;
+use App\Entities\Article\ArticleModel;
 
 class Index extends Controller
 {

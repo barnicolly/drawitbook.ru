@@ -5,7 +5,7 @@ namespace App\Http\Modules\Admin\Controllers\Article;
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Admin\Requests\Article\ArticleSaveRequest;
 use Validator;
-use App\Http\Modules\Database\Models\Common\Article\ArticleModel;
+use App\Entities\Article\ArticleModel;
 use Illuminate\Support\Facades\DB;
 
 class Article extends Controller

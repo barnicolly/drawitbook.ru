@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Modules\Admin\Requests\Article\ArticlePictureSaveRequest;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use Validator;
-use App\Http\Modules\Database\Models\Common\Article\ArticleModel;
+use App\Entities\Article\ArticleModel;
 use App\Http\Modules\Database\Models\Common\Article\ArticlePictureModel;
 use Illuminate\Http\Request;
 

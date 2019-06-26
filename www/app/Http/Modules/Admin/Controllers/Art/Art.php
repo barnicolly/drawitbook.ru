@@ -67,7 +67,7 @@ class Art extends Controller
                 ->get()
                 ->toArray();
             $issetInVkAlbums = [];
-            //TODO-misha вынести в метод + тест для него
+            //TODO-misha вынести в метод
             if ($vkAlbumPictures) {
                 foreach ($vkAlbumPictures as $vkAlbumPicture) {
                     $vkAlbumId = $vkAlbumPicture['vk_album_id'];

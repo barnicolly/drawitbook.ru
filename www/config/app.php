@@ -183,6 +183,7 @@ return [
         sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
         Torann\LaravelMetaTags\MetaTagsServiceProvider::class,
         Waavi\Sanitizer\Laravel\SanitizerServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
     ],
 
     /*
@@ -236,6 +237,7 @@ return [
         'MetaTag'   => Torann\LaravelMetaTags\Facades\MetaTag::class,
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
         'Sanitizer' => Waavi\Sanitizer\Laravel\Facade::class,
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::class,
     ],
 
     'debug_blacklist' => [
