@@ -90,13 +90,22 @@ if (!function_exists('b64img')) {
     {
         $tmp = tempnam(sys_get_temp_dir(), 'img');
 
-        $image = imagecreatetruecolor($w, $h);
-        imagesavealpha($image, true);
+//        $image = imagecreatetruecolor($w, $h);
+//        imagesavealpha($image, true);
+//        $color = imagecolorallocatealpha($image, 0, 0, 0, 127);
+//        imagefill($image, 0, 0, $color);
+//
+//        imagepng($image, $tmp, 9);
+//        imagedestroy($image);
+
+        $image = imagecreatetruecolor( $w, $h );
+        imagesavealpha( $image, true );
         $color = imagecolorallocatealpha($image, 0, 0, 0, 127);
         imagefill($image, 0, 0, $color);
 
-        imagepng($image, $tmp, 9);
-        imagedestroy($image);
+        // Ouput
+        imagepng( $image , $tmp);
+        imagedestroy( $image );
 
         $data = base64_encode(file_get_contents($tmp));
         @unlink($tmp);
