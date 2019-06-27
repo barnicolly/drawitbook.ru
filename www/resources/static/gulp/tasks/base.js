@@ -9,6 +9,7 @@ var base = {
             path.src.plugin + 'masonry/masonry.min.js',
             path.src.plugin + 'share-this/share-this.min.js',
             path.src.plugin + 'lazy/jquery.lazy.min.js',
+            // path.src.plugin + 'bootstrap/compiled/bootstrap.min.js',
         ],
         minify: [
             path.src.self + 'js/init_plugins.js',
@@ -19,7 +20,7 @@ var base = {
     },
     css: {
         append: [
-            path.src.plugin + 'bootstrap/css/bootstrap.min.css',
+            path.src.plugin + 'bootstrap/dist/css/bootstrap.min.css',
             path.src.plugin + 'font-awesome-4.7.0/css/font-awesome.min.css',
         ],
         minify: [
@@ -49,6 +50,7 @@ var admin = {
     }
 };
 
+
 gulp.task('scripts:admin-base', function () {
     var stream;
     if (typeof admin.js.minify !== 'undefined' && Object.keys(admin.js.minify).length) {
@@ -76,6 +78,7 @@ gulp.task('scripts:admin-common', function () {
         .pipe(plugins.plumber())
         .pipe(plugins.cached('scripts:admin-common'))
         .pipe(plugins.if(env.sourcemaps, plugins.sourcemaps.init()))
+        .pipe(plugins.purgeSourcemaps())
         .pipe(plugins.babel())
         .pipe(plugins.if(env.minify, plugins.uglify()))
         .pipe(plugins.remember('scripts:admin-common'))
@@ -128,6 +131,7 @@ gulp.task('scripts:base', function () {
 
 function prepareJsStream(name, files) {
     return gulp.src(files.minify)
+        .pipe(plugins.purgeSourcemaps())
         .pipe(plugins.plumber())
         .pipe(plugins.cached(name))
         .pipe(plugins.babel())
@@ -141,12 +145,13 @@ function prepareCssStream(name, files) {
         .pipe(plugins.plumber())
         .pipe(plugins.cached(name))
         .pipe(plugins.if(env.minify, plugins.cleanCss()))
+        .pipe(plugins.purgeSourcemaps())
         .pipe(plugins.autoprefixer())
         .pipe(plugins.remember(name))
         .pipe(plugins.if(
             files.append !== 'undefined' && Object.keys(files.append).length,
             plugins.addSrc.prepend(files.append))
-        );
+        )
 }
 
 gulp.task('fonts:cp', function () {

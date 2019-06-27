@@ -4,6 +4,7 @@
  */
 require('./tasks/base');
 require('./tasks/plugin');
+require('./tasks/utils');
 
 /**
  * Основные таски
