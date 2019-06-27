@@ -9,8 +9,7 @@
         @if (isset($activeLink) && $activeLink === true)
             <a itemprop="url" href="{{ route('art', ['id' => $picture->id]) }}" rel="nofollow">
                 <div style="width:100%;height:0; padding-top:{{ $picture->height / $picture->width * 100 }}%;position:relative;">
-                    <img data-url="{{ route('art', ['id' => $picture->id]) }}"
-                         width="{{ $picture->width }}"
+                    <img width="{{ $picture->width }}"
                          height="{{ $picture->height }}"
                          style="position:absolute; top:0; left:0; width:100%;"
                          data-title="Art #{{ $picture->id }} | Drawitbook.ru" itemprop="contentUrl"

@@ -30,25 +30,16 @@ $(function () {
     var $grid = $('.stack-grid');
 
     if ($grid.length) {
-        $grid.find('.shared-image img')
-            .imagesLoaded()
-            .always(function () {
-                $grid.closest('.stack-grid-wrapper')
-                    .find('.stack-loader-container').remove();
-                $grid.show();
-                $grid.masonry({
-                    itemSelector: '.art-container',
-                    columnWidth: getMasonryWidth(),
-                    gutter: 10,
-                });
-
-                lazyLoad();
-                showStackGridAd.call(this);
-            });
-    /*    $grid.closest('.stack-grid-wrapper')
+        $grid.closest('.stack-grid-wrapper')
             .find('.stack-loader-container').remove();
         $grid.show();
-        lazyLoad();*/
+        $grid.masonry({
+            itemSelector: '.art-container',
+            columnWidth: getMasonryWidth(),
+            gutter: 10,
+        });
+        lazyLoad();
+        showStackGridAd.call(this);
         $(window).smartresize(function () {
             $grid.masonry({
                 columnWidth: getMasonryWidth(),
@@ -59,14 +50,16 @@ $(function () {
     }
 
     function lazyLoad() {
-        $('body').find('.shared-image img').lazy({
+
+        $('.lazy.not-loaded').lazy({
             visibleOnly: true,
             effect: 'fadeIn',
             effectTime: 200,
-            threshold: 100,
+            threshold: 300,
             enableThrottle: true,
             throttle: 550,
-            afterLoad: function(element) {
+            afterLoad: function (element) {
+                console.log(1234);
                 $(element).removeClass('not-loaded');
             },
         });
@@ -83,15 +76,15 @@ $(function () {
         return masonryWidth;
     }
 
-    $('.shared-image img').sti({
-        selector: '.shared-image img',
-        orientation: "horizontal",
-        title: 'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями',
-        style: "flat-small",
-        always_show: false,
-        is_mobile: false,
-        primary_menu: ["vkontakte", "pinterest", 'odnoklassniki', "facebook", "twitter"]
-    });
+    /*  $('.shared-image img').sti({
+          selector: '.shared-image img',
+          orientation: "horizontal",
+          title: 'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями',
+          style: "flat-small",
+          always_show: false,
+          is_mobile: false,
+          primary_menu: ["vkontakte", "pinterest", 'odnoklassniki', "facebook", "twitter"]
+      });*/
 
     $(document).ready(function () {
         $(".megamenu").on("click", function (e) {
