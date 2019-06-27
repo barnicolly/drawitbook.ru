@@ -30,7 +30,8 @@ $(function () {
     var $grid = $('.stack-grid');
 
     if ($grid.length) {
-        $grid.find('.shared-image img').imagesLoaded()
+        $grid.find('.shared-image img')
+            .imagesLoaded()
             .always(function () {
                 $grid.closest('.stack-grid-wrapper')
                     .find('.stack-loader-container').remove();
@@ -44,7 +45,10 @@ $(function () {
                 lazyLoad();
                 showStackGridAd.call(this);
             });
-
+    /*    $grid.closest('.stack-grid-wrapper')
+            .find('.stack-loader-container').remove();
+        $grid.show();
+        lazyLoad();*/
         $(window).smartresize(function () {
             $grid.masonry({
                 columnWidth: getMasonryWidth(),
@@ -57,7 +61,11 @@ $(function () {
     function lazyLoad() {
         $('body').find('.shared-image img').lazy({
             visibleOnly: true,
-            threshold: 50,
+            effect: 'fadeIn',
+            effectTime: 200,
+            threshold: 100,
+            enableThrottle: true,
+            throttle: 550,
             afterLoad: function(element) {
                 $(element).removeClass('not-loaded');
             },

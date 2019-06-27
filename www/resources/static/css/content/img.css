@@ -20,8 +20,10 @@
     color: #999;
 }
 
+img.lazy {
+    background: #f7f7f7;
+}
+
 img.lazy.not-loaded {
-    background-image:url(http://i.imgur.com/0LXPeq0.gif);
-    background-repeat:no-repeat;
-    background-position:center;
+    background: transparent url(http://afarkas.github.io/lazysizes/assets/imgs/loader.gif) no-repeat 50% 50%;
 }

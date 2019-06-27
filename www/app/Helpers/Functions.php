@@ -89,14 +89,23 @@ if (!function_exists('b64img')) {
     function b64img($str, $fs = 10, $w = 250, $h = 200, $b = array('r' => 255, 'g' => 255, 'b' => 255), $t = array('r' => 0, 'g' => 0, 'b' => 0))
     {
         $tmp = tempnam(sys_get_temp_dir(), 'img');
-        $image = imagecreate($w, $h);
-        imagesavealpha($image, true);
-        $bck = imagecolorallocate($image, $b['r'], $b['g'], $b['b']);
-        $txt = imagecolorallocate($image, $t['r'], $t['g'], $t['b']);
 
-        imagestring($image, $fs, 0, 0, $str, $txt);
-        imagepng($image, $tmp);
-        imagedestroy($image);
+//        $image = imagecreatetruecolor($w, $h);
+//        imagesavealpha($image, true);
+//        $color = imagecolorallocatealpha($image, 0, 0, 0, 127);
+//        imagefill($image, 0, 0, $color);
+//
+//        imagepng($image, $tmp, 9);
+//        imagedestroy($image);
+
+        $image = imagecreatetruecolor( $w, $h );
+        imagesavealpha( $image, true );
+        $color = imagecolorallocatealpha($image, 0, 0, 0, 127);
+        imagefill($image, 0, 0, $color);
+
+        // Ouput
+        imagepng( $image , $tmp);
+        imagedestroy( $image );
 
         $data = base64_encode(file_get_contents($tmp));
         @unlink($tmp);
