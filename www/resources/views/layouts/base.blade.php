@@ -19,6 +19,7 @@
     {!! MetaTag::twitterCard() !!}
     <script src="{{ buildUrl('build/js/loader.min.js') }}" defer></script>
     <link rel="stylesheet" href="{{ buildUrl('build/css/master.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
     @if (!empty(session('is_admin')))
         <link rel="stylesheet" href="{{ buildUrl('build/css/admin.min.css') }}">
     @endif
@@ -49,6 +50,7 @@
 @if (!empty(session('is_admin')))
     <script src="{{ buildUrl('build/js/admin.min.js') }}" defer></script>
 @endif
+<script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 @stack('scripts')
 <a id="button">
     <span class="fa fa-arrow-up"></span>

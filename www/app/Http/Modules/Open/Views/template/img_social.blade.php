@@ -7,7 +7,10 @@
     } ?>
     <div class="img-wrapper">
         @if (isset($activeLink) && $activeLink === true)
-            <a itemprop="url" href="{{ route('art', ['id' => $picture->id]) }}" rel="nofollow">
+            <a itemprop="url" data-fancybox="images" href="{{ asset('arts/' . $picture->path) }}" rel="nofollow"
+               data-thumb="{{ asset('arts/' . $picture->path) }}"
+               data-id="{{ $picture->id }}"
+            >
                 <div style="width:100%;height:0; padding-top:{{ $picture->height / $picture->width * 100 }}%;position:relative;">
                     <img width="{{ $picture->width }}"
                          height="{{ $picture->height }}"

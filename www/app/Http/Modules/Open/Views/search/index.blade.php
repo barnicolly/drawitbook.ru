@@ -45,10 +45,8 @@
                 {!! loadAd('after_first_stack') !!}
             </div>
             @if ($paginate)
-                <div class="row">
-                    <div class="col-12">
-                        {{ $paginate->links() }}
-                    </div>
+                <div class="col-12">
+                    {{ $paginate->links() }}
                 </div>
             @endif
         </div>
