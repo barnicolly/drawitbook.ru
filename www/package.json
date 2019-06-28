@@ -40,11 +40,12 @@
         "gulp-recursive-folder": "^0.9.4",
         "gulp-remember": "^1.0.1",
         "gulp-replace": "^1.0.0",
+        "gulp-rigger": "^0.5.8",
         "gulp-sass": "^4.0.2",
         "gulp-sourcemaps": "^2.6.4",
+        "gulp-strip-comments": "^2.5.2",
         "gulp-uglify": "^3.0.0",
         "node-find-files": "0.0.4",
-        "gulp-strip-comments": "^2.5.2",
         "node-sass": "^4.12.0"
     }
 }

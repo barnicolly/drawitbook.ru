@@ -2,7 +2,7 @@ var base = {
     js: {
         append: [
             path.src.plugin + 'jquery/jquery-3.1.1.min.js',
-            path.src.plugin + 'bootstrap/compiled/js/bootstrap.bundle.min.js',
+            path.src.plugin + 'bootstrap/compiled/js/bootstrap.min.js',
             path.src.plugin + 'sticky/ResizeSensor.js',
             path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
             path.src.plugin + 'masonry/masonry.min.js',
@@ -39,7 +39,7 @@ var admin = {
     css: {
         append: [
             path.src.plugin + 'font-awesome-4.7.0/css/font-awesome.min.css',
-            path.src.plugin + 'bootstrap/compiled/css/bootstrap.min.css',
+            path.src.plugin + 'bootstrap/compiled/css/bootstrap-extended.css',
         ],
         minify: [
             path.src.self + 'css/admin/main.css',
