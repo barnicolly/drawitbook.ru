@@ -2,14 +2,12 @@ var base = {
     js: {
         append: [
             path.src.plugin + 'jquery/jquery-3.1.1.min.js',
-            path.src.plugin + 'bootstrap/js/popper.min.js',
-            path.src.plugin + 'bootstrap/js/bootstrap.min.js',
+            path.src.plugin + 'bootstrap/compiled/js/bootstrap.bundle.min.js',
             path.src.plugin + 'sticky/ResizeSensor.js',
             path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
             path.src.plugin + 'masonry/masonry.min.js',
             path.src.plugin + 'share-this/share-this.min.js',
             path.src.plugin + 'lazy/jquery.lazy.min.js',
-            // path.src.plugin + 'bootstrap/compiled/bootstrap.min.js',
         ],
         minify: [
             path.src.self + 'js/init_plugins.js',
@@ -20,10 +18,10 @@ var base = {
     },
     css: {
         append: [
-            path.src.plugin + 'bootstrap/dist/css/bootstrap.min.css',
-            path.src.plugin + 'font-awesome-4.7.0/css/font-awesome.min.css',
+            path.src.plugin + 'bootstrap/compiled/css/bootstrap-minimized.css',
         ],
         minify: [
+            path.src.plugin + 'font-awesome-4.7.0/css/font-awesome-minimized.css',
             path.src.self + 'css/content/*.css',
         ]
     }
@@ -32,7 +30,6 @@ var base = {
 var admin = {
     js: {
         append: [
-            // path.src.plugin + 'fancybox/jquery.fancybox.min.js',
             path.src.plugin + 'clipboard/clipboard.js',
         ],
         minify: [
@@ -42,7 +39,7 @@ var admin = {
     css: {
         append: [
             path.src.plugin + 'font-awesome-4.7.0/css/font-awesome.min.css',
-            // path.src.plugin + 'fancybox/jquery.fancybox.min.css',
+            path.src.plugin + 'bootstrap/compiled/css/bootstrap.min.css',
         ],
         minify: [
             path.src.self + 'css/admin/main.css',
@@ -137,7 +134,8 @@ function prepareJsStream(name, files) {
         .pipe(plugins.babel())
         .pipe(plugins.if(env.minify, plugins.uglify()))
         .pipe(plugins.remember(name))
-        .pipe(plugins.addSrc.prepend(files.append));
+        .pipe(plugins.addSrc.prepend(files.append))
+        .pipe(plugins.stripComments());
 }
 
 function prepareCssStream(name, files) {
@@ -151,7 +149,7 @@ function prepareCssStream(name, files) {
         .pipe(plugins.if(
             files.append !== 'undefined' && Object.keys(files.append).length,
             plugins.addSrc.prepend(files.append))
-        )
+        );
 }
 
 gulp.task('fonts:cp', function () {

@@ -45,10 +45,6 @@ $(function () {
                 lazyLoad();
                 showStackGridAd.call(this);
             });
-    /*    $grid.closest('.stack-grid-wrapper')
-            .find('.stack-loader-container').remove();
-        $grid.show();
-        lazyLoad();*/
         $(window).smartresize(function () {
             $grid.masonry({
                 columnWidth: getMasonryWidth(),

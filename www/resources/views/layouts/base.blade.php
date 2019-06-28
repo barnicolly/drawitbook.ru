@@ -19,6 +19,9 @@
     {!! MetaTag::twitterCard() !!}
     <script src="{{ buildUrl('build/js/loader.min.js') }}" defer></script>
     <link rel="stylesheet" href="{{ buildUrl('build/css/master.min.css') }}">
+    @if (!empty(session('is_admin')))
+        <link rel="stylesheet" href="{{ buildUrl('build/css/admin.min.css') }}">
+    @endif
     @if (!isLocal() && config('app.debug') === false && empty(session('is_admin')))
         @include('layouts/metrics')
     @endif
@@ -43,6 +46,9 @@
     {!! $footer !!}
 </div>
 <script src="{{ buildUrl('build/js/master.min.js') }}" defer></script>
+@if (!empty(session('is_admin')))
+    <script src="{{ buildUrl('build/js/admin.min.js') }}" defer></script>
+@endif
 @stack('scripts')
 <a id="button">
     <span class="fa fa-arrow-up"></span>
