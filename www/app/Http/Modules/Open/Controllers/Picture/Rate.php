@@ -32,8 +32,12 @@ class Rate extends Controller
         try {
             $this->_validate($data);
             $ip = request()->ip();
+            $userId = auth()->id();
+            if (!$userId) {
+                $userId = 0;
+            }
             $getIp = new GetIp($ip);
-            $ratePicture = new RatePicture($data['id'], $getIp->clean(), auth()->id());
+            $ratePicture = new RatePicture($data['id'], $getIp->clean(), $userId);
             $ratePicture->like($data['off'] !== 'true');
         } catch (\Throwable $e) {
             return response($this->_errorJsonResponse);
@@ -48,8 +52,11 @@ class Rate extends Controller
             $this->_validate($data);
             $ip = request()->ip();
             $getIp = new GetIp($ip);
-
-            $ratePicture = new RatePicture($data['id'], $getIp->clean(), auth()->id());
+            $userId = auth()->id();
+            if (!$userId) {
+                $userId = 0;
+            }
+            $ratePicture = new RatePicture($data['id'], $getIp->clean(), $userId);
             $ratePicture->dislike($data['off'] !== 'true');
         } catch (\Throwable $e) {
             return response($this->_errorJsonResponse);

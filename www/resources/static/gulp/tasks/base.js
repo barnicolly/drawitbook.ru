@@ -2,8 +2,7 @@ var base = {
     js: {
         append: [
             path.src.plugin + 'jquery/jquery-3.1.1.min.js',
-            path.src.plugin + 'bootstrap/js/popper.min.js',
-            path.src.plugin + 'bootstrap/js/bootstrap.min.js',
+            path.src.plugin + 'bootstrap/compiled/js/bootstrap.min.js',
             path.src.plugin + 'sticky/ResizeSensor.js',
             path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
             path.src.plugin + 'masonry/masonry.min.js',
@@ -19,10 +18,10 @@ var base = {
     },
     css: {
         append: [
-            path.src.plugin + 'bootstrap/css/bootstrap.min.css',
-            path.src.plugin + 'font-awesome-4.7.0/css/font-awesome.min.css',
+            path.src.plugin + 'bootstrap/compiled/css/bootstrap-minimized.css',
         ],
         minify: [
+            path.src.plugin + 'font-awesome-4.7.0/css/font-awesome-minimized.css',
             path.src.self + 'css/content/*.css',
         ]
     }
@@ -31,7 +30,6 @@ var base = {
 var admin = {
     js: {
         append: [
-            // path.src.plugin + 'fancybox/jquery.fancybox.min.js',
             path.src.plugin + 'clipboard/clipboard.js',
         ],
         minify: [
@@ -41,13 +39,14 @@ var admin = {
     css: {
         append: [
             path.src.plugin + 'font-awesome-4.7.0/css/font-awesome.min.css',
-            // path.src.plugin + 'fancybox/jquery.fancybox.min.css',
+            path.src.plugin + 'bootstrap/compiled/css/bootstrap-extended.css',
         ],
         minify: [
             path.src.self + 'css/admin/main.css',
         ]
     }
 };
+
 
 gulp.task('scripts:admin-base', function () {
     var stream;
@@ -76,6 +75,7 @@ gulp.task('scripts:admin-common', function () {
         .pipe(plugins.plumber())
         .pipe(plugins.cached('scripts:admin-common'))
         .pipe(plugins.if(env.sourcemaps, plugins.sourcemaps.init()))
+        .pipe(plugins.purgeSourcemaps())
         .pipe(plugins.babel())
         .pipe(plugins.if(env.minify, plugins.uglify()))
         .pipe(plugins.remember('scripts:admin-common'))
@@ -128,12 +128,14 @@ gulp.task('scripts:base', function () {
 
 function prepareJsStream(name, files) {
     return gulp.src(files.minify)
+        .pipe(plugins.purgeSourcemaps())
         .pipe(plugins.plumber())
         .pipe(plugins.cached(name))
         .pipe(plugins.babel())
         .pipe(plugins.if(env.minify, plugins.uglify()))
         .pipe(plugins.remember(name))
-        .pipe(plugins.addSrc.prepend(files.append));
+        .pipe(plugins.addSrc.prepend(files.append))
+        .pipe(plugins.stripComments());
 }
 
 function prepareCssStream(name, files) {
@@ -141,6 +143,7 @@ function prepareCssStream(name, files) {
         .pipe(plugins.plumber())
         .pipe(plugins.cached(name))
         .pipe(plugins.if(env.minify, plugins.cleanCss()))
+        .pipe(plugins.purgeSourcemaps())
         .pipe(plugins.autoprefixer())
         .pipe(plugins.remember(name))
         .pipe(plugins.if(

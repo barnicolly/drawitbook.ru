@@ -64,7 +64,6 @@ class ArtsCell extends Controller
             MetaTag::set('title', $title . ' - Страница ' . $page);
             MetaTag::set('description', $description  . ' Страница - ' . $page);
         } else {
-            MetaTag::set('title', 'Рисунки по клеточкам «' . mbUcfirst($tagInfo->name) . '»‎ ');
             MetaTag::set('title', $title);
             MetaTag::set('description', $description);
         }

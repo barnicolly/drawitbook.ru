@@ -58,8 +58,7 @@ $(function () {
             threshold: 300,
             enableThrottle: true,
             throttle: 550,
-            afterLoad: function (element) {
-                console.log(1234);
+            afterLoad: function(element) {
                 $(element).removeClass('not-loaded');
             },
         });
@@ -76,15 +75,15 @@ $(function () {
         return masonryWidth;
     }
 
-    /*  $('.shared-image img').sti({
-          selector: '.shared-image img',
-          orientation: "horizontal",
-          title: 'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями',
-          style: "flat-small",
-          always_show: false,
-          is_mobile: false,
-          primary_menu: ["vkontakte", "pinterest", 'odnoklassniki', "facebook", "twitter"]
-      });*/
+    $('.shared-image img').sti({
+        selector: '.shared-image img',
+        orientation: "horizontal",
+        title: 'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями',
+        style: "flat-small",
+        always_show: false,
+        is_mobile: false,
+        primary_menu: ["vkontakte", "pinterest", 'odnoklassniki', "facebook", "twitter"]
+    });
 
     $(document).ready(function () {
         $(".megamenu").on("click", function (e) {
