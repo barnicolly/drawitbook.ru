@@ -39,15 +39,16 @@ class ArtsCell extends Controller
         }
 
         $viewData = [];
-
         $page = $request->input('page');
-        if (!is_null($request->input('page')) && $page <= 0) {
-            abort(404);
-        }
-        $perPage = 50;
-        if (!$page) {
+        $addCanonical = false;
+        if ($page === '1') {
+            $addCanonical = true;
+        } else if (is_null($page)) {
             $page = 1;
         }
+        $page = (int) $page;
+        $perPage = 50;
+
         $countSearchResults = count($relativePictureIds);
         $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);
 
@@ -66,8 +67,13 @@ class ArtsCell extends Controller
         } else {
             MetaTag::set('title', $title);
             MetaTag::set('description', $description);
+            if ($addCanonical) {
+                $viewData['canonical'] = route('arts.cell.tagged', $tag);
+            }
         }
-
+        if (empty($viewData['canonical'])) {
+            $viewData['canonical'] = '';
+        }
         $viewData['tag'] = $tagInfo;
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;

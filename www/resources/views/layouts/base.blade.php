@@ -30,7 +30,7 @@
 <body>
 <div class="container-fluid no-padding">
     @include('layouts/header')
-    <div class="container">
+    <div class="container" id="main-container">
         <div class="row">
             <main class="col-12">
                 @yield('breadcrumbs')
