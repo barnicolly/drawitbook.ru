@@ -9,7 +9,7 @@ use App\Http\Modules\Database\Models\Moderate\PagesModel;
 use App\Http\Modules\Admin\Controllers\TagRules;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use Illuminate\Support\Facades\DB;
-use App\Http\Modules\Database\Models\Common\Spr\SprTagsModel;
+use App\Entities\Spr\SprTagsModel;
 
 class SaveImage extends Controller
 {

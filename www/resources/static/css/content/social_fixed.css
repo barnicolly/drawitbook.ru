@@ -43,3 +43,19 @@
         text-align: center;
     }
 }
+
+#main-container {
+    position: relative;
+}
+
+.social-fixed-right-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.social-fixed-right {
+    position: fixed;
+    /*top: 20px;*/
+    /*right: -20px;;*/
+}

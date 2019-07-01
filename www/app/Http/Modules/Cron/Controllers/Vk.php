@@ -17,7 +17,7 @@ class Vk extends Controller
 
     public function __construct()
     {
-        $this->_key = '079d803758e75cf27ebf0d41fd280ab5aef30c1a2af76a831c9f5bb5d0da08d9e7ce6ee33f211deafc89a';
+        $this->_key = 'd2c07ad4d74dcb74808356195ccec7db8c75b25c12106e632265a9e646b7d36588a0355ebe364f8bf4907';
         $this->_groupId = '182256925';
         $this->_api = new Client('5.95');
         $this->_api->setDefaultToken($this->_key);
@@ -101,13 +101,12 @@ limit 1'));
         $uploadedPhoto = $this->_saveWallPhoto($server);
         $attachments = 'photo' . $uploadedPhoto['owner_id'] . '_' . $uploadedPhoto['id'] . ',' . 'https://drawitbook.ru';
         $postId = $this->_wallPost(['message' => $hashTags, 'attachments' => $attachments]);
+        sleep(25);
         $lastWallPhotoId = $this->_getLastWallPhoto();
         if ($lastWallPhotoId) {
-
             $url = 'https://drawitbook.ru';
             $this->_editPhoto($lastWallPhotoId, ['caption' => $hashTags . "\n\n" . 'Ещё больше рисунков на ' . $url . "\n\n" . 'Рисуйте)']);
 
-            sleep(25);
 
             $attachments = 'photo-' . $this->_groupId . '_' . $lastWallPhotoId . ',' . 'https://drawitbook.ru';
             $this->_editPost($postId, ['message' => $hashTags, 'attachments' => $attachments]);
@@ -179,7 +178,9 @@ limit 1'));
     private function _wallPost(array $data)
     {
         $data = array_merge([
-            'owner_id' => '-' . $this->_groupId, 'from_group' => 1
+            'owner_id' => '-' . $this->_groupId,
+            'from_group' => 1,
+            'close_comments' => 1,
         ], $data);
         $response = $this->_api->request('wall.post', $data);
         if ($response) {

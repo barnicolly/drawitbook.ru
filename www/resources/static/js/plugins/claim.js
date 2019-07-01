@@ -52,7 +52,7 @@
                 .on('click', '.submit-claim', function () {
                     if ($(self.artContainer).find('.claim-container').length) {
                         var data = $(self.artContainer).find('.claim-container').serialize();
-                        sendRequest('post', '/art/claim/' + self.artId, data, function () {
+                        sendRequest('post', '/art/' + self.artId + '/claim', data, function () {
                             $(self.artContainer).find('.cancel-claim').trigger('click');
                         })
                     }

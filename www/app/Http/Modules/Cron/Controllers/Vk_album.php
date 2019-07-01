@@ -80,39 +80,6 @@ class Vk_album extends Controller
             $this->_editPhoto($photoId, ['caption' => $hashTags . "\n\n" . ' Ещё больше рисунков на ' . $url]);
 
         }
-
-        /*$path = base_path('public/arts/') . $picture->path;
-        $tags = $picture->tags->pluck('name')->toArray();
-        foreach ($tags as $key => $tag) {
-            $tags[$key] = preg_replace('/\s+/', '', $tag);
-            $tags[$key] = str_ireplace('-', '', $tags[$key]);
-        }*/
-
-      /*  $hashTags = '#рисунки #рисункипоклеточкам';
-        if ($tags) {
-            $hashTags .= ' #' . implode(' #', $tags);
-        }
-        $hashTags .= ' #drawitbook';
-        $uploadUrl = $this->_getUploadServer();
-        $client = new \GuzzleHttp\Client();
-        $res = $client->post($uploadUrl, [
-            'multipart' => [
-                [
-                    'name' => 'photo',
-                    'contents' => fopen($path, 'r')
-                ],
-            ],
-        ]);
-        $server = json_decode($res->getBody()->getContents(), true);*/
-      /*  $uploadedPhoto = $this->_saveWallPhoto($server);
-        $attachments = 'photo' . $uploadedPhoto['owner_id'] . '_' . $uploadedPhoto['id'] . ',' . 'https://drawitbook.ru';
-        $postId = $this->_wallPost(['message' => $hashTags, 'attachments' => $attachments]);*/
-       /* sleep(25);
-        $lastWallPhotoId = $this->_getLastWallPhoto();
-        if ($lastWallPhotoId) {
-            $attachments = 'photo-' . $this->_groupId . '_' . $lastWallPhotoId . ',' . 'https://drawitbook.ru';
-            $this->_editPost($postId, ['message' => $hashTags, 'attachments' => $attachments]);
-        }*/
     }
 
     private function _editPhoto(int $photoId, array $data)

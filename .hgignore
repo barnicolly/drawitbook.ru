@@ -6,6 +6,7 @@ www/vendor/
 node_modules
 www/public/build/
 www/public/arts/
+www/public/thumbnails/
 www/resources/static/arts/
 www/public/moderate/
 www/env

@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.6.1'
 
-set :application, 'db-nica'
+set :application, 'drawitbook'
 set :repo_url, 'ssh://hg@bitbucket.org/MishaRatnikov/drawitbook'
 
 # Default value for :scm is :git
@@ -30,7 +30,7 @@ namespace :deploy do
 	  task :after_deploy do
 		on roles(:all) do
              execute "cd #{fetch(:release_path)}/www; composer install && npm i && gulp build --env production"
-             execute "cd #{fetch(:release_path)}/www; php artisan config:cache && php artisan route:cache && php artisan optimize && composer dumpautoload -o"
+             execute "cd #{fetch(:release_path)}/www; php artisan config:cache && php artisan route:cache && php artisan optimize && composer dumpautoload -o && php artisan cache:clear"
 		end
 	end
 end

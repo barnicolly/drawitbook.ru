@@ -43,12 +43,6 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @if (!empty(session('is_admin')))
-                                    <a class="dropdown-item" href="{{ route('show_articles') }}" rel="nofollow">
-                                        Статьи
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('moderate') }}" rel="nofollow">
-                                        Модерация артов
-                                    </a>
                                 @endif
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" rel="nofollow"
