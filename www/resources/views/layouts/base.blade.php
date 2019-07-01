@@ -19,7 +19,6 @@
     {!! MetaTag::twitterCard() !!}
     <script src="{{ buildUrl('build/js/loader.min.js') }}" defer></script>
     <link rel="stylesheet" href="{{ buildUrl('build/css/master.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
     @if (!empty(session('is_admin')))
         <link rel="stylesheet" href="{{ buildUrl('build/css/admin.min.css') }}">
     @endif
@@ -31,7 +30,7 @@
 <body>
 <div class="container-fluid no-padding">
     @include('layouts/header')
-    <div class="container">
+    <div class="container" id="main-container">
         <div class="row">
             <main class="col-12">
                 @yield('breadcrumbs')
@@ -50,7 +49,6 @@
 @if (!empty(session('is_admin')))
     <script src="{{ buildUrl('build/js/admin.min.js') }}" defer></script>
 @endif
-<script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 @stack('scripts')
 <a id="button">
     <span class="fa fa-arrow-up"></span>

@@ -3,145 +3,145 @@
        aria-expanded="false">Категории</a>
     <div class="dropdown-menu megamenu" aria-labelledby="dropdown01">
         <div class="row">
-            <?php $searchRoute = route('search');
+            <?php $searchRoute = route('arts.cell') . '/';
             $groups = [
                 1 => [
                     'птицы' => [
-                        'href' => $searchRoute . '?tag[]=птицы',
+                        'href' => $searchRoute . 'pticy',
                         'items' => [
                             'орлы' => [
-                                'href' => $searchRoute . '?tag[]=орел',
+                                'href' => $searchRoute . 'orel',
                             ],
                             'совы' => [
-                                'href' => $searchRoute . '?tag[]=сова',
+                                'href' => $searchRoute . 'sova',
                             ],
                         ],
                     ],
                     'мультфильмы' => [
-                        'href' => $searchRoute . '?tag[]=из+мультфильма',
+                        'href' => $searchRoute . 'iz-multfilma',
                         'items' => [
                             'спанч боб' => [
-                                'href' => $searchRoute . '?tag[]=спанч+боб'
+                                'href' => $searchRoute . 'spanch-bob'
                             ],
                             'винни-пух' => [
-                                'href' => $searchRoute . '?tag[]=винни-пух'
+                                'href' => $searchRoute . 'vinni-puh'
                             ],
                             'покемоны' => [
-                                'href' => $searchRoute . '?tag[]=покемоны'
+                                'href' => $searchRoute . 'pokemony'
                             ],
                             'миньоны' => [
-                                'href' => $searchRoute . '?tag[]=миньон'
+                                'href' => $searchRoute . 'minon'
                             ],
                             'смешарики' => [
-                                'href' => $searchRoute . '?tag[]=смешарики'
+                                'href' => $searchRoute . 'smeshariki'
                             ],
                             'симпсоны' => [
-                                'href' => $searchRoute . '?tag[]=симпсоны'
+                                'href' => $searchRoute . 'simpsony'
                             ],
                             'гравити фолз' => [
-                                'href' => $searchRoute . '?tag[]=гравити+фолз'
+                                'href' => $searchRoute . 'graviti-folz'
                             ],
                             'фнаф' => [
-                                'href' => $searchRoute . '?tag[]=фнаф'
+                                'href' => $searchRoute . 'fnaf'
                             ],
                             'энгри бердз' => [
-                                'href' => $searchRoute . '?tag[]=энгри%20бердз'
+                                'href' => $searchRoute . 'engri-berdz'
                             ],
                         ],
                     ],
                 ],
                 2 => [
                     'животные' => [
-                        'href' => $searchRoute . '?tag[]=животные',
+                        'href' => $searchRoute . 'zhivotnye',
                         'items' => [
                             'кошки' => [
-                                'href' => $searchRoute . '?tag[]=кошка',
+                                'href' => $searchRoute . 'koshka',
                             ],
                             'собачки' => [
-                                'href' => $searchRoute . '?tag[]=собачка',
+                                'href' => $searchRoute . 'sobachka',
                             ],
                             'зайцы' => [
-                                'href' => $searchRoute . '?tag[]=заяц',
+                                'href' => $searchRoute . 'zayac',
                             ],
                             'медведи' => [
-                                'href' => $searchRoute . '?tag[]=медведь',
+                                'href' => $searchRoute . 'medved',
                             ],
                             'лошади' => [
-                                'href' => $searchRoute . '?tag[]=лошадь',
+                                'href' => $searchRoute . 'loshad',
                             ],
                             'пони' => [
-                                'href' => $searchRoute . '?tag[]=пони',
+                                'href' => $searchRoute . 'poni',
                             ],
                         ],
                     ],
                     'люди' => [
-                        'href' => $searchRoute . '?tag[]=люди',
+                        'href' => $searchRoute . 'lyudi',
                         'items' => [
                             'девочки' => [
-                                'href' => $searchRoute . '?tag[]=девочка',
+                                'href' => $searchRoute . 'devochka',
                             ],
                             'девушки' => [
-                                'href' => $searchRoute . '?tag[]=девушка',
+                                'href' => $searchRoute . 'devushka',
                             ],
                             'мальчики' => [
-                                'href' => $searchRoute . '?tag[]=мальчик',
+                                'href' => $searchRoute . 'malchik',
                             ],
                             'портреты' => [
-                                'href' => $searchRoute . '?tag[]=портрет',
+                                'href' => $searchRoute . 'portret',
                             ],
                         ],
                     ],
                 ],
                 3 => [
                     'супергерои' => [
-                        'href' => $searchRoute . '?tag[]=супергерои',
+                        'href' => $searchRoute . 'supergeroi',
                         'items' => [
                             'человек-паук' => [
-                                'href' => $searchRoute . '?tag[]=человек-паук',
+                                'href' => $searchRoute . 'chelovek-pauk',
                             ],
                             'бэтмен' => [
-                                'href' => $searchRoute . '?tag[]=бэтмен',
+                                'href' => $searchRoute . 'betmen',
                             ],
                             'железный человек' => [
-                                'href' => $searchRoute . '?tag[]=железный+человек',
+                                'href' => $searchRoute . 'zheleznyy-chelovek',
                             ],
                             'супермен' => [
-                                'href' => $searchRoute . '?tag[]=супермен',
+                                'href' => $searchRoute . 'supermen',
                             ],
                         ],
                     ],
                     'фэнтези' => [
-                        'href' => $searchRoute . '?tag[]=фэнтези',
+                        'href' => $searchRoute . 'fentezi',
                         'items' => [
                             'единороги' => [
-                                'href' => $searchRoute . '?tag[]=единорог',
+                                'href' => $searchRoute . 'edinorog',
                             ],
                             'драконы' => [
-                                'href' => $searchRoute . '?tag[]=дракон',
+                                'href' => $searchRoute . 'drakon',
                             ],
                         ],
                     ],
                     'транспорт' => [
-                        'href' => $searchRoute . '?tag[]=транспорт',
+                        'href' => $searchRoute . 'transport',
                         'items' => [
                             'машины' => [
-                                'href' => $searchRoute . '?tag[]=машина',
+                                'href' => $searchRoute . 'mashina',
                             ],
                             'корабли' => [
-                                'href' => $searchRoute . '?tag[]=корабль',
+                                'href' => $searchRoute . 'korabl',
                             ],
                             'самолёты' => [
-                                'href' => $searchRoute . '?tag[]=самолёты',
+                                'href' => $searchRoute . 'samolet',
                             ],
                         ],
                     ],
                 ],
                 4 => [
                     'природа' => [
-                        'href' => $searchRoute . '?tag[]=природа',
+                        'href' => $searchRoute . 'priroda',
                         'items' => [
                             'цветы' => [
-                                'href' => $searchRoute . '?tag[]=цветы',
+                                'href' => $searchRoute . 'cvety',
                             ],
                         ],
                     ],
@@ -149,27 +149,27 @@
                         'href' => '',
                         'items' => [
                             'сердечки' => [
-                                'href' => $searchRoute . '?tag[]=сердечки',
+                                'href' => $searchRoute . 'serdechki',
                             ],
                             'черепа' => [
-                                'href' => $searchRoute . '?tag[]=череп',
+                                'href' => $searchRoute . 'cherep',
                             ],
                             'скелеты' => [
-                                'href' => $searchRoute . '?tag[]=скелет',
+                                'href' => $searchRoute . 'skelet',
                             ],
                         ],
                     ],
                     'надписи' => [
-                        'href' => $searchRoute . '?tag[]=надпись',
+                        'href' => $searchRoute . 'nadpis',
                         'items' => [
                             'имена' => [
-                                'href' => $searchRoute . '?tag[]=имена',
+                                'href' => $searchRoute . 'imena',
                             ],
                             'логотипы' => [
-                                'href' => $searchRoute . '?tag[]=логотип',
+                                'href' => $searchRoute . 'logotip',
                             ],
                             'узоры' => [
-                                'href' => $searchRoute . '?tag[]=узор',
+                                'href' => $searchRoute . 'uzor',
                             ],
                         ],
                     ],

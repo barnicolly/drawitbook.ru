@@ -7,8 +7,12 @@
     } ?>
     <div class="img-wrapper">
         @if (isset($activeLink) && $activeLink === true)
+            <?php
+            $path_parts = pathinfo($picture->path);
+            $thumbnailPath = $path_parts['dirname'] . '/' . $path_parts['filename'] . '_thumb.' . $path_parts['extension'];
+            ?>
             <a itemprop="url" data-fancybox="images" href="{{ asset('arts/' . $picture->path) }}" rel="nofollow"
-               data-thumb="{{ asset('arts/' . $picture->path) }}"
+               data-thumb="{{ asset('thumbnails/arts/' . $thumbnailPath) }}"
                data-id="{{ $picture->id }}"
             >
                 <div style="width:100%;height:0; padding-top:{{ $picture->height / $picture->width * 100 }}%;position:relative;">

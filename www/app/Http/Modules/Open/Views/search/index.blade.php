@@ -38,13 +38,28 @@
                     {!! loadAd('before_stack') !!}
                 </div>
             @endif
+            @if ($paginate && ($paginate->lastPage() !== 1))
+                <div class="col-12 form-group">
+                    <p>
+                        Страница <span class="badge badge-info">{{ $paginate->currentPage() }} из {{ $paginate->lastPage() }}</span>
+                    </p>
+                </div>
+                <div class="col-12">
+                    {{ $paginate->links() }}
+                </div>
+            @endif
             <div class="col-12 form-group">
                 @include('Open::template.stack_grid', ['pictures' => $relativePictures])
             </div>
             <div class="col-12 form-group">
                 {!! loadAd('after_first_stack') !!}
             </div>
-            @if ($paginate)
+            @if ($paginate && ($paginate->lastPage() !== 1))
+                <div class="col-12 form-group">
+                    <p>
+                        Страница <span class="badge badge-info">{{ $paginate->currentPage() }} из {{ $paginate->lastPage() }}</span>
+                    </p>
+                </div>
                 <div class="col-12">
                     {{ $paginate->links() }}
                 </div>

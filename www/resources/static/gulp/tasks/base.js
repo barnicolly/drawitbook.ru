@@ -8,6 +8,7 @@ var base = {
             path.src.plugin + 'masonry/masonry.min.js',
             path.src.plugin + 'share-this/share-this.min.js',
             path.src.plugin + 'lazy/jquery.lazy.min.js',
+            path.src.plugin + 'fancybox/dist/jquery.fancybox.min.js',
         ],
         minify: [
             path.src.self + 'js/init_plugins.js',
@@ -19,6 +20,7 @@ var base = {
     css: {
         append: [
             path.src.plugin + 'bootstrap/compiled/css/bootstrap-minimized.css',
+            path.src.plugin + 'fancybox/dist/jquery.fancybox.min.css',
         ],
         minify: [
             path.src.plugin + 'font-awesome-4.7.0/css/font-awesome-minimized.css',
