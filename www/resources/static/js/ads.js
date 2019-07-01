@@ -1,4 +1,3 @@
-
 var bvw = document.getElementsByTagName("body")[0].offsetWidth;
 var turnAds = true;
 
@@ -6,6 +5,51 @@ window.addEventListener('load', initLoader, false);
 
 function initLoader() {
     showAds.call(this);
+}
+
+function isHidden(el) {
+    return (el.offsetParent === null)
+}
+
+function initViewPage() {
+    if (document.getElementById('onFancyPreview') && !isHidden(document.getElementById('onFancyPreview'))) {
+        (function(w, d, n, s, t) {
+            w[n] = w[n] || [];
+            w[n].push(function() {
+                Ya.Context.AdvManager.render({
+                    blockId: "R-A-400272-16",
+                    renderTo: "onFancyPreview",
+                    async: true
+                });
+            });
+            t = d.getElementsByTagName("script")[0];
+            s = d.createElement("script");
+            s.type = "text/javascript";
+            s.src = "//an.yandex.ru/system/context.js";
+            s.async = true;
+            t.parentNode.insertBefore(s, t);
+        })(this, this.document, "yandexContextAsyncCallbacks");
+    }
+
+    if (document.getElementById('onFancyHeader') && !isHidden(document.getElementById('onFancyHeader'))) {
+        (function(w, d, n, s, t) {
+            w[n] = w[n] || [];
+            w[n].push(function() {
+                Ya.Context.AdvManager.render({
+                    blockId: "R-A-400272-17",
+                    renderTo: "onFancyHeader",
+                    async: true
+                });
+            });
+            t = d.getElementsByTagName("script")[0];
+            s = d.createElement("script");
+            s.type = "text/javascript";
+            s.src = "//an.yandex.ru/system/context.js";
+            s.async = true;
+            t.parentNode.insertBefore(s, t);
+        })(this, this.document, "yandexContextAsyncCallbacks");
+    }
+
 }
 
 function showAds() {
@@ -148,9 +192,9 @@ function showAds() {
 function showArticleAd() {
     if (document.getElementById('after_article')) {
         if (bvw > 768) {
-            (function(w, d, n, s, t) {
+            (function (w, d, n, s, t) {
                 w[n] = w[n] || [];
-                w[n].push(function() {
+                w[n].push(function () {
                     Ya.Context.AdvManager.render({
                         blockId: "R-A-400272-15",
                         renderTo: "after_article",
@@ -165,9 +209,9 @@ function showArticleAd() {
                 t.parentNode.insertBefore(s, t);
             })(this, this.document, "yandexContextAsyncCallbacks");
         } else {
-            (function(w, d, n, s, t) {
+            (function (w, d, n, s, t) {
                 w[n] = w[n] || [];
-                w[n].push(function() {
+                w[n].push(function () {
                     Ya.Context.AdvManager.render({
                         blockId: "R-A-400272-14",
                         renderTo: "after_article",
@@ -184,9 +228,9 @@ function showArticleAd() {
         }
     }
     if (document.getElementById('integrated_article_2')) {
-        (function(w, d, n, s, t) {
+        (function (w, d, n, s, t) {
             w[n] = w[n] || [];
-            w[n].push(function() {
+            w[n].push(function () {
                 Ya.Context.AdvManager.render({
                     blockId: "R-A-400272-11",
                     renderTo: "integrated_article_2",
@@ -202,9 +246,9 @@ function showArticleAd() {
         })(this, this.document, "yandexContextAsyncCallbacks");
     }
     if (document.getElementById('integrated_article_7')) {
-        (function(w, d, n, s, t) {
+        (function (w, d, n, s, t) {
             w[n] = w[n] || [];
-            w[n].push(function() {
+            w[n].push(function () {
                 Ya.Context.AdvManager.render({
                     blockId: "R-A-400272-12",
                     renderTo: "integrated_article_7",
@@ -220,9 +264,9 @@ function showArticleAd() {
         })(this, this.document, "yandexContextAsyncCallbacks");
     }
     if (document.getElementById('integrated_article_12')) {
-        (function(w, d, n, s, t) {
+        (function (w, d, n, s, t) {
             w[n] = w[n] || [];
-            w[n].push(function() {
+            w[n].push(function () {
                 Ya.Context.AdvManager.render({
                     blockId: "R-A-400272-13",
                     renderTo: "integrated_article_12",

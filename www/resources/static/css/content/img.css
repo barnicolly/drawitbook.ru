@@ -19,3 +19,11 @@
     margin: auto;
     color: #999;
 }
+
+img.lazy {
+    background: #f7f7f7;
+}
+
+img.lazy.not-loaded {
+    background: transparent url(http://afarkas.github.io/lazysizes/assets/imgs/loader.gif) no-repeat 50% 50%;
+}
