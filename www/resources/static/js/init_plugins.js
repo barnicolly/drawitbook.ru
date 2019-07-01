@@ -85,6 +85,7 @@ checkVariable();
 
 $(function () {
 
+    var loadedView = false;
     $('[data-fancybox="images"]').fancybox({
         baseClass: "fancybox-custom-layout",
         infobar: true,
@@ -120,6 +121,16 @@ $(function () {
         '</div>' +
         "</div>" +
         "</div>",
+        afterLoad: function( instance, current ) {
+           if (loadedView === false) {
+               // console.log(thisDocument);
+               loadedView = true;
+
+               window.addEventListener('load', initViewPage.call(window), false);
+
+
+           }
+        },
         mobile: {
             buttons: ["close", 'thumbs'],
             thumbs: {
