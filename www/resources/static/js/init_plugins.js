@@ -123,13 +123,12 @@ $(function () {
         "</div>",
         afterLoad: function( instance, current ) {
            if (loadedView === false) {
-               // console.log(thisDocument);
                loadedView = true;
-
                window.addEventListener('load', initViewPage.call(window), false);
-
-
            }
+        },
+        afterClose: function() {
+            loadedView = false;
         },
         mobile: {
             buttons: ["close", 'thumbs'],

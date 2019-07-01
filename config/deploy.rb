@@ -14,7 +14,7 @@ set :linked_files, fetch(:linked_files, []).push(
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push(
-    'www/public/arts'
+    'www/public/arts',
     'www/public/thumbnails'
 )
 

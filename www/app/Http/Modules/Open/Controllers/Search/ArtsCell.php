@@ -12,6 +12,7 @@ use MetaTag;
 use Validator;
 use Breadcrumbs;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 
 class ArtsCell extends Controller
 {
@@ -23,6 +24,13 @@ class ArtsCell extends Controller
 
     public function tagged(string $tag, Request $request)
     {
+        $cacheName = 'arts.cell.tagged.' . $tag;
+        if (!isLocal()) {
+            $page = Cache::get($cacheName);
+            if ($page) {
+                return $page;
+            }
+        }
         $template = new Template();
 
         $searcher = new SearchBySeoTag($tag);
@@ -46,7 +54,7 @@ class ArtsCell extends Controller
         } else if (is_null($page)) {
             $page = 1;
         }
-        $page = (int) $page;
+        $page = (int)$page;
         $perPage = 50;
 
         $countSearchResults = count($relativePictureIds);
@@ -63,7 +71,7 @@ class ArtsCell extends Controller
         if ($page !== 1) {
             MetaTag::set('robots', 'noindex, follow');
             MetaTag::set('title', $title . ' - Страница ' . $page);
-            MetaTag::set('description', $description  . ' Страница - ' . $page);
+            MetaTag::set('description', $description . ' Страница - ' . $page);
         } else {
             MetaTag::set('title', $title);
             MetaTag::set('description', $description);
@@ -74,11 +82,16 @@ class ArtsCell extends Controller
         if (empty($viewData['canonical'])) {
             $viewData['canonical'] = '';
         }
+        MetaTag::set('image', asset('arts/d4/11/d4113a118447cb7650a7a7d84b45b153.jpeg'));
         $viewData['tag'] = $tagInfo;
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;
         $viewData['links'] = $this->_getPaginateLinks($page, (int)($countSearchResults / $perPage) + 1, route('arts.cell.tagged', $tag));
-        return $template->loadView('Open::search.cell.tagged', $viewData);
+        $page = $template->loadView('Open::search.cell.tagged', $viewData);
+        if (!isLocal()) {
+            Cache::put($cacheName, $page, config('cache.expiration'));
+        }
+        return $page;
     }
 
     private function _getPaginateLinks(int $page, int $maxPage, string $path)

@@ -29,9 +29,11 @@ class ArtsCell extends Controller
         $checkExistPictures = new CheckExistPictures($pictures);
         $pictures = $checkExistPictures->check();
         $viewData['relativePictures'] = $pictures;
-        MetaTag::set('title', 'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями');
+        $title = 'Рисунки по клеточкам | Drawitbook.ru';
+        $description = 'Рисунки по клеточкам. Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.';
+        MetaTag::set('title', $title);
         MetaTag::set('image', asset('arts/d4/11/d4113a118447cb7650a7a7d84b45b153.jpeg'));
-        MetaTag::set('description', 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.');
+        MetaTag::set('description', $description);
         return $template->loadView('Open::search.cell.index', $viewData);
     }
 

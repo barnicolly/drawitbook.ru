@@ -19,7 +19,7 @@
                     <img width="{{ $picture->width }}"
                          height="{{ $picture->height }}"
                          style="position:absolute; top:0; left:0; width:100%;"
-                         data-title="Art #{{ $picture->id }} | Drawitbook.ru" itemprop="contentUrl"
+                         data-title="Art #{{ $picture->id }} | Drawitbook.ru"
                          class="img-fluid lazy not-loaded"
                          data-src="{{ asset('arts/' . $picture->path) }}"
                          alt="{{ $alt }}">
@@ -45,6 +45,7 @@
         </figcaption>
     @endif
     <link itemprop="url" href="{{ asset('arts/' . $picture->path) }}">
+    <link itemprop="contentUrl" href="{{ asset('arts/' . $picture->path) }}">
     <meta itemprop="height" content="{{ $picture->height }}px">
     <meta itemprop="width" content="{{ $picture->width }}px">
     <meta itemprop="representativeOfPage" content="True">
