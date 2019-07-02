@@ -24,16 +24,16 @@ class ArtsCell extends Controller
 
     public function tagged(string $tag, Request $request)
     {
-        $page = $request->input('page');
+        $pageNum = $request->input('page');
         $addCanonical = false;
-        if ($page === '1') {
+        if ($pageNum === '1') {
             $addCanonical = true;
-        } else if (is_null($page)) {
-            $page = 1;
+        } else if (is_null($pageNum)) {
+            $pageNum = 1;
         }
-        $page = (int)$page;
+        $pageNum = (int)$pageNum;
 
-        $cacheName = 'arts.cell.tagged.' . $tag . '.' . $page;
+        $cacheName = 'arts.cell.tagged.' . $tag . '.' . $pageNum;
         if (!isLocal()) {
             $page = Cache::get($cacheName);
             if ($page) {
@@ -60,20 +60,20 @@ class ArtsCell extends Controller
         $perPage = 50;
 
         $countSearchResults = count($relativePictureIds);
-        $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);
+        $relativePictureIds = array_slice($relativePictureIds, ($pageNum - 1) * $perPage, $perPage);
 
         $relativePictures = new GetPicturesWithTags($relativePictureIds);
         $relativePictures = $relativePictures->get();
 
-        $paginate = new LengthAwarePaginator($relativePictures->forPage($page, $perPage), $countSearchResults, $perPage, $page, ['path' => route('arts.cell.tagged', $tag)]);
+        $paginate = new LengthAwarePaginator($relativePictures->forPage($pageNum, $perPage), $countSearchResults, $perPage, $pageNum, ['path' => route('arts.cell.tagged', $tag)]);
 
         $viewData['paginate'] = $paginate ?? [];
         $title = 'Рисунки по клеточкам «' . mbUcfirst($tagInfo->name) . '»‎';
         $description = 'Рисунки по клеточкам - ' . mbUcfirst($tagInfo->name) . '. Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.';
-        if ($page !== 1) {
+        if ($pageNum !== 1) {
             MetaTag::set('robots', 'noindex, follow');
-            MetaTag::set('title', $title . ' - Страница ' . $page);
-            MetaTag::set('description', $description . ' Страница - ' . $page);
+            MetaTag::set('title', $title . ' - Страница ' . $pageNum);
+            MetaTag::set('description', $description . ' Страница - ' . $pageNum);
         } else {
             MetaTag::set('title', $title);
             MetaTag::set('description', $description);
@@ -88,7 +88,7 @@ class ArtsCell extends Controller
         $viewData['tag'] = $tagInfo;
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;
-        $viewData['links'] = $this->_getPaginateLinks($page, (int)($countSearchResults / $perPage) + 1, route('arts.cell.tagged', $tag));
+        $viewData['links'] = $this->_getPaginateLinks($pageNum, (int)($countSearchResults / $perPage) + 1, route('arts.cell.tagged', $tag));
         $page = $template->loadView('Open::search.cell.tagged', $viewData);
         if (!isLocal()) {
             Cache::put($cacheName, $page, config('cache.expiration'));
