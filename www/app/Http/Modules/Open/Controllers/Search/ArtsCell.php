@@ -49,8 +49,16 @@ class ArtsCell extends Controller
             abort(404);
         }
 
+        $hidden = [];
+        $tags = [];
+
+        if ($tagInfo->hidden) {
+            $hidden[] = $tagInfo->id;
+        } else {
+            $tags[] = $tagInfo->id;
+        }
         $searcherByTags = new SearchByTags(1000);
-        $relativePictureIds = $searcherByTags->searchRelatedPicturesIds([$tagInfo->id]);
+        $relativePictureIds = $searcherByTags->searchRelatedPicturesIds($tags, $hidden);
         if (!$relativePictureIds) {
             abort(404);
         }
