@@ -24,7 +24,16 @@ class ArtsCell extends Controller
 
     public function tagged(string $tag, Request $request)
     {
-        $cacheName = 'arts.cell.tagged.' . $tag;
+        $page = $request->input('page');
+        $addCanonical = false;
+        if ($page === '1') {
+            $addCanonical = true;
+        } else if (is_null($page)) {
+            $page = 1;
+        }
+        $page = (int)$page;
+
+        $cacheName = 'arts.cell.tagged.' . $tag . '.' . $page;
         if (!isLocal()) {
             $page = Cache::get($cacheName);
             if ($page) {
@@ -47,14 +56,7 @@ class ArtsCell extends Controller
         }
 
         $viewData = [];
-        $page = $request->input('page');
-        $addCanonical = false;
-        if ($page === '1') {
-            $addCanonical = true;
-        } else if (is_null($page)) {
-            $page = 1;
-        }
-        $page = (int)$page;
+
         $perPage = 50;
 
         $countSearchResults = count($relativePictureIds);

@@ -7,6 +7,11 @@
             <div class="stack-loader"></div>
         </div>
     </div>
+    <style>
+        img.lazy.not-loaded {
+            background: transparent url(/img/loader.gif) no-repeat 50% 50%;
+        }
+    </style>
     <div class="stack-grid" style="display: none" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
         @foreach($pictures as $index => $picture)
             @if(in_array($index, [5, 12, 18], true))
