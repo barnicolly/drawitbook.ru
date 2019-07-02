@@ -34,7 +34,7 @@ class ArtsCell extends Controller
         $pageNum = (int)$pageNum;
 
         $cacheName = 'arts.cell.tagged.' . $tag . '.' . $pageNum;
-        if (!isLocal()) {
+        if (!isLocal() && empty(session('is_admin'))) {
             $page = Cache::get($cacheName);
             if ($page) {
                 return $page;
