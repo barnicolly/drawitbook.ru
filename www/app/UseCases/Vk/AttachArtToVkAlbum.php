@@ -42,10 +42,15 @@ class AttachArtToVkAlbum extends VkCore
         $path = base_path('public/arts/') . $picture->path;
         $server = $this->_uploadPhoto($uploadUrl, $path);
         $photoId = $this->_savePhoto($server, $album->album_id);
-        $url = 'https://drawitbook.ru';
+
+        if ($album->share) {
+            $url = $album->share;
+        } else {
+            $url = 'https://drawitbook.ru';
+        }
         $hashTags = $this->_formatTagsForVk($picture->tags->pluck('name')->toArray());
         sleep(1);
-        $this->_editPhoto($photoId, ['caption' => $hashTags . "\n\n" . ' Ещё больше рисунков на ' . $url]);
+        $this->_editPhoto($photoId, ['caption' => $hashTags . "\n\n" . ' Больше рисунков ► ' . $url]);
         return $photoId;
     }
 
