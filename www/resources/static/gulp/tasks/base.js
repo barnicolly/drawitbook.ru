@@ -3,28 +3,68 @@ var base = {
         append: [
             path.src.plugin + 'jquery/jquery-3.1.1.min.js',
             path.src.plugin + 'bootstrap/compiled/js/bootstrap.min.js',
-            path.src.plugin + 'sticky/ResizeSensor.js',
-            path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
-            path.src.plugin + 'masonry/masonry.min.js',
-            path.src.plugin + 'share-this/share-this.min.js',
+            path.src.plugin + 'masonry/masonry_without_images_loaded.min.js',
             path.src.plugin + 'lazy/jquery.lazy.min.js',
-            path.src.plugin + 'fancybox/dist/jquery.fancybox.min.js',
         ],
         minify: [
             path.src.self + 'js/init_plugins.js',
             path.src.self + 'js/content.js',
             path.src.self + 'js/helpers.js',
-            path.src.self + 'js/plugins/*.js',
+            path.src.self + 'js/plugins/back_up_button.js',
         ]
     },
     css: {
         append: [
-            path.src.plugin + 'bootstrap/compiled/css/bootstrap-minimized.css',
+            path.src.self + 'files/dummy.css',
+        ],
+        minify: [
+            path.src.plugin + 'bootstrap/compiled/css/purged/bootstrap-minimized.css',
+            path.src.plugin + 'font-awesome-4.7.0/css/font-awesome-minimized.css',
+            path.src.self + 'css/content/*.css',
+        ]
+    }
+};
+
+var afterLoad = {
+    js: {
+        append: [
+            path.src.plugin + 'sticky/ResizeSensor.js',
+            path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
+            // path.src.plugin + 'share-this/share-this.min.js',
+            path.src.plugin + 'fancybox/dist/fancybox.compiled.min.js',
+        ],
+        minify: [
+            path.src.self + 'js/plugins/claim.js',
+            path.src.self + 'js/plugins/rate.js',
+        ]
+    },
+    css: {
+        append: [
             path.src.plugin + 'fancybox/dist/jquery.fancybox.min.css',
         ],
         minify: [
-            path.src.plugin + 'font-awesome-4.7.0/css/font-awesome-minimized.css',
-            path.src.self + 'css/content/*.css',
+            path.src.self + 'files/dummy.css',
+            // path.src.plugin + 'share-this/sti.css',
+        ]
+    }
+};
+
+var mobile = {
+    js: {
+        append: [
+            path.src.plugin + 'fancybox/dist/jquery.fancybox.min.js',
+        ],
+        minify: [
+            path.src.self + 'js/plugins/claim.js',
+            path.src.self + 'js/plugins/rate.js',
+        ]
+    },
+    css: {
+        append: [
+            path.src.plugin + 'fancybox/dist/jquery.fancybox.min.css',
+        ],
+        minify: [
+            path.src.plugin + 'share-this/sti.css',
         ]
     }
 };
@@ -35,7 +75,7 @@ var admin = {
             path.src.plugin + 'clipboard/clipboard.js',
         ],
         minify: [
-            path.src.self + 'files/dummy.js',
+            path.src.self + 'js/plugins/art_control.js',
         ]
     },
     css: {
@@ -104,7 +144,7 @@ gulp.task('styles:base', function () {
     var stream;
     if (typeof base.css.minify !== 'undefined' && Object.keys(base.css.minify).length) {
         if (environment === 'development') {
-            initWatcher(base.css.minify, 'styles:base')
+            initWatcher(base.css.minify.concat(base.css.append), 'styles:base')
         }
         stream = prepareCssStream('styles:base', base.css);
     } else {
@@ -125,6 +165,34 @@ gulp.task('scripts:base', function () {
     return stream
         .pipe(plugins.plumber())
         .pipe(plugins.concat('master.min.js'))
+        .pipe(gulp.dest(path.build + 'js/'));
+});
+
+gulp.task('styles:after_load', function () {
+    var stream;
+    if (typeof afterLoad.css.minify !== 'undefined' && Object.keys(afterLoad.css.minify).length) {
+        if (environment === 'development') {
+            initWatcher(afterLoad.css.minify.concat(afterLoad.css.append), 'styles:after_load')
+        }
+        stream = prepareCssStream('styles:after_load', afterLoad.css);
+    } else {
+        stream = gulp.src(afterLoad.css.append);
+    }
+    return stream
+        .pipe(plugins.concat('after_load.min.css'))
+        .pipe(gulp.dest(path.build + 'css/'));
+});
+
+gulp.task('scripts:after_load', function () {
+    var stream;
+    if (environment === 'development') {
+        initWatcher(afterLoad.js.minify, 'scripts:after_load')
+        initWatcher(afterLoad.js.append, 'scripts:after_load', 'scripts:after_load-append')
+    }
+    stream = prepareJsStream('scripts:after_load', afterLoad.js);
+    return stream
+        .pipe(plugins.plumber())
+        .pipe(plugins.concat('after_load.min.js'))
         .pipe(gulp.dest(path.build + 'js/'));
 });
 

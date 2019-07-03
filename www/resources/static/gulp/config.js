@@ -21,7 +21,7 @@ var env = {
         /**
          * Генерация карты кода для отладки кода, который изменен в процессе
          */
-        sourcemaps: true
+        sourcemaps: false
     },
     production: {
         minify: true,

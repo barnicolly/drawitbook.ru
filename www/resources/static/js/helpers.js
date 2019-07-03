@@ -1,16 +1,20 @@
-function debounce(f, ms) {
-    let timer = null;
-    return function (...args) {
-        const onComplete = () => {
-            f.apply(this, args);
-            timer = null;
+var debounce = function (func, threshold, execAsap) {
+    var timeout;
+    return function debounced() {
+        var obj = this, args = arguments;
+
+        function delayed() {
+            if (!execAsap)
+                func.apply(obj, args);
+            timeout = null;
         };
-        if (timer) {
-            clearTimeout(timer);
-        }
-        timer = setTimeout(onComplete, ms);
+        if (timeout)
+            clearTimeout(timeout);
+        else if (execAsap)
+            func.apply(obj, args);
+        timeout = setTimeout(delayed, threshold || 300);
     };
-}
+};
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
