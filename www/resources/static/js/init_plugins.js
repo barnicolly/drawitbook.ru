@@ -16,6 +16,11 @@ function appInit() {
 
     function checkJqueryLoaded() {
         if (window.jQuery) {
+            $('.img-wrapper a').on('click', function (e) {
+                if ($(this).find('img').eq(0).hasClass('not-loaded')) {
+                    e.preventDefault();
+                }
+            });
             afterJqueryLoaded();
         } else {
             window.setTimeout("checkJqueryLoaded();", 100);
