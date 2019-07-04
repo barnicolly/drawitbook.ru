@@ -1,10 +1,21 @@
 var bvw = document.getElementsByTagName("body")[0].offsetWidth;
 var turnAds = true;
 
-window.addEventListener('load', initLoader, false);
+document.addEventListener("DOMContentLoaded", initLoader, false);
 
 function initLoader() {
+
+    getAdYandexScript();
     showAds.call(this);
+
+    function getAdYandexScript() {
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = '//an.yandex.ru/system/context.js';
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+    }
 }
 
 function isHidden(el) {
@@ -22,12 +33,6 @@ function initViewPage() {
                     async: true
                 });
             });
-            t = d.getElementsByTagName("script")[0];
-            s = d.createElement("script");
-            s.type = "text/javascript";
-            s.src = "//an.yandex.ru/system/context.js";
-            s.async = true;
-            t.parentNode.insertBefore(s, t);
         })(this, this.document, "yandexContextAsyncCallbacks");
     }
 
@@ -41,12 +46,6 @@ function initViewPage() {
                     async: true
                 });
             });
-            t = d.getElementsByTagName("script")[0];
-            s = d.createElement("script");
-            s.type = "text/javascript";
-            s.src = "//an.yandex.ru/system/context.js";
-            s.async = true;
-            t.parentNode.insertBefore(s, t);
         })(this, this.document, "yandexContextAsyncCallbacks");
     }
 
@@ -65,12 +64,6 @@ function showAds() {
                             async: true
                         });
                     });
-                    t = d.getElementsByTagName("script")[0];
-                    s = d.createElement("script");
-                    s.type = "text/javascript";
-                    s.src = "//an.yandex.ru/system/context.js";
-                    s.async = true;
-                    t.parentNode.insertBefore(s, t);
                 })(this, this.document, "yandexContextAsyncCallbacks");
             }
         }
@@ -85,12 +78,6 @@ function showAds() {
                             async: true
                         });
                     });
-                    t = d.getElementsByTagName("script")[0];
-                    s = d.createElement("script");
-                    s.type = "text/javascript";
-                    s.src = "//an.yandex.ru/system/context.js";
-                    s.async = true;
-                    t.parentNode.insertBefore(s, t);
                 })(this, this.document, "yandexContextAsyncCallbacks");
             }
             if (document.getElementById('before_stack')) {
@@ -103,12 +90,6 @@ function showAds() {
                             async: true
                         });
                     });
-                    t = d.getElementsByTagName("script")[0];
-                    s = d.createElement("script");
-                    s.type = "text/javascript";
-                    s.src = "//an.yandex.ru/system/context.js";
-                    s.async = true;
-                    t.parentNode.insertBefore(s, t);
                 })(this, this.document, "yandexContextAsyncCallbacks");
             }
             if (document.getElementById('after_first_stack')) {
@@ -121,12 +102,6 @@ function showAds() {
                             async: true
                         });
                     });
-                    t = d.getElementsByTagName("script")[0];
-                    s = d.createElement("script");
-                    s.type = "text/javascript";
-                    s.src = "//an.yandex.ru/system/context.js";
-                    s.async = true;
-                    t.parentNode.insertBefore(s, t);
                 })(this, this.document, "yandexContextAsyncCallbacks");
             }
         } else {
@@ -140,12 +115,6 @@ function showAds() {
                             async: true
                         });
                     });
-                    t = d.getElementsByTagName("script")[0];
-                    s = d.createElement("script");
-                    s.type = "text/javascript";
-                    s.src = "//an.yandex.ru/system/context.js";
-                    s.async = true;
-                    t.parentNode.insertBefore(s, t);
                 })(this, this.document, "yandexContextAsyncCallbacks");
             }
             if (document.getElementById('before_stack')) {
@@ -158,12 +127,6 @@ function showAds() {
                             async: true
                         });
                     });
-                    t = d.getElementsByTagName("script")[0];
-                    s = d.createElement("script");
-                    s.type = "text/javascript";
-                    s.src = "//an.yandex.ru/system/context.js";
-                    s.async = true;
-                    t.parentNode.insertBefore(s, t);
                 })(this, this.document, "yandexContextAsyncCallbacks");
             }
             if (document.getElementById('after_first_stack')) {
@@ -176,12 +139,6 @@ function showAds() {
                             async: true
                         });
                     });
-                    t = d.getElementsByTagName("script")[0];
-                    s = d.createElement("script");
-                    s.type = "text/javascript";
-                    s.src = "//an.yandex.ru/system/context.js";
-                    s.async = true;
-                    t.parentNode.insertBefore(s, t);
                 })(this, this.document, "yandexContextAsyncCallbacks");
             }
         }
@@ -201,12 +158,6 @@ function showArticleAd() {
                         async: true
                     });
                 });
-                t = d.getElementsByTagName("script")[0];
-                s = d.createElement("script");
-                s.type = "text/javascript";
-                s.src = "//an.yandex.ru/system/context.js";
-                s.async = true;
-                t.parentNode.insertBefore(s, t);
             })(this, this.document, "yandexContextAsyncCallbacks");
         } else {
             (function (w, d, n, s, t) {
@@ -218,12 +169,6 @@ function showArticleAd() {
                         async: true
                     });
                 });
-                t = d.getElementsByTagName("script")[0];
-                s = d.createElement("script");
-                s.type = "text/javascript";
-                s.src = "//an.yandex.ru/system/context.js";
-                s.async = true;
-                t.parentNode.insertBefore(s, t);
             })(this, this.document, "yandexContextAsyncCallbacks");
         }
     }
@@ -237,12 +182,6 @@ function showArticleAd() {
                     async: true
                 });
             });
-            t = d.getElementsByTagName("script")[0];
-            s = d.createElement("script");
-            s.type = "text/javascript";
-            s.src = "//an.yandex.ru/system/context.js";
-            s.async = true;
-            t.parentNode.insertBefore(s, t);
         })(this, this.document, "yandexContextAsyncCallbacks");
     }
     if (document.getElementById('integrated_article_7')) {
@@ -255,12 +194,6 @@ function showArticleAd() {
                     async: true
                 });
             });
-            t = d.getElementsByTagName("script")[0];
-            s = d.createElement("script");
-            s.type = "text/javascript";
-            s.src = "//an.yandex.ru/system/context.js";
-            s.async = true;
-            t.parentNode.insertBefore(s, t);
         })(this, this.document, "yandexContextAsyncCallbacks");
     }
     if (document.getElementById('integrated_article_12')) {
@@ -273,12 +206,6 @@ function showArticleAd() {
                     async: true
                 });
             });
-            t = d.getElementsByTagName("script")[0];
-            s = d.createElement("script");
-            s.type = "text/javascript";
-            s.src = "//an.yandex.ru/system/context.js";
-            s.async = true;
-            t.parentNode.insertBefore(s, t);
         })(this, this.document, "yandexContextAsyncCallbacks");
     }
 }
@@ -295,12 +222,6 @@ function showStackGridAd() {
                         async: true
                     });
                 });
-                t = d.getElementsByTagName("script")[0];
-                s = d.createElement("script");
-                s.type = "text/javascript";
-                s.src = "//an.yandex.ru/system/context.js";
-                s.async = true;
-                t.parentNode.insertBefore(s, t);
             })(this, this.document, "yandexContextAsyncCallbacks");
         }
         if (document.getElementById('integrated_12')) {
@@ -313,12 +234,6 @@ function showStackGridAd() {
                         async: true
                     });
                 });
-                t = d.getElementsByTagName("script")[0];
-                s = d.createElement("script");
-                s.type = "text/javascript";
-                s.src = "//an.yandex.ru/system/context.js";
-                s.async = true;
-                t.parentNode.insertBefore(s, t);
             })(this, this.document, "yandexContextAsyncCallbacks");
         }
         if (document.getElementById('integrated_18')) {
@@ -331,12 +246,6 @@ function showStackGridAd() {
                         async: true
                     });
                 });
-                t = d.getElementsByTagName("script")[0];
-                s = d.createElement("script");
-                s.type = "text/javascript";
-                s.src = "//an.yandex.ru/system/context.js";
-                s.async = true;
-                t.parentNode.insertBefore(s, t);
             })(this, this.document, "yandexContextAsyncCallbacks");
         }
     }

@@ -18,7 +18,7 @@
                 <div style="width:100%;height:0; padding-top:{{ $picture->height / $picture->width * 100 }}%;position:relative;">
                     <img width="{{ $picture->width }}"
                          height="{{ $picture->height }}"
-                         style="position:absolute; top:0; left:0; width:100%;"
+                         style="position:absolute; top:0; left:0; width:100%;height: 100%;"
                          data-title="Art #{{ $picture->id }} | Drawitbook.ru" itemprop="contentUrl"
                          class="img-fluid lazy not-loaded"
                          data-src="{{ asset('arts/' . $picture->path) }}"
