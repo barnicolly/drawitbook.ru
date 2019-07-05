@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row form-group">
-        <div class="col-12">
+        <div class="col-12 mobile-no-padding">
             {!! loadAd('before_stack') !!}
         </div>
     </div>
