@@ -17,7 +17,7 @@ var path = {
  */
 var env = {
     development: {
-        minify: false,
+        minify: true,
         /**
          * Генерация карты кода для отладки кода, который изменен в процессе
          */

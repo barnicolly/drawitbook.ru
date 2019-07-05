@@ -46,8 +46,12 @@ class ArtsCell extends Controller
         } else if (is_null($page)) {
             $page = 1;
         }
+
+        if (!$page) {
+            return abort(404);
+        }
         $page = (int) $page;
-        $perPage = 50;
+        $perPage = 30;
 
         $countSearchResults = count($relativePictureIds);
         $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);

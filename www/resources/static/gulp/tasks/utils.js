@@ -42,7 +42,13 @@ gulp.task('styles:bootstrap4.minimized', function () {
 gulp.task('styles:bootstrap4.purge', function () {
     return gulp.src(path.src.plugin + 'bootstrap/compiled/css/bootstrap-minimized.css')
         .pipe(plugins.purgecss({
-            content: ['app/Http/Modules/Open/**/*.php', 'resources/views/layouts/**/*.php', 'resources/static/plugins/bootstrap/compiled/js/bootstrap.min.js']
+            content: [
+                'app/Http/Modules/Open/**/*.php',
+                'resources/views/layouts/**/*.php',
+                'resources/views/partials/*.php',
+                'resources/views/vendor/**/*.php',
+                'resources/static/plugins/bootstrap/compiled/js/bootstrap.min.js'
+            ]
         }))
         .pipe(gulp.dest(path.src.plugin + 'bootstrap/compiled/css/purged'));
 });

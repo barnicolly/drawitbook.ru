@@ -87,7 +87,10 @@ function appInit() {
 
     window.onload = function () {
         appendJs('/build/js/after_load.min.js');
-        appendCss('/build/css/after_load.min.css');
+        setTimeout(function () {
+            appendCss('/build/css/after_load.min.css');
+        }, 250);
+
 
         setTimeout(function tick() {
             if (jQuery().fancybox) {
