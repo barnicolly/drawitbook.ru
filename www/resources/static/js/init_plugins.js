@@ -91,7 +91,6 @@ function appInit() {
             appendCss('/build/css/after_load.min.css');
         }, 250);
 
-
         setTimeout(function tick() {
             if (jQuery().fancybox) {
                 if ($('.rate-container').length) {
@@ -130,7 +129,7 @@ function appInit() {
     };
 
     function initFancybox() {
-var loadedView = false;
+        var loadedView = false;
         $('[data-fancybox="images"]').fancybox({
             baseClass: "fancybox-custom-layout",
             infobar: true,
@@ -151,21 +150,21 @@ var loadedView = false;
             },
             // Base template for layout
             baseTpl:
-                '<div class="fancybox-container" role="dialog" tabindex="-1">' +
-                '<div class="fancybox-bg"></div>' +
-                '<div class="fancybox-inner">' +
-                '<div class="fancybox-infobar"><span data-fancybox-index></span>&nbsp;/&nbsp;<span data-fancybox-count></span></div>' +
-                '<div class="fancybox-toolbar">{{buttons}}</div>' +
-                '<div class="fancybox-navigation">{{arrows}}</div>' +
-                '<div class="fancybox-stage">' +
-                '<div class="fancybox-header"><div id="onFancyHeader"></div></div>' +
-                '</div>' +
-                '<div class="fancybox-caption">' +
-                '<div class="fancybox-caption__body"></div>' +
-                '<div id="onFancyPreview"></div>' +
-                '</div>' +
-                "</div>" +
-                "</div>",
+            '<div class="fancybox-container" role="dialog" tabindex="-1">' +
+            '<div class="fancybox-bg"></div>' +
+            '<div class="fancybox-inner">' +
+            '<div class="fancybox-infobar"><span data-fancybox-index></span>&nbsp;/&nbsp;<span data-fancybox-count></span></div>' +
+            '<div class="fancybox-toolbar">{{buttons}}</div>' +
+            '<div class="fancybox-navigation">{{arrows}}</div>' +
+            '<div class="fancybox-stage">' +
+            '<div class="fancybox-header"><div id="onFancyHeader"></div></div>' +
+            '</div>' +
+            '<div class="fancybox-caption">' +
+            '<div class="fancybox-caption__body"></div>' +
+            '<div id="onFancyPreview"></div>' +
+            '</div>' +
+            "</div>" +
+            "</div>",
             mobile: {
                 buttons: ["close", 'thumbs'],
                 thumbs: {
@@ -187,12 +186,23 @@ var loadedView = false;
                     return current.type === "image" ? "zoom" : false;
                 }
             },
-			 afterLoad: function( instance, current ) {
-           if (loadedView === false) {
-               loadedView = true;
-               window.addEventListener('load', initViewPage.call(window), false);
-           }
-        },
+            clickContent: function (current, event) {
+                return false;
+            },
+            clickSlide: function (current, event) {
+                return false;
+            },
+            afterLoad: function (instance, current) {
+
+                if (loadedView === false) {
+                    loadedView = true;
+                    // initViewPage.call(this);
+                    window.addEventListener('load', initViewPage.call(window), false);
+                }
+            },
+            afterClose: function () {
+                loadedView = false;
+            },
             lang: 'ru',
             i18n: {
                 ru: {

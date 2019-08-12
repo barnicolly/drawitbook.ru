@@ -12,10 +12,11 @@ class PictureViewed extends Controller
     protected $_userId;
     protected $_pictureId;
 
-    public function __construct(string $ip, int $userId, int $pictureId)
+    public function __construct($ip, int $userId, int $pictureId)
     {
         $this->_ip = $ip;
         $this->_userId = $userId;
+        $this->_pictureId = $pictureId;
     }
 
     public function insert(): void

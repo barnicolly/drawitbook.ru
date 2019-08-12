@@ -18,7 +18,7 @@ class Picture extends Controller
 
     public function index($id)
     {
-        $id = (int) $id;
+        $id = (int)$id;
         try {
             $getPicture = new GetPicture($id);
             $picture = $getPicture->getCached();
@@ -26,7 +26,7 @@ class Picture extends Controller
             $getTagsFromPictures = new GetTagsFromPicture();
             list($shown, $hidden) = $getTagsFromPictures->getTagIds($picture);
             $relativePictures = [];
-           if ($shown || $hidden) {
+            if ($shown || $hidden) {
                 $search = new SearchByTags();
                 $pictureIds = $search->searchRelatedPicturesIds($shown, $hidden);
                 if ($pictureIds) {
@@ -53,10 +53,11 @@ class Picture extends Controller
     private function _commandsAfterView(int $pictureId)
     {
         if (empty(session('is_admin'))) {
+            $id = auth()->id();
             $ip = request()->ip();
             if (!in_array($ip, ['127.0.0.1', '192.168.1.5'])) {
                 $getIp = new GetIp($ip);
-                $pictureViewed = new PictureViewed($getIp->inetAton(), auth()->id(), $pictureId);
+                $pictureViewed = new PictureViewed($getIp->inetAton(), ($id ? $id : 0), $pictureId);
                 $pictureViewed->insert();
             }
         }

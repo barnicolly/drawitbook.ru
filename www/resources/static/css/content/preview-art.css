@@ -129,6 +129,7 @@
         width: 970px;
         /* width: 50%; */
         margin: 0 auto;
+        z-index: 99996;
     }
 }
 
@@ -155,4 +156,8 @@
     font-size: 24px;
     padding-bottom: 20px;
     text-transform: uppercase;
+}
+
+.fancybox-custom-layout .fancybox-slide {
+    z-index: unset !important;
 }

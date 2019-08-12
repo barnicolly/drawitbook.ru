@@ -22,7 +22,8 @@ class GetIp
     public function inetAton()
     {
         $ip = $this->clean();
-        return DB::raw("inet_aton($ip)");
+        $test =  DB::raw("inet_aton($ip)");
+        return $test;
     }
 
 }

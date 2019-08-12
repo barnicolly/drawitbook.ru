@@ -60,8 +60,8 @@ class RatePicture extends Controller
         $activity = UserActivityModel::whereIn('activity', [LIKE, DISLIKE])
             ->where('picture_id', '=', $this->_pictureId);
         ($this->_userId)
-            ? $activity->where('user_id', '=', auth()->id())
-            : $activity->whereRaw("ip = $this->_ip");
+            ? $activity->where('user_id', '=', $this->_userId)
+            : $activity->whereRaw("INET_NTOA(ip) = $this->_ip");
         return $activity->first();
     }
 

@@ -8,7 +8,7 @@
     <meta name="yandex-verification" content="e78a61097fbbb899"/>
     <meta name="google-site-verification" content="44qvqCqXAJ59PJZMKJB4zmk8zDa57Ff1mpau2pNfm3Q"/>
     <link rel="icon" href="/favicon.ico">
-    <title>{{ MetaTag::get('title') }}</title>
+    <title>{!! MetaTag::get('title') !!}</title>
     @stack('head')
     @stack('links')
     {!! MetaTag::get('keywords') ? MetaTag::tag('keywords') : '' !!}

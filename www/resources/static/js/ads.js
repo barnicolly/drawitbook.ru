@@ -3,10 +3,17 @@ var turnAds = true;
 
 document.addEventListener("DOMContentLoaded", initLoader, false);
 
+function isMyScriptLoaded(url) {
+    var scripts = document.getElementsByTagName('script');
+    for (var i = scripts.length; i--;) {
+        if (scripts[i].src == url) return true;
+    }
+    return false;
+}
 function initLoader() {
 
     getAdYandexScript();
-    showAds.call(this);
+    showAds.call(window);
 
     function getAdYandexScript() {
         var s = document.createElement('script');
@@ -46,6 +53,14 @@ function initViewPage() {
                     async: true
                 });
             });
+            if (!isMyScriptLoaded('//an.yandex.ru/system/context.js')) {
+                t = d.getElementsByTagName("script")[0];
+                s = d.createElement("script");
+                s.type = "text/javascript";
+                s.src = "//an.yandex.ru/system/context.js";
+                s.async = true;
+                t.parentNode.insertBefore(s, t);
+            }
         })(this, this.document, "yandexContextAsyncCallbacks");
     }
 
@@ -64,6 +79,14 @@ function showAds() {
                             async: true
                         });
                     });
+                    if (!isMyScriptLoaded('//an.yandex.ru/system/context.js')) {
+                        t = d.getElementsByTagName("script")[0];
+                        s = d.createElement("script");
+                        s.type = "text/javascript";
+                        s.src = "//an.yandex.ru/system/context.js";
+                        s.async = true;
+                        t.parentNode.insertBefore(s, t);
+                    }
                 })(this, this.document, "yandexContextAsyncCallbacks");
             }
         }
