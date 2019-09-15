@@ -2,6 +2,8 @@
 
 namespace App\UseCases\Search;
 
+use App\Entities\Picture\PictureModel;
+use Illuminate\Support\Facades\DB;
 use sngrl\SphinxSearch\SphinxSearch;
 
 class SearchByTags
@@ -11,6 +13,24 @@ class SearchByTags
     public function __construct(int $limit = 15)
     {
         $this->_limit = $limit;
+    }
+
+    public static function searchPicturesByTagId(int $tagId)
+    {
+        $results = DB::table('picture')
+            ->select('picture.id')
+            ->join('picture_tags', 'picture_tags.picture_id', '=', 'picture.id')
+            ->whereRaw('picture_tags.tag_id = ?', [$tagId])
+            ->where('picture.is_del', '=', NON_DELETED_ROW)
+            ->limit(1000)
+            ->get();
+        $results = collect($results)->map(function ($x) {
+            return (array) $x;
+        })->toArray();
+        if ($results) {
+            return array_column($results, 'id');
+        }
+        return [];
     }
 
     public function searchRelatedPicturesIds(array $shown, array $hidden = [])

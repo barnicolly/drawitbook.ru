@@ -7,6 +7,7 @@ use App\Libraries\Template;
 use App\UseCases\Picture\GetPicturesWithTags;
 use App\UseCases\Search\SearchBySeoTag;
 use App\UseCases\Search\SearchByTags;
+use App\UseCases\Seo\Seo;
 use Illuminate\Http\Request;
 use MetaTag;
 use Validator;
@@ -31,7 +32,7 @@ class ArtsCell extends Controller
         } else if (is_null($pageNum)) {
             $pageNum = 1;
         }
-        $pageNum = (int) $pageNum;
+        $pageNum = (int)$pageNum;
 
         if (!$pageNum) {
             return abort(404);
@@ -51,21 +52,10 @@ class ArtsCell extends Controller
         if (!$tagInfo) {
             abort(404);
         }
-
-        $hidden = [];
-        $tags = [];
-
-        if ($tagInfo->hidden) {
-            $hidden[] = $tagInfo->id;
-        } else {
-            $tags[] = $tagInfo->id;
-        }
-        $searcherByTags = new SearchByTags(1000);
-        $relativePictureIds = $searcherByTags->searchRelatedPicturesIds($tags, $hidden);
+        $relativePictureIds = SearchByTags::searchPicturesByTagId($tagInfo->id);
         if (!$relativePictureIds) {
             abort(404);
         }
-
         $viewData = [];
 
         $perPage = 50;
@@ -79,8 +69,9 @@ class ArtsCell extends Controller
         $paginate = new LengthAwarePaginator($relativePictures->forPage($pageNum, $perPage), $countSearchResults, $perPage, $pageNum, ['path' => route('arts.cell.tagged', $tag)]);
 
         $viewData['paginate'] = $paginate ?? [];
-        $title = 'Рисунки по клеточкам «' . mbUcfirst($tagInfo->name) . '»‎';
-        $description = 'Рисунки по клеточкам - ' . mbUcfirst($tagInfo->name) . '. Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.';
+
+        $title = Seo::createCategoryTitle('Рисунки по клеточкам', mbUcfirst($tagInfo->name), $countSearchResults);
+        $description = Seo::createCategoryDescription('Рисунки по клеточкам', mbUcfirst($tagInfo->name), $countSearchResults);;
         if ($pageNum !== 1) {
             MetaTag::set('robots', 'noindex, follow');
             MetaTag::set('title', $title . ' - Страница ' . $pageNum);
@@ -91,11 +82,27 @@ class ArtsCell extends Controller
             if ($addCanonical) {
                 $viewData['canonical'] = route('arts.cell.tagged', $tag);
             }
+            $firstPicture = $relativePictures->first();
+            if ($firstPicture) {
+                MetaTag::set('image', asset('arts/' . $firstPicture->path));
+            }
         }
         if (empty($viewData['canonical'])) {
             $viewData['canonical'] = '';
         }
-        MetaTag::set('image', asset('arts/d4/11/d4113a118447cb7650a7a7d84b45b153.jpeg'));
+        if ($relativePictures) {
+            foreach ($relativePictures as $index => $relativePicture) {
+                $tags = [];
+                foreach ($relativePicture->tags as $tag) {
+                    if ($tag->hidden === 0) {
+                        $tags[] = mbUcfirst($tag->name);
+                    }
+                }
+                if ($tags) {
+                    $relativePicture->alt = 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags);
+                }
+            }
+        }
         $viewData['tag'] = $tagInfo;
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;

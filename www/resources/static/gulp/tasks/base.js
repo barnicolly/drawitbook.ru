@@ -4,7 +4,8 @@ var base = {
             path.src.plugin + 'jquery/jquery-3.1.1.min.js',
             path.src.plugin + 'bootstrap/compiled/js/bootstrap.min.js',
             path.src.plugin + 'masonry/masonry_without_images_loaded.min.js',
-            path.src.plugin + 'lazy/jquery.lazy.min.js',
+            // path.src.plugin + 'lazy/jquery.lazy.min.js',
+            // path.src.plugin + 'lazy/plugins/jquery.lazy.picture.min.js',
         ],
         minify: [
             path.src.self + 'js/init_plugins.js',
@@ -20,6 +21,7 @@ var base = {
         minify: [
             path.src.plugin + 'bootstrap/compiled/css/purged/bootstrap-minimized.css',
             path.src.plugin + 'font-awesome-4.7.0/css/font-awesome-minimized.css',
+            path.src.plugin + 'cloud/jqcloud.css',
             path.src.self + 'css/content/*.css',
         ]
     }
@@ -32,6 +34,7 @@ var afterLoad = {
             path.src.plugin + 'sticky/theia-sticky-sidebar.min.js',
             // path.src.plugin + 'share-this/share-this.min.js',
             path.src.plugin + 'fancybox/dist/fancybox.compiled.min.js',
+            path.src.plugin + 'cloud/jqcloud-1.0.4.min.js',
         ],
         minify: [
             path.src.self + 'js/plugins/claim.js',
@@ -40,31 +43,12 @@ var afterLoad = {
     },
     css: {
         append: [
+            // path.src.self + 'files/dummy.css',
             path.src.plugin + 'fancybox/dist/jquery.fancybox.min.css',
         ],
         minify: [
             path.src.self + 'files/dummy.css',
             // path.src.plugin + 'share-this/sti.css',
-        ]
-    }
-};
-
-var mobile = {
-    js: {
-        append: [
-            path.src.plugin + 'fancybox/dist/jquery.fancybox.min.js',
-        ],
-        minify: [
-            path.src.self + 'js/plugins/claim.js',
-            path.src.self + 'js/plugins/rate.js',
-        ]
-    },
-    css: {
-        append: [
-            path.src.plugin + 'fancybox/dist/jquery.fancybox.min.css',
-        ],
-        minify: [
-            path.src.plugin + 'share-this/sti.css',
         ]
     }
 };
@@ -165,6 +149,21 @@ gulp.task('scripts:base', function () {
     return stream
         .pipe(plugins.plumber())
         .pipe(plugins.concat('master.min.js'))
+        .pipe(gulp.dest(path.build + 'js/'));
+});
+
+gulp.task('scripts:base.copy', function () {
+    var stream;
+    var files = {
+        minify: [
+            path.src.plugin + 'lazy/lazysizes.min.js',
+        ],
+        append: [
+            path.src.self + 'files/dummy.js',
+        ],
+    };
+    stream = prepareJsStream('scripts:base.copy', files);
+    return stream
         .pipe(gulp.dest(path.build + 'js/'));
 });
 
