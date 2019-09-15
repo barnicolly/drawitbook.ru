@@ -19,7 +19,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
 )
 
 # Default value for keep_releases is 5
-set :keep_releases, 3
+set :keep_releases, 1
 
 # Deployment process
 # after "deploy:update", "deploy:cleanup"
@@ -31,7 +31,9 @@ namespace :deploy do
 	  task :after_deploy do
 		on roles(:all) do
              execute "cd #{fetch(:release_path)}/www; composer install && npm i && gulp build --env production"
-             execute "cd #{fetch(:release_path)}/www; php artisan config:cache && php artisan route:cache && php artisan optimize && composer dumpautoload -o && php artisan cache:clear"
+             execute "cd #{fetch(:release_path)}/www; php artisan cache:clear && php artisan route:cache && php artisan config:cache"
+             execute "cd #{fetch(:release_path)}/www; php artisan optimize && composer dumpautoload -o"
+             execute "cd #{fetch(:release_path)}/www; rm -rf node_modules"
 		end
 	end
 end

@@ -274,11 +274,15 @@ small,
   margin-right: -15px;
   margin-left: -15px; }
 
- .col-12, .col-sm-6, .col-md-1, .col-md-4, .col-md-8, .col-md-11, .col-md-12, .col-lg-3 {
+ .col-3, .col-12, .col-sm-6, .col-md-1, .col-md-4, .col-md-8, .col-md-11, .col-md-12, .col-lg-3, .col-lg-5, .col-lg-7 {
   position: relative;
   width: 100%;
   padding-right: 15px;
   padding-left: 15px; }
+
+.col-3 {
+  flex: 0 0 25%;
+  max-width: 25%; }
 
 .col-12 {
   flex: 0 0 100%;
@@ -314,7 +318,13 @@ small,
 @media (min-width: 992px) {
   .col-lg-3 {
     flex: 0 0 25%;
-    max-width: 25%; } }
+    max-width: 25%; }
+  .col-lg-5 {
+    flex: 0 0 41.66667%;
+    max-width: 41.66667%; }
+  .col-lg-7 {
+    flex: 0 0 58.33333%;
+    max-width: 58.33333%; } }
 
 .form-control {
   display: block;

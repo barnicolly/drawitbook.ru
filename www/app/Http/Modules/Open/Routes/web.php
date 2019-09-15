@@ -27,4 +27,6 @@ Route::group(
     function () {
         Route::get('/', ['uses' => 'Content@index'])
             ->name('home');
+
+        Route::get('/tag/list', ['uses' => 'Content@tagList'])->middleware(['ajax']);
     });

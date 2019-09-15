@@ -36,6 +36,28 @@ class Picture extends Controller
                     $relativePictures = $checkExistPictures->check();
                 }
             }
+            $tags = [];
+            foreach ($picture->tags as $tag) {
+                if ($tag->hidden === 0) {
+                    $tags[] = mbUcfirst($tag->name);
+                }
+            }
+            if ($tags) {
+                $picture->alt = 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags);
+            }
+            if ($relativePictures) {
+                foreach ($relativePictures as $index => $relativePicture) {
+                    $tags = [];
+                    foreach ($relativePicture->tags as $tag) {
+                        if ($tag->hidden === 0) {
+                            $tags[] = mbUcfirst($tag->name);
+                        }
+                    }
+                    if ($tags) {
+                        $relativePicture->alt = 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags);
+                    }
+                }
+            }
             $viewData = ['picture' => $picture, 'relativePictures' => $relativePictures];
             $template = new Template();
             MetaTag::set('title', 'Art #' . $id . ' | Drawitbook.ru');

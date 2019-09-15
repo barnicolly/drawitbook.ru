@@ -112,3 +112,10 @@ if (!function_exists('b64img')) {
         return $data;
     }
 }
+
+if (!function_exists('frenchQuotes')) {
+    function frenchQuotes(string $row)
+    {
+        return '«‎' . $row . '»';
+    }
+}
