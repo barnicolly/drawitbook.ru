@@ -9,17 +9,19 @@ set :scm, :hg
 
 # Default value for :linked_files is []
 set :linked_files, fetch(:linked_files, []).push(
-	'www/.env'
+	'www/.env',
+	'www/config/logging.php',
 )
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push(
     'www/public/arts',
-    'www/public/thumbnails'
+    'www/public/thumbnails',
+    'www/storage/logs',
 )
 
 # Default value for keep_releases is 5
-set :keep_releases, 1
+set :keep_releases, 2
 
 # Deployment process
 # after "deploy:update", "deploy:cleanup"
@@ -30,7 +32,7 @@ namespace :deploy do
     desc 'after_deploy'
 	  task :after_deploy do
 		on roles(:all) do
-             execute "cd #{fetch(:release_path)}/www; composer install && npm i && gulp build --env production"
+             execute "cd #{fetch(:release_path)}/www; composer install --no-dev && npm i && gulp build --env production"
              execute "cd #{fetch(:release_path)}/www; php artisan cache:clear && php artisan route:cache && php artisan config:cache"
              execute "cd #{fetch(:release_path)}/www; php artisan optimize && composer dumpautoload -o"
              execute "cd #{fetch(:release_path)}/www; rm -rf node_modules"
