@@ -1,7 +1,7 @@
 <?php
 
-$packageJson = file_get_contents(base_path('package.json'));
-$packageJson = json_decode($packageJson, true);
+$manifest = file_get_contents(base_path('public/build/manifest.json'));
+$manifest = json_decode($manifest, true);
 
 return [
 
@@ -44,7 +44,7 @@ return [
 
     'debug' => env('APP_DEBUG', true),
 
-    'version' => $packageJson['version'],
+    'manifest' => $manifest,
 
     /*
     |--------------------------------------------------------------------------

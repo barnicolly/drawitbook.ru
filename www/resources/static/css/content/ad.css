@@ -1,9 +1,0 @@
-@media (max-width: 600px) {
-    #onFancyPreview {
-        display: none;
-    }
-
-    .mobile-no-padding {
-        padding: 0px !important;
-    }
-}
