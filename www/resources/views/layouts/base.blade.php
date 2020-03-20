@@ -7,9 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta name="yandex-verification" content="e78a61097fbbb899"/>
     <meta name="google-site-verification" content="44qvqCqXAJ59PJZMKJB4zmk8zDa57Ff1mpau2pNfm3Q"/>
-    @include('layouts/partials/base/favicon_pack')
+    @include('layouts.partials.base.favicon_pack')
     <title>{!! MetaTag::get('title') !!}</title>
-    @stack('head')
+    <link rel="stylesheet" href="{{ buildUrl('app.css') }}">
     @stack('links')
     {!! MetaTag::get('keywords') ? MetaTag::tag('keywords') : '' !!}
     {!! MetaTag::get('image') ? MetaTag::tag('image') : '' !!}
@@ -17,29 +17,11 @@
     {!! MetaTag::get('description') ? MetaTag::tag('description') : '' !!}
     {!! MetaTag::openGraph() !!}
     {!! MetaTag::twitterCard() !!}
-    @if (!isLocal() && config('app.debug') === false && empty(session('is_admin')))
-        @include('layouts/metrics')
-    @endif
     @stack('styles')
 </head>
 <body>
-<div class="container-fluid no-padding">
-    @include('layouts/header')
-    <div class="container" id="main-container">
-        <div class="row">
-            <main class="col-12">
-                @yield('breadcrumbs')
-                @yield('content')
-            </main>
-        </div>
-    </div>
-    <?php $footer = Cache::get('footer');
-    if (!$footer || isLocal()) {
-        $footer = view('layouts/footer')->render();
-        Cache::put('footer', $footer, config('cache.expiration'));
-    } ?>
-    {!! $footer !!}
-</div>
+@yield('content')
+<script src="{{ buildUrl('app.js') }}" defer></script>
 @stack('scripts')
 </body>
 </html>

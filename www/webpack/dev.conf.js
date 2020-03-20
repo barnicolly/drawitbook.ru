@@ -2,7 +2,7 @@ const merge = require('webpack-merge');
 const helper = require('./utilites/parts');
 const baseWebpackConfig = require('./base.conf');
 
-let domain = 'http://test';
+let domain = 'http://test1';
 const  devWebpackConfig = merge(baseWebpackConfig, {
     mode: 'development',
     output: {

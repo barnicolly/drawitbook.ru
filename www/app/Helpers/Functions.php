@@ -45,7 +45,8 @@ if (!function_exists('pluralForm')) {
 if (!function_exists('buildUrl')) {
     function buildUrl(string $path)
     {
-        return asset($path) . '?' . config('app.version');
+        $files = config('app.manifest');
+        return $files[$path] ?? '';
     }
 }
 

@@ -1,0 +1,51 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  border: 0;
+}
+
+nav, footer, header, aside {
+  display: block;
+}
+
+html, body {
+  width: 100%;
+  background-color: #fff;
+  font-size: $defaultFontSize;
+  color: #222;
+  line-height: 180%;
+}
+
+h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
+}
+
+ul, ul ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  background-color: transparent;
+  color: #337ab7;
+  text-decoration: none;
+
+  &:hover, :focus {
+    color: #23527c;
+    text-decoration: underline;
+  }
+}
+
+img {
+  vertical-align: middle;
+}
