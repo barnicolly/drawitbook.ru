@@ -21,6 +21,7 @@
 </head>
 <body>
 @yield('content')
+<script src="{{ buildUrl('polyfills.js') }}" defer></script>
 <script src="{{ buildUrl('app.js') }}" defer></script>
 @stack('scripts')
 </body>

@@ -20,7 +20,7 @@
                 @else
                     <li class="breadcrumb-item active" itemscope="" itemprop="itemListElement"
                         itemtype="http://schema.org/ListItem">
-                            <div itemprop="item" class="d-inline-block">
+                            <div itemprop="item" class="d-inline">
                                 <span itemprop="name"> {{ $breadcrumb->title }}</span>
                                 <meta itemprop="position" content="{{ ++$loop->index }}">
                             </div>

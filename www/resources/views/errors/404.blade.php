@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-4">
-            <img src="{{ asset('img/page-not-found.png') }}" class="d-block img-fluid m-auto"
+            <img src="{{ asset('img/page-not-found.png') }}" class="img-responsive"
                  alt="По запросу ничего не найдено">
         </div>
         <div class="col-md-8 text-left">

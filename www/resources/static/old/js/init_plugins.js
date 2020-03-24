@@ -36,35 +36,8 @@ function appInit() {
             currentRequests[options.url] = jqXHR;
         });
 
-        var grid = $('.stack-grid');
-        if (grid.length) {
-            grid.closest('.stack-grid-wrapper')
-                .find('.stack-loader-container').remove();
-            grid.show();
-            grid.masonry({
-                itemSelector: '.art-container',
-                columnWidth: getMasonryWidth(),
-                gutter: 10,
-            });
-            showStackGridAd.call(this);
-            $(window).smartresize(function () {
-                grid.masonry({
-                    columnWidth: getMasonryWidth(),
-                })
-            });
-        }
-        $('#button').backUpButton('init');
 
-        function getMasonryWidth() {
-            var masonryWidth = 362;
-            var bvw = document.getElementsByTagName("body")[0].offsetWidth;
-            if (bvw >= 768 && bvw <= 1100) {
-                masonryWidth = 300;
-            } else if (bvw < 768) {
-                masonryWidth = null;
-            }
-            return masonryWidth;
-        }
+        $('#button').backUpButton('init');
     }
 
     window.onload = function () {

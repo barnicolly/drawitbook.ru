@@ -68,6 +68,7 @@
         "hc-sticky": "^2.2.3",
         "lazysizes": "^5.2.0",
         "little-loader": "^0.2.0",
+        "masonry-layout": "^4.2.2",
         "normalize.css": "^8.0.1",
         "rater-js": "^1.0.1",
         "svgxuse": "^1.2.6",

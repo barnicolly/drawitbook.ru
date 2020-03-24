@@ -28,7 +28,7 @@
                              height="{{ $picture->height }}"
                              style="position:absolute; top:0; left:0; width:100%;height: 100%;"
                              data-title="Art #{{ $picture->id }} | Drawitbook.ru"
-                             class="img-fluid lazyload"
+                             class="img-responsive lazyload"
                              data-src="{{ asset('arts/' . $picture->path) }}"
                              alt="{{ $alt }}">
                     </picture>
@@ -36,7 +36,7 @@
             </a>
         @else
             <?php $img = b64img('', 6, $picture->width, $picture->height); ?>
-            <img class="img-fluid lazyload"
+            <img class="img-responsive lazyload"
                  data-url="{{ route('art', ['id' => $picture->id]) }}"
                  data-title="Art #{{ $picture->id }} | Drawitbook.ru"
                  itemprop="contentUrl"

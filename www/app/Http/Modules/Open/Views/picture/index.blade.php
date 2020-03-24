@@ -1,6 +1,6 @@
-@extends('layouts.base')
+@extends('Open::template.layout')
 
-@section('content')
+@section('layout.content')
     <div class="row clearfix">
         <div class="col-md-8">
             <div class="row">
