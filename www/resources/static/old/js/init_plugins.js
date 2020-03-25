@@ -65,12 +65,6 @@ function appInit() {
                     });
                 }
 
-                if ($('.social-fixed-sidebar').length) {
-                    $('.social-fixed-sidebar').theiaStickySidebar({
-                        additionalMarginTop: 40,
-                    });
-                }
-
                 if ($('.sidebar').length) {
                     $('.sidebar').theiaStickySidebar({
                         additionalMarginTop: 20,

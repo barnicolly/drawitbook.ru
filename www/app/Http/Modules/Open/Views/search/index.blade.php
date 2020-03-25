@@ -1,68 +1,33 @@
-@extends('Open::template.layout')
+@extends('Open::template.layouts.paginated')
 
-@section('layout.content')
-    <div class="form-group">
-        <h1 class="title">
-            @if (!empty($filters['query']) && !empty($filters['tag']))
-                Результаты поиска по запросу {{ $filters['query'] }} и тегам
+@section('layouts.paginated.first_block')
+    <h1 class="title form-group">
+        @if (!empty($filters['query']) && !empty($filters['tag']))
+            Результаты поиска по запросу {{ $filters['query'] }} и тегам
+            @foreach($filters['tag'] as $tag)
+                #{{ $tag }}
+            @endforeach
+        @elseif (!empty($filters['query']))
+            Результаты поиска по запросу {{ $filters['query'] }}
+        @elseif (!empty($filters['tag']))
+            @if (count($filters['tag']) === 1)
+                Результаты поиска по тегу
                 @foreach($filters['tag'] as $tag)
                     #{{ $tag }}
                 @endforeach
-            @elseif (!empty($filters['query']))
-                Результаты поиска по запросу {{ $filters['query'] }}
-            @elseif (!empty($filters['tag']))
-                @if (count($filters['tag']) === 1)
-                    Результаты поиска по тегу
-                    @foreach($filters['tag'] as $tag)
-                        #{{ $tag }}
-                    @endforeach
-                @else
-                    Результаты поиска по тегам
-                    @foreach($filters['tag'] as $tag)
-                        #{{ $tag }}
-                    @endforeach
-                @endif
+            @else
+                Результаты поиска по тегам
+                @foreach($filters['tag'] as $tag)
+                    #{{ $tag }}
+                @endforeach
             @endif
-        </h1>
-    </div>
+        @endif
+    </h1>
+@endsection
+
+@section('layouts.paginated.content')
     @if (!empty($relativePictures))
-        <div class="form-group">
-            Результатов:
-            <span class="badge badge-info">{{ $countRelatedPictures }}</span>
-        </div>
-        @if (!empty($relativePictures))
-            <div class="form-group">
-                {!! loadAd('before_stack') !!}
-            </div>
-        @endif
-        @if ($paginate && ($paginate->lastPage() !== 1))
-            <div class="form-group">
-                <p>
-                    Страница <span
-                        class="badge badge-info">{{ $paginate->currentPage() }} из {{ $paginate->lastPage() }}</span>
-                </p>
-            </div>
-            <div>
-                {{ $paginate->links() }}
-            </div>
-        @endif
-        <div class="form-group">
-            @include('Open::template.stack_grid', ['pictures' => $relativePictures])
-        </div>
-        <div class="form-group">
-            {!! loadAd('after_first_stack') !!}
-        </div>
-        @if ($paginate && ($paginate->lastPage() !== 1))
-            <div class="form-group">
-                <p>
-                    Страница <span
-                        class="badge badge-info">{{ $paginate->currentPage() }} из {{ $paginate->lastPage() }}</span>
-                </p>
-            </div>
-            <div>
-                {{ $paginate->links() }}
-            </div>
-        @endif
+        @include('Open::template.stack_grid', ['pictures' => $relativePictures])
     @else
         <div>
             <img src="{{ asset('img/results-not-found.png') }}" class=""

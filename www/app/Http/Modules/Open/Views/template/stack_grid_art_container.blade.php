@@ -36,7 +36,9 @@
                  style="width: 10%; vertical-align: top; padding-top: 5px">
                 <a itemprop="url" href="{{ route('art', ['id' => $picture->id]) }}" rel="nofollow" target="_blank"
                    title="Открыть в новом окне">
-                    <span class="fa fa-external-link"></span>
+                    <svg role="img" width="20" height="20" viewBox="0 0 20 20">
+                        <use xlink:href="{{ buildUrl('sprite.svg') . '#external-link' }}"></use>
+                    </svg>
                 </a>
             </div>
         </div>

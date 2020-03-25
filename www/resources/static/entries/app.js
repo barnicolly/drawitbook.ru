@@ -11,6 +11,10 @@ import '../scss/components/_rate_button.scss';
 import '../scss/components/_art.scss';
 import '../scss/components/_img.scss';
 
+import '../scss/pages/art.preview.scss';
+
+import './icons';
+
 const lazyLoadElements = document.querySelector("img.lazyload");
 if (lazyLoadElements) {
     import (/* webpackChunkName: "lazysizes" */'lazysizes');

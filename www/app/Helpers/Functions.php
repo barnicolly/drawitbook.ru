@@ -24,12 +24,12 @@ if (!function_exists('isLocal')) {
 }
 
 if (!function_exists('loadAd')) {
-    function loadAd(string $path)
+    function loadAd(string $id)
     {
         if (isLocal()) {
-            return view('Open::template.ads.dummy')->render();
+            return view('Open::template.ads.dummy', ['id' => $id])->render();
         } else {
-            return view('Open::template.ads.' . $path)->render();
+            return '<div id="' . $id . '"></div>';
         }
     }
 }

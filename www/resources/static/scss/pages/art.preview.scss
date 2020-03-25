@@ -1,0 +1,13 @@
+.detail-art-container {
+    .art-container {
+        flex: 1 1 auto;
+        display: flex;
+
+        .social-container {
+            flex: 0 0 100px;
+        }
+    }
+    .sidebar {
+        flex: 0 0 300px;
+    }
+}

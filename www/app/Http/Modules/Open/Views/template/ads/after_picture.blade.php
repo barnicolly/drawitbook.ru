@@ -1,1 +1,0 @@
-<div id="after_picture"></div>
