@@ -2,12 +2,14 @@ const merge = require('webpack-merge');
 const helper = require('./utilites/parts');
 const baseWebpackConfig = require('./base.conf');
 
-let domain = 'http://test1';
+
+const {domain} = baseWebpackConfig.externals.settings;
 const  devWebpackConfig = merge(baseWebpackConfig, {
     mode: 'development',
     output: {
-        filename: "[name].js",
-        publicPath: `${domain}:8080/build/`,
+        filename: '[name].js',
+        chunkFilename: '[name].js',
+        publicPath: `${domain}:8081/build/`,
     },
     devServer: {
         hot: true,
@@ -15,6 +17,7 @@ const  devWebpackConfig = merge(baseWebpackConfig, {
         inline: true,
         overlay: true,
         quiet: false,
+        port: 8081,
         host: '0.0.0.0',
         proxy: {
             '**': {
@@ -30,10 +33,16 @@ const  devWebpackConfig = merge(baseWebpackConfig, {
     devtool: 'eval-sourcemap',
     plugins: [
         helper.plugins.MiniCssExtractPlugin({
-            filename: '[name].css',
+            moduleFilename: (chunk) => {
+                let name = chunk.name.replace('js/', 'css/');
+                return `${name}.css`;
+            },
+            filename: 'css/[id].css',
+        }),
+        helper.plugins.WriteFilePlugin({
+            test: /(img|icons)\//,
         }),
     ],
-
     module: {
         rules: [
             {
@@ -43,16 +52,6 @@ const  devWebpackConfig = merge(baseWebpackConfig, {
                     helper.loaders.CacheLoader(isProduction()),
                     helper.loaders.CssLoader(isProduction()),
                     helper.loaders.PostcssLoader(isProduction()),
-                ]
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    helper.loaders.MiniCssExtractPluginLoader(isProduction()),
-                    helper.loaders.CacheLoader(isProduction()),
-                    helper.loaders.CssLoader(isProduction()),
-                    helper.loaders.PostcssLoader(isProduction()),
-                    helper.loaders.SassLoader(isProduction()),
                 ]
             },
             {

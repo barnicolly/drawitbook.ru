@@ -1,7 +1,7 @@
 const Loader = require('../core/base-loader');
 
 //https://webpack.js.org/loaders/thread-loader/#root
-module.exports = class BabelLoader extends Loader {
+module.exports = class ThreadLoader extends Loader {
     constructor(isProduction, options = {}) {
         super();
         this.options = {

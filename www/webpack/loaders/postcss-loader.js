@@ -5,9 +5,9 @@ module.exports = class PostCssLoader extends Loader {
     constructor(isProduction, options = {}) {
         super();
         this.options = {
-            config: {
-                path: __dirname + '/postcss.config.js'
-            },
+            plugins: [
+                require('autoprefixer'),
+            ],
             outputStyle: 'expanded',
         };
         if (options) {

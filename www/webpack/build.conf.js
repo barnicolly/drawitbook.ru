@@ -1,16 +1,21 @@
 const merge = require('webpack-merge');
 const helper = require('./utilites/parts');
 const baseWebpackConfig = require('./base.conf');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const {domain} = baseWebpackConfig.externals.settings;
 const buildWebpackConfig = merge(baseWebpackConfig, {
     mode: 'production',
     output: {
-        filename: '[name].[chunkhash].js',
-        publicPath: '/build/',
+        filename: 'js/[name].[contenthash].js',
+        publicPath: `${domain}/build/`,
     },
+    devtool: 'source-map',
     plugins: [
+        helper.plugins.CleanWebpackPlugin(),
         helper.plugins.MiniCssExtractPlugin({
-            filename: '[name].[chunkhash].css',
+            filename: 'css/[name].[contenthash].css',
+            moduleFilename: (chunk) => `css/${chunk.name}.[contenthash].css`,
         }),
         helper.plugins.CompressionPlugin({
             filename: '[path].gz[query]',
@@ -20,9 +25,10 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
         helper.plugins.CompressionPlugin({
             filename: '[path].br[query]',
             algorithm: 'brotliCompress',
-            test: /\.(js|css|svg)$/,
+            test: /\.(js|css)$/,
             compressionOptions: {level: 11},
         }),
+        // new BundleAnalyzerPlugin(),
     ],
     module: {
         rules: [
@@ -32,15 +38,6 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
                     helper.loaders.MiniCssExtractPluginLoader(isProduction()),
                     helper.loaders.CssLoader(isProduction()),
                     helper.loaders.PostcssLoader(isProduction()),
-                ]
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    helper.loaders.MiniCssExtractPluginLoader(isProduction()),
-                    helper.loaders.CssLoader(isProduction()),
-                    helper.loaders.PostcssLoader(isProduction()),
-                    helper.loaders.SassLoader(isProduction()),
                 ]
             },
             {

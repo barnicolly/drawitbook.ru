@@ -1,21 +1,21 @@
 var ManifestPlugin = require('webpack-manifest-plugin');
-const path = require('path');
+
+//https://www.npmjs.com/package/webpack-manifest-plugin
 module.exports = function createPlugin(options) {
+    let excludePatterns = [
+        '\.*.gz$',
+        '\.*.br$',
+        'fonts/',
+        'img/',
+    ];
     return new ManifestPlugin({
         writeToFileEmit: true,
-        // filter: (file) => !file.path.match(/\.map$/),
-        // map: (file) => {
-        //     const extension = path.extname(file.name).slice(1);
-        //     console.log(file);
-        //     // return {
-        //     //     ...file,
-        //     //     isAsset: false,
-        //     //     // name: ['css', 'js'].includes(extension) ?
-        //     //     //     `${extension}/${file.name}` :
-        //     //     //     file.name
-        //     // }
-        //     file.isAsset = false;
-        //     return {};
-        // }
+        filter: (FileDescriptor) => {
+            let matchPatters = excludePatterns.filter(pattern => {
+                let regexp = new RegExp(pattern);
+                return FileDescriptor.name.match(regexp)
+            });
+            return !matchPatters.length;
+        }
     });
 };
