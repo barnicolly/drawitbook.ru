@@ -85,6 +85,7 @@
         "little-loader": "^0.2.0",
         "lodash": "^4.17.20",
         "masonry-layout": "^4.2.2",
+        "normalize.css": "^8.0.1",
         "promise-polyfill": "8.1.0",
         "query-string": "^5",
         "svgxuse": "^1.2.6",

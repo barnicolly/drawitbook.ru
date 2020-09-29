@@ -36,9 +36,6 @@ module.exports = {
     },
     entry: {
         'app': `${paths.src.self}entries/app.js`,
-        'landing': `${paths.src.self}entries/landing.js`,
-        'ranking': `${paths.src.self}entries/ranking.js`,
-        'webinar': `${paths.src.self}entries/webinar.js`,
     },
     optimization: helper.parts.optimization(isProduction),
     output: {
