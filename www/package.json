@@ -32,6 +32,7 @@
         ]
     },
     "devDependencies": {
+        "@babel/compat-data": "^7.11.0",
         "@babel/core": "^7.8.4",
         "@babel/plugin-proposal-class-properties": "^7.8.3",
         "@babel/plugin-syntax-dynamic-import": "^7.8.3",
