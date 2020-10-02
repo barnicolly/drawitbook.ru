@@ -4,9 +4,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 const checkPrimaryVendor = (vendorIdentity) => {
     const vendorModules = [
         'jquery',
-        'animate.css',
-        'lodash',
-        'fancybox',
+        'bootstrap',
+        // 'animate.css',
+        // 'lodash',
     ];
     const path = require('path');
     let findVendorModule = false;

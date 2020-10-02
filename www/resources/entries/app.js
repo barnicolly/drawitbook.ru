@@ -14,6 +14,11 @@ import '../scss/components/_img.scss';
 import '../scss/pages/art.preview.scss';
 
 import './icons';
+//TODO-misha уменьшить размер ;
+// import 'jquery';
+
+import 'bootstrap/dist/js/bootstrap.bundle'
+import 'bootstrap/dist/css/bootstrap.css'
 
 const lazyLoadElements = document.querySelector("img.lazyload");
 if (lazyLoadElements) {
