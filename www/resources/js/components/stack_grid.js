@@ -9,7 +9,7 @@ if (stackGrid) {
             gutter: 10,
         });
         function getMasonryWidth() {
-            var masonryWidth = 376;
+            var masonryWidth = 350;
             var bvw = document.getElementsByTagName("body")[0].offsetWidth;
             if (bvw >= 768 && bvw <= 1100) {
                 masonryWidth = 300;
