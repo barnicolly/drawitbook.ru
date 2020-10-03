@@ -1,147 +1,132 @@
-.form-group {
-    margin-bottom: 15px;
-}
-
-.d-none {
-    display: none;
-}
-
-#siteWrapper {
-    min-height: 100%;
-    overflow: hidden;
-
-    display: flex;
-    flex-direction: column;
-}
-
-#appWrapper {
-    flex: 1 1 auto;
-}
-
-.container {
-    max-width: 1180px;
-    margin: 0 auto;
-    height: 100%;
-    position: relative;
-}
-
-.block_row {
-    display: flex;
-}
-
-#content_body {
-    flex: 1 1 500px;
-    width: 360px;
-    border: 1px solid rgba(53, 66, 81, .13);
-    margin: 15px;
-    @media (max-width: 768px) {
-        border: unset;
-        padding-bottom: 20px;
-    }
-}
-
-#sidebar_body {
-    flex: 0 0 300px;
-    margin-top: 15px;
-    margin-right: 15px;
-}
-
-@media (max-width: 900px) {
-    #sidebar_body {
-        display: none;
-    }
-}
-
-.img-responsive {
-    display: block;
-    max-width: 100%;
-    height: auto;
-}
-
-.content {
-    padding: 0 15px;
-}
-
-@media (max-width: 768px) {
-    #content_body {
-        margin: 0;
-    }
-}
-
-hr {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border: 0;
-    border-top: 1px solid rgba(0,0,0,.1);
-}
-
-.d-inline {
-    display: inline-block;
-}
-
-.btn-link {
-    font-weight: 00;
-    color: #007bff !important;
-    text-decoration: none;
-}
-
-.badge-info {
-    color: #fff;
-    background-color: #17a2b8;
-}
-
-.badge {
-    display: inline-block;
-    padding: .25em .4em;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: .25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
-.text-center {
-    text-align: center;
-}
-
-button[type="button"]:focus {outline:0;}
-
-body {
-    font-size: 18px;
-    color: #222;
-    line-height: 160%;
-}
-
-h1 {
-    font-size: 24px;
-}
-
-main {
-    min-height: 80% !important;
-}
-
-p {
-    margin: 0 !important;
-}
-
-figure {
-    margin: 0 0 0;
-}
-
-.ad-label {
-    color: #939393;
-    font-size: 14px;
-}
-
-@media (max-width: 700px) {
-    .mobile-no-padding {
-        padding: 0px !important;
-    }
-}
-
-.float-right {
-    float: right;
-}
+//.form-group {
+//    margin-bottom: 15px;
+//}
+//
+//.d-none {
+//    display: none;
+//}
+//
+//
+//.container {
+//    max-width: 1180px;
+//    margin: 0 auto;
+//    height: 100%;
+//    position: relative;
+//}
+//
+//.block_row {
+//    display: flex;
+//}
+//
+//#content_body {
+//    flex: 1 1 500px;
+//    width: 360px;
+//    border: 1px solid rgba(53, 66, 81, .13);
+//    margin: 15px;
+//    @media (max-width: 768px) {
+//        border: unset;
+//        padding-bottom: 20px;
+//    }
+//}
+//
+//#sidebar_body {
+//    flex: 0 0 300px;
+//    margin-top: 15px;
+//    margin-right: 15px;
+//}
+//
+//@media (max-width: 900px) {
+//    #sidebar_body {
+//        display: none;
+//    }
+//}
+//
+//.img-responsive {
+//    display: block;
+//    max-width: 100%;
+//    height: auto;
+//}
+//
+//.content {
+//    padding: 0 15px;
+//}
+//
+//@media (max-width: 768px) {
+//    #content_body {
+//        margin: 0;
+//    }
+//}
+//
+//hr {
+//    margin-top: 1rem;
+//    margin-bottom: 1rem;
+//    border: 0;
+//    border-top: 1px solid rgba(0,0,0,.1);
+//}
+//
+//.d-inline {
+//    display: inline-block;
+//}
+//
+//.btn-link {
+//    font-weight: 00;
+//    color: #007bff !important;
+//    text-decoration: none;
+//}
+//
+//.badge-info {
+//    color: #fff;
+//    background-color: #17a2b8;
+//}
+//
+//.badge {
+//    display: inline-block;
+//    padding: .25em .4em;
+//    font-size: 75%;
+//    font-weight: 700;
+//    line-height: 1;
+//    text-align: center;
+//    white-space: nowrap;
+//    vertical-align: baseline;
+//    border-radius: .25rem;
+//    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+//}
+//
+//.text-center {
+//    text-align: center;
+//}
+//
+//button[type="button"]:focus {outline:0;}
+//
+//body {
+//    font-size: 18px;
+//    color: #222;
+//    line-height: 160%;
+//}
+//
+//h1 {
+//    font-size: 24px;
+//}
+//
+//p {
+//    margin: 0 !important;
+//}
+//
+//figure {
+//    margin: 0 0 0;
+//}
+//
+//.ad-label {
+//    color: #939393;
+//    font-size: 14px;
+//}
+//
+//@media (max-width: 700px) {
+//    .mobile-no-padding {
+//        padding: 0px !important;
+//    }
+//}
+//
+//.float-right {
+//    float: right;
+//}

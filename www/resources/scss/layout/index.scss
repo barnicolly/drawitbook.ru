@@ -1,6 +1,8 @@
 @import "../helpers/variables";
 @import "../helpers/mixins";
 @import "../base/reset";
+@import "components";
 @import "header";
 @import "main";
+@import "layout";
 @import "footer";

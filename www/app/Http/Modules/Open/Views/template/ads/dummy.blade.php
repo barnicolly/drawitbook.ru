@@ -2,7 +2,7 @@
 
 <style>
     .dummy {
-        height: 300px;
+        height: 100px;
         width: 100%;
         background-color: #761c19;
     }

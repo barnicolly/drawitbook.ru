@@ -1,9 +1,9 @@
 @extends('layouts.base')
 
 @section('content')
-    <div id="siteWrapper">
+    <div id="siteWrapper" class="page__inner">
         @include('layouts.public.header.base')
-        <main id="appWrapper">
+        <main class="page__content">
             @yield('layout.body')
         </main>
         @include('layouts.public.footer.base')
