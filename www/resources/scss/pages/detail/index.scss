@@ -1,0 +1,12 @@
+.detail-art-page {
+    display: flex;
+
+    .detail-art-page__sidebar {
+        flex: 0 0 300px;
+    }
+
+    .detail-art-page__content {
+        flex: 1 1;
+        margin-right: 10px;
+    }
+}

@@ -1,30 +1,33 @@
 @extends('Open::template.layout')
 
 @section('layout.content')
-    <div class="block_row detail-art-container">
-        <div class="art-container">
-            <div>
-                <h1 class="title form-group">
-                    Art #{{ $picture->id }}
-                </h1>
-                <div class="art form-group">
-                    <div>
-                        @include('Open::template.tag_list', ['tags' => $picture->tags, 'showAllTags' => false])
+    <div class="detail-art-page">
+        <div class="detail-art-page__content">
+            <div class="art-container">
+                <div>
+                    <h1 class="title form-group">
+                        Art #{{ $picture->id }}
+                    </h1>
+                    <div class="art form-group">
+                        <div>
+                            @include('Open::template.tag_list', ['tags' => $picture->tags, 'showAllTags' => false])
+                        </div>
+                        @include('Open::template.img_social', ['picture' => $picture])
                     </div>
-                    @include('Open::template.img_social', ['picture' => $picture])
+                    <div class="form-group clearfix">
+                        <button type="button" class="btn btn-link float-right claim-button"
+                                data-id="{{ $picture->id }}">
+                            Пожаловаться
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <button type="button" class="btn btn-link float-right claim-button"
-                            data-id="{{ $picture->id }}">
-                        Пожаловаться
-                    </button>
+                <div class="content mobile-no-padding">
+                    {!! loadAd('after_picture') !!}
                 </div>
-            </div>
-            <div class="content mobile-no-padding">
-                {!! loadAd('after_picture') !!}
             </div>
         </div>
-        <div class="sidebar">
+
+        <div class="detail-art-page__sidebar sidebar">
             {!! loadAd('sidebar') !!}
         </div>
     </div>
