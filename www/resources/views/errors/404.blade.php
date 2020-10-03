@@ -1,20 +1,24 @@
-@extends('layouts.base')
+@extends('layouts.errors')
 
-@section('content')
-    <div class="row">
-        <div class="col-md-4">
-            <img src="{{ asset('img/page-not-found.png') }}" class="img-responsive"
-                 alt="По запросу ничего не найдено">
-        </div>
-        <div class="col-md-8 text-left">
-            <div style="padding-top: 100px;">
-                <p>
-                    К сожалению, страница не найдена или была удалена.
-                </p>
-                <small>
-                    Проверьте правильность ввода или воспользуйтесь поиском и навигацией по сайту.
-                </small>
-            </div>
-        </div>
+@section('errors.title')
+    <h1>Страница не найдена или была удалена</h1>
+@endsection
+
+@section('errors.content')
+    <div>
+        <p class="form-group">
+            Вы обратились к странице «{{ $incorrectUrl }}».
+        </p>
+        <p>
+            К сожалению, страница не найдена или была удалена. Чтобы найти нужную страницу:
+        </p>
+        <ul>
+            <li>
+                проверьте правильность ссылки (если копировали вручную);
+            </li>
+            <li>
+                воспользуйтесь навигацией по сайту.
+            </li>
+        </ul>
     </div>
 @endsection

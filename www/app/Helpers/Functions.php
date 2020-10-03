@@ -45,9 +45,8 @@ if (!function_exists('pluralForm')) {
 if (!function_exists('buildUrl')) {
     function buildUrl(string $path)
     {
-        //TODO-misha переделать для assets;
-        $files = config('app.manifest');
-        return $files[$path] ?? '';
+        $uri = preg_replace("/\/{2,}/", '/', '/build/' . $path);
+        return asset($uri);
     }
 }
 

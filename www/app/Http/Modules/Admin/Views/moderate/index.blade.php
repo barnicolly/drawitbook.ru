@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
 @push('scripts')
-    <script src="{{ buildUrl('build/js/admin.min.js') }}" defer></script>
-    <script src="{{ buildUrl('build/js/admin/moderate/main.js') }}" defer></script>
+    <script src="{{ getUrlFromManifest('js/admin.min.js') }}" defer></script>
+    <script src="{{ getUrlFromManifest('js/admin/moderate/main.js') }}" defer></script>
 @endpush
 @push('styles')
-    <link rel="stylesheet" href="{{ buildUrl('build/css/admin.min.css') }}">
+    <link rel="stylesheet" href="{{ getUrlFromManifest('css/admin.min.css') }}">
 @endpush
 
 @section('content')

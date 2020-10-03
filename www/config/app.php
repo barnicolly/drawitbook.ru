@@ -179,11 +179,15 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\ModulesServiceProvider::class,
         sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
         Torann\LaravelMetaTags\MetaTagsServiceProvider::class,
         Waavi\Sanitizer\Laravel\SanitizerServiceProvider::class,
         DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
+        /*
+         * Custom Service Providers
+         */
+        App\Providers\ModulesServiceProvider::class,
+        App\Providers\ComposerServiceProvider::class,
     ],
 
     /*

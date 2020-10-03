@@ -1,0 +1,33 @@
+.errors-page {
+    height: 450px;
+    display: flex;
+    align-items: center;
+
+    @include media-breakpoint-down(sm) {
+        flex-wrap: wrap;
+    }
+
+    .errors-page__title {
+        text-transform: uppercase;
+        font-size: 24px;
+    }
+
+    .errors-page__img {
+        flex: 0 0 40%;
+
+        @include media-breakpoint-down(sm) {
+            display: none;
+        }
+    }
+
+    ul {
+        list-style: circle;
+        padding-left: 20px;
+        font-size: 18px;
+    }
+
+    p {
+        font-size: 18px;
+        line-height: 140%;
+    }
+}

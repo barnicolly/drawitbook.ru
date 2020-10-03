@@ -13,6 +13,7 @@
                data-thumb="{{ asset('thumbnails/arts/' . $thumbnailPath) }}"
                data-id="{{ $picture->id }}"
             >
+{{--                //TODO-misha избавиться от стилей в коде;--}}
                 <div style="width:100%;height:0; padding-top:{{ $picture->height / $picture->width * 100 }}%;position:relative;">
                     <picture>
                         <?php $fileInfo = pathinfo(public_path('arts/') . $picture->path);?>

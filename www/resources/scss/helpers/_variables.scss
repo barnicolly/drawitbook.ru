@@ -3,3 +3,10 @@ $mainColor: #354251;
 $defaultFontSize: 18px;
 $defaultSpace: 15px;
 $defaultSpaceBack: -15px;
+
+$grid-breakpoints: (
+    xs: 0px,
+    sm: 750px,
+    md: 970px,
+    lg: 1170px
+) !default;
