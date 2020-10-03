@@ -9,7 +9,7 @@ const  devWebpackConfig = merge(baseWebpackConfig, {
     output: {
         filename: '[name].js',
         chunkFilename: '[name].js',
-        publicPath: `${domain}:8081/build/`,
+        publicPath: `${domain}:8080/build/`,
     },
     devServer: {
         hot: true,
@@ -17,7 +17,7 @@ const  devWebpackConfig = merge(baseWebpackConfig, {
         inline: true,
         overlay: true,
         quiet: false,
-        port: 8081,
+        port: 8080,
         host: '0.0.0.0',
         proxy: {
             '**': {

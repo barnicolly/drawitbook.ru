@@ -9,3 +9,33 @@
 .text-uppercase {
     text-transform: uppercase;
 }
+
+.d-inline {
+    display: inline-block;
+}
+
+@media (max-width: 700px) {
+    .mobile-no-padding {
+        padding: 0px !important;
+    }
+}
+
+.float-right {
+    float: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.clearfix::after {
+    display: block;
+    clear: both;
+    content: "";
+}
