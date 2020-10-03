@@ -3,7 +3,7 @@
         <nav class="navbar navbar-expand-lg navbar-light" itemscope=""
              itemtype="http://schema.org/SiteNavigationElement">
             <a class="navbar-brand " href="{{ route('home') }}" rel="nofollow">
-                <img style="max-width: 100px" class="img-responsive" src="{{ asset('img/logo.jpg') }}"
+                <img style="max-width: 100px" class="img-responsive" src="{{ buildUrl('img/logo.jpg') }}"
                      alt="">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"

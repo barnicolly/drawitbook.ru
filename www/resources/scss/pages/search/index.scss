@@ -1,0 +1,9 @@
+.search-no-results {
+    display: flex;
+    align-items: center;
+    min-height: 300px;
+
+    @include media-breakpoint-down(sm) {
+        flex-wrap: wrap;
+    }
+}

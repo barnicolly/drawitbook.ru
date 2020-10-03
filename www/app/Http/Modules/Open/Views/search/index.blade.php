@@ -29,30 +29,36 @@
     @if (!empty($relativePictures))
         @include('Open::template.stack_grid', ['pictures' => $relativePictures])
     @else
-        <div>
-            <img src="{{ asset('img/results-not-found.png') }}" class=""
-                 alt="По запросу ничего не найдено">
-        </div>
-        <div class="form-group text-center">
-            <p>
-                К сожалению, результатов по запросу не найдено.
-            </p>
-            <small>
-                Проверьте правильность ввода, попробуйте уменьшить количество слов.
-            </small>
-            <?php $popularQueries = [
-                'из мультфильма',
-                'животные',
-                'кошечка',
-                'девочки',
-            ]; ?>
-            <p>
-                Популярные запросы
-                @foreach($popularQueries as $popularQuery)
-                    <a itemprop="url" rel="nofollow"
-                       href="{{ route('search') . '?query=' . urlencode($popularQuery) }}">{{ $popularQuery }}</a>
-                @endforeach
-            </p>
+        <div class="search-no-results">
+            <div class="search-no-results__img">
+                <img src="{{ buildUrl('img/results-not-found.png') }}" class="img-responsive lazyload"
+                     alt="По запросу ничего не найдено">
+            </div>
+            <div class="search-no-results__suggests">
+                <p>
+                    К сожалению, результатов по запросу не найдено.
+                </p>
+                <small>
+                    Проверьте правильность ввода, попробуйте уменьшить количество слов.
+                </small>
+                <?php $popularQueries = [
+                    'из мультфильма',
+                    'животные',
+                    'кошечка',
+                    'девочки',
+                ]; ?>
+                <div>
+                    Популярные запросы:
+                </div>
+                <ul>
+                    @foreach($popularQueries as $popularQuery)
+                       <li>
+                           <a itemprop="url" rel="nofollow"
+                              href="{{ route('search') . '?query=' . urlencode($popularQuery) }}">{{ $popularQuery }}</a>
+                       </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
     @endif
 @endsection
