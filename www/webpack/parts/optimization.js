@@ -5,8 +5,7 @@ const checkPrimaryVendor = (vendorIdentity) => {
     const vendorModules = [
         'jquery',
         'bootstrap',
-        // 'animate.css',
-        // 'lodash',
+        'animate.css',
     ];
     const path = require('path');
     let findVendorModule = false;

@@ -1,7 +1,7 @@
-import '../../assets/icons/external-link.svg';
-import '../../assets/icons/social_fb.svg';
-import '../../assets/icons/social_ok.svg';
-import '../../assets/icons/social_tw.svg';
-import '../../assets/icons/social_vk.svg';
-import '../../assets/icons/like.svg';
-import '../../assets/icons/dislike.svg';
+import '@img/icons/external-link.svg';
+import '@img/icons/social_fb.svg';
+import '@img/icons/social_ok.svg';
+import '@img/icons/social_tw.svg';
+import '@img/icons/social_vk.svg';
+import '@img/icons/like.svg';
+import '@img/icons/dislike.svg';

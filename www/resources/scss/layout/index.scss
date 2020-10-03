@@ -1,6 +1,7 @@
-@import "../helpers/variables";
-@import "../helpers/mixins";
-@import "../base/reset";
+@import "~@scss/helpers/_variables.scss";
+@import "~@scss/helpers/_mixins.scss";
+@import "~@scss/base/_reset.scss";
+@import "~@scss/base/_compose.scss";
 @import "components";
 @import "header";
 @import "main";

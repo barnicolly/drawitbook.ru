@@ -9,8 +9,8 @@
     <meta name="google-site-verification" content="44qvqCqXAJ59PJZMKJB4zmk8zDa57Ff1mpau2pNfm3Q"/>
     @include('layouts.partials.base.favicon_pack')
     <title>{!! MetaTag::get('title') !!}</title>
-    <link rel="stylesheet" href="{{ buildUrl('vendors.css') }}">
-    <link rel="stylesheet" href="{{ buildUrl('app.css') }}">
+    <link rel="stylesheet" href="{{ getUrlFromManifest('vendors.css') }}">
+    <link rel="stylesheet" href="{{ getUrlFromManifest('app.css') }}">
     @stack('links')
     {!! MetaTag::get('keywords') ? MetaTag::tag('keywords') : '' !!}
     {!! MetaTag::get('image') ? MetaTag::tag('image') : '' !!}
@@ -22,10 +22,10 @@
 </head>
 <body>
 @yield('content')
-<script src="{{ buildUrl('polyfills.js') }}" defer></script>
-<script src="{{ buildUrl('runtime.js') }}" defer></script>
-<script src="{{ buildUrl('vendors.js') }}" defer></script>
-<script src="{{ buildUrl('app.js') }}" defer></script>
+<script src="{{ getUrlFromManifest('polyfills.js') }}" defer></script>
+<script src="{{ getUrlFromManifest('runtime.js') }}" defer></script>
+<script src="{{ getUrlFromManifest('vendors.js') }}" defer></script>
+<script src="{{ getUrlFromManifest('app.js') }}" defer></script>
 @stack('scripts')
 </body>
 </html>

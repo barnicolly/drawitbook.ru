@@ -45,6 +45,15 @@ if (!function_exists('pluralForm')) {
 if (!function_exists('buildUrl')) {
     function buildUrl(string $path)
     {
+        //TODO-misha переделать для assets;
+        $files = config('app.manifest');
+        return $files[$path] ?? '';
+    }
+}
+
+if (!function_exists('getUrlFromManifest')) {
+    function getUrlFromManifest(string $path)
+    {
         $files = config('app.manifest');
         return $files[$path] ?? '';
     }

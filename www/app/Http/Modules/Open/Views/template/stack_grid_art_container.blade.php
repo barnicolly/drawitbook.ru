@@ -26,18 +26,17 @@
                 </div>
             </div>
         @endif
-        <div class="stack-grid-footer">
-            <div class="stack-grid-tags d-inline" style="width: 88%">
+        <div class="stack-grid__footer">
+            <div class="stack-grid__tags">
                 @if ($picture->tags->count())
                     @include('Open::template.tag_list', ['tags' => $picture->tags, 'showAllTags' => $showAllTags])
                 @endif
             </div>
-            <div class="stack-grid-external-link d-inline text-right"
-                 style="width: 10%; vertical-align: top; padding-top: 5px">
+            <div class="stack-grid__external-link">
                 <a itemprop="url" href="{{ route('art', ['id' => $picture->id]) }}" rel="nofollow" target="_blank"
                    title="Открыть в новом окне">
                     <svg role="img" width="20" height="20" viewBox="0 0 20 20">
-                        <use xlink:href="{{ buildUrl('sprite.svg') . '#external-link' }}"></use>
+                        <use xlink:href="{{ getUrlFromManifest('icons/sprite.svg') . '#external-link' }}"></use>
                     </svg>
                 </a>
             </div>
