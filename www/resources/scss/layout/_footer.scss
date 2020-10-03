@@ -1,29 +1,34 @@
-footer {
+.footer {
     background-color: #377af2;
     color: white;
     min-height: 100px;
-}
 
-footer .footer {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
+    .footer__delimiter {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, .1);
+    }
 
-footer .slogan {
-    padding-top: 20px;
-    text-align: center;
-    text-transform: uppercase;
-}
+    .footer__app-name {
+        text-transform: uppercase;
+    }
 
-footer .app-name {
-    text-transform: uppercase;
-}
+    .footer__line {
 
-footer .footer-line:before {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 18px;
-    background-image: url('/img/line-bg.svg');
-    background-size: 5px;
+        &:before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 18px;
+            background-image: url('/img/line-bg.svg');
+            background-size: 5px;
+        }
+    }
+
+    .footer__slogan {
+        padding-top: 20px;
+        text-align: center;
+        text-transform: uppercase;
+    }
 }
