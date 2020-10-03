@@ -3,9 +3,6 @@
 @section('layout.content')
     <div class="block_row detail-art-container">
         <div class="art-container">
-            <div class="social-container">
-                @include('Open::template.partials.social_fixed')
-            </div>
             <div>
                 <h1 class="title form-group">
                     Art #{{ $picture->id }}

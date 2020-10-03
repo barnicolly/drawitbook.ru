@@ -24,9 +24,4 @@
             @yield('layouts.paginated.seo')
         </div>
     @endif
-    <div class="social-fixed-right-wrapper">
-        <div class="social-fixed-right">
-            @include('Open::template.partials.social_fixed')
-        </div>
-    </div>
 @endsection

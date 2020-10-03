@@ -13,3 +13,10 @@ let stackGrid = document.querySelector('.stack-grid');
 if (stackGrid) {
     initStackGrid(stackGrid);
 }
+
+const $rateContainers = $('.rate-container');
+if ($rateContainers.length) {
+    $rateContainers.each(function () {
+        $(this).customRate('init');
+    });
+}

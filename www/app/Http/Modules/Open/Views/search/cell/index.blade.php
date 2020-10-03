@@ -27,11 +27,4 @@
     <div class="form-group mobile-no-padding content">
         {!! loadAd('after_first_stack') !!}
     </div>
-    <div class="content">
-        <div class="social-fixed-right-wrapper">
-            <div class="social-fixed-right">
-                @include('Open::template.partials.social_fixed')
-            </div>
-        </div>
-    </div>
 @endsection

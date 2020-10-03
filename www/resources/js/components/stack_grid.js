@@ -4,6 +4,7 @@ export function initStackGrid(stackGrid) {
         stackGrid.style.display = 'flex';
         new Masonry.default(stackGrid, {
             itemSelector: '.art-container',
+            // gutter: 10,
         });
     });
 }

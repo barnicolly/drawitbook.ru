@@ -1,5 +1,15 @@
 .rate-button {
-    padding: 5px;
+    padding: 5px 10px;
+
+    background-color: rgba(255, 255, 255, 0.63);
+}
+
+.rate-button:hover {
+    background-color: #0c51bf;
+
+    svg {
+        fill: white;
+    }
 }
 
 .rate-button svg {
@@ -7,5 +17,5 @@
 }
 
 .rate-button.active svg {
-    fill: #377af2;
+    fill: #6500ec;
 }

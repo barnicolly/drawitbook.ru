@@ -1,3 +1,5 @@
+import { getRandomInt, sendRequest } from '@js/helpers/utils';
+
 (function ($) {
     $.rateContainer = $.rateContainer || [];
     var routes = {
