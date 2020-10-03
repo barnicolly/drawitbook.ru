@@ -4,7 +4,7 @@
     <div class="detail-art-page">
         <div class="detail-art-page__content">
             <div class="art-container">
-                <div>
+                <div class="content">
                     <h1 class="title form-group">
                         Art #{{ $picture->id }}
                     </h1>

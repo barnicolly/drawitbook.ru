@@ -1,5 +1,7 @@
 .content {
-    padding: 0 15px;
+    @media screen and (max-width: 768px) {
+        padding: 0 15px;
+    }
 }
 
 .form-group {

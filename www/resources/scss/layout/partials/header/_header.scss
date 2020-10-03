@@ -1,0 +1,124 @@
+.header {
+    $navbarBackgroundColor: #ffffff;
+    $navbarHamburgerColor: #6500ec;
+
+    background-color: $navbarBackgroundColor;
+    padding: 5px 0;
+    position: relative;
+
+    &.header--fixed {
+        position: fixed;
+        z-index: 1002;
+        width: 100%;
+        top: 0;
+    }
+
+    &.header--animated {
+        animation-duration: 0.3s;
+        animation-fill-mode: both;
+    }
+
+    &.header--fade-in-down {
+        animation-name: fadeInDown;
+    }
+
+    .header__hamburger-icon {
+        background: $navbarHamburgerColor;
+
+        &:before, &:after {
+            background: $navbarHamburgerColor;
+        }
+    }
+
+    .hamburger__icon--open {
+        background: transparent;
+    }
+
+    .header__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .header__toggle {
+        display: none;
+        margin-right: 50px;
+
+        @media screen and (max-width: 768px) {
+            display: block;
+            margin-right: 15px;
+        }
+    }
+
+    .header__menu {
+        top: -100%;
+        display: block;
+        //transition: all 0.3s ease;
+        background-color: white;
+        z-index: 1001;
+        overflow: auto;
+
+        @media screen and (max-width: 768px) {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+        }
+
+        &.open {
+            top: 63px;
+            display: block;
+
+            @media screen and (max-width: 768px) {
+                height: 100vh;
+            }
+        }
+    }
+
+    .header__link {
+        color: $navbarHamburgerColor;
+        background-color: $navbarBackgroundColor;
+
+        @media screen and (max-width: 768px) {
+            border-top: 1px solid #4D4F63;
+            border-left: 3px solid transparent;
+        }
+
+        &:hover {
+            background-color: transparent;
+            color: #F05D5E;
+        }
+    }
+
+    .header__search {
+        flex: 1 0 50%;
+        margin-right: 30px;
+
+        @media screen and (max-width: 990px) {
+            margin-right: 10px;
+            flex-basis: 40%;
+        }
+    }
+
+    .header__logo {
+        margin-right: 30px;
+        display: flex;
+
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
+
+        @media screen and (max-width: 990px) {
+            margin-right: 10px;
+        }
+    }
+
+}
+
+.body--lock-scroll {
+    @media screen and (max-width: 768px) {
+        overflow: hidden;
+    }
+}

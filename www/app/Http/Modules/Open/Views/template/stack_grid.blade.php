@@ -1,4 +1,4 @@
-<div class="stack-grid-wrapper">
+<div class="stack-grid-wrapper form-group">
     <div class="stack-loader-container">
         <div class="stack-loader-wrapper">
             <div class="stack-loader-text">

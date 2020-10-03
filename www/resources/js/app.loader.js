@@ -8,6 +8,8 @@ if (lazyLoadElements) {
 import backUpButton from '../js/components/back_up_button';
 import { sendRequest } from '@js/helpers/utils';
 import { debounce } from '@js/helpers/optimization';
+import { initHeaderMenu } from '@js/components/header_menu';
+import { initFixedHeader } from '@js/components/header_fixed';
 let backUpButtonElement = new backUpButton();
 backUpButtonElement.create();
 
@@ -39,7 +41,6 @@ if ($claimButtons.length) {
 }
 
 if ($('#tagContainer').length) {
-    console.log(123123);
     sendRequest('get', '/tag/list', {}, function (res) {
         if (res.success) {
             var cloudTags = res.cloud_items;
@@ -67,3 +68,8 @@ if ($('#tagContainer').length) {
         }
     });
 }
+
+const $headerMenu = $('.header__menu');
+initHeaderMenu($headerMenu);
+const $header = $('header').first();
+initFixedHeader($header);

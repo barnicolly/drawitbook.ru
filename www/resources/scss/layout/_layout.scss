@@ -3,6 +3,7 @@
     flex-direction: column;
 
     .page__content {
+        padding-top: 20px;
         flex: 1 1 auto;
         min-height: 500px;
     }
@@ -18,7 +19,7 @@
     }
 
     @media only screen and (min-width: 768px) {
-        max-width: 540px;
+        max-width: 720px;
     }
 
     @media only screen and (min-width: 992px) {

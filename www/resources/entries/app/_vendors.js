@@ -1,4 +1,5 @@
 import 'normalize.css';
+import 'animate.css';
 import 'jquery';
 
 import '@plugins/sticky/ResizeSensor';

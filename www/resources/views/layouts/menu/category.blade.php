@@ -1,6 +1,6 @@
 @foreach ($groups as $categoryName => $group)
     <div class="form-group">
-        <div class="category dropdown-item">
+        <div class="category">
             @if ($group['href'])
                 <a href="{{ $group['href'] }}" rel="nofollow" itemprop="url">
                     <span itemprop="name">{{ $categoryName }}</span>
@@ -10,7 +10,7 @@
             @endif
         </div>
         @foreach ($group['items'] as $categoryItemName => $item)
-            <div class="dropdown-item category-item">
+            <div class="category-item">
                 <a href="{{ $item['href'] }}" rel="nofollow" itemprop="url"><span itemprop="name">{{ $categoryItemName }}</span></a>
             </div>
         @endforeach

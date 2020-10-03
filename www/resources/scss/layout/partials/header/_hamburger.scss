@@ -1,0 +1,55 @@
+$hamburgerColor: black;
+
+%hamburger__icon-pseudo {
+    background: $hamburgerColor;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+}
+
+.hamburger {
+    cursor: pointer;
+    padding: 28px 20px;
+    color: $hamburgerColor;
+    font-size: 14px;
+
+    @media screen and (max-width: 768px) {
+        display: block;
+    }
+
+    .hamburger__icon {
+        background: $hamburgerColor;
+        display: block;
+        height: 2px;
+        position: relative;
+        transition: background .2s ease-out;
+        width: 24px;
+
+        &:before {
+            top: 7px;
+            @extend %hamburger__icon-pseudo;
+        }
+
+        &:after {
+            top: -7px;
+            @extend %hamburger__icon-pseudo;
+        }
+    }
+
+    .hamburger__icon--open {
+        background: transparent;
+
+        &:before {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        &:after {
+            transform: rotate(45deg);
+            top: 0;
+        }
+    }
+}
