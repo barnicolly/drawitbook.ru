@@ -63,7 +63,7 @@ class Picture extends Controller
             MetaTag::set('title', 'Art #' . $id . ' | Drawitbook.ru');
             MetaTag::set('robots', 'noindex');
             MetaTag::set('description', 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.');
-            MetaTag::set('image', asset('arts/' . $picture->path));
+            MetaTag::set('image', asset('content/arts/' . $picture->path));
             $this->_commandsAfterView($id);
             return $template->loadView('Open::picture.index', $viewData);
         } catch (\Throwable $exception) {

@@ -13,8 +13,7 @@ set :linked_files, fetch(:linked_files, []).push(
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push(
-    'www/public/arts',
-    'www/public/thumbnails',
+    'www/public/content',
     'www/public/sitemaps',
     'www/storage/framework/cache',
     'www/storage/logs',

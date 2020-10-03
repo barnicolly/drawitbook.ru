@@ -27,12 +27,12 @@ class SaveImage extends Controller
     private function _getUnigueFileName(string $fileName)
     {
         $path = base_path('public/moderate/in_moderate/' . $fileName);
-        return $this->_copyFileFromModerateFolderToArt($path, base_path('public/arts/'));
+        return $this->_copyFileFromModerateFolderToArt($path, base_path('public/content/arts/'));
     }
 
     private function _removeFile(string $fileName)
     {
-        unlink(base_path('public/arts/') . $fileName);
+        unlink(base_path('public/content/arts/') . $fileName);
     }
 
     private function _saveImage(int $id, array $data, int $donorId)

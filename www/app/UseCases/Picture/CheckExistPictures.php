@@ -17,7 +17,7 @@ class CheckExistPictures
     public function check()
     {
         foreach ($this->_pictures as $key => $picture) {
-            if (!file_exists(base_path('public/arts/') . $picture->path)) {
+            if (!file_exists(base_path('public/content/arts/') . $picture->path)) {
                 $this->_pictures->forget($key);
                 Log::info('Не найдено изображение', ['art' => $picture->toArray()]);
             }

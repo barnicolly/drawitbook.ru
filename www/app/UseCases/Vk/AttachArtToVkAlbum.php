@@ -39,7 +39,7 @@ class AttachArtToVkAlbum extends VkCore
     private function _postPhotoInAlbum($album, $picture)
     {
         $uploadUrl = $this->_getUploadServer($album->album_id);
-        $path = base_path('public/arts/') . $picture->path;
+        $path = base_path('public/content/arts/') . $picture->path;
         $server = $this->_uploadPhoto($uploadUrl, $path);
         $photoId = $this->_savePhoto($server, $album->album_id);
 

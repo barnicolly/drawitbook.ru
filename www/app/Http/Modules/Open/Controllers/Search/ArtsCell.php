@@ -84,7 +84,7 @@ class ArtsCell extends Controller
             }
             $firstPicture = $relativePictures->first();
             if ($firstPicture) {
-                MetaTag::set('image', asset('arts/' . $firstPicture->path));
+                MetaTag::set('image', asset('content/arts/' . $firstPicture->path));
             }
         }
         if (empty($viewData['canonical'])) {
