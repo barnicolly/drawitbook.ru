@@ -3,7 +3,7 @@
 @section('layout.body')
     <div class="container">
         <div class="index-page">
-            <div class="index-page__content">
+            <div class="index-page__content content">
                 <h1>
                     Drawitbook.ru
                 </h1>

@@ -2,8 +2,8 @@
     display: flex;
 
     .search-form__input {
-        background: #3F4151;
-        color: #fff;
+        background: #fff;
+        color: #000;
         font-size: 10pt;
         float: left;
         padding-left: 15px;
@@ -12,21 +12,33 @@
 
         flex: 1 1;
         height: 40px;
+
+        border: 1px solid #ced4da;
     }
 
     .search-form__btn {
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
-        border: 1px solid #3F4151;
+        border: 1px solid #17a2b8;
         width: 50px;
         opacity: 1;
         font-size: 10pt;
         transition: all .55s ease;
-        color: #4f5b66;
-        background: #232833;
+        background-color: transparent;
+        color: #17a2b8;
+
+        &:hover {
+            color: white;
+            background-color: #17a2b8;
+
+            svg {
+                fill: white;
+            }
+        }
     }
 
     svg {
-        fill: white;
+        fill: #17a2b8;
     }
+
 }

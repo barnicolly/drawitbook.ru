@@ -1,10 +1,12 @@
 .header {
     $navbarBackgroundColor: #ffffff;
-    $navbarHamburgerColor: #6500ec;
+    $navbarHamburgerColor: rgba(0,0,0,.5);;
 
     background-color: $navbarBackgroundColor;
     padding: 5px 0;
     position: relative;
+
+    border-bottom: 1px solid #d5dddf;
 
     &.header--fixed {
         position: fixed;
@@ -47,7 +49,7 @@
 
         @media screen and (max-width: 768px) {
             display: block;
-            margin-right: 15px;
+            margin-right: 0;
         }
     }
 
@@ -73,6 +75,7 @@
 
             @media screen and (max-width: 768px) {
                 height: 100vh;
+                padding-bottom: 80px;
             }
         }
     }
@@ -82,13 +85,13 @@
         background-color: $navbarBackgroundColor;
 
         @media screen and (max-width: 768px) {
-            border-top: 1px solid #4D4F63;
+            border-top: transparent;
             border-left: 3px solid transparent;
         }
 
         &:hover {
             background-color: transparent;
-            color: #F05D5E;
+            color: rgba(0,0,0,.7);
         }
     }
 
@@ -113,6 +116,10 @@
         @media screen and (max-width: 990px) {
             margin-right: 10px;
         }
+    }
+
+    .header__logo-img {
+        height: 35px;
     }
 
 }
