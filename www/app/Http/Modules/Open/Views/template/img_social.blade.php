@@ -9,7 +9,7 @@
             $path_parts = pathinfo($picture->path);
             $thumbnailPath = $path_parts['dirname'] . '/' . $path_parts['filename'] . '_thumb.' . $path_parts['extension'];
             ?>
-            <a itemprop="url" data-fancybox="images" href="{{ asset('content/arts/' . $picture->path) }}" rel="nofollow"
+            <a itemprop="url" class="fullscreen-image" href="{{ asset('content/arts/' . $picture->path) }}" rel="nofollow"
                data-thumb="{{ asset('content/thumbnails/arts/' . $thumbnailPath) }}"
                data-id="{{ $picture->id }}"
             >

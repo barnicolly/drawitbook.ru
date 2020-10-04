@@ -29,7 +29,7 @@ const $sidebar = $('.sidebar');
 
 if ($sidebar.length) {
     $sidebar.theiaStickySidebar({
-        additionalMarginTop: 20,
+        additionalMarginTop: 70,
     });
 }
 
@@ -73,3 +73,11 @@ const $headerMenu = $('.header__menu');
 initHeaderMenu($headerMenu);
 const $header = $('header').first();
 initFixedHeader($header);
+
+//TODO-misha lazyload по востребованию;
+$('.fullscreen-image')
+    .fancybox({
+        'speedIn': 600,
+        'speedOut': 200,
+        'overlayShow': false,
+    });

@@ -8,3 +8,6 @@ import '@plugins/sticky/theia-sticky-sidebar.min';
 import '@plugins/cloud/jqcloud.css';
 import '@plugins/cloud/jqcloud-1.0.4.min';
 
+import '@plugins/fancybox/dist/fancybox.compiled.min';
+import '@plugins/fancybox/dist/jquery.fancybox.min.css';
+
