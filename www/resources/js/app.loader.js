@@ -1,21 +1,23 @@
 import { initStackGrid } from '@js/components/stack_grid';
+import backUpButton from '@js/components/back_up_button';
+import { sendRequest } from '@js/helpers/utils';
+import { debounce } from '@js/helpers/optimization';
+import { initHeaderMenu } from '@js/components/header_menu';
+import { initFixedHeader } from '@js/components/header_fixed';
+import { initAds, initStackGridAds } from '@js/ads.loader';
 
 const lazyLoadElements = document.querySelector("img.lazyload");
 if (lazyLoadElements) {
     import (/* webpackChunkName: "lazysizes" */'lazysizes');
 }
 
-import backUpButton from '../js/components/back_up_button';
-import { sendRequest } from '@js/helpers/utils';
-import { debounce } from '@js/helpers/optimization';
-import { initHeaderMenu } from '@js/components/header_menu';
-import { initFixedHeader } from '@js/components/header_fixed';
+initAds();
 let backUpButtonElement = new backUpButton();
 backUpButtonElement.create();
 
 let stackGrid = document.querySelector('.stack-grid');
 if (stackGrid) {
-    initStackGrid(stackGrid);
+    initStackGrid(stackGrid, initStackGridAds);
 }
 
 const $rateContainers = $('.rate-container');

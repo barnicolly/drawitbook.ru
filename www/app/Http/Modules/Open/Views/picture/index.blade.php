@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="content mobile-no-padding">
-                    {!! loadAd('after_picture') !!}
+                    {!! loadAd('after_detail_picture') !!}
                 </div>
             </div>
         </div>

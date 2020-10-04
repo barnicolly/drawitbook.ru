@@ -24,12 +24,13 @@ if (!function_exists('isLocal')) {
 }
 
 if (!function_exists('loadAd')) {
-    function loadAd(string $id)
+    function loadAd(string $id, bool $integrated = false)
     {
         if (isLocal()) {
-            return view('Open::template.ads.dummy', ['id' => $id])->render();
+            return view('Open::template.ads.dummy', ['id' => $id, 'integrated' => $integrated])->render();
         } else {
-            return '<div id="' . $id . '"></div>';
+            $integratedText = $integrated ? 'true': 'false';
+            return "<div class=\"mon-place\" data-integrated=\"{$integratedText}\" id=\"{$id}\"></div>";
         }
     }
 }
