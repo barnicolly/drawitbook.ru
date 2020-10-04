@@ -1,0 +1,15 @@
+.fixed-shared-block-wrapper {
+    position: relative;
+
+    .fixed-shared-block {
+        position: absolute;
+        top: 40px;
+        right: -20px;
+
+        .fixed-shared-block__inner {
+            position: fixed;
+        }
+    }
+}
+
+

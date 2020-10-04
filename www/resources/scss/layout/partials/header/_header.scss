@@ -83,6 +83,8 @@
     .header__link {
         color: $navbarHamburgerColor;
         background-color: $navbarBackgroundColor;
+        font-weight: bold;
+        font-size: 18px;
 
         @media screen and (max-width: 768px) {
             border-top: transparent;

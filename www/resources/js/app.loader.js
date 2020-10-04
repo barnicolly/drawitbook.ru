@@ -6,6 +6,7 @@ import { initHeaderMenu } from '@js/components/header_menu';
 import { initFixedHeader } from '@js/components/header_fixed';
 import { initAds, initStackGridAds } from '@js/ads.loader';
 
+//TODO-misha разобраться с порядком загрузки и необходимостью компонент;
 const lazyLoadElements = document.querySelector("img.lazyload");
 if (lazyLoadElements) {
     import (/* webpackChunkName: "lazysizes" */'lazysizes');
@@ -83,3 +84,9 @@ $('.fullscreen-image')
         'speedOut': 200,
         'overlayShow': false,
     });
+
+$('.fixed-shared-block__inner').jsSocials({
+    showLabel: false,
+    showCount: false,
+    shares: ['vkontakte', 'telegram', 'twitter', 'facebook', 'pinterest', 'whatsapp', 'viber', 'email'],
+});

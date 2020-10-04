@@ -3,14 +3,14 @@ export function isOnScreen(elem, offset = 300) {
     if( elem.length == 0 ) {
         return;
     }
-    var $window = $(window)
-    var viewport_top = $window.scrollTop()
-    var viewport_height = $window.height()
-    var viewport_bottom = viewport_top + viewport_height + offset
-    var $elem = $(elem)
-    var top = $elem.offset().top
-    var height = $elem.height()
-    var bottom = top + height
+    const $window = $(window)
+    const viewport_top = $window.scrollTop()
+    const viewport_height = $window.height()
+    const viewport_bottom = viewport_top + viewport_height + offset
+    const $elem = $(elem)
+    const top = $elem.offset().top
+    const height = $elem.height()
+    const bottom = top + height
 
     return (top >= viewport_top && top < viewport_bottom) ||
         (bottom > viewport_top && bottom <= viewport_bottom) ||

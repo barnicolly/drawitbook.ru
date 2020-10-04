@@ -77,6 +77,7 @@
         "browserslist": "^4.14.1",
         "caniuse-lite": "^1.0.30001124",
         "core-js": "^3.6.4",
+        "font-awesome": "^4.7.0",
         "hc-sticky": "^2.2.3",
         "jquery": "3.3.1",
         "jssocials": "^1.5.0",
