@@ -8,6 +8,9 @@ import { loadLazyloadImg } from '@js/loaders/lazy.loader';
 import { loadFixedShared } from '@js/loaders/fixed_shared.loader';
 import { loadFancybox } from '@js/loaders/fancybox.loader';
 import { loadSidebar } from '@js/loaders/sidebar.loader';
+import { SentryInstance } from '@js/sentry';
+
+new SentryInstance();
 
 loadLazyloadImg();
 loadStackGrid();
