@@ -1,7 +1,7 @@
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const checkPrimaryVendor = (vendorIdentity) => {
+const checkPrimaryVendor = (vendorIdentity, js = 'js') => {
     const vendorModules = [
         'jquery',
         'animate.css',
@@ -42,7 +42,7 @@ module.exports = function (isProduction) {
                 },
                 'vendors.css': {
                     name: 'vendors',
-                    test: (module) => module.constructor.name === 'CssModule' ? checkPrimaryVendor(module.identifier()): false,
+                    test: (module) => module.constructor.name === 'CssModule' ? checkPrimaryVendor(module.identifier(), 'test'): false,
                     chunks: 'all',
                     priority: 1,
                 },
