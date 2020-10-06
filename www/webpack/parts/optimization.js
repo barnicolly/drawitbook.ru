@@ -4,9 +4,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 const checkPrimaryVendor = (vendorIdentity) => {
     const vendorModules = [
         'jquery',
-        'bootstrap',
         'animate.css',
         'lodash',
+        'font-awesome',
     ];
     const path = require('path');
     let findVendorModule = false;
@@ -29,7 +29,7 @@ module.exports = function (isProduction) {
                     test(module, chunks) {
                         const path = require('path');
                         return module.resource &&
-                            (module.resource.includes(`${path.sep}core-js${path.sep}`));
+                            (module.resource.includes(`${path.sep}core-js${path.sep}`) || module.resource.includes(`_polyfills`));
                     },
                     chunks: 'all',
                     priority: 1,

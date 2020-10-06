@@ -10,7 +10,7 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
         filename: 'js/[name].[contenthash].js',
         publicPath: `${domain}/build/`,
     },
-    devtool: 'source-map',
+    devtool: 'none',
     plugins: [
         helper.plugins.CleanWebpackPlugin(),
         helper.plugins.MiniCssExtractPlugin({

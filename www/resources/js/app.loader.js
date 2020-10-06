@@ -5,6 +5,8 @@ import { debounce } from '@js/helpers/optimization';
 import { initHeaderMenu } from '@js/components/header_menu';
 import { initFixedHeader } from '@js/components/header_fixed';
 import { initAds, initStackGridAds } from '@js/ads.loader';
+import { getScreenWidth } from '@js/helpers/screen';
+import throttle from 'lodash/throttle';
 
 //TODO-misha разобраться с порядком загрузки и необходимостью компонент;
 const lazyLoadElements = document.querySelector("img.lazyload");
@@ -16,10 +18,36 @@ initAds();
 let backUpButtonElement = new backUpButton();
 backUpButtonElement.create();
 
+const screenWidth = getScreenWidth();
+
 let stackGrid = document.querySelector('.stack-grid');
 if (stackGrid) {
-    initStackGrid(stackGrid, initStackGridAds);
+    if (screenWidth < 700) {
+        stackGrid.closest('.stack-grid-wrapper').querySelector('.stack-loader-container').remove();
+        stackGrid.style.display = 'flex';
+        initStackGridAds($(stackGrid));
+    }
+
+    const tryInitStackGrid = function () {
+        const screenWidth = getScreenWidth();
+        if (screenWidth >= 700) {
+            const isStackGridVisible = $(stackGrid).is(':visible');
+            initStackGrid(stackGrid, function ($stackGrid) {
+                if (!isStackGridVisible) {
+                    initStackGridAds($stackGrid);
+                }
+                $(window).off('resize', throttledInitStackGrid);
+            });
+        }
+    }
+
+    const throttledInitStackGrid = throttle(tryInitStackGrid, 150);
+
+    tryInitStackGrid();
+    $(window).on('resize', throttledInitStackGrid);
 }
+
+
 
 const $rateContainers = $('.rate-container');
 if ($rateContainers.length) {

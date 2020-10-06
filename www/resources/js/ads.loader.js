@@ -1,5 +1,6 @@
 import {isOnScreen} from '@js/helpers/dom';
 import throttle from 'lodash/throttle';
+import { getScreenWidth } from '@js/helpers/screen';
 
 export function initAds() {
     const $monPlaces = $('body').find('.mon-place[data-integrated="false"]');
@@ -10,7 +11,7 @@ export function initAds() {
     }
 
     function getConfigurations() {
-        var bvw = document.getElementsByTagName('body')[0].offsetWidth;
+        const bvw = getScreenWidth();
         let configurations = {};
         if (bvw >= 993) {
             configurations = {

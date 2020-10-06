@@ -3,11 +3,23 @@
 
     .fixed-shared-block {
         position: absolute;
-        top: 40px;
+        top: 50px;
         right: -20px;
+
+        @media only screen and (max-width: 1300px) {
+            display: none;
+        }
 
         .fixed-shared-block__inner {
             position: fixed;
+        }
+
+        .jssocials-share {
+            padding: 10px;
+        }
+
+        .jssocials-share .fa {
+           font-size: 24px;
         }
     }
 }
