@@ -1,120 +1,42 @@
-import { initStackGrid } from '@js/components/stack_grid';
 import backUpButton from '@js/components/back_up_button';
-import { sendRequest } from '@js/helpers/utils';
-import { debounce } from '@js/helpers/optimization';
 import { initHeaderMenu } from '@js/components/header_menu';
 import { initFixedHeader } from '@js/components/header_fixed';
-import { initAds, initStackGridAds } from '@js/ads.loader';
-import { getScreenWidth } from '@js/helpers/screen';
-import throttle from 'lodash/throttle';
+import { initAds } from '@js/loaders/ads.loader';
+import { loadStackGrid } from '@js/loaders/stack_grid.loader';
+import { loadJQcloud } from '@js/loaders/jq_cloud.loader';
+import { loadLazyloadImg } from '@js/loaders/lazy.loader';
+import { loadFixedShared } from '@js/loaders/fixed_shared.loader';
+import { loadFancybox } from '@js/loaders/fancybox.loader';
+import { loadSidebar } from '@js/loaders/sidebar.loader';
 
-//TODO-misha разобраться с порядком загрузки и необходимостью компонент;
-const lazyLoadElements = document.querySelector("img.lazyload");
-if (lazyLoadElements) {
-    import (/* webpackChunkName: "lazysizes" */'lazysizes');
-}
-
+loadLazyloadImg();
+loadStackGrid();
+loadJQcloud();
 initAds();
-let backUpButtonElement = new backUpButton();
-backUpButtonElement.create();
 
-const screenWidth = getScreenWidth();
+initHeaderMenu($('.header__menu'));
+initFixedHeader($('header').first());
 
-let stackGrid = document.querySelector('.stack-grid');
-if (stackGrid) {
-    if (screenWidth < 700) {
-        stackGrid.closest('.stack-grid-wrapper').querySelector('.stack-loader-container').remove();
-        stackGrid.style.display = 'flex';
-        initStackGridAds($(stackGrid));
+loadFancybox();
+
+$(function () {
+    let backUpButtonElement = new backUpButton();
+    backUpButtonElement.create();
+
+    const $rateContainers = $('.rate-container');
+    if ($rateContainers.length) {
+        $rateContainers.each(function () {
+            $(this).customRate('init');
+        });
     }
 
-    const tryInitStackGrid = function () {
-        const screenWidth = getScreenWidth();
-        if (screenWidth >= 700) {
-            const isStackGridVisible = $(stackGrid).is(':visible');
-            initStackGrid(stackGrid, function ($stackGrid) {
-                if (!isStackGridVisible) {
-                    initStackGridAds($stackGrid);
-                }
-                $(window).off('resize', throttledInitStackGrid);
-            });
-        }
+    const $claimButtons = $('.claim-button');
+    if ($claimButtons.length) {
+        $claimButtons.each(function () {
+            $(this).customClaim('init');
+        });
     }
 
-    const throttledInitStackGrid = throttle(tryInitStackGrid, 150);
-
-    tryInitStackGrid();
-    $(window).on('resize', throttledInitStackGrid);
-}
-
-
-
-const $rateContainers = $('.rate-container');
-if ($rateContainers.length) {
-    $rateContainers.each(function () {
-        $(this).customRate('init');
-    });
-}
-
-const $sidebar = $('.sidebar');
-
-if ($sidebar.length) {
-    $sidebar.theiaStickySidebar({
-        additionalMarginTop: 70,
-    });
-}
-
-const $claimButtons = $('.claim-button');
-if ($claimButtons.length) {
-    $claimButtons.each(function () {
-        $(this).customClaim('init');
-    });
-}
-
-if ($('#tagContainer').length) {
-    sendRequest('get', '/tag/list', {}, function (res) {
-        if (res.success) {
-            var cloudTags = res.cloud_items;
-            reinitJQcloud(cloudTags);
-
-            function reinitJQcloud(tags) {
-                $("#tagContainer").html('');
-                $("#tagContainer").jQCloud(tags, {
-                    classPattern: null,
-                    fontSize: {
-                        from: 0.1,
-                        to: 0.08
-                    },
-                    shape: false, // or 'rectangular'
-                    autoResize: true,
-                });
-
-            }
-
-            function checkScroll() {
-                reinitJQcloud(cloudTags);
-            }
-
-            $(window).resize(debounce(checkScroll, 150));
-        }
-    });
-}
-
-const $headerMenu = $('.header__menu');
-initHeaderMenu($headerMenu);
-const $header = $('header').first();
-initFixedHeader($header);
-
-//TODO-misha lazyload по востребованию;
-$('.fullscreen-image')
-    .fancybox({
-        'speedIn': 600,
-        'speedOut': 200,
-        'overlayShow': false,
-    });
-
-$('.fixed-shared-block__inner').jsSocials({
-    showLabel: false,
-    showCount: false,
-    shares: ['vkontakte', 'telegram', 'twitter', 'facebook', 'pinterest', 'whatsapp', 'viber', 'email'],
+    loadFixedShared();
+    loadSidebar();
 });

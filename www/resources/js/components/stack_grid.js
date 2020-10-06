@@ -2,8 +2,10 @@
 export function initStackGrid(stackGrid, callback) {
     import (/* webpackChunkName: "masonry-layout" */'masonry-layout').then(Masonry => {
         if (!$(stackGrid).is(':visible')) {
-            stackGrid.closest('.stack-grid-wrapper').querySelector('.stack-loader-container').remove();
-            stackGrid.style.display = 'flex';
+            $(stackGrid).closest('.stack-grid-wrapper').find('.stack-loader-container').remove();
+            $(stackGrid).css({
+                display: 'flex',
+            });
         }
         new Masonry.default(stackGrid, {
             itemSelector: '.art-container',
