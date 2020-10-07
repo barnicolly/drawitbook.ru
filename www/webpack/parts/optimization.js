@@ -5,6 +5,7 @@ const checkPrimaryVendor = (vendorIdentity, js = 'js') => {
     const vendorModules = [
         'jquery',
         'animate.css',
+        'normalize.css',
         'lodash',
         'font-awesome',
     ];
@@ -33,18 +34,21 @@ module.exports = function (isProduction) {
                     },
                     chunks: 'all',
                     priority: 1,
+                    enforce: true,
                 },
                 'vendors.js': {
                     name: 'vendors',
                     test: (module) => module.resource ? checkPrimaryVendor(module.resource): false,
                     chunks: 'all',
                     priority: 1,
+                    enforce: true,
                 },
                 'vendors.css': {
                     name: 'vendors',
                     test: (module) => module.constructor.name === 'CssModule' ? checkPrimaryVendor(module.identifier(), 'test'): false,
                     chunks: 'all',
                     priority: 1,
+                    enforce: true,
                 },
             },
         },

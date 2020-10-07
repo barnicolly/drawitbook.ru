@@ -4,6 +4,7 @@ const folderPath = {
     plugin: path.join(__dirname, '../../resources/plugins'),
     node_modules: path.join(__dirname, '../../node_modules'),
 };
+
 /**
  * создает в каждой поддиректории build index.html
  * */
@@ -18,7 +19,7 @@ gulp.task('createIndex', plugins.recursiveFolder({
 
 gulp.task('styles:fa.purge', function () {
     const targetPath = path.join(folderPath.plugin, 'font-awesome/dist/');
-    return gulp.src(folderPath.node_modules + '/font-awesome/css/font-awesome.min.css')
+    return gulp.src(folderPath.plugin + '/font-awesome/css/font-awesome.min.css')
         .pipe(plugins.purgecss({
             content: [
                 'app/Http/Modules/Open/**/*.php',
