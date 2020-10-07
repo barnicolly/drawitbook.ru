@@ -87,7 +87,7 @@
         "caniuse-lite": "^1.0.30001124",
         "core-js": "^3.6.4",
         "hc-sticky": "^2.2.3",
-        "jquery": "3.3.1",
+        "jquery": "^3.5.1",
         "jssocials": "^1.5.0",
         "lazysizes": "^5.2.2",
         "little-loader": "^0.2.0",
