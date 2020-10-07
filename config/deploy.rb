@@ -1,6 +1,3 @@
-# config valid only for current version of Capistrano
-lock '3.6.1'
-
 set :application, 'drawitbook'
 set :repo_url, 'ssh://git@bitbucket.org/MishaRatnikov/drawitbook.ru'
 
@@ -32,32 +29,39 @@ role :app, %w{deployer@62.109.31.189}
   }
 
 
-# Deployment process
-# after "deploy:update", "deploy:cleanup"
-namespace :deploy do
-    desc 'default description'
-	  task :before_symlink_shared do
-		on roles(:all) do
-		  execute "cd #{fetch(:release_path)}/www; composer install --no-dev"
-		  execute "cd #{fetch(:release_path)}/www; npm i"
-		  execute "cd #{fetch(:release_path)}/www; gulp build --env production"
-		  execute "cd #{fetch(:release_path)}/www; rm -rf node_modules"
-		end
-	end
-end
-before "deploy:symlink:shared", "deploy:before_symlink_shared"
-
-namespace :deploy do
-    desc 'default description'
-    task :after_symlink_shared do
-    on roles(:all) do
-        execute "cd #{fetch(:release_path)}/www; php artisan cache:clear"
-        execute "cd #{fetch(:release_path)}/www; php artisan view:clear"
-        execute "cd #{fetch(:release_path)}/www; php artisan config:cache"
-        execute "cd #{fetch(:release_path)}/www; php artisan route:cache"
-        execute "cd #{fetch(:release_path)}/www; php artisan optimize"
-        execute "cd #{fetch(:release_path)}/www; composer dump-autoload -o"
+namespace :static do
+  desc 'Run the precompile static files task locally'
+  task :precompile do
+    run_locally do
+        execute "cd www && npm i && npm run build.production"
+        execute "cd www && node scripts/archiver.js"
     end
   end
 end
+
+namespace :deploy do
+    task :before_symlink_shared do
+    on roles(:all) do
+        execute "PATH=/opt/php72/bin:$PATH && cd #{fetch(:release_path)}/www; composer install --no-dev"
+        upload! "www/public/build.zip", "#{fetch(:release_path)}/www/public"
+        execute "cd #{fetch(:release_path)}/www/public; unzip -o build.zip -d build"
+    end
+  end
+end
+
+namespace :deploy do
+    task :after_symlink_shared do
+    on roles(:all) do
+        execute "PATH=/opt/php72/bin:$PATH && cd #{fetch(:release_path)}/www; php artisan cache:clear"
+        execute "PATH=/opt/php72/bin:$PATH && cd #{fetch(:release_path)}/www; php artisan view:clear"
+        execute "PATH=/opt/php72/bin:$PATH && cd #{fetch(:release_path)}/www; php artisan config:cache"
+        execute "PATH=/opt/php72/bin:$PATH && cd #{fetch(:release_path)}/www; php artisan route:cache"
+        execute "PATH=/opt/php72/bin:$PATH && cd #{fetch(:release_path)}/www; php artisan optimize"
+        execute "PATH=/opt/php72/bin:$PATH && cd #{fetch(:release_path)}/www; composer dump-autoload -o"
+    end
+  end
+end
+
+before "deploy:starting", "static:precompile"
+before "deploy:symlink:shared", "deploy:before_symlink_shared"
 after "deploy:symlink:shared", "deploy:after_symlink_shared"
