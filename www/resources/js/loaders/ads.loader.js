@@ -45,7 +45,7 @@ export function initStackGridAds($stackGrid) {
         //TODO-misha сократить количество записей до 25;
         const bvw = getScreenWidth();
         let configurations = {};
-        if (bvw >= 993) {
+        if (bvw >= 768) {
             configurations = {
                 'integrated-5': 'R-A-400272-8',
                 'integrated-12': 'R-A-400272-9',

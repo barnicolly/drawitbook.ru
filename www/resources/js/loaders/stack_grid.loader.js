@@ -8,7 +8,7 @@ export function loadStackGrid() {
 
     let stackGrid = document.querySelector('.stack-grid');
     if (stackGrid) {
-        if (screenWidth < 700) {
+        if (screenWidth <= 768) {
             stackGrid.closest('.stack-grid-wrapper').querySelector('.stack-loader-container').remove();
             stackGrid.style.display = 'flex';
             initStackGridAds($(stackGrid));
