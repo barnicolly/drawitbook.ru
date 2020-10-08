@@ -41,14 +41,23 @@ export function initStackGridAds($stackGrid) {
     }
 
     function getConfigurations() {
-        //TODO-misha разделить на мобилу и desktop;
         //TODO-misha распределить на 50 записей;
         //TODO-misha сократить количество записей до 25;
-        const configurations = {
-            'integrated-5': 'R-A-400272-8',
-            'integrated-12': 'R-A-400272-9',
-            'integrated-18': 'R-A-400272-10',
-        };
+        const bvw = getScreenWidth();
+        let configurations = {};
+        if (bvw >= 993) {
+            configurations = {
+                'integrated-5': 'R-A-400272-8',
+                'integrated-12': 'R-A-400272-9',
+                'integrated-18': 'R-A-400272-10',
+            };
+        } else {
+            configurations = {
+                'integrated-5': 'R-A-400272-18',
+                'integrated-12': 'R-A-400272-19',
+                'integrated-18': 'R-A-400272-20',
+            };
+        }
         const failovers = {};
         return {configurations, failovers};
     }
