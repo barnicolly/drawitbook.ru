@@ -7,18 +7,28 @@
         @if (isset($activeLink) && $activeLink === true)
             <?php
             $path_parts = pathinfo($picture->path);
-            $thumbnailPath = $path_parts['dirname'] . '/' . $path_parts['filename'] . '_thumb.' . $path_parts['extension'];
+            $thumbnailPath = $path_parts['dirname']
+                . '/'
+                . $path_parts['filename']
+                . '_thumb.'
+                . $path_parts['extension'];
             ?>
-            <a itemprop="url" class="fullscreen-image" href="{{ asset('content/arts/' . $picture->path) }}" rel="nofollow"
+            <a itemprop="url" class="fullscreen-image" href="{{ asset('content/arts/' . $picture->path) }}"
+               rel="nofollow"
                data-thumb="{{ asset('content/thumbnails/arts/' . $thumbnailPath) }}"
                data-id="{{ $picture->id }}"
             >
-{{--                //TODO-misha избавиться от стилей в коде;--}}
-                <div style="width:100%;height:0; padding-top:{{ $picture->height / $picture->width * 100 }}%;position:relative;">
+                {{--                //TODO-misha избавиться от стилей в коде;--}}
+                <div
+                    style="width:100%;height:0; padding-top:{{ $picture->height / $picture->width * 100 }}%;position:relative;">
                     <picture>
                         <?php $fileInfo = pathinfo(public_path('content/arts/') . $picture->path);?>
                         @if (!empty($fileInfo['extension']))
-                            <?php $otherSource = 'content/arts/' . str_replace(('.' . $fileInfo['extension']), '.webp', $picture->path); ?>
+                            <?php $otherSource = 'content/arts/' . str_replace(
+                                    ('.' . $fileInfo['extension']),
+                                    '.webp',
+                                    $picture->path
+                                ); ?>
                             @if (file_exists(public_path($otherSource)))
                                 <source type="image/webp"
                                         data-srcset="<?= asset($otherSource) ?>"/>
@@ -47,6 +57,13 @@
         @endif
         <div class="rate-footer">
             @include('Open::template.rate', ['pictureId' => $picture->id])
+        </div>
+        <div class="find-similar">
+            <a itemprop="url" href="#" rel="nofollow" title="Найти похожие">
+                <svg role="img" width="26" height="26" viewBox="0 0 26 26">
+                    <use xlink:href="{{ getUrlFromManifest('icons/sprite.svg') . '#image-similar' }}"></use>
+                </svg>
+            </a>
         </div>
     </div>
     <link itemprop="url" href="{{ asset('content/arts/' . $picture->path) }}">

@@ -9,6 +9,12 @@ import { loadFixedShared } from '@js/loaders/fixed_shared.loader';
 import { loadFancybox } from '@js/loaders/fancybox.loader';
 import { loadSidebar } from '@js/loaders/sidebar.loader';
 import { SentryInstance } from '@js/sentry';
+import {
+    reachClickBtnExternalLink,
+    reachClickBtnFindSimilar, reachClickBtnShareEmail, reachClickBtnShareFacebook, reachClickBtnSharePinterest,
+    reachClickBtnShareTelegram, reachClickBtnShareTwitter, reachClickBtnShareViber,
+    reachClickBtnShareVk, reachClickBtnShareWhatsapp,
+} from '@js/components/ya_target';
 
 new SentryInstance();
 
@@ -42,4 +48,17 @@ $(function () {
 
     loadFixedShared();
     loadSidebar();
+
+    $('.stack-grid__external-link a').on('click', reachClickBtnExternalLink);
+    $('.find-similar a').on('click', reachClickBtnFindSimilar);
+
+    $('body')
+        .on('click', '.jssocials-share-vkontakte a', reachClickBtnShareVk)
+        .on('click', '.jssocials-share-telegram a', reachClickBtnShareTelegram)
+        .on('click', '.jssocials-share-twitter a', reachClickBtnShareTwitter)
+        .on('click', '.jssocials-share-facebook a', reachClickBtnShareFacebook)
+        .on('click', '.jssocials-share-pinterest a', reachClickBtnSharePinterest)
+        .on('click', '.jssocials-share-whatsapp a', reachClickBtnShareWhatsapp)
+        .on('click', '.jssocials-share-viber a', reachClickBtnShareViber)
+        .on('click', '.jssocials-share-email a', reachClickBtnShareEmail)
 });
