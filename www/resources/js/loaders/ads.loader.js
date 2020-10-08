@@ -65,7 +65,7 @@ function initWatcher($monPlaces, configurations, failovers) {
             const placeLoaded = mapPlaces[id];
             const $place = $(`#${id.replace('.', '\\.')}`);
             const isDummy = $place.hasClass('dummy');
-            if (!placeLoaded && isOnScreen($place)) {
+            if (!placeLoaded && isOnScreen($place, 500)) {
                 mapPlaces[id] = true;
                 $place.attr('data-loaded', true);
                 if (!isDummy) {
