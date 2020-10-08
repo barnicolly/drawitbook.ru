@@ -19,6 +19,9 @@
     {!! MetaTag::openGraph() !!}
     {!! MetaTag::twitterCard() !!}
     @stack('styles')
+    @if (!isLocal() && config('app.debug') === false)
+        @include('layouts.partials.metrics')
+    @endif
 </head>
 <body>
 @yield('content')
