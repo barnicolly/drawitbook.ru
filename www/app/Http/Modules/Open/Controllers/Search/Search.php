@@ -49,7 +49,7 @@ class Search extends Controller
             if ($relativePictureIds) {
                 $countSearchResults = count($relativePictureIds);
                 $page = $request->input('page');
-                $perPage = 50;
+                $perPage = 25;
                 if (!$page) {
                     $page = 1;
                 }

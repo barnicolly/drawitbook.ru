@@ -58,7 +58,7 @@ class ArtsCell extends Controller
         }
         $viewData = [];
 
-        $perPage = 50;
+        $perPage = 25;
 
         $countSearchResults = count($relativePictureIds);
         $relativePictureIds = array_slice($relativePictureIds, ($pageNum - 1) * $perPage, $perPage);
