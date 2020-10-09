@@ -2,7 +2,7 @@
 
 @section('content')
     <div id="siteWrapper" class="page__inner">
-        @include('layouts.public.header.base')
+        @include('layouts.public.header.index')
         <main class="page__content">
             @yield('layout.body')
         </main>

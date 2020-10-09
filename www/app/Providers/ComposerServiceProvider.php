@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Http\ViewComposers\Error500Composer;
 use App\Http\ViewComposers\Error404Composer;
+use App\Http\ViewComposers\HeaderComposer;
 use Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider
@@ -29,5 +30,7 @@ class ComposerServiceProvider extends ServiceProvider
         view()->composer('errors::404', Error404Composer::class);
 
         view()->composer('errors::500', Error500Composer::class);
+
+        view()->composer('layouts.public.header.index', HeaderComposer::class);
     }
 }

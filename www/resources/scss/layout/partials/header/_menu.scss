@@ -87,6 +87,7 @@
 
     .dropdown__column {
         flex: 0 0 25%;
+        padding: 15px;
 
         @media screen and (max-width: 768px) {
             flex-basis: 50%;
