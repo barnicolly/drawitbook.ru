@@ -14,6 +14,7 @@ use App\UseCases\Search\SearchByTags;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use MetaTag;
 use Validator;
 use Breadcrumbs;
@@ -115,6 +116,15 @@ class Search extends Controller
                         abort(404);
                     }
                 }
+            }
+            if (!$relativePictures) {
+                $pictures = PictureModel::take(10)
+                    ->where('is_del', '=', 0)
+                    ->where('in_common', '=', IN_MAIN_PAGE)
+                    ->with(['tags'])->get();
+                $checkExistPictures = new CheckExistPictures($pictures);
+                $pictures = $checkExistPictures->check();
+                $viewData['popularPictures'] = $pictures;
             }
 
         }

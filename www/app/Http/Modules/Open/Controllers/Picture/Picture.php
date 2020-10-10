@@ -3,6 +3,7 @@
 namespace App\Http\Modules\Open\Controllers\Picture;
 
 use App\Http\Controllers\Controller;
+use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use App\Libraries\Template;
 use App\UseCases\Picture\CheckExistPictures;
 use App\UseCases\Picture\GetPicturesWithTags;
@@ -24,7 +25,7 @@ class Picture extends Controller
             $picture = $getPicture->getCached();
 
             $getTagsFromPictures = new GetTagsFromPicture();
-            list($shown, $hidden) = $getTagsFromPictures->getTagIds($picture);
+            [$shown, $hidden] = $getTagsFromPictures->getTagIds($picture);
             $relativePictures = [];
             if ($shown || $hidden) {
                 $search = new SearchByTags();
@@ -34,6 +35,14 @@ class Picture extends Controller
                     $relativePictures = $getPicturesWithTags->get();
                     $checkExistPictures = new CheckExistPictures($relativePictures);
                     $relativePictures = $checkExistPictures->check();
+                } else {
+                    $pictures = PictureModel::take(10)
+                        ->where('is_del', '=', 0)
+                        ->where('in_common', '=', IN_MAIN_PAGE)
+                        ->with(['tags'])->get();
+                    $checkExistPictures = new CheckExistPictures($pictures);
+                    $pictures = $checkExistPictures->check();
+                    $relativePictures = $pictures;
                 }
             }
             $tags = [];

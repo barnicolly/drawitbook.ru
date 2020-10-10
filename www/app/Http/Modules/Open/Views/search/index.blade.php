@@ -69,5 +69,11 @@
                 </ul>
             </div>
         </div>
+        <div class="content form-group">
+            <h2>Популярные рисунки</h2>
+        </div>
+        <div class="content">
+            @include('Open::template.stack_grid', ['pictures' => $popularPictures, 'tagged' => route('arts.cell.tagged', '')])
+        </div>
     @endif
 @endsection
