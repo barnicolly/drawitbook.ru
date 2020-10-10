@@ -1,6 +1,7 @@
 import {isOnScreen} from '@js/helpers/dom';
 import throttle from 'lodash/throttle';
 import { getScreenWidth } from '@js/helpers/screen';
+import { initStackGrid } from '@js/components/stack_grid';
 
 export function initAds() {
     const $monPlaces = $('body').find('.mon-place[data-integrated="false"]');
@@ -37,12 +38,10 @@ export function initStackGridAds($stackGrid) {
 
     if ($monPlaces.length) {
         const {configurations, failovers} = getConfigurations();
-        initWatcher($monPlaces, configurations, failovers);
+        initWatcher($monPlaces, configurations, failovers, true);
     }
 
     function getConfigurations() {
-        //TODO-misha распределить на 50 записей;
-        //TODO-misha сократить количество записей до 25;
         const bvw = getScreenWidth();
         let configurations = {};
         if (bvw >= 768) {
@@ -65,7 +64,7 @@ export function initStackGridAds($stackGrid) {
     }
 }
 
-function initWatcher($monPlaces, configurations, failovers) {
+function initWatcher($monPlaces, configurations, failovers, needResize = false) {
     const mapPlaces = {};
     $monPlaces.each(function () {
         const id = $(this).attr('id');
@@ -97,6 +96,13 @@ function initWatcher($monPlaces, configurations, failovers) {
                                     blockId: configurations[id],
                                     renderTo: id,
                                     async: true,
+                                    onRender: function (data) {
+                                        const $stackGrid = $place.closest('.stack-grid');
+                                        const screenWidth = getScreenWidth();
+                                        if ($stackGrid.length && $stackGrid.attr('data-loaded') !== 'true' && screenWidth >= 700) {
+                                            initStackGrid($stackGrid);
+                                        }
+                                    }
                                 }, failover !== null ? failoverCallback : null);
                             });
                             t = d.getElementsByTagName('script')[0];

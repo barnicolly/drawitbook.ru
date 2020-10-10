@@ -6,19 +6,19 @@ import throttle from 'lodash/throttle';
 export function loadStackGrid() {
     const screenWidth = getScreenWidth();
 
-    let stackGrid = document.querySelector('.stack-grid');
-    if (stackGrid) {
+    let $stackGrid = $('.stack-grid');
+    if ($stackGrid.length) {
         if (screenWidth <= 768) {
-            $(stackGrid).closest('.stack-grid-wrapper').find('.stack-loader-container').remove();
-            stackGrid.style.display = 'flex';
-            initStackGridAds($(stackGrid));
+            $stackGrid.closest('.stack-grid-wrapper').find('.stack-loader-container').remove();
+            $stackGrid.css({display: 'flex'});
+            initStackGridAds($stackGrid);
         }
 
         const tryInitStackGrid = function () {
             const screenWidth = getScreenWidth();
             if (screenWidth >= 700) {
-                const isStackGridVisible = $(stackGrid).is(':visible');
-                initStackGrid(stackGrid, function ($stackGrid) {
+                const isStackGridVisible = $stackGrid.is(':visible');
+                initStackGrid($stackGrid, function ($stackGrid) {
                     if (!isStackGridVisible) {
                         initStackGridAds($stackGrid);
                     }
