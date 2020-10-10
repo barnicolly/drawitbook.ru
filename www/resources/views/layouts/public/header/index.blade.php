@@ -29,7 +29,7 @@
                     <li class="menu__item"><a class="menu__link header__link" href="{{ route('home') }}" rel="nofollow" itemprop="url">Главная</a></li>
                     <li class="menu__item dropdown">
                         <a class="menu__link header__link dropdown__toggle" href="#">Категории</a>
-                        <div class="dropdown__menu">
+                        <div class="dropdown__menu categories-dropdown">
                             <div class="dropdown__inner">
                                 @foreach($groups as $group)
                                     <div class="dropdown__column">
