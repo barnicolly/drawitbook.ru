@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Modules\Open\Controllers\Picture;
+namespace App\Http\Modules\Arts\Controllers\Art;
 
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Modules\Open\Controllers\Picture;
+namespace App\Http\Modules\Arts\Controllers\Art;
 
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
@@ -14,7 +14,7 @@ use App\UseCases\Picture\GetPicture;
 use App\UseCases\Picture\PictureViewed;
 use MetaTag;
 
-class Picture extends Controller
+class Art extends Controller
 {
 
     public function index($id)
@@ -74,7 +74,7 @@ class Picture extends Controller
             MetaTag::set('description', 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.');
             MetaTag::set('image', asset('content/arts/' . $picture->path));
             $this->_commandsAfterView($id);
-            return $template->loadView('Open::picture.index', $viewData);
+            return $template->loadView('Arts::art.index', $viewData);
         } catch (\Throwable $exception) {
             info($exception->getMessage());
             abort(500);

@@ -1,20 +1,17 @@
 <?php
 
-namespace App\Http\Modules\Open\Controllers\Search;
+namespace App\Http\Modules\Content\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Entities\Spr\SprTagsModel;
-use App\Http\Modules\Open\Requests\Search\SearchRisunkiPoKletochkamRequest;
 use App\Libraries\Template;
 use App\UseCases\Picture\CheckExistPictures;
 use App\UseCases\Picture\GetPicture;
-use App\UseCases\Picture\GetPicturesWithTags;
 use App\UseCases\Picture\GetTagsFromPicture;
 use App\UseCases\Search\SearchByTags;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use MetaTag;
 use Validator;
 use Breadcrumbs;
@@ -139,75 +136,7 @@ class Search extends Controller
         //TODO-misha добавить title;
 
         MetaTag::set('robots', 'noindex');
-        return $template->loadView('Open::search.index', $viewData);
-    }
-
-    public function risunkiPoKletochkam(SearchRisunkiPoKletochkamRequest $request)
-    {
-        $template = new Template();
-
-        $data = $request->validated();
-        $filters = [];
-        if (!$filters) {
-
-        }
-        $relativePictures = [];
-        $countSearchResults = 0;
-
-        $viewData['filters'] = [
-//            'query' => $query,
-//            'tag' => $tags,
-        ];
-//        $viewData['paginate'] = $paginate ?? [];
-        $viewData['countRelatedPictures'] = $countSearchResults;
-        $viewData['relativePictures'] = $relativePictures;
-
-        Breadcrumbs::for('home', function ($trail) {
-            $trail->push('Главная', '/');
-        });
-
-        Breadcrumbs::for('risunkiPoKletochkam', function ($trail) {
-            $trail->parent('home');
-            $trail->push('Рисунки по клеточкам', '/risunki-po-kletochkam');
-        });
-
-        Breadcrumbs::for('search.risunkiPoKletochkam', function ($trail, $tag) {
-            $trail->parent('risunkiPoKletochkam');
-            $trail->push('Поиск', '/risunki-po-kletochkam/search');
-            if ($tag) {
-                $trail->push($tag);
-            }
-        });
-
-        MetaTag::set('robots', 'noindex');
-        return $template->loadView('Open::search.index', $viewData);
-    }
-
-    public function searchRelatedPicturesIds(array $shown, array $hidden)
-    {
-        $sphinx = new SphinxSearch();
-        $sphinx->search('', 'drawItBookSearchByTag')
-            ->limit(15)
-            ->setFieldWeights(
-                array(
-                    'hidden_tag' => 3,
-                    'tag' => 8,
-                )
-            )
-            ->setSortMode(\Sphinx\SphinxClient::SPH_SORT_RELEVANCE, '@relevance DESC')
-            ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED);
-        if ($hidden) {
-            $sphinx->filter('hidden_tag', $hidden);
-        }
-        if ($shown) {
-            $sphinx->filter('tag', $shown);
-        }
-        $results = $sphinx->query();
-        if (!empty($results['matches'])) {
-            $pictureIds = array_keys($results['matches']);
-            return $pictureIds;
-        }
-        return [];
+        return $template->loadView('Content::search.index', $viewData);
     }
 
     public function checkExistArts(Collection $pictures)

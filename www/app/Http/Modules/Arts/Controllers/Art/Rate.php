@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Modules\Open\Controllers\Picture;
+namespace App\Http\Modules\Arts\Controllers\Art;
 
 use App\Http\Controllers\Controller;
 
@@ -26,7 +26,7 @@ class Rate extends Controller
         ];
     }
 
-    public function likeJson($id, Request $request)
+    public function like($id, Request $request)
     {
         $data = ['id' => $id, 'off' => $request->input('off')];
         try {
@@ -45,7 +45,7 @@ class Rate extends Controller
         return response($this->_successJsonResponse);
     }
 
-    public function dislikeJson($id, Request $request)
+    public function dislike($id, Request $request)
     {
         $data = ['id' => $id, 'off' => $request->input('off')];
         try {

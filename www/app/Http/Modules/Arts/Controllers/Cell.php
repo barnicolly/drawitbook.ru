@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Modules\Open\Controllers\Search;
+namespace App\Http\Modules\Arts\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use App\Libraries\Template;
+use App\UseCases\Picture\CheckExistPictures;
 use App\UseCases\Picture\GetPicturesWithTags;
 use App\UseCases\Search\SearchBySeoTag;
 use App\UseCases\Search\SearchByTags;
@@ -15,12 +17,32 @@ use Breadcrumbs;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 
-class ArtsCell extends Controller
+class Cell extends Controller
 {
 
     public function __construct()
     {
 
+    }
+
+    public function index()
+    {
+        $template = new Template();
+        $pictures = Cache::remember('pictures.popular', 60 * 60, function () {
+            return PictureModel::take(25)
+                ->where('is_del', '=', 0)
+                ->where('in_common', '=', IN_MAIN_PAGE)
+                ->with(['tags'])->get();
+        });
+        $checkExistPictures = new CheckExistPictures($pictures);
+        $pictures = $checkExistPictures->check();
+        $viewData['relativePictures'] = $pictures;
+        $title = 'Рисунки по клеточкам | Drawitbook.ru';
+        $description = 'Рисунки по клеточкам. Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.';
+        MetaTag::set('title', $title);
+        MetaTag::set('image', asset('content/arts/d4/11/d4113a118447cb7650a7a7d84b45b153.jpeg'));
+        MetaTag::set('description', $description);
+        return $template->loadView('Arts::cell.index', $viewData);
     }
 
     public function tagged(string $tag, Request $request)
@@ -107,7 +129,7 @@ class ArtsCell extends Controller
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;
         $viewData['links'] = $this->_getPaginateLinks($pageNum, (int)($countSearchResults / $perPage) + 1, route('arts.cell.tagged', $tag));
-        $page = $template->loadView('Open::search.cell.tagged', $viewData);
+        $page = $template->loadView('Arts::cell.tagged', $viewData);
         if (!isLocal()) {
             Cache::put($cacheName, $page, config('cache.expiration'));
         }
