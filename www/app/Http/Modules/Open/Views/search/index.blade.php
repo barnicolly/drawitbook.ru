@@ -21,6 +21,8 @@
                     #{{ $tag }}
                 @endforeach
             @endif
+        @elseif (!empty($filters['targetSimilarId']))
+            Результаты поиска похожих
         @endif
     </h1>
 @endsection

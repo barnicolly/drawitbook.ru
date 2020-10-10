@@ -91,9 +91,10 @@ class Search extends Controller
                 [$shown, $hidden] = $getTagsFromPictures->getTagIds($picture);
                 $relativePictures = [];
                 if ($shown || $hidden) {
-                    $search = new SearchByTags(50);
+                    $search = new SearchByTags(51);
                     $relativePictureIds = $search->searchRelatedPicturesIds($shown, $hidden);
                     if ($relativePictureIds) {
+                        $relativePictureIds = array_diff($relativePictureIds, [$targetSimilarId]);
                         $countSearchResults = count($relativePictureIds);
                         $page = $request->input('page');
                         $perPage = DEFAULT_PER_PAGE;

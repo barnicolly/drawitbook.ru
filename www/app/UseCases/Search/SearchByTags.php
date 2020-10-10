@@ -44,7 +44,7 @@ class SearchByTags
                     'tag' => 8,
                 )
             )
-            ->setSortMode(\Sphinx\SphinxClient::SPH_SORT_RELEVANCE, '@relevance DESC')
+            ->setSortMode(\Sphinx\SphinxClient::SPH_SORT_EXTENDED, '@weight DESC')
             ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED);
         if ($hidden) {
             $sphinx->filter('hidden_tag', $hidden);
