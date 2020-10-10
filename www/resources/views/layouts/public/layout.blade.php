@@ -6,7 +6,7 @@
         <main class="page__content">
             @yield('layout.body')
         </main>
-        @include('layouts.public.footer.base')
+        @include('layouts.public.footer.index')
     </div>
 @endsection
 

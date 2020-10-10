@@ -27,3 +27,39 @@
         text-align: center;
     }
 }
+
+.footer-nav {
+    display: flex;
+    padding: 20px 0;
+
+    @include media-breakpoint-down(sm) {
+        flex-wrap: wrap;
+        padding: 20px 10px;
+    }
+
+    .footer-nav__column {
+        flex: 0 0 25%;
+
+        @include media-breakpoint-down(sm) {
+            flex: 0 0 50%;
+        }
+
+        @media screen and (max-width: 450px) {
+           flex: 1 1 100%;
+        }
+    }
+
+    .footer-nav__category {
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .footer-nav__link {
+        color: white;
+    }
+
+    .footer-nav__list {
+
+        padding-left: 10px;
+    }
+}
