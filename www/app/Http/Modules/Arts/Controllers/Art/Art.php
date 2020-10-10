@@ -2,76 +2,60 @@
 
 namespace App\Http\Modules\Arts\Controllers\Art;
 
+use App\Entities\Picture\PictureModel;
 use App\Http\Controllers\Controller;
-use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use App\Libraries\Template;
+use App\Services\Arts\ArtsService;
+use App\Services\Arts\SeoService;
+use App\Services\Tags\TagsService;
 use App\UseCases\Picture\CheckExistPictures;
+use App\UseCases\Picture\GetPicture;
 use App\UseCases\Picture\GetPicturesWithTags;
 use App\UseCases\Picture\GetTagsFromPicture;
+use App\UseCases\Picture\PictureViewed;
 use App\UseCases\Search\SearchByTags;
 use App\UseCases\User\GetIp;
-use App\UseCases\Picture\GetPicture;
-use App\UseCases\Picture\PictureViewed;
+use Illuminate\Database\Eloquent\Collection;
 use MetaTag;
 
 class Art extends Controller
 {
 
-    public function index($id)
-    {
-        $id = (int)$id;
+    public function index(
+        $id,
+        SearchByTags $searchByTags,
+        GetTagsFromPicture $getTagsFromPictures
+    ) {
+        $id = (int) $id;
+        $picture = (new GetPicture($id))->getCached();
+        if (!$picture) {
+            abort(404);
+        }
         try {
-            $getPicture = new GetPicture($id);
-            $picture = $getPicture->getCached();
-
-            $getTagsFromPictures = new GetTagsFromPicture();
             [$shown, $hidden] = $getTagsFromPictures->getTagIds($picture);
             $relativePictures = [];
             if ($shown || $hidden) {
-                $search = new SearchByTags();
-                $pictureIds = $search->searchRelatedPicturesIds($shown, $hidden);
-                if ($pictureIds) {
-                    $getPicturesWithTags = new GetPicturesWithTags($pictureIds);
-                    $relativePictures = $getPicturesWithTags->get();
-                    $checkExistPictures = new CheckExistPictures($relativePictures);
-                    $relativePictures = $checkExistPictures->check();
-                } else {
-                    $pictures = PictureModel::take(10)
-                        ->where('is_del', '=', 0)
-                        ->where('in_common', '=', IN_MAIN_PAGE)
-                        ->with(['tags'])->get();
-                    $checkExistPictures = new CheckExistPictures($pictures);
-                    $pictures = $checkExistPictures->check();
-                    $relativePictures = $pictures;
-                }
+                $pictureIds = $searchByTags->searchRelatedPicturesIds($shown, $hidden);
+                $relativePictures = $pictureIds
+                    ? $this->formRelativePictures($pictureIds)
+                    : (new ArtsService())->getInterestingArts($id);
             }
-            $tags = [];
-            foreach ($picture->tags as $tag) {
-                if ($tag->hidden === 0) {
-                    $tags[] = mbUcfirst($tag->name);
-                }
-            }
-            if ($tags) {
-                $picture->alt = 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags);
-            }
+            $this->setArtAlt($picture);
             if ($relativePictures) {
                 foreach ($relativePictures as $index => $relativePicture) {
-                    $tags = [];
-                    foreach ($relativePicture->tags as $tag) {
-                        if ($tag->hidden === 0) {
-                            $tags[] = mbUcfirst($tag->name);
-                        }
-                    }
-                    if ($tags) {
-                        $relativePicture->alt = 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags);
-                    }
+                    $this->setArtAlt($relativePicture);
                 }
             }
-            $viewData = ['picture' => $picture, 'relativePictures' => $relativePictures];
+            $viewData = [
+                'picture' => $picture,
+                'relativePictures' => $relativePictures,
+            ];
             $template = new Template();
-            MetaTag::set('title', 'Art #' . $id . ' | Drawitbook.ru');
+            [$title, $description] = (new SeoService())->formTitleAndDescriptionShowArt($id);
+            MetaTag::set('title', $title);
+            MetaTag::set('description', $description);
             MetaTag::set('robots', 'noindex');
-            MetaTag::set('description', 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.');
+            //TODO-misha выделить путь к артам;
             MetaTag::set('image', asset('content/arts/' . $picture->path));
             $this->_commandsAfterView($id);
             return $template->loadView('Arts::art.index', $viewData);
@@ -81,8 +65,25 @@ class Art extends Controller
         }
     }
 
+    private function formRelativePictures(array $pictureIds): Collection
+    {
+        $relativePictures = (new GetPicturesWithTags($pictureIds))->get();
+        return $relativePictures->isNotEmpty()
+            ? (new CheckExistPictures($relativePictures))->check()
+            : new Collection();
+    }
+
+    private function setArtAlt(PictureModel $art)
+    {
+        $tags = (new TagsService)->extractTagsFromArt($art);
+        if ($tags) {
+            $art->alt = 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags);
+        }
+    }
+
     private function _commandsAfterView(int $pictureId)
     {
+        //TODO-misha удалить статистику просмотров;
         if (empty(session('is_admin'))) {
             $id = auth()->id();
             $ip = request()->ip();
