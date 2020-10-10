@@ -29,37 +29,32 @@ class Art extends Controller
         if (!$picture) {
             abort(404);
         }
-        try {
-            [$shown, $hidden] = $getTagsFromPictures->getTagIds($picture);
-            $relativePictures = [];
-            if ($shown || $hidden) {
-                $pictureIds = $searchByTags->searchRelatedPicturesIds($shown, $hidden);
-                $relativePictures = $pictureIds
-                    ? $this->formRelativePictures($pictureIds)
-                    : (new ArtsService())->getInterestingArts($id);
-            }
-            $this->setArtAlt($picture);
-            if ($relativePictures) {
-                foreach ($relativePictures as $index => $relativePicture) {
-                    $this->setArtAlt($relativePicture);
-                }
-            }
-            $viewData = [
-                'picture' => $picture,
-                'relativePictures' => $relativePictures,
-            ];
-            $template = new Template();
-            [$title, $description] = (new SeoService())->formTitleAndDescriptionShowArt($id);
-            MetaTag::set('title', $title);
-            MetaTag::set('description', $description);
-            MetaTag::set('robots', 'noindex');
-            //TODO-misha выделить путь к артам;
-            MetaTag::set('image', asset('content/arts/' . $picture->path));
-            return $template->loadView('Arts::art.index', $viewData);
-        } catch (\Throwable $exception) {
-            info($exception->getMessage());
-            abort(500);
+        [$shown, $hidden] = $getTagsFromPictures->getTagIds($picture);
+        $relativePictures = [];
+        if ($shown || $hidden) {
+            $pictureIds = $searchByTags->searchRelatedPicturesIds($shown, $hidden);
+            $relativePictures = $pictureIds
+                ? $this->formRelativePictures($pictureIds)
+                : (new ArtsService())->getInterestingArts($id);
         }
+        $this->setArtAlt($picture);
+        if ($relativePictures) {
+            foreach ($relativePictures as $index => $relativePicture) {
+                $this->setArtAlt($relativePicture);
+            }
+        }
+        $viewData = [
+            'picture' => $picture,
+            'relativePictures' => $relativePictures,
+        ];
+        $template = new Template();
+        [$title, $description] = (new SeoService())->formTitleAndDescriptionShowArt($id);
+        MetaTag::set('title', $title);
+        MetaTag::set('description', $description);
+        MetaTag::set('robots', 'noindex');
+        //TODO-misha выделить путь к артам;
+        MetaTag::set('image', asset('content/arts/' . $picture->path));
+        return $template->loadView('Arts::art.index', $viewData);
     }
 
     private function formRelativePictures(array $pictureIds): Collection

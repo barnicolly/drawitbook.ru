@@ -3,8 +3,8 @@ import { getRandomInt, sendRequest } from '@js/helpers/utils';
 (function ($) {
     $.rateContainer = $.rateContainer || [];
     var routes = {
-        like: '/art/{id}/like',
-        dislike: '/art/{id}/dislike',
+        like: '/arts/{id}/like',
+        dislike: '/arts/{id}/dislike',
     };
 
     function rateContainer() {

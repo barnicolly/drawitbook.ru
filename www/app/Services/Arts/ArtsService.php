@@ -11,7 +11,6 @@ class ArtsService
 
     public function __construct()
     {
-
     }
 
     public function getInterestingArts(int $excludeId): Collection
@@ -25,6 +24,19 @@ class ArtsService
         return $checkExistPictures->check();
     }
 
+    public function getById(int $id): ?array
+    {
+        $art = PictureModel::query()
+            ->where('id', $id)
+            ->getQuery()
+            ->first();
+        return $art ? (array) $art : null;
+    }
+
+    public function isArtExist(int $id): bool
+    {
+        return !empty($this->getById($id));
+    }
 }
 
 
