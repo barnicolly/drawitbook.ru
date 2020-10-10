@@ -12,9 +12,7 @@ use App\UseCases\Picture\CheckExistPictures;
 use App\UseCases\Picture\GetPicture;
 use App\UseCases\Picture\GetPicturesWithTags;
 use App\UseCases\Picture\GetTagsFromPicture;
-use App\UseCases\Picture\PictureViewed;
 use App\UseCases\Search\SearchByTags;
-use App\UseCases\User\GetIp;
 use Illuminate\Database\Eloquent\Collection;
 use MetaTag;
 
@@ -57,7 +55,6 @@ class Art extends Controller
             MetaTag::set('robots', 'noindex');
             //TODO-misha выделить путь к артам;
             MetaTag::set('image', asset('content/arts/' . $picture->path));
-            $this->_commandsAfterView($id);
             return $template->loadView('Arts::art.index', $viewData);
         } catch (\Throwable $exception) {
             info($exception->getMessage());
@@ -78,20 +75,6 @@ class Art extends Controller
         $tags = (new TagsService)->extractTagsFromArt($art);
         if ($tags) {
             $art->alt = 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags);
-        }
-    }
-
-    private function _commandsAfterView(int $pictureId)
-    {
-        //TODO-misha удалить статистику просмотров;
-        if (empty(session('is_admin'))) {
-            $id = auth()->id();
-            $ip = request()->ip();
-            if (!in_array($ip, ['127.0.0.1', '192.168.1.5'])) {
-                $getIp = new GetIp($ip);
-                $pictureViewed = new PictureViewed($getIp->inetAton(), ($id ? $id : 0), $pictureId);
-                $pictureViewed->insert();
-            }
         }
     }
 
