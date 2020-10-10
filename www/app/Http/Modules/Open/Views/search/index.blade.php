@@ -25,6 +25,13 @@
             Результаты поиска похожих
         @endif
     </h1>
+    @if (!empty($relativePictures))
+        <div class="form-group">
+            <p>
+                Голосуйте за понравившиеся рисунки и делитесь с друзьями.
+            </p>
+        </div>
+    @endif
 @endsection
 
 @section('layouts.paginated.content')

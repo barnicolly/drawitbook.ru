@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
 class ModulesServiceProvider extends ServiceProvider
@@ -15,7 +16,7 @@ class ModulesServiceProvider extends ServiceProvider
     public function boot()
     {
         $modulesCorePath = 'app/Http/Modules/';
-        $modules = listDir(base_path($modulesCorePath));
+        $modules = array_map('basename', File::directories(base_path($modulesCorePath)));
         foreach ($modules as $module) {
             if (file_exists(base_path($modulesCorePath . $module . '/Routes/web.php'))) {
                 $this->loadRoutesFrom(base_path($modulesCorePath . $module . '/Routes/web.php'));

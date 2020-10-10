@@ -14,10 +14,24 @@ Route::group(
         Route::post('/art/{id}/claim', ['uses' => 'Claim@register']);
     });
 
-require_once 'Auth/web.php';
+Route::group(
+    [
+        'middleware' => 'web',
+        'namespace' => 'App\Http\Modules\Open\Controllers\Search'
+    ],
+    function () {
+        Route::get('/search', ['uses' => 'Search@index'])->name('search');
+        Route::get('/risunki-po-kletochkam/{tag}', ['uses' => 'ArtsCell@tagged'])->name('arts.cell.tagged');
+    });
 
-require_once 'Search/arts.cell.php';
-require_once 'Arts/Cell.php';
+Route::group(
+    [
+        'middleware' => 'web',
+        'namespace' => 'App\Http\Modules\Open\Controllers\Picture'
+    ],
+    function () {
+        Route::get('/risunki-po-kletochkam', ['uses' => 'ArtsCell@index'])->name('arts.cell');
+    });
 
 Route::group(
     [
@@ -29,4 +43,20 @@ Route::group(
             ->name('home');
 
         Route::get('/tag/list', ['uses' => 'Content@tagList'])->middleware(['ajax']);
+    });
+
+Route::group(
+    [
+        'middleware' => 'web',
+        'prefix' => '/',
+        'namespace' => 'App\Http\Modules\Open\Controllers\Auth'
+    ],
+    function () {
+        Route::get('/login', ['uses' => 'Login@showLoginForm'])->name('login');
+        Route::get('/register', ['uses' => 'Login@dump']);
+        Route::post('/register', ['uses' => 'Login@dump']);
+        Route::get('/password/reset', ['uses' => 'Login@dump']);
+        Route::post('password/email', ['uses' => 'Login@dump']);
+        Route::get('password/reset/{token}', ['uses' => 'Login@dump']);
+        Route::post('password/reset', ['uses' => 'Login@dump']);
     });
