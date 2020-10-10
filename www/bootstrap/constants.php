@@ -10,3 +10,5 @@ define('ON_VK_POSTING', 1);
 
 define('LIKE', 1);
 define('DISLIKE', 2);
+
+define('DEFAULT_PER_PAGE', 25);

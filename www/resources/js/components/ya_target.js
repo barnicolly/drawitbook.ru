@@ -44,6 +44,14 @@ export function reachClickBtnShareEmail() {
     reachGoal('share_email');
 }
 
+export function reachClickTagItem() {
+    reachGoal('click_tag_item');
+}
+
+export function reachClickBtnRate() {
+    reachGoal('click_btn_rate');
+}
+
 function reachGoal(goal) {
     if (typeof window[yandexCounterName] !== 'undefined') {
         window[yandexCounterName].reachGoal(goal);

@@ -50,12 +50,14 @@ export function initStackGridAds($stackGrid) {
                 'integrated-5': 'R-A-400272-8',
                 'integrated-12': 'R-A-400272-9',
                 'integrated-18': 'R-A-400272-10',
+                'in_stack_arts_last': 'R-A-400272-21',
             };
         } else {
             configurations = {
                 'integrated-5': 'R-A-400272-18',
                 'integrated-12': 'R-A-400272-19',
                 'integrated-18': 'R-A-400272-20',
+                'in_stack_arts_last': 'R-A-400272-22',
             };
         }
         const failovers = {};

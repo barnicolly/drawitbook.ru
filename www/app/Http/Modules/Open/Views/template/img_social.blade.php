@@ -59,7 +59,7 @@
             @include('Open::template.rate', ['pictureId' => $picture->id])
         </div>
         <div class="find-similar">
-            <a itemprop="url" href="#" rel="nofollow" title="Найти похожие">
+            <a itemprop="url" href="{{ route('search') . '?similar=' . $picture->id }}"  rel="nofollow" title="Найти похожие">
                 <svg role="img" width="26" height="26" viewBox="0 0 26 26">
                     <use xlink:href="{{ getUrlFromManifest('icons/sprite.svg') . '#image-similar' }}"></use>
                 </svg>

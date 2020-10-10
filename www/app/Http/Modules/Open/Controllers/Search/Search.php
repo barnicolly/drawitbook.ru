@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Entities\Spr\SprTagsModel;
 use App\Http\Modules\Open\Requests\Search\SearchRisunkiPoKletochkamRequest;
 use App\Libraries\Template;
+use App\UseCases\Picture\CheckExistPictures;
+use App\UseCases\Picture\GetPicture;
+use App\UseCases\Picture\GetPicturesWithTags;
+use App\UseCases\Picture\GetTagsFromPicture;
+use App\UseCases\Search\SearchByTags;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -23,6 +28,7 @@ class Search extends Controller
     {
         $template = new Template();
         $tags = $request->input('tag') ?? [];
+        $targetSimilarId = $request->input('similar') ?? 0;
         if (is_string($tags)) {
             $tags = [$tags];
         }
@@ -33,8 +39,10 @@ class Search extends Controller
         $validator = Validator::make([
             'tags' => $tags,
             'query' => $query,
+            'similar' => $targetSimilarId,
         ], [
             'query' => 'string|max:255',
+            'similar' => 'int',
             'tags' => 'array',
             'tags.*' => 'string',
         ]);
@@ -44,45 +52,80 @@ class Search extends Controller
         $query = strip_tags($query);
         $relativePictures = [];
         $countSearchResults = 0;
-        if ($query || $tags) {
-            $relativePictureIds = $this->_searchByQuery($query, $tags);
-            if ($relativePictureIds) {
-                $countSearchResults = count($relativePictureIds);
-                $page = $request->input('page');
-                $perPage = 25;
-                if (!$page) {
-                    $page = 1;
+        if ($query || $tags || $targetSimilarId) {
+            if ($query || $tags) {
+                $relativePictureIds = $this->_searchByQuery($query, $tags);
+                if ($relativePictureIds) {
+                    $countSearchResults = count($relativePictureIds);
+                    $page = $request->input('page');
+                    $perPage = DEFAULT_PER_PAGE;
+                    if (!$page) {
+                        $page = 1;
+                    }
+                    $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);
+
+                    if (!$relativePictureIds) {
+                        abort(404);
+                    }
+                    $relativePictures = PictureModel::with(['tags'])
+                        ->whereIn('id', $relativePictureIds)
+                        ->get();
+
+                    $relativePictures = $this->checkExistArts($relativePictures);
+
+                    $paginate = new LengthAwarePaginator($relativePictures->forPage($page, $perPage), $countSearchResults, $perPage, $page, ['path' => url('search')]);
+
+                    if ($query) {
+                        $paginate->appends(['query' => $query]);
+                    }
+                    if ($tags) {
+                        foreach ($tags as $tag) {
+                            $paginate->appends(['tag[]' => $tag]);
+                        }
+                    }
                 }
-                $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);
+            } elseif ($targetSimilarId) {
+                $getPicture = new GetPicture($targetSimilarId);
+                $picture = $getPicture->getCached();
+                $getTagsFromPictures = new GetTagsFromPicture();
+                [$shown, $hidden] = $getTagsFromPictures->getTagIds($picture);
+                $relativePictures = [];
+                if ($shown || $hidden) {
+                    $search = new SearchByTags(50);
+                    $relativePictureIds = $search->searchRelatedPicturesIds($shown, $hidden);
+                    if ($relativePictureIds) {
+                        $countSearchResults = count($relativePictureIds);
+                        $page = $request->input('page');
+                        $perPage = DEFAULT_PER_PAGE;
+                        if (!$page) {
+                            $page = 1;
+                        }
+                        $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);
 
-                if (!$relativePictureIds) {
-                   abort(404);
-                }
-                $relativePictures = PictureModel::with(['tags'])
-                    ->whereIn('id', $relativePictureIds)
-                    ->get();
+                        $relativePictures = PictureModel::with(['tags'])
+                            ->whereIn('id', $relativePictureIds)
+                            ->get();
 
-                $relativePictures = $this->checkExistArts($relativePictures);
+                        $relativePictures = $this->checkExistArts($relativePictures);
 
-                $paginate = new LengthAwarePaginator($relativePictures->forPage($page, $perPage), $countSearchResults, $perPage, $page, ['path' => url('search')]);
-
-                if ($query) {
-                    $paginate->appends(['query' => $query]);
-                }
-                if ($tags) {
-                    foreach ($tags as $tag) {
-                        $paginate->appends(['tag[]' => $tag]);
+                        $paginate = new LengthAwarePaginator($relativePictures->forPage($page, $perPage), $countSearchResults, $perPage, $page, ['path' => url('search')]);
+                        $paginate->appends(['similar' => $targetSimilarId]);
+                    } else {
+                        abort(404);
                     }
                 }
             }
+
         }
         $viewData['filters'] = [
             'query' => $query,
             'tag' => $tags,
+            'targetSimilarId' => $targetSimilarId,
         ];
         $viewData['paginate'] = $paginate ?? [];
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;
+        //TODO-misha добавить title;
 
         MetaTag::set('robots', 'noindex');
         return $template->loadView('Open::search.index', $viewData);
