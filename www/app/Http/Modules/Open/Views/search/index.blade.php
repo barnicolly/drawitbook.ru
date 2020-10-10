@@ -36,7 +36,7 @@
 
 @section('layouts.paginated.content')
     @if (!empty($relativePictures))
-        @include('Open::template.stack_grid', ['pictures' => $relativePictures])
+        @include('Open::template.stack_grid', ['pictures' => $relativePictures, 'tagged' => route('arts.cell.tagged', ''), 'showAllTags' => true])
     @else
         <div class="search-no-results">
             <div class="search-no-results__img">
