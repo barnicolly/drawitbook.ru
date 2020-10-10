@@ -6,7 +6,7 @@ use App\Entities\Picture\PictureModel;
 use App\Http\Controllers\Controller;
 use App\Libraries\Template;
 use App\Services\Arts\ArtsService;
-use App\Services\Arts\SeoService;
+use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
 use App\UseCases\Picture\CheckExistPictures;
 use App\UseCases\Picture\GetPicture;

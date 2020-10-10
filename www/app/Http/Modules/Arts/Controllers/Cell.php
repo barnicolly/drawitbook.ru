@@ -5,11 +5,11 @@ namespace App\Http\Modules\Arts\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use App\Libraries\Template;
+use App\Services\Seo\SeoService;
 use App\UseCases\Picture\CheckExistPictures;
 use App\UseCases\Picture\GetPicturesWithTags;
 use App\UseCases\Search\SearchBySeoTag;
 use App\UseCases\Search\SearchByTags;
-use App\UseCases\Seo\Seo;
 use Illuminate\Http\Request;
 use MetaTag;
 use Validator;
@@ -92,8 +92,8 @@ class Cell extends Controller
 
         $viewData['paginate'] = $paginate ?? [];
 
-        $title = Seo::createCategoryTitle('Рисунки по клеточкам', mbUcfirst($tagInfo->name), $countSearchResults);
-        $description = Seo::createCategoryDescription('Рисунки по клеточкам', mbUcfirst($tagInfo->name), $countSearchResults);;
+        $title = (new SeoService())->createCategoryTitle('Рисунки по клеточкам', mbUcfirst($tagInfo->name), $countSearchResults);
+        $description =  (new SeoService())->createCategoryDescription('Рисунки по клеточкам', mbUcfirst($tagInfo->name), $countSearchResults);;
         if ($pageNum !== 1) {
             MetaTag::set('robots', 'noindex, follow');
             MetaTag::set('title', $title . ' - Страница ' . $pageNum);
