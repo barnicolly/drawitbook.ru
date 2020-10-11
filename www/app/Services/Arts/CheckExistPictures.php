@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCases\Picture;
+namespace App\Services\Arts;
 
 use Illuminate\Database\Eloquent\Collection;
 

@@ -1,8 +1,7 @@
 <?php
 
-namespace App\UseCases\Search;
+namespace App\Services\Search;
 
-use App\Entities\Picture\PictureModel;
 use Illuminate\Support\Facades\DB;
 use sngrl\SphinxSearch\SphinxSearch;
 
@@ -24,9 +23,11 @@ class SearchByTags
             ->where('picture.is_del', '=', NON_DELETED_ROW)
             ->limit(1000)
             ->get();
-        $results = collect($results)->map(function ($x) {
-            return (array) $x;
-        })->toArray();
+        $results = collect($results)->map(
+            function ($x) {
+                return (array) $x;
+            }
+        )->toArray();
         if ($results) {
             return array_column($results, 'id');
         }
@@ -39,10 +40,10 @@ class SearchByTags
         $sphinx->search('', 'drawItBookSearchByTag')
             ->limit($this->_limit)
             ->setFieldWeights(
-                array(
+                [
                     'hidden_tag' => 3,
                     'tag' => 8,
-                )
+                ]
             )
             ->setSortMode(\Sphinx\SphinxClient::SPH_SORT_EXTENDED, '@weight DESC')
             ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED);

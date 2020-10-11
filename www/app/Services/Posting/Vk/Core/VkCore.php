@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCases\Vk\Core;
+namespace App\Services\Posting\Vk\Core;
 
 use ATehnix\VkClient\Client;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCases\Vk;
+namespace App\Services\Posting\Vk;
 
 use App\Entities\Vk\VkAlbumModel;
 

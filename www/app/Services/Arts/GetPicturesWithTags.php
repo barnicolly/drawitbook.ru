@@ -1,6 +1,7 @@
 <?php
 
-namespace App\UseCases\Picture;
+namespace App\Services\Arts;
+
 use App\Entities\Picture\PictureModel;
 
 class GetPicturesWithTags

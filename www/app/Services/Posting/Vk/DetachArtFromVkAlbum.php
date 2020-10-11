@@ -1,11 +1,11 @@
 <?php
 
-namespace App\UseCases\Vk;
+namespace App\Services\Posting\Vk;
 
 use App\Entities\Vk\VkAlbumModel;
 use App\Entities\Vk\VkAlbumPictureModel;
-use App\UseCases\Picture\GetPicture;
-use App\UseCases\Vk\Core\VkCore;
+use App\Services\Arts\GetPicture;
+use App\Services\Posting\Vk\Core\VkCore;
 
 class DetachArtFromVkAlbum extends VkCore
 {

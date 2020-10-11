@@ -8,11 +8,11 @@ use App\Libraries\Template;
 use App\Services\Arts\ArtsService;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
-use App\UseCases\Picture\CheckExistPictures;
-use App\UseCases\Picture\GetPicture;
-use App\UseCases\Picture\GetPicturesWithTags;
-use App\UseCases\Picture\GetTagsFromPicture;
-use App\UseCases\Search\SearchByTags;
+use App\Services\Arts\CheckExistPictures;
+use App\Services\Arts\GetPicture;
+use App\Services\Arts\GetPicturesWithTags;
+use App\Services\Arts\GetTagsFromPicture;
+use App\Services\Search\SearchByTags;
 use Illuminate\Database\Eloquent\Collection;
 use MetaTag;
 

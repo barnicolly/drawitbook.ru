@@ -4,6 +4,7 @@ namespace App\Http\Modules\Content\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Libraries\Template;
+use App\Services\Tags\TagsService;
 use App\UseCases\Tag\Tag;
 use Illuminate\Http\Request;
 use MetaTag;
@@ -33,7 +34,7 @@ class Content extends Controller
     {
         try {
             $responseList = [];
-            $tagList = Tag::list();
+            $tagList = (new TagsService())->getMostPopular();
             foreach ($tagList as $tag) {
                 $responseList[] = [
                     'link' => route('arts.cell.tagged', ['tag' => $tag->seo]),
