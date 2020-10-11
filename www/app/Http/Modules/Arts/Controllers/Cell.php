@@ -3,7 +3,7 @@
 namespace App\Http\Modules\Arts\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
+use App\Entities\Picture\PictureModel;
 use App\Libraries\Template;
 use App\Services\Seo\SeoService;
 use App\UseCases\Picture\CheckExistPictures;

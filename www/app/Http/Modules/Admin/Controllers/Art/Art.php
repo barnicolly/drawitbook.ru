@@ -13,7 +13,7 @@ use App\UseCases\Vk\AttachArtToVkAlbum;
 use App\UseCases\Vk\DetachArtFromVkAlbum;
 use App\UseCases\Vk\GetVkAlbums;
 use Validator;
-use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
+use App\Entities\Picture\PictureModel;
 
 class Art extends Controller
 {

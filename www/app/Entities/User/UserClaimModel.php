@@ -1,18 +1,21 @@
 <?php
 
-namespace App\Http\Modules\Database\Models\Common\Raw;
+namespace App\Entities\User;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HistoryVkPostingModel extends Model
+class UserClaimModel extends Model
 {
+    protected $table = 'user_claim';
+
     public $timestamps = false;
     protected $dates = ['created_at'];
-    protected $table = 'history_vk_posting';
+
     protected $fillable = [];
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
     }
+
 }

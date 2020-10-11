@@ -2,7 +2,7 @@
 
 namespace App\Services\Arts;
 
-use App\Http\Modules\Database\Models\Common\User\UserClaimModel;
+use App\Entities\User\UserClaimModel;
 use Illuminate\Support\Facades\DB;
 
 class ClaimService

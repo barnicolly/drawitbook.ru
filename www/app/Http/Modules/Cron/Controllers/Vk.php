@@ -3,8 +3,8 @@
 namespace App\Http\Modules\Cron\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Modules\Database\Models\Common\Raw\HistoryVkPostingModel;
-use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
+use App\Entities\Vk\HistoryPostingModel;
+use App\Entities\Picture\PictureModel;
 use ATehnix\VkClient\Client;
 use Illuminate\Support\Facades\DB;
 
@@ -65,7 +65,7 @@ limit 1'));
 
     private function _addHistoryVkPosting(int $artId)
     {
-        $historyVkPostingRecord = new HistoryVkPostingModel();
+        $historyVkPostingRecord = new HistoryPostingModel();
         $historyVkPostingRecord->picture_id = $artId;
         $historyVkPostingRecord->save();
     }

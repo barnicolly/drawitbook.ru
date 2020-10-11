@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 use MetaTag;
 use Validator;
 use Breadcrumbs;
-use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
+use App\Entities\Picture\PictureModel;
 use sngrl\SphinxSearch\SphinxSearch;
 use Illuminate\Support\Facades\Log;
 

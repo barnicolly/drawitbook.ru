@@ -2,11 +2,9 @@
 
 namespace App\Http\Modules\Cron\Controllers;
 
+use App\Entities\Picture\PictureModel;
 use App\Http\Controllers\Controller;
-use App\Http\Modules\Database\Models\Common\Raw\HistoryVkPostingModel;
-use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
 use ATehnix\VkClient\Client;
-use Illuminate\Support\Facades\DB;
 
 class Vk_album extends Controller
 {
@@ -25,18 +23,21 @@ class Vk_album extends Controller
 
     public function posting()
     {
-            try {
-                $this->_post([2608]);
-            } catch (\Exception $e) {
-
-            }
+        try {
+            $this->_post([2608]);
+        } catch (\Exception $e) {
+        }
     }
 
     private function _post(array $artIds)
     {
-        $pictures = PictureModel::with(['tags' => function ($q) {
-            $q->where('spr_tags.hidden_vk', '=', 0);
-        }])->whereIn('id', $artIds)->get();
+        $pictures = PictureModel::with(
+            [
+                'tags' => function ($q) {
+                    $q->where('spr_tags.hidden_vk', '=', 0);
+                },
+            ]
+        )->whereIn('id', $artIds)->get();
 
         $uploadUrl = $this->_getUploadServer();
 
@@ -57,58 +58,61 @@ class Vk_album extends Controller
             }
             $hashTags .= ' #drawitbook';
 
-          /*  if (empty($payload[$picture->id])) {
-                $payload[$picture->id] = [];
-            }*/
+            /*  if (empty($payload[$picture->id])) {
+                  $payload[$picture->id] = [];
+              }*/
 //            $payload[$picture->id]['caption'] = $hashTags . '%0A' . 'Ещё больше рисунков на ' . $url;
 
-        /*    $client = new \GuzzleHttp\Client();
-            $res = $client->post($uploadUrl, [
-                'multipart' => [
-                    [
-                        'name' => 'photo',
-                        'contents' => fopen($path, 'r')
+            /*    $client = new \GuzzleHttp\Client();
+                $res = $client->post($uploadUrl, [
+                    'multipart' => [
+                        [
+                            'name' => 'photo',
+                            'contents' => fopen($path, 'r')
+                        ],
                     ],
-                ],
-            ]);
-            $server = json_decode($res->getBody()->getContents(), true);*/
+                ]);
+                $server = json_decode($res->getBody()->getContents(), true);*/
 //            $payload[$picture->id] = ['id' => $server];
 
 //            $photoId = $this->_savePhoto($server);
             $photoId = 456239067;
 
             $this->_editPhoto($photoId, ['caption' => $hashTags . "\n\n" . ' Ещё больше рисунков на ' . $url]);
-
         }
     }
 
     private function _editPhoto(int $photoId, array $data)
     {
-        $data = array_merge([
-            'owner_id' => '-' . $this->_groupId,
-            'photo_id' => $photoId,
-        ], $data);
+        $data = array_merge(
+            [
+                'owner_id' => '-' . $this->_groupId,
+                'photo_id' => $photoId,
+            ],
+            $data
+        );
         try {
             $response = $this->_api->request('photos.edit', $data);
         } catch (\Exception $e) {
             if ($data) {
-
             }
         }
     }
 
     private function _editPost(int $postId, array $data)
     {
-        $data = array_merge([
-            'owner_id' => '-' . $this->_groupId,
-            'post_id' => $postId,
-        ], $data);
+        $data = array_merge(
+            [
+                'owner_id' => '-' . $this->_groupId,
+                'post_id' => $postId,
+            ],
+            $data
+        );
         try {
             $response = $this->_api->request('wall.edit', $data);
         } catch (\Exception $e) {
-           if ($data) {
-
-           }
+            if ($data) {
+            }
         }
     }
 
@@ -125,7 +129,6 @@ class Vk_album extends Controller
             return $response['response']['items'][0]['id'];
         } catch (\Exception $e) {
             if ($data) {
-
             }
         }
     }
@@ -146,18 +149,19 @@ class Vk_album extends Controller
             }
         } catch (\Exception $e) {
             if ($data) {
-
             }
         }
-
-
     }
 
     private function _wallPost(array $data)
     {
-        $data = array_merge([
-            'owner_id' => '-' . $this->_groupId, 'from_group' => 1
-        ], $data);
+        $data = array_merge(
+            [
+                'owner_id' => '-' . $this->_groupId,
+                'from_group' => 1,
+            ],
+            $data
+        );
         $response = $this->_api->request('wall.post', $data);
         if ($response) {
             return $response['response']['post_id'];
@@ -166,7 +170,10 @@ class Vk_album extends Controller
 
     private function _getUploadServer()
     {
-        $response = $this->_api->request('photos.getUploadServer', ['group_id' => $this->_groupId, 'album_id' => 263036803]);
+        $response = $this->_api->request(
+            'photos.getUploadServer',
+            ['group_id' => $this->_groupId, 'album_id' => 263036803]
+        );
         return $response['response']['upload_url'];
     }
 }

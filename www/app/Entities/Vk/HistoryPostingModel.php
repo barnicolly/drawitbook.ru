@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Modules\Database\Models\Common\Picture;
+namespace App\Entities\Vk;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PictureViewsModel extends Model
+class HistoryPostingModel extends Model
 {
-    protected $table = 'picture_views';
     public $timestamps = false;
-    protected $dates = ['updated_at'];
+    protected $dates = ['created_at'];
+    protected $table = 'history_vk_posting';
     protected $fillable = [];
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
     }
-
 }
