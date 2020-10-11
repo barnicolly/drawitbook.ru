@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Services\Commands\CreateSitemapService;
 
 class CreateSitemap extends Command
 {
@@ -37,7 +38,7 @@ class CreateSitemap extends Command
      */
     public function handle()
     {
-        $cron = new \App\UseCases\Cron\CreateSitemap();
+        $cron = new CreateSitemapService();
         $cron->create();
     }
 }

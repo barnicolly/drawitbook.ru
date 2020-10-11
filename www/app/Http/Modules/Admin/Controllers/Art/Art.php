@@ -8,12 +8,12 @@ use App\Http\Modules\Admin\Requests\Art\ArtSetVkPostingOffRequest;
 use App\Http\Modules\Admin\Requests\Art\ArtSetVkPostingOnRequest;
 use App\Http\Modules\Admin\Requests\Art\PostInVkAlbumRequest;
 use App\Http\Modules\Admin\Requests\Art\RemoveFromVkAlbumRequest;
-use App\UseCases\Picture\GetPicture;
-use App\UseCases\Vk\AttachArtToVkAlbum;
-use App\UseCases\Vk\DetachArtFromVkAlbum;
-use App\UseCases\Vk\GetVkAlbums;
+use App\Services\Arts\GetPicture;
+use App\Services\Posting\Vk\AttachArtToVkAlbum;
+use App\Services\Posting\Vk\DetachArtFromVkAlbum;
+use App\Services\Posting\Vk\GetVkAlbums;
 use Validator;
-use App\Http\Modules\Database\Models\Common\Picture\PictureModel;
+use App\Entities\Picture\PictureModel;
 
 class Art extends Controller
 {

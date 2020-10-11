@@ -36,6 +36,7 @@ module.exports = {
     },
     entry: {
         'app': `${paths.src.self}entries/app/index.js`,
+        'admin': `${paths.src.self}entries/admin/index.js`,
     },
     optimization: helper.parts.optimization(isProduction),
     output: {

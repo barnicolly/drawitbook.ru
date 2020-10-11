@@ -56,7 +56,6 @@
     .header__menu {
         top: -100%;
         display: block;
-        //transition: all 0.3s ease;
         background-color: white;
         z-index: 1001;
         overflow: auto;
@@ -66,7 +65,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: white;
+            background: url('/content/arts/90/0c/900c946f21c1b7a6b93b2a7e0802d249.gif') no-repeat left;
+            background-size: cover;
         }
 
         &.open {
@@ -89,10 +89,10 @@
         @media screen and (max-width: 768px) {
             border-top: transparent;
             border-left: 3px solid transparent;
+            background-color: white;
         }
 
         &:hover {
-            background-color: transparent;
             color: rgba(0,0,0,.7);
         }
     }

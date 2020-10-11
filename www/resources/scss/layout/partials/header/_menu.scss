@@ -67,7 +67,7 @@
         color: #212529;
         text-align: left;
         list-style: none;
-        background-color: #fff;
+        background-color: transparent;
         background-clip: padding-box;
         width: 100%;
         left: 0;
@@ -102,9 +102,11 @@
         display: flex;
         border: 1px solid rgba(0, 0, 0, .15);
         border-radius: .25rem;
+        background-color: white;
 
         @media screen and (max-width: 768px) {
             flex-wrap: wrap;
+            background-color: #ffffffe8;
         }
     }
 
@@ -117,7 +119,7 @@
 .category {
     text-transform: uppercase;
     font-weight: 700;
-    color: #377af2;
+    color: black;
     padding-left: 10px;
 
     @media screen and (max-width: 380px) {

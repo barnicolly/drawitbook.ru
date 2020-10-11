@@ -1,4 +1,5 @@
 <footer class="footer">
+    <div class="footer__line"></div>
     <div class="container">
         <div class="footer-nav">
             @foreach($groups as $group)
@@ -8,7 +9,6 @@
             @endforeach
         </div>
     </div>
-    <div class="footer__line"></div>
     <div class="container">
         <div class="footer__slogan text-uppercase content">
             Love art? We do too.

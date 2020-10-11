@@ -54,7 +54,7 @@ import { getRandomInt, sendRequest } from '@js/helpers/utils';
                 .on('click', '.submit-claim', function () {
                     if ($(self.artContainer).find('.claim-container').length) {
                         const data = $(self.artContainer).find('.claim-container').serialize();
-                        sendRequest('post', '/art/' + self.artId + '/claim', data, function () {
+                        sendRequest('post', '/arts/' + self.artId + '/claim', data, function () {
                             $(self.artContainer).find('.cancel-claim').trigger('click');
                         })
                     }

@@ -10,6 +10,7 @@ import { loadFixedShared } from '@js/loaders/fixed_shared.loader';
 import { loadFancybox } from '@js/loaders/fancybox.loader';
 import { loadSidebar } from '@js/loaders/sidebar.loader';
 import { SentryInstance } from '@js/sentry';
+import { initArtControls } from '@js/loaders/art_control.loader';
 
 new SentryInstance();
 
@@ -43,6 +44,6 @@ $(function () {
 
     loadFixedShared();
     loadSidebar();
-
+    initArtControls($('.art-control'))
 
 });

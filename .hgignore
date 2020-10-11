@@ -7,7 +7,6 @@ node_modules
 www/public/build/
 www/public/content/
 www/resources/static/arts/
-www/public/moderate/
 www/env
 
 #vendor

@@ -11,6 +11,9 @@
     <title>{!! MetaTag::get('title') !!}</title>
     <link rel="stylesheet" href="{{ getUrlFromManifest('vendors.css') }}">
     <link rel="stylesheet" href="{{ getUrlFromManifest('app.css') }}">
+    @auth
+        <link rel="stylesheet" href="{{ getUrlFromManifest('admin.css') }}">
+    @endauth
     @stack('links')
     {!! MetaTag::get('keywords') ? MetaTag::tag('keywords') : '' !!}
     {!! MetaTag::get('image') ? MetaTag::tag('image') : '' !!}
@@ -28,6 +31,9 @@
 <script src="{{ getUrlFromManifest('polyfills.js') }}" defer></script>
 <script src="{{ getUrlFromManifest('runtime.js') }}" defer></script>
 <script src="{{ getUrlFromManifest('vendors.js') }}" defer></script>
+@auth
+    <script src="{{ getUrlFromManifest('admin.js') }}" defer></script>
+@endauth
 <script src="{{ getUrlFromManifest('app.js') }}" defer></script>
 @stack('scripts')
 </body>
