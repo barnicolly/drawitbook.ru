@@ -1,12 +1,13 @@
 <?php
 
-namespace App\UseCases\Picture;
+namespace App\Services\Arts;
 
 use App\Entities\Picture\PictureModel;
 use App\Entities\User\UserActivityModel;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-class RatePicture extends Controller
+
+class RateService extends Controller
 {
 
     private $_pictureId;
@@ -15,6 +16,7 @@ class RatePicture extends Controller
 
     public function __construct(int $pictureId, string $ip, int $userId)
     {
+        //TODO-misha вынести работу с бд в отдельный слой;
         $this->_pictureId = $pictureId;
         $this->_ip = $ip;
         $this->_userId = !empty($userId) ? $userId : 0;
@@ -47,12 +49,6 @@ class RatePicture extends Controller
             $activity->save();
         }
         return true;
-    }
-
-    private function _createUserActivity()
-    {
-
-//        return $activity;
     }
 
     private function _getActivityIfExist()

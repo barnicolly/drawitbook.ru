@@ -3,12 +3,11 @@
 namespace App\Http\Modules\Arts\Controllers\Art;
 
 use App\Http\Controllers\Controller;
-
-use App\UseCases\Picture\RatePicture;
-use App\UseCases\User\GetIp;
+use App\Services\User\UserService;
+use App\Services\Validation\RateValidationService;
+use App\Services\Arts\RateService;
 use Illuminate\Http\Request;
 use Validator;
-use Illuminate\Validation\Rule;
 
 class Rate extends Controller
 {
@@ -28,52 +27,35 @@ class Rate extends Controller
 
     public function like($id, Request $request)
     {
-        $data = ['id' => $id, 'off' => $request->input('off')];
-        try {
-            $this->_validate($data);
-            $ip = request()->ip();
-            $userId = auth()->id();
-            if (!$userId) {
-                $userId = 0;
-            }
-            $getIp = new GetIp($ip);
-            $ratePicture = new RatePicture($data['id'], $getIp->clean(), $userId);
-            $ratePicture->like($data['off'] !== 'true');
-        } catch (\Throwable $e) {
-            return response($this->_errorJsonResponse);
-        }
-        return response($this->_successJsonResponse);
+        return $this->activity($id, $request->input('off'), true);
     }
 
     public function dislike($id, Request $request)
     {
-        $data = ['id' => $id, 'off' => $request->input('off')];
+        return $this->activity($id, $request->input('off'), false);
+    }
+
+    private function activity(int $artId, string $turnOff, bool $like)
+    {
+        $data = ['id' => $artId, 'off' => $turnOff];
         try {
-            $this->_validate($data);
-            $ip = request()->ip();
-            $getIp = new GetIp($ip);
-            $userId = auth()->id();
-            if (!$userId) {
-                $userId = 0;
-            }
-            $ratePicture = new RatePicture($data['id'], $getIp->clean(), $userId);
-            $ratePicture->dislike($data['off'] !== 'true');
+            $turnOn = $turnOff !== 'true';
+            $this->validateInput($data);
+            $ip = (new UserService())->getIp();
+            $userId = 0;
+            $ratePicture = new RateService($artId, $ip, $userId);
+            $like
+                ? $ratePicture->like($turnOn)
+                : $ratePicture->dislike($turnOn);
         } catch (\Throwable $e) {
             return response($this->_errorJsonResponse);
         }
         return response($this->_successJsonResponse);
     }
 
-    private function _validate(array $data): bool
+    private function validateInput(array $data): bool
     {
-        $validator = Validator::make($data, [
-            'id' => 'required|integer',
-            'off' => [
-                'required',
-                Rule::in(['true', 'false']),
-            ]
-        ]);
-        if ($validator->fails()) {
+        if (!(new RateValidationService())->validate($data)) {
             throw new \HttpInvalidParamException();
         }
         return true;
