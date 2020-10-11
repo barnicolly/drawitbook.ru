@@ -13,10 +13,11 @@ class VkCore
 
     public function __construct()
     {
+//        https://oauth.vk.com/authorize?client_id=6981825&display=page&scope=photos,groups&response_type=token&v=5.124&state=123456
         //TODO-misha скрыть api key
-        $this->_key = 'd2c07ad4d74dcb74808356195ccec7db8c75b25c12106e632265a9e646b7d36588a0355ebe364f8bf4907';
+        $this->_key = 'a9047a422ed7cc98ceba1976dfebe8f42bac5611e597853364c66cd16e3fcd3725d96143231f5681e3f75';
         $this->_groupId = '182256925';
-        $this->_api = new Client('5.95');
+        $this->_api = new Client('5.124');
         $this->_api->setDefaultToken($this->_key);
     }
 

@@ -14,4 +14,5 @@ Route::group(
         Route::post('password/email', ['uses' => 'Login@dump']);
         Route::get('password/reset/{token}', ['uses' => 'Login@dump']);
         Route::post('password/reset', ['uses' => 'Login@dump']);
+        Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
     });

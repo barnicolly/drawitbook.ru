@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Modules\Open\Controllers\Auth;
+namespace App\Http\Modules\Auth\Controllers;
 
 use App\Libraries\Template;
 use App\Http\Controllers\Auth\LoginController;

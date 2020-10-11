@@ -2,6 +2,7 @@
     <div class="art-wrapper">
         @include('Open::template.img_social', ['picture' => $picture, 'activeLink' => true, 'tagged' => $tagged ?? false])
         @if (!empty(session('is_admin')))
+{{--            //TODO-misha выделить отдельно;--}}
             <div class="admin-panel" data-picture-id="{{ $picture->id }}">
                 <i class="art-control d-inline">
                     <div class="dropdown d-inline art-control-dropdown">
