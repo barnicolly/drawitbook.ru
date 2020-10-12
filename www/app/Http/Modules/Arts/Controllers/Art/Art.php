@@ -37,10 +37,10 @@ class Art extends Controller
                 ? $this->formRelativePictures($pictureIds)
                 : (new ArtsService())->getInterestingArts($id);
         }
-        $this->setArtAlt($picture);
+        (new SeoService())->setArtAlt($picture);
         if ($relativePictures) {
             foreach ($relativePictures as $index => $relativePicture) {
-                $this->setArtAlt($relativePicture);
+                (new SeoService())->setArtAlt($relativePicture);
             }
         }
         $viewData = [
@@ -63,14 +63,6 @@ class Art extends Controller
         return $relativePictures->isNotEmpty()
             ? (new CheckExistPictures($relativePictures))->check()
             : new Collection();
-    }
-
-    private function setArtAlt(PictureModel $art)
-    {
-        $tags = (new TagsService)->extractTagsFromArt($art);
-        if ($tags) {
-            $art->alt = 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags);
-        }
     }
 
 }

@@ -10,6 +10,8 @@ use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Search\SearchBySeoTag;
 use App\Services\Search\SearchByTags;
+use App\Services\Tags\TagsService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use MetaTag;
 use Validator;
@@ -22,18 +24,21 @@ class Cell extends Controller
 
     public function __construct()
     {
-
     }
 
     public function index()
     {
         $template = new Template();
-        $pictures = Cache::remember('pictures.popular', 60 * 60, function () {
-            return PictureModel::take(25)
-                ->where('is_del', '=', 0)
-                ->where('in_common', '=', IN_MAIN_PAGE)
-                ->with(['tags'])->get();
-        });
+        $pictures = Cache::remember(
+            'pictures.popular',
+            60 * 60,
+            function () {
+                return PictureModel::take(25)
+                    ->where('is_del', '=', 0)
+                    ->where('in_common', '=', IN_MAIN_PAGE)
+                    ->with(['tags'])->get();
+            }
+        );
         $checkExistPictures = new CheckExistPictures($pictures);
         $pictures = $checkExistPictures->check();
         $viewData['relativePictures'] = $pictures;
@@ -48,14 +53,13 @@ class Cell extends Controller
     public function tagged(string $tag, Request $request)
     {
         $pageNum = $request->input('page');
-        $addCanonical = false;
-        if ($pageNum === '1') {
-            $addCanonical = true;
-        } else if (is_null($pageNum)) {
+        //TODO-misha добавить валидацию;
+        //TODO-misha не использовать get параметры;
+        if (!$pageNum) {
             $pageNum = 1;
+        } else {
+            $pageNum = (int) $pageNum;
         }
-        $pageNum = (int)$pageNum;
-
         if (!$pageNum) {
             return abort(404);
         }
@@ -68,67 +72,33 @@ class Cell extends Controller
         }
         $template = new Template();
 
-        $searcher = new SearchBySeoTag($tag);
-        $tagInfo = $searcher->search();
+        $tagInfo = (new SearchBySeoTag($tag))->search();
 
         if (!$tagInfo) {
             abort(404);
         }
-        $relativePictureIds = SearchByTags::searchPicturesByTagId($tagInfo->id);
+
+        $viewData = [];
+        [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->formSlicePictureIds(
+            $tagInfo->id,
+            $pageNum
+        );
         if (!$relativePictureIds) {
             abort(404);
         }
-        $viewData = [];
-
-        $perPage = DEFAULT_PER_PAGE;
-
-        $countSearchResults = count($relativePictureIds);
-        $relativePictureIds = array_slice($relativePictureIds, ($pageNum - 1) * $perPage, $perPage);
-
-        $relativePictures = new GetPicturesWithTags($relativePictureIds);
-        $relativePictures = $relativePictures->get();
-
-        $paginate = new LengthAwarePaginator($relativePictures->forPage($pageNum, $perPage), $countSearchResults, $perPage, $pageNum, ['path' => route('arts.cell.tagged', $tag)]);
-
-        $viewData['paginate'] = $paginate ?? [];
-
-        $title = (new SeoService())->createCategoryTitle('Рисунки по клеточкам', mbUcfirst($tagInfo->name), $countSearchResults);
-        $description =  (new SeoService())->createCategoryDescription('Рисунки по клеточкам', mbUcfirst($tagInfo->name), $countSearchResults);;
-        if ($pageNum !== 1) {
-            MetaTag::set('robots', 'noindex, follow');
-            MetaTag::set('title', $title . ' - Страница ' . $pageNum);
-            MetaTag::set('description', $description . ' Страница - ' . $pageNum);
-        } else {
-            MetaTag::set('title', $title);
-            MetaTag::set('description', $description);
-            if ($addCanonical) {
-                $viewData['canonical'] = route('arts.cell.tagged', $tag);
-            }
-            $firstPicture = $relativePictures->first();
-            if ($firstPicture) {
-                MetaTag::set('image', asset('content/arts/' . $firstPicture->path));
-            }
-        }
-        if (empty($viewData['canonical'])) {
-            $viewData['canonical'] = '';
-        }
-        if ($relativePictures) {
-            foreach ($relativePictures as $index => $relativePicture) {
-                $tags = [];
-                foreach ($relativePicture->tags as $tag) {
-                    if ($tag->hidden === 0) {
-                        $tags[] = mbUcfirst($tag->name);
-                    }
-                }
-                if ($tags) {
-                    $relativePicture->alt = 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags);
-                }
-            }
+        $relativePictures = $this->formRelativePictures($relativePictureIds);
+        [$title, $description] = $this->formCategoryTitleAndDescription($countSearchResults, $tagInfo->name);
+        MetaTag::set('title', $title);
+        MetaTag::set('description', $description);
+        $firstPicture = $relativePictures->first();
+        if ($firstPicture) {
+            MetaTag::set('image', asset('content/arts/' . $firstPicture->path));
         }
         $viewData['tag'] = $tagInfo;
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;
-        $viewData['links'] = $this->_getPaginateLinks($pageNum, (int)($countSearchResults / $perPage) + 1, route('arts.cell.tagged', $tag));
+        $viewData['countLeftPictures'] = $countLeftPictures;
+        $viewData['isLastSlice'] = $isLastSlice;
         $page = $template->loadView('Arts::cell.tagged', $viewData);
         if (!isLocal()) {
             Cache::put($cacheName, $page, config('cache.expiration'));
@@ -136,21 +106,42 @@ class Cell extends Controller
         return $page;
     }
 
-    private function _getPaginateLinks(int $page, int $maxPage, string $path)
+    private function formRelativePictures(array $relativePictureIds): Collection
     {
-        $links = [];
-        //в середине
-        if ($page > 1 && $page !== $maxPage) {
-            $links['prev'] = $path . '?' . 'page=' . ($page - 1);
-            $links['next'] = $path . '?' . 'page=' . ($page + 1);
-        } else if ($page === $maxPage) {
-            //в конце
-            $links['prev'] = $path . '?' . 'page=' . ($maxPage - 1);
-        } elseif ($page === 1) {
-            //в начале
-            $links['next'] = $path . '?' . 'page=2';
+        $relativePictures = (new GetPicturesWithTags($relativePictureIds))->get();
+        if ($relativePictures) {
+            foreach ($relativePictures as $index => $relativePicture) {
+                (new SeoService())->setArtAlt($relativePicture);
+            }
         }
-        return $links;
+        return $relativePictures;
+    }
+
+    public function formSlicePictureIds(int $tagId, int $pageNum): array
+    {
+        $relativePictureIds = SearchByTags::searchPicturesByTagId($tagId);
+        if ($relativePictureIds) {
+            $perPage = DEFAULT_PER_PAGE;
+            $countSearchResults = count($relativePictureIds);
+            $countSlices = ($countSearchResults / $perPage) + 1;
+            $isLastSlice = (int) $countSlices === $pageNum;
+            $relativePictureIds = array_slice($relativePictureIds, ($pageNum - 1) * $perPage, $perPage);
+            $countLeftPictures = $countSearchResults - $perPage;
+        } else {
+            $countSearchResults = 0;
+            $isLastSlice = false;
+            $countLeftPictures = 0;
+        }
+        return [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures];
+    }
+
+    private function formCategoryTitleAndDescription(int $countSearchResults, string $tagName): array
+    {
+        $tagName = mbUcfirst($tagName);
+        $prefix = 'Рисунки по клеточкам';
+        $title = (new SeoService())->createCategoryTitle($prefix, $tagName, $countSearchResults);
+        $description = (new SeoService())->createCategoryDescription($prefix, $tagName, $countSearchResults);
+        return [$title, $description];
     }
 
 }

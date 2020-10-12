@@ -9,6 +9,7 @@
     </div>
     <div class="stack-grid"
          style="display: none"
+         data-page="{{ $page ?? 1 }}"
          itemscope=""
          itemtype="http://schema.org/SiteNavigationElement">
         @foreach($pictures as $index => $picture)

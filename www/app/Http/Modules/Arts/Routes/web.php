@@ -9,6 +9,8 @@ Route::group(
         Route::get('/risunki-po-kletochkam', ['uses' => 'Cell@index'])->name('arts.cell');
 
         Route::get('/risunki-po-kletochkam/{tag}', ['uses' => 'Cell@tagged'])->name('arts.cell.tagged');
+
+        Route::get('/risunki-po-kletochkam/{tag}/slice', ['uses' => 'Cell@slice'])->name('arts.cell.tagged.slice');
     });
 
 Route::group(
