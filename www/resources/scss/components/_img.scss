@@ -49,3 +49,11 @@ img.lazy {
 img.lazy.not-loaded {
     background: transparent url(/build/img/loader.gif) no-repeat 50% 50%;
 }
+
+.fullscreen-image {
+    .fullscreen-image__inner {
+        width: 100%;
+        height: 0;
+        position: relative;
+    }
+}

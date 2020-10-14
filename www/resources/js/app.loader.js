@@ -28,7 +28,7 @@ $(function () {
     let backUpButtonElement = new backUpButton();
     backUpButtonElement.create();
 
-    const $rateContainers = $('.rate-container');
+    const $rateContainers = $('.rate-control');
     if ($rateContainers.length) {
         $rateContainers.each(function () {
             $(this).customRate('init');

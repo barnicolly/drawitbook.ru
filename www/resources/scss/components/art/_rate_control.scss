@@ -1,0 +1,27 @@
+.rate-control {
+
+    .rate-control__btn {
+        padding: 5px 10px;
+        background-color: rgba(255, 255, 255, 0.63);
+
+        &:hover {
+            background-color: #0c51bf;
+
+            .rate-control__svg {
+                fill: white;
+            }
+        }
+    }
+
+    .rate-control__svg {
+        fill: #1a2038;
+    }
+
+    .rate-control__btn--active {
+
+        .rate-control__svg {
+            fill: #6500ec;
+        }
+    }
+
+}

@@ -24,7 +24,7 @@ import { getRandomInt, sendRequest } from '@js/helpers/utils';
 
         function initListeners() {
             self.container
-                .on('click', '.rate-button', lockRateButtons)
+                .on('click', '.rate-control__btn', lockRateButtons)
                 .on('click', '.like', function () {
                     like($(this));
                 })
@@ -34,12 +34,12 @@ import { getRandomInt, sendRequest } from '@js/helpers/utils';
         }
 
         function lockRateButtons() {
-            self.container.find('.rate-button')
+            self.container.find('.rate-control__btn')
                 .prop('disabled', true);
         }
 
         function unlockRateButtons() {
-            self.container.find('.rate-button')
+            self.container.find('.rate-control__btn')
                 .prop('disabled', false);
         }
 
@@ -54,15 +54,15 @@ import { getRandomInt, sendRequest } from '@js/helpers/utils';
         }
 
         function fetch(button, route) {
-            let activeOff = $(button).hasClass('active');
+            let activeOff = $(button).hasClass('rate-control__btn--active');
             sendRequest('post', route, {off: activeOff}, function (res) {
                 unlockRateButtons();
                 if (res.success) {
                     if (!activeOff) {
-                        self.container.find('.rate-button').removeClass('active');
-                        $(button).addClass('active');
+                        self.container.find('.rate-control__btn').removeClass('rate-control__btn--active');
+                        $(button).addClass('rate-control__btn--active');
                     } else {
-                        $(button).removeClass('active');
+                        $(button).removeClass('rate-control__btn--active');
                     }
                 }
             });
