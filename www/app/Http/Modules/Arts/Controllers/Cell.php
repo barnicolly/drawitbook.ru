@@ -106,18 +106,63 @@ class Cell extends Controller
         return $page;
     }
 
-    private function formRelativePictures(array $relativePictureIds): Collection
+    public function slice(string $tag, Request $request)
     {
-        $relativePictures = (new GetPicturesWithTags($relativePictureIds))->get();
-        if ($relativePictures) {
-            foreach ($relativePictures as $index => $relativePicture) {
-                (new SeoService())->setArtAlt($relativePicture);
+        $pageNum = $request->input('page');
+        //TODO-misha добавить валидацию;
+        //TODO-misha не использовать get параметры;
+        if (!$pageNum) {
+            $pageNum = 1;
+        } else {
+            $pageNum = (int) $pageNum;
+        }
+        if (!$pageNum) {
+            return abort(404);
+        }
+        $cacheName = 'arts.cell.tagged.' . $tag . '.' . $pageNum;
+        if (!isLocal() && empty(session('is_admin'))) {
+            $page = Cache::get($cacheName);
+            if ($page) {
+                return $page;
             }
         }
-        return $relativePictures;
+        $template = new Template();
+
+        $tagInfo = (new SearchBySeoTag($tag))->search();
+
+        if (!$tagInfo) {
+            abort(404);
+        }
+
+        $viewData = [];
+        [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->formSlicePictureIds(
+            $tagInfo->id,
+            $pageNum
+        );
+        if (!$relativePictureIds) {
+            abort(404);
+        }
+        $relativePictures = $this->formRelativePictures($relativePictureIds);
+        [$title, $description] = $this->formCategoryTitleAndDescription($countSearchResults, $tagInfo->name);
+        MetaTag::set('title', $title);
+        MetaTag::set('description', $description);
+        $firstPicture = $relativePictures->first();
+        if ($firstPicture) {
+            MetaTag::set('image', asset('content/arts/' . $firstPicture->path));
+        }
+        $viewData['tag'] = $tagInfo;
+        $viewData['countRelatedPictures'] = $countSearchResults;
+        $viewData['relativePictures'] = $relativePictures;
+        $viewData['countLeftPictures'] = $countLeftPictures;
+        $viewData['isLastSlice'] = $isLastSlice;
+        $page = $template->loadView('Arts::cell.tagged', $viewData);
+        if (!isLocal()) {
+            Cache::put($cacheName, $page, config('cache.expiration'));
+        }
+        return $page;
     }
 
-    public function formSlicePictureIds(int $tagId, int $pageNum): array
+    private function formSlicePictureIds(int $tagId, int $pageNum): array
     {
         $relativePictureIds = SearchByTags::searchPicturesByTagId($tagId);
         if ($relativePictureIds) {
@@ -142,6 +187,17 @@ class Cell extends Controller
         $title = (new SeoService())->createCategoryTitle($prefix, $tagName, $countSearchResults);
         $description = (new SeoService())->createCategoryDescription($prefix, $tagName, $countSearchResults);
         return [$title, $description];
+    }
+
+    private function formRelativePictures(array $relativePictureIds): Collection
+    {
+        $relativePictures = (new GetPicturesWithTags($relativePictureIds))->get();
+        if ($relativePictures) {
+            foreach ($relativePictures as $index => $relativePicture) {
+                (new SeoService())->setArtAlt($relativePicture);
+            }
+        }
+        return $relativePictures;
     }
 
 }
