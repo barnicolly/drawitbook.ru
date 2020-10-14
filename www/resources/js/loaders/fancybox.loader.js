@@ -1,7 +1,6 @@
 import { reachClickFullSizeImage } from '@js/components/ya_target';
 
-export function loadFancybox() {
-    const $images = $('.fullscreen-image');
+export function loadFancybox($images) {
     if ($images.length) {
         let loaded = false;
         $images

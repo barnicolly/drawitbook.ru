@@ -3,6 +3,7 @@ import {initStackGridAds} from '@js/loaders/ads.loader';
 import {initStackGrid} from '@js/components/stack_grid';
 import throttle from 'lodash/throttle';
 import {sendRequest} from "@js/helpers/utils";
+import { loadFancybox } from '@js/loaders/fancybox.loader';
 
 export function loadStackGrid() {
     const screenWidth = getScreenWidth();
@@ -52,6 +53,8 @@ export function loadStackGrid() {
                             $(window).scrollTop(scrollPosition);
                             initStackGridAds($stackGrid, sliceNumber);
                         }
+                        const $newImages = $stackGrid.find(`.art-container[data-page="${res.data.page}"]`).find('.fullscreen-image');
+                        loadFancybox($newImages);
                         $stackGrid.attr('data-page', res.data.page);
                         $downloadBtn.find('.left-pictures-cnt').text(res.data.countLeftPicturesText);
                         if (res.data.isLastSlice) {

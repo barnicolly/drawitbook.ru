@@ -37,7 +37,7 @@
                 Похожие
             </p>
             <div>
-                @include('Open::template.stack_grid', ['pictures' => $relativePictures])
+                @include('Arts::template.stack_grid.index', ['pictures' => $relativePictures, 'tagged' => route('arts.cell.tagged', '')])
             </div>
         </div>
     @endif

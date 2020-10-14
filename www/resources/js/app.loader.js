@@ -22,7 +22,7 @@ initAds();
 initHeaderMenu($('.header__menu'));
 initFixedHeader($('header').first());
 
-loadFancybox();
+loadFancybox($('body').find('.fullscreen-image'));
 
 $(function () {
     let backUpButtonElement = new backUpButton();

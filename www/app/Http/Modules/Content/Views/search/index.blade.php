@@ -1,14 +1,14 @@
-@extends('Open::template.layouts.paginated')
+@extends('Arts::template.landing')
 
-@section('layouts.paginated.first_block')
+@section('layouts.landing.first_block')
     <h1 class="title form-group">
         @if (!empty($filters['query']) && !empty($filters['tag']))
-            Результаты поиска по запросу {{ $filters['query'] }} и тегам
+            Результаты поиска по запросу «{{ $filters['query'] }}» и тегам
             @foreach($filters['tag'] as $tag)
                 #{{ $tag }}
             @endforeach
         @elseif (!empty($filters['query']))
-            Результаты поиска по запросу {{ $filters['query'] }}
+            Результаты поиска по запросу «{{ $filters['query'] }}»
         @elseif (!empty($filters['tag']))
             @if (count($filters['tag']) === 1)
                 Результаты поиска по тегу
@@ -34,9 +34,9 @@
     @endif
 @endsection
 
-@section('layouts.paginated.content')
+@section('layouts.landing.content')
     @if (!empty($relativePictures))
-        @include('Open::template.stack_grid', ['pictures' => $relativePictures, 'tagged' => route('arts.cell.tagged', ''), 'showAllTags' => true])
+        @include('Arts::template.stack_grid.index', ['pictures' => $relativePictures, 'tagged' => route('arts.cell.tagged', ''), 'showAllTags' => true])
     @else
         <div class="search-no-results">
             <div class="search-no-results__img">
@@ -74,7 +74,7 @@
                 <h2>Популярные рисунки</h2>
             </div>
             <div class="content">
-                @include('Open::template.stack_grid', ['pictures' => $popularPictures, 'tagged' => route('arts.cell.tagged', '')])
+                @include('Arts::template.stack_grid.index', ['pictures' => $popularPictures, 'tagged' => route('arts.cell.tagged', '')])
             </div>
         @endif
     @endif

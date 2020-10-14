@@ -1,4 +1,4 @@
-<div class="art-container">
+<div class="art-container" data-page="{{ $page ?? 1 }}">
     <div class="art-wrapper">
         @include('Open::template.img_social', ['picture' => $picture, 'activeLink' => true, 'tagged' => $tagged ?? false])
         @if (!empty(session('is_admin')))

@@ -2,23 +2,21 @@
 
 namespace App\Http\Modules\Arts\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Entities\Picture\PictureModel;
+use App\Http\Controllers\Controller;
 use App\Libraries\Template;
-use App\Services\Seo\SeoService;
 use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Search\SearchBySeoTag;
 use App\Services\Search\SearchByTags;
-use App\Services\Tags\TagsService;
+use App\Services\Seo\SeoService;
+use Breadcrumbs;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use MetaTag;
 use Throwable;
 use Validator;
-use Breadcrumbs;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Cache;
 
 class Cell extends Controller
 {
@@ -43,6 +41,7 @@ class Cell extends Controller
         $checkExistPictures = new CheckExistPictures($pictures);
         $pictures = $checkExistPictures->check();
         $viewData['relativePictures'] = $pictures;
+        $viewData['tagged'] = $this->formTagUrlPrefix();
         $title = 'Рисунки по клеточкам | Drawitbook.ru';
         $description = 'Рисунки по клеточкам. Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.';
         MetaTag::set('title', $title);
@@ -117,7 +116,7 @@ class Cell extends Controller
         try {
             $tagInfo = (new SearchBySeoTag($tag))->search();
             if (!$tagInfo) {
-               throw new Exception('Не найден tag');
+                throw new Exception('Не найден tag');
             }
             $viewData = [];
             [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->formSlicePictureIds(
@@ -133,11 +132,15 @@ class Cell extends Controller
             $viewData['countLeftPictures'] = $countLeftPictures;
             $viewData['isLastSlice'] = $isLastSlice;
             $viewData['tagged'] = $this->formTagUrlPrefix();
+            $viewData['page'] = $pageNum;
+            $countLeftPicturesText = $countLeftPictures >= 0
+                ? pluralForm($countLeftPictures, ['рисунок', 'рисунка', 'рисунков'])
+                : '';
             $result = [
                 'data' => [
                     'html' => view('Arts::template.stack_grid.elements', $viewData)->render(),
                     'page' => $pageNum,
-                    'countLeftPicturesText' => pluralForm($countLeftPictures, ['рисунок', 'рисунка', 'рисунков']),
+                    'countLeftPicturesText' => $countLeftPicturesText,
                     'isLastSlice' => $isLastSlice,
                 ],
             ];

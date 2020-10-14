@@ -139,6 +139,11 @@ class Search extends Controller
         return $template->loadView('Content::search.index', $viewData);
     }
 
+    public function slice()
+    {
+        
+    }
+
     public function checkExistArts(Collection $pictures)
     {
         foreach ($pictures as $key => $picture) {
