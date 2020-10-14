@@ -57,7 +57,7 @@
                  alt="{{ $alt }}">
         @endif
         <div class="rate-footer">
-            @include('Open::template.rate', ['pictureId' => $picture->id])
+            @include('Arts::template.stack_grid.art.rate', ['pictureId' => $picture->id])
         </div>
         <div class="find-similar">
             <a itemprop="url" href="{{ route('search') . '?similar=' . $picture->id }}"  rel="nofollow" title="Найти похожие">

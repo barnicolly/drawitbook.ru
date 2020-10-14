@@ -1,4 +1,4 @@
-@extends('Open::template.layout')
+@extends('layouts.public.layout')
 
 @section('breadcrumbs')
     {{ Breadcrumbs::render('arts.cell') }}

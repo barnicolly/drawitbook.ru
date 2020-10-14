@@ -12,7 +12,13 @@
 
         </div>
     @endif
-    @include('Open::template.stack_grid_art_container', ['picture' => $picture, 'showAllTags' => $showAllTags ?? false, 'tagged' => $tagged ?? false, 'page' => $page ?? 1])
+    <?php $viewData = [
+        'picture' => $picture,
+        'showAllTags' => $showAllTags ?? false,
+        'tagged' => $tagged ?? false,
+        'page' => $page ?? 1
+    ]; ?>
+    @include('Arts::template.stack_grid.art.index', $viewData)
 @endforeach
 @if ($pictures->count() > 21)
     <div class="art-container art-container-ad">

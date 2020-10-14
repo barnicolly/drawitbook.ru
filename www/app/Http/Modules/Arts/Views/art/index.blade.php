@@ -1,4 +1,4 @@
-@extends('Open::template.layout')
+@extends('layouts.public.layout')
 
 @section('layout.content')
     <div class="detail-art-page">
@@ -10,9 +10,9 @@
                     </h1>
                     <div class="art form-group">
                         <div>
-                            @include('Open::template.tag_list', ['tags' => $picture->tags, 'showAllTags' => false])
+                            @include('Arts::template.stack_grid.art.tag_list', ['tags' => $picture->tags, 'showAllTags' => false])
                         </div>
-                        @include('Open::template.img_social', ['picture' => $picture])
+                        @include('Arts::template.stack_grid.art.img_social', ['picture' => $picture])
                     </div>
                     <div class="form-group clearfix">
                         <button type="button" class="btn btn-link float-right claim-button"

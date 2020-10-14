@@ -141,7 +141,7 @@ class Search extends Controller
 
     public function slice()
     {
-        
+
     }
 
     public function checkExistArts(Collection $pictures)

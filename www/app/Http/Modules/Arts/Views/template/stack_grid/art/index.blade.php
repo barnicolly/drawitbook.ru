@@ -1,6 +1,6 @@
 <div class="art-container" data-page="{{ $page ?? 1 }}">
     <div class="art-wrapper">
-        @include('Open::template.img_social', ['picture' => $picture, 'activeLink' => true, 'tagged' => $tagged ?? false])
+        @include('Arts::template.stack_grid.art.img_social', ['picture' => $picture, 'activeLink' => true, 'tagged' => $tagged ?? false])
         @if (!empty(session('is_admin')))
 {{--            //TODO-misha выделить отдельно;--}}
             <div class="admin-panel" data-picture-id="{{ $picture->id }}">
@@ -30,7 +30,7 @@
         <div class="stack-grid__footer">
             <div class="stack-grid__tags">
                 @if ($picture->tags->count())
-                    @include('Open::template.tag_list', ['tags' => $picture->tags, 'showAllTags' => $showAllTags])
+                    @include('Arts::template.stack_grid.art.tag_list', ['tags' => $picture->tags, 'showAllTags' => $showAllTags])
                 @endif
             </div>
             <div class="stack-grid__external-link">

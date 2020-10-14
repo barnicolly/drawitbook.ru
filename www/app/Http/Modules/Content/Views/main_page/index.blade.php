@@ -1,4 +1,4 @@
-@extends('Open::template.layout')
+@extends('layouts.public.layout')
 
 @section('layout.body')
     <div class="container">
