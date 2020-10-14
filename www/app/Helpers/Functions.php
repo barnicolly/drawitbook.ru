@@ -27,7 +27,7 @@ if (!function_exists('loadAd')) {
     function loadAd(string $id, bool $integrated = false)
     {
         if (isLocal()) {
-            return view('Open::template.ads.dummy', ['id' => $id, 'integrated' => $integrated])->render();
+            return view('partials.ad_dummy', ['id' => $id, 'integrated' => $integrated])->render();
         } else {
             $integratedText = $integrated ? 'true': 'false';
             return "<div class=\"mon-place\" data-integrated=\"{$integratedText}\" id=\"{$id}\"></div>";

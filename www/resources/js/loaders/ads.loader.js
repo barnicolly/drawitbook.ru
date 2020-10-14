@@ -33,12 +33,12 @@ export function initAds() {
     }
 }
 
-export function initStackGridAds($stackGrid) {
+export function initStackGridAds($stackGrid, pageNumber = 1) {
     const $monPlaces = $stackGrid.find('.mon-place[data-integrated="true"]');
 
     if ($monPlaces.length) {
         const {configurations, failovers} = getConfigurations();
-        initWatcher($monPlaces, configurations, failovers, true);
+        initWatcher($monPlaces, configurations, failovers, pageNumber);
     }
 
     function getConfigurations() {
@@ -64,7 +64,7 @@ export function initStackGridAds($stackGrid) {
     }
 }
 
-function initWatcher($monPlaces, configurations, failovers, needResize = false) {
+function initWatcher($monPlaces, configurations, failovers, pageNumber) {
     const mapPlaces = {};
     $monPlaces.each(function () {
         const id = $(this).attr('id');
@@ -88,22 +88,27 @@ function initWatcher($monPlaces, configurations, failovers, needResize = false) 
                             const $wrapper = $('<ins>', failover);
                             $place.append($wrapper);
                         }
+                        const renderOptions = {
+                            blockId: configurations[id],
+                            renderTo: id,
+                            async: true,
+                            onRender: function (data) {
+                                const $stackGrid = $place.closest('.stack-grid');
+                                const screenWidth = getScreenWidth();
+                                if ($stackGrid.length && $stackGrid.attr('data-loaded') !== 'true' && screenWidth >= 700) {
+                                    initStackGrid($stackGrid);
+                                }
+                            }
+                        };
+
+                        if (typeof pageNumber !== 'undefined') {
+                            renderOptions.pageNumber = pageNumber;
+                        }
 
                         (function (w, d, n, s, t) {
                             w[n] = w[n] || [];
                             w[n].push(function () {
-                                Ya.Context.AdvManager.render({
-                                    blockId: configurations[id],
-                                    renderTo: id,
-                                    async: true,
-                                    onRender: function (data) {
-                                        const $stackGrid = $place.closest('.stack-grid');
-                                        const screenWidth = getScreenWidth();
-                                        if ($stackGrid.length && $stackGrid.attr('data-loaded') !== 'true' && screenWidth >= 700) {
-                                            initStackGrid($stackGrid);
-                                        }
-                                    }
-                                }, failover !== null ? failoverCallback : null);
+                                Ya.Context.AdvManager.render(renderOptions, failover !== null ? failoverCallback : null);
                             });
                             t = d.getElementsByTagName('script')[0];
                             s = d.createElement('script');

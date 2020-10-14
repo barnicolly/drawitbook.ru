@@ -6,6 +6,7 @@
     <div class="img-wrapper">
         @if (isset($activeLink) && $activeLink === true)
             <?php
+            //TODO-misha изолировать пулученение ссылки к миниатюре;
             $path_parts = pathinfo($picture->path);
             $thumbnailPath = $path_parts['dirname']
                 . '/'

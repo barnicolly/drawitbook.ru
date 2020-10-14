@@ -19,15 +19,7 @@
 @endsection
 
 @section('layouts.landing.content')
-    @include('Open::template.stack_grid', ['pictures' => $relativePictures, 'tagged' => route('arts.cell.tagged', '')])
-    @if ($countRelatedPictures && !$isLastSlice)
-        <div class="download-more form-group">
-        <?php $leftPicturesText = pluralForm($countLeftPictures, ['рисунок', 'рисунка', 'рисунков']); ?>
-            <button type="button" class="download-more__btn">
-                Показать еще <span class="left-pictures-cnt">{{ $leftPicturesText }}</span>
-            </button>
-        </div>
-    @endif
+    @include('Arts::template.stack_grid.index', ['pictures' => $relativePictures, 'tagged' => $tagged])
 @endsection
 
 @section('layouts.landing.seo')

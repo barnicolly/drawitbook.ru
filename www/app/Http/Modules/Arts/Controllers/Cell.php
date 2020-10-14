@@ -14,6 +14,7 @@ use App\Services\Tags\TagsService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use MetaTag;
+use Throwable;
 use Validator;
 use Breadcrumbs;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -73,12 +74,9 @@ class Cell extends Controller
         $template = new Template();
 
         $tagInfo = (new SearchBySeoTag($tag))->search();
-
         if (!$tagInfo) {
             abort(404);
         }
-
-        $viewData = [];
         [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->formSlicePictureIds(
             $tagInfo->id,
             $pageNum
@@ -99,6 +97,7 @@ class Cell extends Controller
         $viewData['relativePictures'] = $relativePictures;
         $viewData['countLeftPictures'] = $countLeftPictures;
         $viewData['isLastSlice'] = $isLastSlice;
+        $viewData['tagged'] = $this->formTagUrlPrefix();
         $page = $template->loadView('Arts::cell.tagged', $viewData);
         if (!isLocal()) {
             Cache::put($cacheName, $page, config('cache.expiration'));
@@ -112,54 +111,47 @@ class Cell extends Controller
         //TODO-misha добавить валидацию;
         //TODO-misha не использовать get параметры;
         if (!$pageNum) {
-            $pageNum = 1;
-        } else {
-            $pageNum = (int) $pageNum;
-        }
-        if (!$pageNum) {
             return abort(404);
         }
-        $cacheName = 'arts.cell.tagged.' . $tag . '.' . $pageNum;
-        if (!isLocal() && empty(session('is_admin'))) {
-            $page = Cache::get($cacheName);
-            if ($page) {
-                return $page;
+        $pageNum = (int) $pageNum + 1;
+        try {
+            $tagInfo = (new SearchBySeoTag($tag))->search();
+            if (!$tagInfo) {
+               throw new Exception('Не найден tag');
             }
+            $viewData = [];
+            [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->formSlicePictureIds(
+                $tagInfo->id,
+                $pageNum
+            );
+            if (!$relativePictureIds) {
+                throw new Exception('Не найден пулл изображений для paginate');
+            }
+            $relativePictures = $this->formRelativePictures($relativePictureIds);
+            $viewData['countRelatedPictures'] = $countSearchResults;
+            $viewData['pictures'] = $relativePictures;
+            $viewData['countLeftPictures'] = $countLeftPictures;
+            $viewData['isLastSlice'] = $isLastSlice;
+            $viewData['tagged'] = $this->formTagUrlPrefix();
+            $result = [
+                'data' => [
+                    'html' => view('Arts::template.stack_grid.elements', $viewData)->render(),
+                    'page' => $pageNum,
+                    'countLeftPicturesText' => pluralForm($countLeftPictures, ['рисунок', 'рисунка', 'рисунков']),
+                    'isLastSlice' => $isLastSlice,
+                ],
+            ];
+        } catch (Throwable $e) {
+            $result = [
+                'error' => 'Произошла ошибка на стороне сервера',
+            ];
         }
-        $template = new Template();
+        return response($result);
+    }
 
-        $tagInfo = (new SearchBySeoTag($tag))->search();
-
-        if (!$tagInfo) {
-            abort(404);
-        }
-
-        $viewData = [];
-        [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->formSlicePictureIds(
-            $tagInfo->id,
-            $pageNum
-        );
-        if (!$relativePictureIds) {
-            abort(404);
-        }
-        $relativePictures = $this->formRelativePictures($relativePictureIds);
-        [$title, $description] = $this->formCategoryTitleAndDescription($countSearchResults, $tagInfo->name);
-        MetaTag::set('title', $title);
-        MetaTag::set('description', $description);
-        $firstPicture = $relativePictures->first();
-        if ($firstPicture) {
-            MetaTag::set('image', asset('content/arts/' . $firstPicture->path));
-        }
-        $viewData['tag'] = $tagInfo;
-        $viewData['countRelatedPictures'] = $countSearchResults;
-        $viewData['relativePictures'] = $relativePictures;
-        $viewData['countLeftPictures'] = $countLeftPictures;
-        $viewData['isLastSlice'] = $isLastSlice;
-        $page = $template->loadView('Arts::cell.tagged', $viewData);
-        if (!isLocal()) {
-            Cache::put($cacheName, $page, config('cache.expiration'));
-        }
-        return $page;
+    private function formTagUrlPrefix()
+    {
+        return route('arts.cell.tagged', '');
     }
 
     private function formSlicePictureIds(int $tagId, int $pageNum): array
@@ -171,7 +163,7 @@ class Cell extends Controller
             $countSlices = ($countSearchResults / $perPage) + 1;
             $isLastSlice = (int) $countSlices === $pageNum;
             $relativePictureIds = array_slice($relativePictureIds, ($pageNum - 1) * $perPage, $perPage);
-            $countLeftPictures = $countSearchResults - $perPage;
+            $countLeftPictures = $countSearchResults - ($perPage * $pageNum);
         } else {
             $countSearchResults = 0;
             $isLastSlice = false;
