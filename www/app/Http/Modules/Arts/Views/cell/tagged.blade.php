@@ -4,6 +4,12 @@
     {{ Breadcrumbs::render('arts.cell.tagged', mbUcfirst($tag->name)) }}
 @endsection
 
+@push('links')
+    @if (!empty($canonical))
+        <link rel="canonical" href="{{ $canonical }}">
+    @endif
+@endpush
+
 @section('layouts.landing.first_block')
     <h1 class="title form-group">
         Рисунки по клеточкам «{{ mbUcfirst($tag->name) }}»

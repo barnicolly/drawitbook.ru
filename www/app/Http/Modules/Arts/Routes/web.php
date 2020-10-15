@@ -6,9 +6,13 @@ Route::group(
         'namespace' => 'App\Http\Modules\Arts\Controllers'
     ],
     function () {
-        Route::get('/risunki-po-kletochkam', ['uses' => 'Cell@index'])->name('arts.cell');
+        Route::get('/risunki-po-kletochkam', ['uses' => 'Cell@index'])
+            ->middleware(['no_get'])
+            ->name('arts.cell');
 
-        Route::get('/risunki-po-kletochkam/{tag}', ['uses' => 'Cell@tagged'])->name('arts.cell.tagged');
+        Route::get('/risunki-po-kletochkam/{tag}', ['uses' => 'Cell@tagged'])
+            ->middleware(['no_get'])
+            ->name('arts.cell.tagged');
 
         Route::get('/risunki-po-kletochkam/{tag}/slice', ['uses' => 'Cell@slice'])->name('arts.cell.tagged.slice');
     });

@@ -62,6 +62,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'roles' => \App\Http\Middleware\CheckRole::class,
         'ajax' => \App\Http\Middleware\OnlyAjax::class,
+        'no_get' => \App\Http\Middleware\WithoutGet::class,
     ];
 
     /**

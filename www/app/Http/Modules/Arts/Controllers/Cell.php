@@ -6,6 +6,7 @@ use App\Entities\Picture\PictureModel;
 use App\Exceptions\NotFoundRelativeArts;
 use App\Http\Controllers\Controller;
 use App\Libraries\Template;
+use App\Services\Arts\ArtsService;
 use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Search\SearchBySeoTag;
@@ -33,10 +34,7 @@ class Cell extends Controller
             'pictures.popular',
             60 * 60,
             function () {
-                return PictureModel::take(25)
-                    ->where('is_del', '=', 0)
-                    ->where('in_common', '=', IN_MAIN_PAGE)
-                    ->with(['tags'])->get();
+                return (new ArtsService())->getInterestingArts(0, 25);
             }
         );
         $checkExistPictures = new CheckExistPictures($pictures);
@@ -51,19 +49,9 @@ class Cell extends Controller
         return $template->loadView('Arts::cell.index', $viewData);
     }
 
-    public function tagged(string $tag, Request $request)
+    public function tagged(string $tag)
     {
-        $pageNum = $request->input('page');
-        //TODO-misha добавить валидацию;
-        //TODO-misha не использовать get параметры;
-        if (!$pageNum) {
-            $pageNum = 1;
-        } else {
-            $pageNum = (int) $pageNum;
-        }
-        if (!$pageNum) {
-            return abort(404);
-        }
+        $pageNum = 1;
         $cacheName = 'arts.cell.tagged.' . $tag . '.' . $pageNum;
         if (!isLocal() && empty(session('is_admin'))) {
             $page = Cache::get($cacheName);
@@ -71,7 +59,6 @@ class Cell extends Controller
                 return $page;
             }
         }
-        $template = new Template();
         $tagInfo = (new SearchBySeoTag($tag))->search();
         if (!$tagInfo) {
             abort(404);
@@ -79,6 +66,7 @@ class Cell extends Controller
         try {
             $viewData = $this->formViewData($tagInfo->id, $pageNum);
             $viewData['tag'] = $tagInfo;
+            $viewData['canonical'] = route('arts.cell.tagged', $tag);
         } catch (NotFoundRelativeArts $e) {
             return abort(404);
         }
@@ -91,7 +79,7 @@ class Cell extends Controller
         if ($firstPicture) {
             MetaTag::set('image', formArtUrlPath($firstPicture->path));
         }
-        $page = $template->loadView('Arts::cell.tagged', $viewData);
+        $page = view('Arts::cell.tagged', $viewData)->render();
         if (!isLocal()) {
             Cache::put($cacheName, $page, config('cache.expiration'));
         }
@@ -100,13 +88,17 @@ class Cell extends Controller
 
     public function slice(string $tag, Request $request)
     {
-        $pageNum = $request->input('page');
-        //TODO-misha добавить валидацию;
-        //TODO-misha не использовать get параметры;
-        if (!$pageNum) {
+        $rules = [
+            'page' => [
+                'required',
+                'integer',
+            ],
+        ];
+        $validator = Validator::make($request->input(), $rules);
+        if ($validator->fails()) {
             return abort(404);
         }
-        $pageNum = (int) $pageNum;
+        $pageNum = (int) $request->input('page');
         try {
             $tagInfo = (new SearchBySeoTag($tag))->search();
             if (!$tagInfo) {
