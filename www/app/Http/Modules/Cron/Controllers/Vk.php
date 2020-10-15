@@ -75,7 +75,7 @@ limit 1'));
         $picture = PictureModel::with(['tags' => function ($q) {
             $q->where('spr_tags.hidden_vk', '=', 0);
         }])->find($artId);
-        $path = base_path('public/content/arts/') . $picture->path;
+        $path = formArtFsPath($picture->path);
         $tags = $picture->tags->pluck('name')->toArray();
         foreach ($tags as $key => $tag) {
             $tags[$key] = preg_replace('/\s+/', '', $tag);

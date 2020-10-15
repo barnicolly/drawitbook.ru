@@ -147,7 +147,7 @@ class Search extends Controller
     public function checkExistArts(Collection $pictures)
     {
         foreach ($pictures as $key => $picture) {
-            if (!file_exists(base_path('public/content/arts/') . $picture->path)) {
+            if (!checkExistArt($picture->path)) {
                 $pictures->forget($key);
                 Log::info('Не найдено изображение', ['art' => $picture->toArray()]);
             }

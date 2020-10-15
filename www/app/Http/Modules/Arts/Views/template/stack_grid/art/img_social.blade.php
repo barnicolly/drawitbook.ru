@@ -2,7 +2,9 @@
     <?php $alt = '';
     if ($picture->alt) {
         $alt = $picture->alt;
-    } ?>
+    }
+    $artUrlPath = formArtUrlPath($picture->path);
+    ?>
     <div>
         <?php
         //TODO-misha изолировать получение ссылки к миниатюре;
@@ -13,31 +15,25 @@
             . '_thumb.'
             . $path_parts['extension'];
         ?>
-        <a itemprop="url" class="fullscreen-image__link" href="{{ asset('content/arts/' . $picture->path) }}"
+        <a itemprop="url" class="fullscreen-image__link" href="{{ $artUrlPath }}"
            rel="nofollow"
-           data-thumb="{{ asset('content/thumbnails/arts/' . $thumbnailPath) }}"
+           data-thumb="{{ formArtThumbnailUrlPath($thumbnailPath) }}"
            data-id="{{ $picture->id }}">
             <div class="fullscreen-image__inner"
                  style="padding-top:{{ (int) ($picture->height / $picture->width * 100) }}%;">
                 <picture>
-                    <?php $fileInfo = pathinfo(public_path('content/arts/') . $picture->path);?>
-                    @if (!empty($fileInfo['extension']))
-                        <?php $otherSource = 'content/arts/' . str_replace(
-                                ('.' . $fileInfo['extension']),
-                                '.webp',
-                                $picture->path
-                            ); ?>
-                        @if (file_exists(public_path($otherSource)))
-                            <source type="image/webp"
-                                    data-srcset="<?= asset($otherSource) ?>"/>
-                        @endif
+                    <?php $webpSourceRelativePath = formArtWebpFormatRelativePath($picture->path); ?>
+                    @if (!empty($webpSourceRelativePath) && checkExistArt($webpSourceRelativePath))
+                        <source type="image/webp"
+                                data-srcset="<?= formArtUrlPath($webpSourceRelativePath) ?>"/>
                     @endif
-                    <source type="image/jpg" data-srcset="<?= asset('content/arts/' . $picture->path) ?>"/>
+                    {{--                        //TODO-misha source неверный;--}}
+                    <source type="image/jpg" data-srcset="{{ $artUrlPath }}"/>
                     <img width="{{ $picture->width }}"
                          height="{{ $picture->height }}"
                          data-title="Art #{{ $picture->id }} | Drawitbook.ru"
                          class="img-responsive lazyload fullscreen-image__img"
-                         data-src="{{ asset('content/arts/' . $picture->path) }}"
+                         data-src="{{ $artUrlPath }}"
                          alt="{{ $alt }}">
                 </picture>
             </div>
@@ -55,8 +51,8 @@
             </a>
         </div>
     </div>
-    <link itemprop="url" href="{{ asset('content/arts/' . $picture->path) }}">
-    <link itemprop="contentUrl" href="{{ asset('content/arts/' . $picture->path) }}">
+    <link itemprop="url" href="{{ $artUrlPath }}">
+    <link itemprop="contentUrl" href="{{ $artUrlPath }}">
     <meta itemprop="height" content="{{ $picture->height }}px">
     <meta itemprop="width" content="{{ $picture->width }}px">
     <meta itemprop="representativeOfPage" content="True">

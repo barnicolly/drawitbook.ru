@@ -45,7 +45,7 @@ class Cell extends Controller
         $title = 'Рисунки по клеточкам | Drawitbook.ru';
         $description = 'Рисунки по клеточкам. Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.';
         MetaTag::set('title', $title);
-        MetaTag::set('image', asset('content/arts/d4/11/d4113a118447cb7650a7a7d84b45b153.jpeg'));
+        MetaTag::set('image', formDefaultShareArtUrlPath());
         MetaTag::set('description', $description);
         return $template->loadView('Arts::cell.index', $viewData);
     }
@@ -89,7 +89,7 @@ class Cell extends Controller
         MetaTag::set('description', $description);
         $firstPicture = $relativePictures->first();
         if ($firstPicture) {
-            MetaTag::set('image', asset('content/arts/' . $firstPicture->path));
+            MetaTag::set('image', formArtUrlPath($firstPicture->path));
         }
         $viewData['tag'] = $tagInfo;
         $viewData['countRelatedPictures'] = $countSearchResults;

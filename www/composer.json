@@ -43,6 +43,7 @@
     "autoload": {
         "files": [
             "app/Helpers/Functions.php",
+            "app/Helpers/Path_helper.php",
             "bootstrap/constants.php"
         ],
         "psr-4": {

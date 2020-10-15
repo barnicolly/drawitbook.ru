@@ -29,7 +29,7 @@ if (!function_exists('loadAd')) {
         if (isLocal()) {
             return view('partials.ad_dummy', ['id' => $id, 'integrated' => $integrated])->render();
         } else {
-            $integratedText = $integrated ? 'true': 'false';
+            $integratedText = $integrated ? 'true' : 'false';
             return "<div class=\"mon-place\" data-integrated=\"{$integratedText}\" id=\"{$id}\"></div>";
         }
     }
@@ -38,24 +38,8 @@ if (!function_exists('loadAd')) {
 if (!function_exists('pluralForm')) {
     function pluralForm($number, $after)
     {
-        $cases = array(2, 0, 1, 1, 1, 2);
+        $cases = [2, 0, 1, 1, 1, 2];
         return $number . ' ' . $after[($number % 100 > 4 && $number % 100 < 20) ? 2 : $cases[min($number % 10, 5)]];
-    }
-}
-
-if (!function_exists('buildUrl')) {
-    function buildUrl(string $path)
-    {
-        $uri = preg_replace("/\/{2,}/", '/', '/build/' . $path);
-        return asset($uri);
-    }
-}
-
-if (!function_exists('getUrlFromManifest')) {
-    function getUrlFromManifest(string $path)
-    {
-        $files = config('app.manifest');
-        return $files[$path] ?? '';
     }
 }
 
@@ -70,17 +54,20 @@ if (!function_exists('mbUcfirst')) {
 if (!function_exists('trimData')) {
     function trimData($data)
     {
-        if ($data === null)
+        if ($data === null) {
             return null;
+        }
 
         if (is_array($data)) {
             return array_map('trimData', $data);
-        } else return trim(cleaner($data));
+        } else {
+            return trim(cleaner($data));
+        }
     }
 }
 
 if (!function_exists('deleteLongSpace')) {
-    function deleteLongSpace($row = FALSE)
+    function deleteLongSpace($row = false)
     {
         if ($row) {
             return preg_replace('/ {2,}/', ' ', $row);
@@ -95,37 +82,10 @@ if (!function_exists('cleaner')) {
         return deleteLongSpace($row);
     }
 }
-if (!function_exists('b64img')) {
-    function b64img($str, $fs = 10, $w = 250, $h = 200, $b = array('r' => 255, 'g' => 255, 'b' => 255), $t = array('r' => 0, 'g' => 0, 'b' => 0))
-    {
-        $tmp = tempnam(sys_get_temp_dir(), 'img');
-
-//        $image = imagecreatetruecolor($w, $h);
-//        imagesavealpha($image, true);
-//        $color = imagecolorallocatealpha($image, 0, 0, 0, 127);
-//        imagefill($image, 0, 0, $color);
-//
-//        imagepng($image, $tmp, 9);
-//        imagedestroy($image);
-
-        $image = imagecreatetruecolor( $w, $h );
-        imagesavealpha( $image, true );
-        $color = imagecolorallocatealpha($image, 0, 0, 0, 127);
-        imagefill($image, 0, 0, $color);
-
-        // Ouput
-        imagepng( $image , $tmp);
-        imagedestroy( $image );
-
-        $data = base64_encode(file_get_contents($tmp));
-        @unlink($tmp);
-        return $data;
-    }
-}
 
 if (!function_exists('frenchQuotes')) {
     function frenchQuotes(string $row)
     {
-        return '«‎' . $row . '»';
+        return '«' . $row . '»';
     }
 }

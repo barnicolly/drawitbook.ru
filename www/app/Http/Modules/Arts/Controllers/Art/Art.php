@@ -52,8 +52,7 @@ class Art extends Controller
         MetaTag::set('title', $title);
         MetaTag::set('description', $description);
         MetaTag::set('robots', 'noindex');
-        //TODO-misha выделить путь к артам;
-        MetaTag::set('image', asset('content/arts/' . $picture->path));
+        MetaTag::set('image', formArtUrlPath($picture->path));
         return $template->loadView('Arts::art.index', $viewData);
     }
 

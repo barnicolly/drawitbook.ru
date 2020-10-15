@@ -46,7 +46,6 @@ class Vk_album extends Controller
         $url = str_ireplace('%3D', '=', $url);
 
         foreach ($pictures as $picture) {
-            $path = base_path('public/content/arts/') . $picture->path;
             $tags = $picture->tags->pluck('name')->toArray();
             foreach ($tags as $key => $tag) {
                 $tags[$key] = preg_replace('/\s+/', '', $tag);
