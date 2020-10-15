@@ -1,6 +1,6 @@
-@extends('layouts.public.layout')
+@extends('layouts.public.layout', ['hideSocial' => true])
 
-@section('layout.body')
+@section('layout.content')
     <div class="container">
         <div class="index-page">
             <div class="index-page__content content">

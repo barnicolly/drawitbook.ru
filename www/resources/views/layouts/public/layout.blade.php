@@ -10,9 +10,11 @@
                         @yield('breadcrumbs')
                     </div>
                     @yield('layout.content')
-                    <div class="fixed-shared-block">
-                        <div class="fixed-shared-block__inner"></div>
-                    </div>
+                    @if (!isset($hideSocial) || !$hideSocial)
+                        <div class="fixed-shared-block">
+                            <div class="fixed-shared-block__inner"></div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </main>

@@ -36,7 +36,8 @@
 
 @section('layouts.landing.content')
     @if (!empty($relativePictures))
-        @include('Arts::template.stack_grid.index', ['pictures' => $relativePictures, 'tagged' => route('arts.cell.tagged', ''), 'showAllTags' => true])
+        <?php $viewData = ['pictures' => $relativePictures, 'tagged' => route('arts.cell.tagged', ''), 'showAllTags' => true]; ?>
+        @include('Arts::template.stack_grid.index', $viewData)
     @else
         <div class="search-no-results">
             <div class="search-no-results__img">

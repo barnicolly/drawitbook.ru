@@ -4,27 +4,24 @@ namespace App\Http\Modules\Content\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Entities\Spr\SprTagsModel;
-use App\Libraries\Template;
+use App\Services\Arts\ArtsService;
 use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicture;
 use App\Services\Arts\GetTagsFromPicture;
+use App\Services\Search\SearchByQuery;
 use App\Services\Search\SearchByTags;
+use App\Services\Validation\SearchValidationService;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
+use App\Entities\Picture\PictureModel;
 use MetaTag;
 use Validator;
 use Breadcrumbs;
-use App\Entities\Picture\PictureModel;
-use sngrl\SphinxSearch\SphinxSearch;
-use Illuminate\Support\Facades\Log;
 
 class Search extends Controller
 {
 
     public function index(Request $request)
     {
-        $template = new Template();
         $tags = $request->input('tag') ?? [];
         $targetSimilarId = $request->input('similar') ?? 0;
         if (is_string($tags)) {
@@ -34,17 +31,13 @@ class Search extends Controller
             $tags = [$tags];
         }
         $query = $request->input('query') ?? '';
-        $validator = Validator::make([
+
+        $data = [
             'tags' => $tags,
             'query' => $query,
             'similar' => $targetSimilarId,
-        ], [
-            'query' => 'string|max:255',
-            'similar' => 'int',
-            'tags' => 'array',
-            'tags.*' => 'string',
-        ]);
-        if ($validator->fails()) {
+        ];
+        if (!(new SearchValidationService())->validate($data)) {
             abort(404);
         }
         $query = strip_tags($query);
@@ -52,7 +45,11 @@ class Search extends Controller
         $countSearchResults = 0;
         if ($query || $tags || $targetSimilarId) {
             if ($query || $tags) {
-                $relativePictureIds = $this->_searchByQuery($query, $tags);
+                //TODO-misha выделить в отдельный слой;
+                $tagIds = $tags
+                    ? SprTagsModel::whereIn('name', $tags)->pluck('id')->toArray()
+                    : [];
+                $relativePictureIds = (new SearchByQuery())->searchByQuery($query, $tagIds);
                 if ($relativePictureIds) {
                     $countSearchResults = count($relativePictureIds);
                     $page = $request->input('page');
@@ -65,22 +62,12 @@ class Search extends Controller
                     if (!$relativePictureIds) {
                         abort(404);
                     }
+                    //TODO-misha выделить;
                     $relativePictures = PictureModel::with(['tags'])
                         ->whereIn('id', $relativePictureIds)
                         ->get();
 
-                    $relativePictures = $this->checkExistArts($relativePictures);
-
-                    $paginate = new LengthAwarePaginator($relativePictures->forPage($page, $perPage), $countSearchResults, $perPage, $page, ['path' => url('search')]);
-
-                    if ($query) {
-                        $paginate->appends(['query' => $query]);
-                    }
-                    if ($tags) {
-                        foreach ($tags as $tag) {
-                            $paginate->appends(['tag[]' => $tag]);
-                        }
-                    }
+                    $relativePictures = (new CheckExistPictures($relativePictures))->check();
                 }
             } elseif ($targetSimilarId) {
                 $getPicture = new GetPicture($targetSimilarId);
@@ -101,81 +88,31 @@ class Search extends Controller
                         }
                         $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);
 
+                        //TODO-misha выделить;
                         $relativePictures = PictureModel::with(['tags'])
                             ->whereIn('id', $relativePictureIds)
                             ->get();
 
-                        $relativePictures = $this->checkExistArts($relativePictures);
-
-                        $paginate = new LengthAwarePaginator($relativePictures->forPage($page, $perPage), $countSearchResults, $perPage, $page, ['path' => url('search')]);
-                        $paginate->appends(['similar' => $targetSimilarId]);
+                        $relativePictures = (new CheckExistPictures($relativePictures))->check();
                     } else {
                         abort(404);
                     }
                 }
             }
             if (!$relativePictures) {
-                $pictures = PictureModel::take(10)
-                    ->where('is_del', '=', 0)
-                    ->where('in_common', '=', IN_MAIN_PAGE)
-                    ->with(['tags'])->get();
-                $checkExistPictures = new CheckExistPictures($pictures);
-                $pictures = $checkExistPictures->check();
-                $viewData['popularPictures'] = $pictures;
+                $viewData['popularPictures'] = (new ArtsService())->getInterestingArts(0, 10);
             }
-
         }
         $viewData['filters'] = [
             'query' => $query,
             'tag' => $tags,
             'targetSimilarId' => $targetSimilarId,
         ];
-        $viewData['paginate'] = $paginate ?? [];
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;
         //TODO-misha добавить title;
 
         MetaTag::set('robots', 'noindex');
-        return $template->loadView('Content::search.index', $viewData);
-    }
-
-    public function slice()
-    {
-
-    }
-
-    public function checkExistArts(Collection $pictures)
-    {
-        foreach ($pictures as $key => $picture) {
-            if (!checkExistArt($picture->path)) {
-                $pictures->forget($key);
-                Log::info('Не найдено изображение', ['art' => $picture->toArray()]);
-            }
-        }
-        return $pictures;
-    }
-
-    private function _searchByQuery(string $query, array $tags = [])
-    {
-        $sphinx = new SphinxSearch();
-        $sphinx->search($query, 'drawitbookByQuery')
-            ->limit(1000)
-            ->setSortMode(\Sphinx\SphinxClient::SPH_SORT_RELEVANCE, '@relevance DESC')
-            ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED);
-        if ($tags) {
-            $tags = SprTagsModel::whereIn('name', $tags)->pluck('id')->toArray();
-            if (!$tags) {
-               return [];
-            }
-            foreach ($tags as $item) {
-                $sphinx->filter('tag', $item);
-            }
-        }
-        $results = $sphinx->query();
-        if (!empty($results['matches'])) {
-            $pictureIds = array_keys($results['matches']);
-            return $pictureIds;
-        }
-        return [];
+        return view('Content::search.index', $viewData)->render();
     }
 }

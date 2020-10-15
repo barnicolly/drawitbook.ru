@@ -60,4 +60,27 @@ class SearchByTags
         return [];
     }
 
+    public function searchByQuery(string $query, array $tags = [])
+    {
+        $sphinx = new SphinxSearch();
+        $sphinx->search($query, 'drawitbookByQuery')
+            ->limit(1000)
+            ->setSortMode(\Sphinx\SphinxClient::SPH_SORT_RELEVANCE, '@relevance DESC')
+            ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED);
+        if ($tags) {
+            if (!$tags) {
+                return [];
+            }
+            foreach ($tags as $item) {
+                $sphinx->filter('tag', $item);
+            }
+        }
+        $results = $sphinx->query();
+        if (!empty($results['matches'])) {
+            $pictureIds = array_keys($results['matches']);
+            return $pictureIds;
+        }
+        return [];
+    }
+
 }
