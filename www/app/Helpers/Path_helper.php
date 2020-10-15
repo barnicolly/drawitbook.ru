@@ -65,9 +65,35 @@ if (!function_exists('formDefaultShareArtUrlPath')) {
     }
 }
 
-if (!function_exists('formArtThumbnailUrlPath')) {
-    function formArtThumbnailUrlPath(string $thumbnailRelativePath): string
+if (!function_exists('getMimeType')) {
+    function getMimeType(string $filename): string
     {
-        return asset('content/thumbnails/arts/' . $thumbnailRelativePath);
+        $mimeTypes = [
+            // images
+            'png' => 'image/png',
+            'jpe' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'jpg' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'bmp' => 'image/bmp',
+            'ico' => 'image/vnd.microsoft.icon',
+            'tiff' => 'image/tiff',
+            'tif' => 'image/tiff',
+            'svg' => 'image/svg+xml',
+            'svgz' => 'image/svg+xml',
+        ];
+
+        $array = explode('.', $filename);
+        $ext = strtolower(array_pop($array));
+        if (array_key_exists($ext, $mimeTypes)) {
+            return $mimeTypes[$ext];
+        } elseif (function_exists('finfo_open')) {
+            $finfo = finfo_open(FILEINFO_MIME);
+            $mimetype = finfo_file($finfo, $filename);
+            finfo_close($finfo);
+            return $mimetype;
+        } else {
+            return 'application/octet-stream';
+        }
     }
 }

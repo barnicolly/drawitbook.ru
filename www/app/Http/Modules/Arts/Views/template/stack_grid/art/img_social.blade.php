@@ -6,29 +6,18 @@
     $artUrlPath = formArtUrlPath($picture->path);
     ?>
     <div>
-        <?php
-        //TODO-misha изолировать получение ссылки к миниатюре;
-        $path_parts = pathinfo($picture->path);
-        $thumbnailPath = $path_parts['dirname']
-            . '/'
-            . $path_parts['filename']
-            . '_thumb.'
-            . $path_parts['extension'];
-        ?>
         <a itemprop="url" class="fullscreen-image__link" href="{{ $artUrlPath }}"
            rel="nofollow"
-           data-thumb="{{ formArtThumbnailUrlPath($thumbnailPath) }}"
            data-id="{{ $picture->id }}">
             <div class="fullscreen-image__inner"
                  style="padding-top:{{ (int) ($picture->height / $picture->width * 100) }}%;">
                 <picture>
-                    <?php $webpSourceRelativePath = formArtWebpFormatRelativePath($picture->path); ?>
+                    <?php $webpSourceRelativePath = formArtWebpFormatRelativePath($picture->path) ?>
                     @if (!empty($webpSourceRelativePath) && checkExistArt($webpSourceRelativePath))
                         <source type="image/webp"
                                 data-srcset="<?= formArtUrlPath($webpSourceRelativePath) ?>"/>
                     @endif
-                    {{--                        //TODO-misha source неверный;--}}
-                    <source type="image/jpg" data-srcset="{{ $artUrlPath }}"/>
+                    <source type="{{ getMimeType($picture->path) }}" data-srcset="{{ $artUrlPath }}"/>
                     <img width="{{ $picture->width }}"
                          height="{{ $picture->height }}"
                          data-title="Art #{{ $picture->id }} | Drawitbook.ru"
