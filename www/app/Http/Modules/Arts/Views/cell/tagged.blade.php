@@ -19,7 +19,7 @@
 @endsection
 
 @section('layouts.landing.content')
-    @include('Arts::template.stack_grid.index', ['pictures' => $relativePictures, 'tagged' => $tagged])
+    @include('Arts::template.stack_grid.index', ['pictures' => $pictures, 'tagged' => $tagged])
 @endsection
 
 @section('layouts.landing.seo')

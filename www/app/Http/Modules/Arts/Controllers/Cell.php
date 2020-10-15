@@ -3,6 +3,7 @@
 namespace App\Http\Modules\Arts\Controllers;
 
 use App\Entities\Picture\PictureModel;
+use App\Exceptions\NotFoundRelativeArts;
 use App\Http\Controllers\Controller;
 use App\Libraries\Template;
 use App\Services\Arts\CheckExistPictures;
@@ -71,19 +72,18 @@ class Cell extends Controller
             }
         }
         $template = new Template();
-
         $tagInfo = (new SearchBySeoTag($tag))->search();
         if (!$tagInfo) {
             abort(404);
         }
-        [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->formSlicePictureIds(
-            $tagInfo->id,
-            $pageNum
-        );
-        if (!$relativePictureIds) {
-            abort(404);
+        try {
+            $viewData = $this->formViewData($tagInfo->id, $pageNum);
+            $viewData['tag'] = $tagInfo;
+        } catch (NotFoundRelativeArts $e) {
+            return abort(404);
         }
-        $relativePictures = $this->formRelativePictures($relativePictureIds);
+        $countSearchResults = $viewData['countRelatedPictures'];
+        $relativePictures = $viewData['pictures'];
         [$title, $description] = $this->formCategoryTitleAndDescription($countSearchResults, $tagInfo->name);
         MetaTag::set('title', $title);
         MetaTag::set('description', $description);
@@ -91,12 +91,6 @@ class Cell extends Controller
         if ($firstPicture) {
             MetaTag::set('image', formArtUrlPath($firstPicture->path));
         }
-        $viewData['tag'] = $tagInfo;
-        $viewData['countRelatedPictures'] = $countSearchResults;
-        $viewData['relativePictures'] = $relativePictures;
-        $viewData['countLeftPictures'] = $countLeftPictures;
-        $viewData['isLastSlice'] = $isLastSlice;
-        $viewData['tagged'] = $this->formTagUrlPrefix();
         $page = $template->loadView('Arts::cell.tagged', $viewData);
         if (!isLocal()) {
             Cache::put($cacheName, $page, config('cache.expiration'));
@@ -112,27 +106,15 @@ class Cell extends Controller
         if (!$pageNum) {
             return abort(404);
         }
-        $pageNum = (int) $pageNum + 1;
+        $pageNum = (int) $pageNum;
         try {
             $tagInfo = (new SearchBySeoTag($tag))->search();
             if (!$tagInfo) {
                 throw new Exception('Не найден tag');
             }
-            $viewData = [];
-            [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->formSlicePictureIds(
-                $tagInfo->id,
-                $pageNum
-            );
-            if (!$relativePictureIds) {
-                throw new Exception('Не найден пулл изображений для paginate');
-            }
-            $relativePictures = $this->formRelativePictures($relativePictureIds);
-            $viewData['countRelatedPictures'] = $countSearchResults;
-            $viewData['pictures'] = $relativePictures;
-            $viewData['countLeftPictures'] = $countLeftPictures;
-            $viewData['isLastSlice'] = $isLastSlice;
-            $viewData['tagged'] = $this->formTagUrlPrefix();
-            $viewData['page'] = $pageNum;
+            $viewData = $this->formViewData($tagInfo->id, $pageNum);
+            $countLeftPictures = $viewData['countLeftPictures'];
+            $isLastSlice = $viewData['isLastSlice'];
             $countLeftPicturesText = $countLeftPictures >= 0
                 ? pluralForm($countLeftPictures, ['рисунок', 'рисунка', 'рисунков'])
                 : '';
@@ -150,6 +132,25 @@ class Cell extends Controller
             ];
         }
         return response($result);
+    }
+
+    private function formViewData(int $tagId, int $pageNum)
+    {
+        [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->formSlicePictureIds(
+            $tagId,
+            $pageNum
+        );
+        if (!$relativePictureIds) {
+            throw new NotFoundRelativeArts();
+        }
+        $relativePictures = $this->formRelativePictures($relativePictureIds);
+        $viewData['countRelatedPictures'] = $countSearchResults;
+        $viewData['pictures'] = $relativePictures;
+        $viewData['countLeftPictures'] = $countLeftPictures;
+        $viewData['isLastSlice'] = $isLastSlice;
+        $viewData['tagged'] = $this->formTagUrlPrefix();
+        $viewData['page'] = $pageNum;
+        return $viewData;
     }
 
     private function formTagUrlPrefix()

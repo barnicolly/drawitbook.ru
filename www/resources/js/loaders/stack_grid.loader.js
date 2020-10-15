@@ -39,7 +39,7 @@ export function loadStackGrid() {
         $stackGridWrapper
             .on('click', '.download-more__btn', function () {
                 const $downloadBtn = $(this);
-                const sliceNumber = $stackGrid.attr('data-page');
+                const sliceNumber = parseInt($stackGrid.attr('data-page')) + 1;
                 sendRequest('get',  `${relativeUrlPath}/slice`, {page: sliceNumber}, function (res) {
                     let scrollPosition = $(window).scrollTop();
                     if (typeof res.data !== 'undefined' && typeof res.data.html !== 'undefined') {

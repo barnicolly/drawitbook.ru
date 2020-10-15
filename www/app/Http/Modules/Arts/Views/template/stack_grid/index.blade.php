@@ -19,7 +19,7 @@
             <div class="download-more form-group">
                 <?php $leftPicturesText = pluralForm($countLeftPictures, ['рисунок', 'рисунка', 'рисунков']); ?>
                 <button type="button" class="download-more__btn">
-                    Показать еще <span class="left-pictures-cnt">{{ $leftPicturesText }}</span>
+                    Показать еще (осталось <span class="left-pictures-cnt">{{ $leftPicturesText }}</span>)
                 </button>
             </div>
         @endif
