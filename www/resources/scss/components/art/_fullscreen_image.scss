@@ -1,0 +1,31 @@
+.fullscreen-image {
+    position: relative;
+
+    .fullscreen-image__inner {
+        width: 100%;
+        height: 0;
+        position: relative;
+    }
+
+    .fullscreen-image__img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .fullscreen-image__rate {
+        position: absolute;
+        bottom: 5px;
+        right: 5px
+    }
+
+    .fullscreen-image__find-similar {
+        position: absolute;
+        top: 15px;
+        right: 5px;
+
+        cursor: pointer;
+    }
+}

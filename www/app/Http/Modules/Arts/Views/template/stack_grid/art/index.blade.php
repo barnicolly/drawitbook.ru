@@ -1,6 +1,6 @@
 <div class="art-container" data-page="{{ $page ?? 1 }}">
     <div class="art-wrapper">
-        @include('Arts::template.stack_grid.art.img_social', ['picture' => $picture, 'activeLink' => true, 'tagged' => $tagged ?? false])
+        @include('Arts::template.stack_grid.art.img_social', ['picture' => $picture, 'tagged' => $tagged ?? false])
         @if (!empty(session('is_admin')))
 {{--            //TODO-misha выделить отдельно;--}}
             <div class="admin-panel" data-picture-id="{{ $picture->id }}">

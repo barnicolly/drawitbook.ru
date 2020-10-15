@@ -11,7 +11,7 @@ import {
 
 $('body')
     .on('click', '.stack-grid__external-link a', reachClickBtnExternalLink)
-    .on('click', '.find-similar a', reachClickBtnFindSimilar)
+    .on('click', '.fullscreen-image__find-similar a', reachClickBtnFindSimilar)
     .on('click', '.tag-list a', reachClickTagItem)
     .on('click', '.rate-button', reachClickBtnRate)
     //social

@@ -7,19 +7,19 @@
         &:hover {
             background-color: #0c51bf;
 
-            .rate-control__svg {
+            .rate-control__icon {
                 fill: white;
             }
         }
     }
 
-    .rate-control__svg {
+    .rate-control__icon {
         fill: #1a2038;
     }
 
     .rate-control__btn--active {
 
-        .rate-control__svg {
+        .rate-control__icon {
             fill: #6500ec;
         }
     }

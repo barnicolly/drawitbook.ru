@@ -53,7 +53,7 @@ export function loadStackGrid() {
                             $(window).scrollTop(scrollPosition);
                             initStackGridAds($stackGrid, sliceNumber);
                         }
-                        const $newImages = $stackGrid.find(`.art-container[data-page="${res.data.page}"]`).find('.fullscreen-image');
+                        const $newImages = $stackGrid.find(`.art-container[data-page="${res.data.page}"]`).find('.fullscreen-image__link');
                         loadFancybox($newImages);
                         $stackGrid.attr('data-page', res.data.page);
                         $downloadBtn.find('.left-pictures-cnt').text(res.data.countLeftPicturesText);

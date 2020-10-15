@@ -1,67 +1,55 @@
-<figure itemprop="image" class="shared-image" itemscope itemtype="http://schema.org/ImageObject">
+<figure class="fullscreen-image" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
     <?php $alt = '';
     if ($picture->alt) {
         $alt = $picture->alt;
     } ?>
-    <div class="img-wrapper">
-        @if (isset($activeLink) && $activeLink === true)
-            <?php
-            //TODO-misha изолировать пулученение ссылки к миниатюре;
-            $path_parts = pathinfo($picture->path);
-            $thumbnailPath = $path_parts['dirname']
-                . '/'
-                . $path_parts['filename']
-                . '_thumb.'
-                . $path_parts['extension'];
-            ?>
-            <a itemprop="url" class="fullscreen-image" href="{{ asset('content/arts/' . $picture->path) }}"
-               rel="nofollow"
-               data-thumb="{{ asset('content/thumbnails/arts/' . $thumbnailPath) }}"
-               data-id="{{ $picture->id }}"
-            >
-                {{--                //TODO-misha избавиться от стилей в коде;--}}
-                <div
-                    style="width:100%;height:0; padding-top:{{ $picture->height / $picture->width * 100 }}%;position:relative;">
-                    <picture>
-                        <?php $fileInfo = pathinfo(public_path('content/arts/') . $picture->path);?>
-                        @if (!empty($fileInfo['extension']))
-                            <?php $otherSource = 'content/arts/' . str_replace(
-                                    ('.' . $fileInfo['extension']),
-                                    '.webp',
-                                    $picture->path
-                                ); ?>
-                            @if (file_exists(public_path($otherSource)))
-                                <source type="image/webp"
-                                        data-srcset="<?= asset($otherSource) ?>"/>
-                            @endif
+    <div>
+        <?php
+        //TODO-misha изолировать получение ссылки к миниатюре;
+        $path_parts = pathinfo($picture->path);
+        $thumbnailPath = $path_parts['dirname']
+            . '/'
+            . $path_parts['filename']
+            . '_thumb.'
+            . $path_parts['extension'];
+        ?>
+        <a itemprop="url" class="fullscreen-image__link" href="{{ asset('content/arts/' . $picture->path) }}"
+           rel="nofollow"
+           data-thumb="{{ asset('content/thumbnails/arts/' . $thumbnailPath) }}"
+           data-id="{{ $picture->id }}">
+            <div class="fullscreen-image__inner"
+                 style="padding-top:{{ (int) ($picture->height / $picture->width * 100) }}%;">
+                <picture>
+                    <?php $fileInfo = pathinfo(public_path('content/arts/') . $picture->path);?>
+                    @if (!empty($fileInfo['extension']))
+                        <?php $otherSource = 'content/arts/' . str_replace(
+                                ('.' . $fileInfo['extension']),
+                                '.webp',
+                                $picture->path
+                            ); ?>
+                        @if (file_exists(public_path($otherSource)))
+                            <source type="image/webp"
+                                    data-srcset="<?= asset($otherSource) ?>"/>
                         @endif
-                        <source type="image/jpg" data-srcset="<?= asset('content/arts/' . $picture->path) ?>"/>
-                        <img width="{{ $picture->width }}"
-                             height="{{ $picture->height }}"
-                             style="position:absolute; top:0; left:0; width:100%;height: 100%;"
-                             data-title="Art #{{ $picture->id }} | Drawitbook.ru"
-                             class="img-responsive lazyload"
-                             data-src="{{ asset('content/arts/' . $picture->path) }}"
-                             alt="{{ $alt }}">
-                    </picture>
-                </div>
-            </a>
-        @else
-            <?php $img = b64img('', 6, $picture->width, $picture->height); ?>
-            <img class="img-responsive lazyload"
-                 data-url="{{ route('art', ['id' => $picture->id]) }}"
-                 data-title="Art #{{ $picture->id }} | Drawitbook.ru"
-                 itemprop="contentUrl"
-                 data-src="{{ asset('content/arts/' . $picture->path) }}"
-                 src="data:image/png;base64,{{$img}}"
-                 alt="{{ $alt }}">
-        @endif
-        <div class="rate-footer">
+                    @endif
+                    <source type="image/jpg" data-srcset="<?= asset('content/arts/' . $picture->path) ?>"/>
+                    <img width="{{ $picture->width }}"
+                         height="{{ $picture->height }}"
+                         data-title="Art #{{ $picture->id }} | Drawitbook.ru"
+                         class="img-responsive lazyload fullscreen-image__img"
+                         data-src="{{ asset('content/arts/' . $picture->path) }}"
+                         alt="{{ $alt }}">
+                </picture>
+            </div>
+        </a>
+        <div class="fullscreen-image__rate">
             @include('Arts::template.stack_grid.art.rate', ['pictureId' => $picture->id])
         </div>
-        <div class="find-similar">
-            <a itemprop="url" href="{{ route('search') . '?similar=' . $picture->id }}"  rel="nofollow" title="Найти похожие">
-                <svg role="img" width="26" height="26" viewBox="0 0 26 26">
+        <div class="fullscreen-image__find-similar find-similar">
+            <a itemprop="url" href="{{ route('search') . '?similar=' . $picture->id }}" rel="nofollow"
+               class="find-similar__btn"
+               title="Найти похожие">
+                <svg class="find-similar__icon" role="img" width="26" height="26" viewBox="0 0 26 26">
                     <use xlink:href="{{ getUrlFromManifest('icons/sprite.svg') . '#image-similar' }}"></use>
                 </svg>
             </a>
