@@ -36,11 +36,15 @@ export function loadStackGrid() {
         $(window).on('resize', throttledInitStackGrid);
 
         const relativeUrlPath = window.location.pathname;
+        const searchParams = window.location.search;
         $stackGridWrapper
             .on('click', '.download-more__btn', function () {
                 const $downloadBtn = $(this);
                 const sliceNumber = parseInt($stackGrid.attr('data-page')) + 1;
-                sendRequest('get',  `${relativeUrlPath}/slice`, {page: sliceNumber}, function (res) {
+                const url = searchParams
+                    ? `${relativeUrlPath}/slice${searchParams}&page=${sliceNumber}`
+                    : `${relativeUrlPath}/slice?page=${sliceNumber}`;
+                sendRequest('get',  url, {}, function (res) {
                     let scrollPosition = $(window).scrollTop();
                     if (typeof res.data !== 'undefined' && typeof res.data.html !== 'undefined') {
                         $stackGrid.append(res.data.html);

@@ -9,6 +9,7 @@ use App\Libraries\Template;
 use App\Services\Arts\ArtsService;
 use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicturesWithTags;
+use App\Services\Paginator\PaginatorService;
 use App\Services\Search\SearchBySeoTag;
 use App\Services\Search\SearchByTags;
 use App\Services\Seo\SeoService;
@@ -153,19 +154,7 @@ class Cell extends Controller
     private function formSlicePictureIds(int $tagId, int $pageNum): array
     {
         $relativePictureIds = SearchByTags::searchPicturesByTagId($tagId);
-        if ($relativePictureIds) {
-            $perPage = DEFAULT_PER_PAGE;
-            $countSearchResults = count($relativePictureIds);
-            $countSlices = ($countSearchResults / $perPage) + 1;
-            $isLastSlice = (int) $countSlices === $pageNum;
-            $relativePictureIds = array_slice($relativePictureIds, ($pageNum - 1) * $perPage, $perPage);
-            $countLeftPictures = $countSearchResults - ($perPage * $pageNum);
-        } else {
-            $countSearchResults = 0;
-            $isLastSlice = false;
-            $countLeftPictures = 0;
-        }
-        return [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures];
+        return (new PaginatorService())->formSlice($relativePictureIds, $pageNum);
     }
 
     private function formCategoryTitleAndDescription(int $countSearchResults, string $tagName): array

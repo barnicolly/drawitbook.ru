@@ -19,4 +19,6 @@ Route::group(
     ],
     function () {
         Route::get('/search', ['uses' => 'Search@index'])->name('search');
+
+        Route::get('/search/slice', ['uses' => 'Search@slice'])->name('search.slice');
     });

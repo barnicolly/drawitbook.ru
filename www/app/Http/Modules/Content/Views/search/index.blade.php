@@ -25,7 +25,7 @@
             Результаты поиска похожих
         @endif
     </h1>
-    @if (!empty($relativePictures))
+    @if (!empty($pictures))
         <div class="form-group">
             <p>
                 Голосуйте за понравившиеся рисунки и делитесь с друзьями.
@@ -35,8 +35,8 @@
 @endsection
 
 @section('layouts.landing.content')
-    @if (!empty($relativePictures))
-        <?php $viewData = ['pictures' => $relativePictures, 'tagged' => route('arts.cell.tagged', ''), 'showAllTags' => true]; ?>
+    @if (!empty($pictures))
+        <?php $viewData = ['pictures' => $pictures, 'tagged' => route('arts.cell.tagged', ''), 'showAllTags' => true]; ?>
         @include('Arts::template.stack_grid.index', $viewData)
     @else
         <div class="search-no-results">

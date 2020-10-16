@@ -9,10 +9,12 @@ use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicture;
 use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Arts\GetTagsFromPicture;
+use App\Services\Paginator\PaginatorService;
 use App\Services\Search\SearchByQuery;
 use App\Services\Search\SearchByTags;
 use App\Services\Tags\TagsService;
 use App\Services\Validation\SearchValidationService;
+use http\Exception\InvalidArgumentException;
 use Illuminate\Http\Request;
 use MetaTag;
 use Validator;
@@ -23,18 +25,86 @@ class Search extends Controller
 
     public function index(Request $request)
     {
-        $tags = $request->input('tag') ?? [];
-        $targetSimilarId = $request->input('similar') ?? 0;
-        $query = $request->input('query') ?? '';
-        $filters = [
-            'tags' => $tags,
-            'query' => $query,
-            'similar' => $targetSimilarId,
-        ];
-        if (!(new SearchValidationService())->validate($filters)) {
-            abort(404);
+        $filters = $request->input();
+        try {
+            [$relativePictures, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->searchByFilters(
+                $filters,
+                1
+            );
+        } catch (InvalidArgumentException $e) {
+            return abort(404);
         }
-        $query = strip_tags($query);
+        if (!$relativePictures) {
+            $viewData['popularPictures'] = (new ArtsService())->getInterestingArts(0, 10);
+        }
+        $viewData['filters'] = $filters;
+        $viewData['isLastSlice'] = $isLastSlice;
+        $viewData['countLeftPictures'] = $countLeftPictures;
+        $viewData['countRelatedPictures'] = $countSearchResults;
+        $viewData['pictures'] = $relativePictures;
+        //TODO-misha добавить title;
+
+        MetaTag::set('robots', 'noindex');
+        return view('Content::search.index', $viewData)->render();
+    }
+
+    public function slice(Request $request)
+    {
+        //TODO-misha вынести и объединить с кодом из cell;
+        $rules = [
+            'page' => [
+                'required',
+                'integer',
+            ],
+        ];
+        $validator = Validator::make($request->input(), $rules);
+        if ($validator->fails()) {
+            return abort(404);
+        }
+        $pageNum = (int) $request->input('page');
+        try {
+            [$relativePictures, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->searchByFilters(
+                $request->input(),
+                $pageNum
+            );
+            if (!$relativePictures) {
+                throw new NotFoundRelativeArts();
+            }
+            $viewData = [
+                'page' => $pageNum,
+                'isLastSlice' => $isLastSlice,
+                'countLeftPictures' => $countLeftPictures,
+                'pictures' => $relativePictures,
+                'countRelatedPictures' => $countSearchResults,
+                'tagged' => route('arts.cell.tagged', ''),
+            ];
+            $countLeftPicturesText = $countLeftPictures >= 0
+                ? pluralForm($countLeftPictures, ['рисунок', 'рисунка', 'рисунков'])
+                : '';
+            $result = [
+                'data' => [
+                    'html' => view('Arts::template.stack_grid.elements', $viewData)->render(),
+                    'page' => $pageNum,
+                    'countLeftPicturesText' => $countLeftPicturesText,
+                    'isLastSlice' => $isLastSlice,
+                ],
+            ];
+        } catch (Throwable $e) {
+            $result = [
+                'error' => 'Произошла ошибка на стороне сервера',
+            ];
+        }
+        return response($result);
+    }
+
+    private function searchByFilters(array $filters, int $pageNum)
+    {
+        if (!(new SearchValidationService())->validate($filters)) {
+            throw new InvalidArgumentException();
+        }
+        $query = !empty($filters['query']) ? strip_tags($filters['query']) : '';
+        $tags = $filters['tags'] ?? [];
+        $targetSimilarId = $filters['similar'] ?? 0;
         $relativePictureIds = [];
         try {
             if ($query || $tags) {
@@ -51,7 +121,10 @@ class Search extends Controller
                 }
             }
             if ($relativePictureIds) {
-                [$relativePictures, $countSearchResults] = $this->formSlice($relativePictureIds, 1);
+                [$relativePictures, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->formSlice(
+                    $relativePictureIds,
+                    $pageNum
+                );
             } else {
                 throw new NotFoundRelativeArts();
             }
@@ -59,29 +132,21 @@ class Search extends Controller
             $relativePictures = [];
             $countSearchResults = 0;
         }
-        if (!$relativePictures) {
-            $viewData['popularPictures'] = (new ArtsService())->getInterestingArts(0, 10);
-        }
-        $viewData['filters'] = $filters;
-        $viewData['countRelatedPictures'] = $countSearchResults;
-        $viewData['relativePictures'] = $relativePictures;
-        //TODO-misha добавить title;
-
-        MetaTag::set('robots', 'noindex');
-        return view('Content::search.index', $viewData)->render();
+        $isLastSlice = $isLastSlice ?? false;
+        $countLeftPictures = $countLeftPictures ?? 0;
+        return [$relativePictures, $countSearchResults, $isLastSlice, $countLeftPictures];
     }
 
-    private function formSlice(array $relativePictureIds, int $page): array
+    private function formSlice(array $relativePictureIds, int $pageNum): array
     {
-        $countSearchResults = count($relativePictureIds);
-        $perPage = DEFAULT_PER_PAGE;
-        $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);
+        [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures] = (new PaginatorService())
+            ->formSlice($relativePictureIds, $pageNum);
         if (!$relativePictureIds) {
             throw new NotFoundRelativeArts();
         }
         $relativePictures = (new GetPicturesWithTags($relativePictureIds))->get();
         $relativePictures = (new CheckExistPictures($relativePictures))->check();
-        return [$relativePictures, $countSearchResults];
+        return [$relativePictures, $countSearchResults, $isLastSlice, $countLeftPictures];
     }
 }
 
