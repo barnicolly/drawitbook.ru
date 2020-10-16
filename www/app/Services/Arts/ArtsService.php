@@ -3,7 +3,6 @@
 namespace App\Services\Arts;
 
 use App\Entities\Picture\PictureModel;
-use App\Services\Arts\CheckExistPictures;
 use Illuminate\Database\Eloquent\Collection;
 
 class ArtsService

@@ -1,10 +1,5 @@
 <figure class="fullscreen-image" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-    <?php $alt = '';
-    if ($picture->alt) {
-        $alt = $picture->alt;
-    }
-    $artUrlPath = formArtUrlPath($picture->path);
-    ?>
+    <?php $artUrlPath = formArtUrlPath($picture->path); ?>
     <div>
         <a itemprop="url" class="fullscreen-image__link" href="{{ $artUrlPath }}"
            rel="nofollow"
@@ -23,7 +18,7 @@
                          data-title="Art #{{ $picture->id }} | Drawitbook.ru"
                          class="img-responsive lazyload fullscreen-image__img"
                          data-src="{{ $artUrlPath }}"
-                         alt="{{ $alt }}">
+                         alt="{{ $picture->alt ?? '' }}">
                 </picture>
             </div>
         </a>

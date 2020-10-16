@@ -3,6 +3,7 @@
 namespace App\Services\Tags;
 
 use App\Entities\Picture\PictureModel;
+use App\Entities\Spr\SprTagsModel;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -41,6 +42,15 @@ limit {$limit}");
             });
         }
         return $results;
+    }
+
+    public function getByTagIdsByNames(array $tagNames): array
+    {
+        return $tagNames
+            ? SprTagsModel::whereIn('name', $tagNames)
+                ->pluck('id')
+                ->toArray()
+            : [];
     }
 
 }

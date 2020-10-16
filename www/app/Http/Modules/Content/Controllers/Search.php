@@ -2,17 +2,18 @@
 
 namespace App\Http\Modules\Content\Controllers;
 
+use App\Exceptions\NotFoundRelativeArts;
 use App\Http\Controllers\Controller;
-use App\Entities\Spr\SprTagsModel;
 use App\Services\Arts\ArtsService;
 use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicture;
+use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Arts\GetTagsFromPicture;
 use App\Services\Search\SearchByQuery;
 use App\Services\Search\SearchByTags;
+use App\Services\Tags\TagsService;
 use App\Services\Validation\SearchValidationService;
 use Illuminate\Http\Request;
-use App\Entities\Picture\PictureModel;
 use MetaTag;
 use Validator;
 use Breadcrumbs;
@@ -24,90 +25,44 @@ class Search extends Controller
     {
         $tags = $request->input('tag') ?? [];
         $targetSimilarId = $request->input('similar') ?? 0;
-        if (is_string($tags)) {
-            $tags = [$tags];
-        }
-        if (is_string($tags)) {
-            $tags = [$tags];
-        }
         $query = $request->input('query') ?? '';
-
-        $data = [
+        $filters = [
             'tags' => $tags,
             'query' => $query,
             'similar' => $targetSimilarId,
         ];
-        if (!(new SearchValidationService())->validate($data)) {
+        if (!(new SearchValidationService())->validate($filters)) {
             abort(404);
         }
         $query = strip_tags($query);
-        $relativePictures = [];
-        $countSearchResults = 0;
-        if ($query || $tags || $targetSimilarId) {
+        $relativePictureIds = [];
+        try {
             if ($query || $tags) {
-                //TODO-misha выделить в отдельный слой;
-                $tagIds = $tags
-                    ? SprTagsModel::whereIn('name', $tags)->pluck('id')->toArray()
-                    : [];
+                $tagIds = (new TagsService())->getByTagIdsByNames($tags);
                 $relativePictureIds = (new SearchByQuery())->searchByQuery($query, $tagIds);
-                if ($relativePictureIds) {
-                    $countSearchResults = count($relativePictureIds);
-                    $page = $request->input('page');
-                    $perPage = DEFAULT_PER_PAGE;
-                    if (!$page) {
-                        $page = 1;
-                    }
-                    $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);
-
-                    if (!$relativePictureIds) {
-                        abort(404);
-                    }
-                    //TODO-misha выделить;
-                    $relativePictures = PictureModel::with(['tags'])
-                        ->whereIn('id', $relativePictureIds)
-                        ->get();
-
-                    $relativePictures = (new CheckExistPictures($relativePictures))->check();
-                }
             } elseif ($targetSimilarId) {
-                $getPicture = new GetPicture($targetSimilarId);
-                $picture = $getPicture->getCached();
-                $getTagsFromPictures = new GetTagsFromPicture();
-                [$shown, $hidden] = $getTagsFromPictures->getTagIds($picture);
-                $relativePictures = [];
+                $picture = (new GetPicture($targetSimilarId))->getCached();
+                [$shown, $hidden] = (new GetTagsFromPicture())->getTagIds($picture);
                 if ($shown || $hidden) {
-                    $search = new SearchByTags(51);
-                    $relativePictureIds = $search->searchRelatedPicturesIds($shown, $hidden);
+                    $relativePictureIds = (new SearchByTags(51))->searchRelatedPicturesIds($shown, $hidden);
                     if ($relativePictureIds) {
                         $relativePictureIds = array_diff($relativePictureIds, [$targetSimilarId]);
-                        $countSearchResults = count($relativePictureIds);
-                        $page = $request->input('page');
-                        $perPage = DEFAULT_PER_PAGE;
-                        if (!$page) {
-                            $page = 1;
-                        }
-                        $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);
-
-                        //TODO-misha выделить;
-                        $relativePictures = PictureModel::with(['tags'])
-                            ->whereIn('id', $relativePictureIds)
-                            ->get();
-
-                        $relativePictures = (new CheckExistPictures($relativePictures))->check();
-                    } else {
-                        abort(404);
                     }
                 }
             }
-            if (!$relativePictures) {
-                $viewData['popularPictures'] = (new ArtsService())->getInterestingArts(0, 10);
+            if ($relativePictureIds) {
+                [$relativePictures, $countSearchResults] = $this->formSlice($relativePictureIds, 1);
+            } else {
+                throw new NotFoundRelativeArts();
             }
+        } catch (NotFoundRelativeArts $e) {
+            $relativePictures = [];
+            $countSearchResults = 0;
         }
-        $viewData['filters'] = [
-            'query' => $query,
-            'tag' => $tags,
-            'targetSimilarId' => $targetSimilarId,
-        ];
+        if (!$relativePictures) {
+            $viewData['popularPictures'] = (new ArtsService())->getInterestingArts(0, 10);
+        }
+        $viewData['filters'] = $filters;
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['relativePictures'] = $relativePictures;
         //TODO-misha добавить title;
@@ -115,4 +70,18 @@ class Search extends Controller
         MetaTag::set('robots', 'noindex');
         return view('Content::search.index', $viewData)->render();
     }
+
+    private function formSlice(array $relativePictureIds, int $page): array
+    {
+        $countSearchResults = count($relativePictureIds);
+        $perPage = DEFAULT_PER_PAGE;
+        $relativePictureIds = array_slice($relativePictureIds, ($page - 1) * $perPage, $perPage);
+        if (!$relativePictureIds) {
+            throw new NotFoundRelativeArts();
+        }
+        $relativePictures = (new GetPicturesWithTags($relativePictureIds))->get();
+        $relativePictures = (new CheckExistPictures($relativePictures))->check();
+        return [$relativePictures, $countSearchResults];
+    }
 }
+
