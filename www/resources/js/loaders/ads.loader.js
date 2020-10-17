@@ -35,7 +35,6 @@ export function initAds() {
 
 export function initStackGridAds($stackGrid, pageNumber = 1) {
     const $monPlaces = $stackGrid.find('.mon-place[data-integrated="true"][data-loaded="false"]');
-
     if ($monPlaces.length) {
         const {configurations, failovers} = getConfigurations();
         initWatcher($monPlaces, configurations, failovers, pageNumber);
@@ -65,18 +64,13 @@ export function initStackGridAds($stackGrid, pageNumber = 1) {
 }
 
 function initWatcher($monPlaces, configurations, failovers, pageNumber) {
-    const mapPlaces = {};
-    $monPlaces.each(function () {
-        const id = $(this).attr('id');
-        mapPlaces[id] = false;
-    });
     const scrollEvent = function () {
-        Object.keys(mapPlaces).forEach(id => {
-            const placeLoaded = mapPlaces[id];
-            const $place = $(`#${id.replace('.', '\\.')}`);
+        $monPlaces.each(function () {
+            const $place = $(this);
+            const id = $place.attr('id');
+            const placeLoaded = $place.attr('data-loaded') === 'true';
             const isDummy = $place.hasClass('dummy');
             if (!placeLoaded && isOnScreen($place, 500)) {
-                mapPlaces[id] = true;
                 $place.attr('data-loaded', true);
                 if (!isDummy) {
                     if (typeof configurations[id] !== 'undefined') {
@@ -121,10 +115,10 @@ function initWatcher($monPlaces, configurations, failovers, pageNumber) {
                 }
             }
         });
-        const stayNotLoadedPlaces = Object.keys(mapPlaces).filter(id => {
-            return !mapPlaces[id];
+        const $stayNotLoadedPlaces = $monPlaces.filter(function () {
+           return $(this).attr('data-loaded') === 'false';
         });
-        if (!stayNotLoadedPlaces.length) {
+        if (!$stayNotLoadedPlaces.length) {
             $(window).off('scroll', scrollEventThrottled);
         }
     };

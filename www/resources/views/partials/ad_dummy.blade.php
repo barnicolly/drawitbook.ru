@@ -1,4 +1,4 @@
-<div class="mon-place dummy" data-integrated="{{ $integrated ? 'true': 'false' }}" id="{{ $id }}" style="text-align: center">
+<div class="mon-place dummy" data-loaded="false" data-integrated="{{ $integrated ? 'true': 'false' }}" id="{{ $id }}" style="text-align: center">
     <?= $id ?>
 </div>
 
