@@ -3,7 +3,6 @@
 namespace App\Http\Modules\Arts\Controllers\Art;
 
 use App\Http\Controllers\Controller;
-use App\Libraries\Template;
 use App\Services\Arts\ArtsService;
 use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicture;
@@ -47,13 +46,12 @@ class Art extends Controller
             'popularTags' => $this->getPopularTags(),
             'tagged' => route('arts.cell.tagged', ''),
         ];
-        $template = new Template();
         [$title, $description] = (new SeoService())->formTitleAndDescriptionShowArt($id);
         MetaTag::set('title', $title);
         MetaTag::set('description', $description);
         MetaTag::set('robots', 'noindex');
         MetaTag::set('image', formArtUrlPath($picture->path));
-        return $template->loadView('Arts::art.index', $viewData);
+        return view('Arts::art.index', $viewData);
     }
 
     private function getPopularTags(): array

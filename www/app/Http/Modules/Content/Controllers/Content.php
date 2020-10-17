@@ -3,9 +3,7 @@
 namespace App\Http\Modules\Content\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Libraries\Template;
 use App\Services\Tags\TagsService;
-use App\UseCases\Tag\Tag;
 use Illuminate\Http\Request;
 use MetaTag;
 use Validator;
@@ -19,7 +17,6 @@ class Content extends Controller
 
     public function index()
     {
-        $template = new Template();
         $viewData = [];
         MetaTag::set('title', 'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями');
         MetaTag::set('image', formDefaultShareArtUrlPath());
@@ -27,7 +24,7 @@ class Content extends Controller
             'description',
             'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.'
         );
-        return $template->loadView('Content::main_page.index', $viewData);
+        return view('Content::main_page.index', $viewData);
     }
 
     public function tagList(Request $request)

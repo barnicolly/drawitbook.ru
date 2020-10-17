@@ -2,7 +2,6 @@
 
 namespace App\Http\Modules\Auth\Controllers;
 
-use App\Libraries\Template;
 use App\Http\Controllers\Auth\LoginController;
 
 class Login extends LoginController
@@ -15,8 +14,7 @@ class Login extends LoginController
 
     public function showLoginForm()
     {
-        $template = new Template();
-        return $template->loadView('auth.login', []);
+        return view('auth.login', []);
     }
 
     public function dump()

@@ -4,7 +4,6 @@ namespace App\Http\Modules\Arts\Controllers;
 
 use App\Exceptions\NotFoundRelativeArts;
 use App\Http\Controllers\Controller;
-use App\Libraries\Template;
 use App\Services\Arts\ArtsService;
 use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicturesWithTags;
@@ -29,7 +28,6 @@ class Cell extends Controller
 
     public function index()
     {
-        $template = new Template();
         $pictures = Cache::remember(
             'pictures.popular',
             60 * 60,
@@ -46,7 +44,7 @@ class Cell extends Controller
         MetaTag::set('title', $title);
         MetaTag::set('image', formDefaultShareArtUrlPath());
         MetaTag::set('description', $description);
-        return $template->loadView('Arts::cell.index', $viewData);
+        return view('Arts::cell.index', $viewData);
     }
 
     public function tagged(string $tag)
