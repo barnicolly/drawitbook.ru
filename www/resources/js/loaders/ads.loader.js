@@ -34,7 +34,7 @@ export function initAds() {
 }
 
 export function initStackGridAds($stackGrid, pageNumber = 1) {
-    const $monPlaces = $stackGrid.find('.mon-place[data-integrated="true"]');
+    const $monPlaces = $stackGrid.find('.mon-place[data-integrated="true"][data-loaded="false"]');
 
     if ($monPlaces.length) {
         const {configurations, failovers} = getConfigurations();

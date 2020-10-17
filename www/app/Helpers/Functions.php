@@ -30,7 +30,7 @@ if (!function_exists('loadAd')) {
             return view('partials.ad_dummy', ['id' => $id, 'integrated' => $integrated])->render();
         } else {
             $integratedText = $integrated ? 'true' : 'false';
-            return "<div class=\"mon-place\" data-integrated=\"{$integratedText}\" id=\"{$id}\"></div>";
+            return "<div class=\"mon-place\" data-integrated=\"{$integratedText}\" id=\"{$id}\" data-loaded=\"false\">";
         }
     }
 }
