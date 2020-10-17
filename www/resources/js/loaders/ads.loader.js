@@ -69,12 +69,13 @@ function initWatcher($monPlaces, configurations, failovers, pageNumber) {
             const $place = $(this);
             const id = $place.attr('id');
             const placeLoaded = $place.attr('data-loaded') === 'true';
+            const configurationKey = $place.attr('data-configuration-key');
             const isDummy = $place.hasClass('dummy');
             if (!placeLoaded && isOnScreen($place, 500)) {
                 $place.attr('data-loaded', true);
                 if (!isDummy) {
-                    if (typeof configurations[id] !== 'undefined') {
-                        let failover = typeof failovers[id] !== 'undefined'
+                    if (typeof configurations[configurationKey] !== 'undefined') {
+                        let failover = typeof failovers[configurationKey] !== 'undefined'
                             ? failovers[id]
                             : null;
 
@@ -83,7 +84,7 @@ function initWatcher($monPlaces, configurations, failovers, pageNumber) {
                             $place.append($wrapper);
                         }
                         const renderOptions = {
-                            blockId: configurations[id],
+                            blockId: configurations[configurationKey],
                             renderTo: id,
                             async: true,
                             onRender: function (data) {

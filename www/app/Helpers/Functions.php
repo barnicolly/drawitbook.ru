@@ -30,6 +30,7 @@ if (!function_exists('loadAd')) {
             'id' => $idPostFix ? ($id . '-' . $idPostFix): $id,
             'integratedText' => $integrated ? 'true': 'false',
             'isDummy' => isLocal(),
+            'configurationKey' => $id,
         ];
         return view('partials.ad_dummy', $viewData)->render();
     }
