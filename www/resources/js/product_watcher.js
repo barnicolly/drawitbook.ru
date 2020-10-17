@@ -5,7 +5,7 @@ import {
     reachClickBtnShareFacebook, reachClickBtnSharePinterest,
     reachClickBtnShareTelegram,
     reachClickBtnShareTwitter, reachClickBtnShareViber,
-    reachClickBtnShareVk, reachClickBtnShareWhatsapp,
+    reachClickBtnShareVk, reachClickBtnShareWhatsapp, reachClickDownloadMoreBtn,
     reachClickTagItem,
 } from '@js/components/ya_target';
 
@@ -14,6 +14,7 @@ $('body')
     .on('click', '.fullscreen-image__find-similar a', reachClickBtnFindSimilar)
     .on('click', '.tag-list a', reachClickTagItem)
     .on('click', '.rate-button', reachClickBtnRate)
+    .on('click', '.download-more__btn', reachClickDownloadMoreBtn)
     //social
     .on('click', '.jssocials-share-vkontakte a', reachClickBtnShareVk)
     .on('click', '.jssocials-share-telegram a', reachClickBtnShareTelegram)

@@ -52,6 +52,10 @@ export function reachClickBtnRate() {
     reachGoal('click_btn_rate');
 }
 
+export function reachClickDownloadMoreBtn() {
+    reachGoal('click_btn_download_more');
+}
+
 function reachGoal(goal) {
     if (typeof window[yandexCounterName] !== 'undefined') {
         window[yandexCounterName].reachGoal(goal);
