@@ -12,7 +12,7 @@ use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicture;
 use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Arts\GetTagsFromPicture;
-use App\Services\Search\SearchByTags;
+use App\Services\Search\SearchService;
 use Illuminate\Database\Eloquent\Collection;
 use MetaTag;
 
@@ -21,7 +21,7 @@ class Art extends Controller
 
     public function index(
         $id,
-        SearchByTags $searchByTags,
+        SearchService $searchByTags,
         GetTagsFromPicture $getTagsFromPictures
     ) {
         $id = (int) $id;

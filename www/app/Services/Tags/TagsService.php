@@ -53,5 +53,10 @@ limit {$limit}");
             : [];
     }
 
+    public function getByTagSeoName(string $tagSeoName)
+    {
+        return SprTagsModel::where('seo', '=', $tagSeoName)->first();
+    }
+
 }
 

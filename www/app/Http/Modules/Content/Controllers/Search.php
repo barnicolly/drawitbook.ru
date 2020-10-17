@@ -10,8 +10,7 @@ use App\Services\Arts\GetPicture;
 use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Arts\GetTagsFromPicture;
 use App\Services\Paginator\PaginatorService;
-use App\Services\Search\SearchByQuery;
-use App\Services\Search\SearchByTags;
+use App\Services\Search\SearchService;
 use App\Services\Tags\TagsService;
 use App\Services\Validation\SearchValidationService;
 use http\Exception\InvalidArgumentException;
@@ -109,12 +108,12 @@ class Search extends Controller
         try {
             if ($query || $tags) {
                 $tagIds = (new TagsService())->getByTagIdsByNames($tags);
-                $relativePictureIds = (new SearchByQuery())->searchByQuery($query, $tagIds);
+                $relativePictureIds = (new SearchService(1000))->searchByQuery($query, $tagIds);
             } elseif ($targetSimilarId) {
                 $picture = (new GetPicture($targetSimilarId))->getCached();
                 [$shown, $hidden] = (new GetTagsFromPicture())->getTagIds($picture);
                 if ($shown || $hidden) {
-                    $relativePictureIds = (new SearchByTags(51))->searchRelatedPicturesIds($shown, $hidden);
+                    $relativePictureIds = (new SearchService(51))->searchRelatedPicturesIds($shown, $hidden);
                     if ($relativePictureIds) {
                         $relativePictureIds = array_diff($relativePictureIds, [$targetSimilarId]);
                     }

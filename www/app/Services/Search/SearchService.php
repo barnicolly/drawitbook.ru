@@ -5,7 +5,7 @@ namespace App\Services\Search;
 use Illuminate\Support\Facades\DB;
 use sngrl\SphinxSearch\SphinxSearch;
 
-class SearchByTags
+class SearchService
 {
     private $_limit;
 
@@ -14,14 +14,14 @@ class SearchByTags
         $this->_limit = $limit;
     }
 
-    public static function searchPicturesByTagId(int $tagId)
+    public function searchPicturesByTagId(int $tagId)
     {
         $results = DB::table('picture')
             ->select('picture.id')
             ->join('picture_tags', 'picture_tags.picture_id', '=', 'picture.id')
             ->whereRaw('picture_tags.tag_id = ?', [$tagId])
             ->where('picture.is_del', '=', NON_DELETED_ROW)
-            ->limit(1000)
+            ->limit($this->_limit)
             ->get();
         $results = collect($results)->map(
             function ($x) {
@@ -64,13 +64,10 @@ class SearchByTags
     {
         $sphinx = new SphinxSearch();
         $sphinx->search($query, 'drawitbookByQuery')
-            ->limit(1000)
+            ->limit($this->_limit)
             ->setSortMode(\Sphinx\SphinxClient::SPH_SORT_RELEVANCE, '@relevance DESC')
             ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED);
         if ($tags) {
-            if (!$tags) {
-                return [];
-            }
             foreach ($tags as $item) {
                 $sphinx->filter('tag', $item);
             }

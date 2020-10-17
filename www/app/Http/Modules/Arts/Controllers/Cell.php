@@ -2,7 +2,6 @@
 
 namespace App\Http\Modules\Arts\Controllers;
 
-use App\Entities\Picture\PictureModel;
 use App\Exceptions\NotFoundRelativeArts;
 use App\Http\Controllers\Controller;
 use App\Libraries\Template;
@@ -10,13 +9,13 @@ use App\Services\Arts\ArtsService;
 use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Paginator\PaginatorService;
-use App\Services\Search\SearchBySeoTag;
-use App\Services\Search\SearchByTags;
+use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
-use Breadcrumbs;
+use App\Services\Tags\TagsService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Breadcrumbs;
 use MetaTag;
 use Throwable;
 use Validator;
@@ -60,7 +59,7 @@ class Cell extends Controller
                 return $page;
             }
         }
-        $tagInfo = (new SearchBySeoTag($tag))->search();
+        $tagInfo = (new TagsService())->getByTagSeoName($tag);
         if (!$tagInfo) {
             abort(404);
         }
@@ -101,7 +100,7 @@ class Cell extends Controller
         }
         $pageNum = (int) $request->input('page');
         try {
-            $tagInfo = (new SearchBySeoTag($tag))->search();
+            $tagInfo = (new TagsService())->getByTagSeoName($tag);
             if (!$tagInfo) {
                 throw new Exception('Не найден tag');
             }
@@ -153,7 +152,7 @@ class Cell extends Controller
 
     private function formSlicePictureIds(int $tagId, int $pageNum): array
     {
-        $relativePictureIds = SearchByTags::searchPicturesByTagId($tagId);
+        $relativePictureIds = (new SearchService(1000))->searchPicturesByTagId($tagId);
         return (new PaginatorService())->formSlice($relativePictureIds, $pageNum);
     }
 
