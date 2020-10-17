@@ -64,6 +64,12 @@ export function loadStackGrid() {
                         if (res.data.isLastSlice) {
                             $downloadBtn.remove();
                         }
+                        const $rateContainers = $stackGrid.find(`.art-container[data-page="${res.data.page}"]`).find('.rate-control');
+                        if ($rateContainers.length) {
+                            $rateContainers.each(function () {
+                                $(this).customRate('init');
+                            });
+                        }
                     } else {
                         //TODO-misha сообщение об ошибке;
                     }
