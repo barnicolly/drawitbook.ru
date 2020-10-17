@@ -28,6 +28,20 @@
         </div>
 
         <div class="detail-art-page__sidebar sidebar">
+            <div class="form-group">
+                <h3 class="form-group">
+                    Популярные #теги
+                </h3>
+                <div class="tag-list">
+                    @foreach($popularTags as $tagName => $tagsSeoName)
+                        <a href="{{$tagged . '/' . $tagsSeoName }}"
+                           rel="nofollow"
+                           itemprop="url"
+                           title="Поиск по тегу #{{ $tagName  }}"
+                           class="btn btn-link tag">#{{ $tagName }}</a>
+                    @endforeach
+                </div>
+            </div>
             {!! loadAd('sidebar') !!}
         </div>
     </div>

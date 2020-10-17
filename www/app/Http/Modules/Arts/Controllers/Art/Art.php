@@ -2,17 +2,15 @@
 
 namespace App\Http\Modules\Arts\Controllers\Art;
 
-use App\Entities\Picture\PictureModel;
 use App\Http\Controllers\Controller;
 use App\Libraries\Template;
 use App\Services\Arts\ArtsService;
-use App\Services\Seo\SeoService;
-use App\Services\Tags\TagsService;
 use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicture;
 use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Arts\GetTagsFromPicture;
 use App\Services\Search\SearchService;
+use App\Services\Seo\SeoService;
 use Illuminate\Database\Eloquent\Collection;
 use MetaTag;
 
@@ -46,6 +44,8 @@ class Art extends Controller
         $viewData = [
             'picture' => $picture,
             'relativePictures' => $relativePictures,
+            'popularTags' => $this->getPopularTags(),
+            'tagged' => route('arts.cell.tagged', ''),
         ];
         $template = new Template();
         [$title, $description] = (new SeoService())->formTitleAndDescriptionShowArt($id);
@@ -54,6 +54,20 @@ class Art extends Controller
         MetaTag::set('robots', 'noindex');
         MetaTag::set('image', formArtUrlPath($picture->path));
         return $template->loadView('Arts::art.index', $viewData);
+    }
+
+    private function getPopularTags(): array
+    {
+        return [
+            'Мультфильмы' => 'iz-multfilma',
+            'Животные' => 'zhivotnye',
+            'Кошки' => 'koshka',
+            'Собачки' => 'sobachka',
+            'Супергерои' => 'supergeroi',
+            'Единороги' => 'edinorog',
+            'Девочки' => 'devochka',
+            'Цветы' => 'cvety',
+        ];
     }
 
     private function formRelativePictures(array $pictureIds): Collection
