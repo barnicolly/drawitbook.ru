@@ -1,9 +1,10 @@
+<?php $adPostfix = $page ?? 1; ?>
 @foreach($pictures as $index => $picture)
     @if(in_array($index, [5, 12, 18], true))
         <div class="art-container art-container-ad">
             <div class="art-wrapper integration">
                 <div class="integration__content">
-                    {!! loadAd('integrated-' . $index, true) !!}
+                    {!! loadAd('integrated-' . $index, $adPostfix, true) !!}
                 </div>
                 <div class="integration__label">
                     <span class="integration__text float-right">Реклама</span>
@@ -24,7 +25,7 @@
     <div class="art-container art-container-ad">
         <div class="art-wrapper integration">
             <div class="integration__content">
-                {!! loadAd('in_stack_arts_last', true) !!}
+                {!! loadAd('in_stack_arts_last', $adPostfix, true) !!}
             </div>
             <div class="integration__label">
                 <span class="integration__text float-right">Реклама</span>

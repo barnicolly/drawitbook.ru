@@ -24,14 +24,14 @@ if (!function_exists('isLocal')) {
 }
 
 if (!function_exists('loadAd')) {
-    function loadAd(string $id, bool $integrated = false)
+    function loadAd(string $id, string $idPostFix = '', bool $integrated = false)
     {
-        if (isLocal()) {
-            return view('partials.ad_dummy', ['id' => $id, 'integrated' => $integrated])->render();
-        } else {
-            $integratedText = $integrated ? 'true' : 'false';
-            return "<div class=\"mon-place\" data-integrated=\"{$integratedText}\" id=\"{$id}\" data-loaded=\"false\"></div>";
-        }
+        $viewData = [
+            'id' => $idPostFix ? ($id . '-' . $idPostFix): $id,
+            'integratedText' => $integrated ? 'true': 'false',
+            'isDummy' => isLocal(),
+        ];
+        return view('partials.ad_dummy', $viewData)->render();
     }
 }
 

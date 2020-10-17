@@ -1,11 +1,6 @@
-<div class="mon-place dummy" data-loaded="false" data-integrated="{{ $integrated ? 'true': 'false' }}" id="{{ $id }}" style="text-align: center">
-    <?= $id ?>
+<div class="mon-place {{ $isDummy ? 'dummy': '' }}"
+     data-loaded="false"
+     data-integrated="{{ $integratedText }}"
+     id="{{ $id }}">
+    <?= $isDummy ? $id: '' ?>
 </div>
-
-<style>
-    .dummy {
-        height: 200px;
-        width: 100%;
-        background-color: #00b1b3;
-    }
-</style>
