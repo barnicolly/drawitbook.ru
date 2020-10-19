@@ -16,7 +16,7 @@ export function initAds() {
         let configurations = {};
         if (bvw >= 993) {
             configurations = {
-                'in_sidebar': 'R-A-400272-1',
+                'sidebar': 'R-A-400272-1',
                 'after_detail_picture': 'R-A-400272-2',
                 'before_stack': 'R-A-400272-4',
                 'after_first_stack': 'R-A-400272-7',
@@ -28,7 +28,33 @@ export function initAds() {
                 'after_first_stack': 'R-A-400272-6',
             };
         }
-        const failovers = {};
+        let client = 'ca-pub-1368141699085758';
+        const failovers = {
+            'after_detail_picture': {
+                'class': 'adsbygoogle',
+                'data-ad-client': client,
+                'data-ad-slot': '6153216946',
+                'data-full-width-responsive': 'true',
+                'data-ad-format': 'auto',
+                'style': 'display: block',
+            },
+            'before_stack': {
+                'class': 'adsbygoogle',
+                'data-ad-client': client,
+                'data-ad-slot': '1076984235',
+                'data-full-width-responsive': 'true',
+                'data-ad-format': 'auto',
+                'style': 'display: block',
+            },
+            'after_first_stack': {
+                'class': 'adsbygoogle',
+                'data-ad-client': client,
+                'data-ad-slot': 'draw_after_stack',
+                'data-full-width-responsive': 'true',
+                'data-ad-format': 'auto',
+                'style': 'display: block',
+            },
+        }
         return {configurations, failovers};
     }
 }
@@ -58,7 +84,41 @@ export function initStackGridAds($stackGrid, pageNumber = 1) {
                 'in_stack_arts_last': 'R-A-400272-22',
             };
         }
-        const failovers = {};
+        let client = 'ca-pub-1368141699085758';
+        const failovers = {
+            'integrated-5': {
+                'class': 'adsbygoogle',
+                'data-ad-client': client,
+                'data-ad-slot': '6776690019',
+                'data-full-width-responsive': 'true',
+                'data-ad-format': 'auto',
+                'style': 'display: block',
+            },
+            'integrated-12': {
+                'class': 'adsbygoogle',
+                'data-ad-client': client,
+                'data-ad-slot': '6776690019',
+                'data-full-width-responsive': 'true',
+                'data-ad-format': 'auto',
+                'style': 'display: block',
+            },
+            'integrated-18': {
+                'class': 'adsbygoogle',
+                'data-ad-client': client,
+                'data-ad-slot': '6776690019',
+                'data-full-width-responsive': 'true',
+                'data-ad-format': 'auto',
+                'style': 'display: block',
+            },
+            'in_stack_arts_last': {
+                'class': 'adsbygoogle',
+                'data-ad-client': client,
+                'data-ad-slot': '6776690019',
+                'data-full-width-responsive': 'true',
+                'data-ad-format': 'auto',
+                'style': 'display: block',
+            },
+        }
         return {configurations, failovers};
     }
 }
@@ -76,12 +136,16 @@ function initWatcher($monPlaces, configurations, failovers, pageNumber) {
                 if (!isDummy) {
                     if (typeof configurations[configurationKey] !== 'undefined') {
                         let failover = typeof failovers[configurationKey] !== 'undefined'
-                            ? failovers[id]
+                            ? failovers[configurationKey]
                             : null;
 
                         const failoverCallback = () => {
                             const $wrapper = $('<ins>', failover);
                             $place.append($wrapper);
+
+                            if (typeof window.adsbygoogle !== 'undefined') {
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            }
                         }
                         const renderOptions = {
                             blockId: configurations[configurationKey],
