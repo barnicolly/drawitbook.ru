@@ -98,9 +98,6 @@ class Search extends Controller
 
     private function searchByFilters(array $filters, int $pageNum)
     {
-        if (!(new SearchValidationService())->validate($filters)) {
-            throw new InvalidArgumentException();
-        }
         $query = !empty($filters['query']) ? strip_tags($filters['query']) : '';
         $tags = $filters['tags'] ?? [];
         $targetSimilarId = $filters['similar'] ?? 0;
