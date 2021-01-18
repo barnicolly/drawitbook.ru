@@ -28,6 +28,14 @@ role :app, %w{deployer@62.109.31.189}
 	password: fetch(:password)
   }
 
+namespace :tests do
+  desc 'Run tests locally'
+  task :run do
+    run_locally do
+        execute "cd www && npm run php.test"
+    end
+  end
+end
 
 namespace :static do
   desc 'Run the precompile static files task locally'
@@ -62,6 +70,7 @@ namespace :deploy do
   end
 end
 
+before "deploy:starting", "tests:run"
 before "deploy:starting", "static:precompile"
 before "deploy:symlink:shared", "deploy:before_symlink_shared"
 after "deploy:symlink:shared", "deploy:after_symlink_shared"

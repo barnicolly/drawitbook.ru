@@ -10,6 +10,7 @@
         "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack/dev.conf.js",
         "build": "cross-env NODE_ENV=production webpack --config webpack/build.conf.js",
         "build.production": "cross-env NODE_ENV=production PROJECT_DOMAIN='https://drawitbook.ru' webpack --config webpack/build.conf.js",
+        "php.test": "php vendor/phpunit/phpunit/phpunit --testdox",
         "fa.purge": "gulp styles:fa.purge"
     },
     "author": "",
