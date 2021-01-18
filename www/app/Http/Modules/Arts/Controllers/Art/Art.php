@@ -10,8 +10,9 @@ use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Arts\GetTagsFromPicture;
 use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Database\Eloquent\Collection;
-use MetaTag;
 
 class Art extends Controller
 {
@@ -29,7 +30,7 @@ class Art extends Controller
         [$shown, $hidden] = $getTagsFromPictures->getTagIds($picture);
         $relativePictures = [];
         if ($shown || $hidden) {
-            $pictureIds = $searchByTags->searchRelatedPicturesIds($shown, $hidden);
+            $pictureIds = []; //$searchByTags->searchRelatedPicturesIds($shown, $hidden);
             $relativePictures = $pictureIds
                 ? $this->formRelativePictures($pictureIds)
                 : (new ArtsService())->getInterestingArts($id);
@@ -47,10 +48,10 @@ class Art extends Controller
             'tagged' => route('arts.cell.tagged', ''),
         ];
         [$title, $description] = (new SeoService())->formTitleAndDescriptionShowArt($id);
-        MetaTag::set('title', $title);
-        MetaTag::set('description', $description);
-        MetaTag::set('robots', 'noindex');
-        MetaTag::set('image', formArtUrlPath($picture->path));
+        SEOTools::setTitle($title);
+        SEOTools::setDescription($description);
+        SEOMeta::setRobots('noindex');
+        $this->setShareImage(getArtsFolder() . $picture->path);
         return view('Arts::art.index', $viewData);
     }
 

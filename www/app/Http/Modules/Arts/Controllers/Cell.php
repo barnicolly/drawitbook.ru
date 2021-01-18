@@ -13,10 +13,11 @@ use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
 use App\Traits\BreadcrumbsTrait;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Breadcrumbs;
-use MetaTag;
 use Throwable;
 use Tightenco\Collect\Support\Collection as CollectionAlias;
 use Validator;
@@ -51,9 +52,9 @@ class Cell extends Controller
             'relativePictures' => $pictures,
             'breadcrumbs' => $this->breadcrumbs,
         ];
-        MetaTag::set('title', $title);
-        MetaTag::set('image', formDefaultShareArtUrlPath());
-        MetaTag::set('description', $description);
+        SEOTools::setTitle($title);
+        $this->setShareImage(formDefaultShareArtUrlPath(true));
+        SEOTools::setDescription($description);
         return view('Arts::cell.index', $viewData);
     }
 
@@ -74,11 +75,11 @@ class Cell extends Controller
         $countSearchResults = $viewData['countRelatedPictures'];
         $relativePictures = $viewData['pictures'];
         [$title, $description] = $this->formCategoryTitleAndDescription($countSearchResults, $tagInfo->name);
-        MetaTag::set('title', $title);
-        MetaTag::set('description', $description);
+        SEOTools::setTitle($title);
+        SEOTools::setDescription($description);
         $firstPicture = $relativePictures->first();
         if ($firstPicture) {
-            MetaTag::set('image', formArtUrlPath($firstPicture->path));
+            $this->setShareImage(getArtsFolder() . $firstPicture->path);
         }
         $this->addBreadcrumb('Рисунки по клеточкам', $this->routeService->getRouteArtsCell());
         $this->addBreadcrumb(mbUcfirst($tagInfo->name));

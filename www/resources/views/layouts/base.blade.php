@@ -5,22 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    <meta name="yandex-verification" content="e78a61097fbbb899"/>
-    <meta name="google-site-verification" content="44qvqCqXAJ59PJZMKJB4zmk8zDa57Ff1mpau2pNfm3Q"/>
+    @include('layouts.partials.base.verification')
     @include('layouts.partials.base.favicon_pack')
-    <title>{!! MetaTag::get('title') !!}</title>
+    @stack('meta')
     <link rel="stylesheet" href="{{ getUrlFromManifest('vendors.css') }}">
     <link rel="stylesheet" href="{{ getUrlFromManifest('app.css') }}">
     @auth
         <link rel="stylesheet" href="{{ getUrlFromManifest('admin.css') }}">
     @endauth
     @stack('links')
-    {!! MetaTag::get('keywords') ? MetaTag::tag('keywords') : '' !!}
-    {!! MetaTag::get('image') ? MetaTag::tag('image') : '' !!}
-    {!! MetaTag::get('robots') ? MetaTag::tag('robots') : '' !!}
-    {!! MetaTag::get('description') ? MetaTag::tag('description') : '' !!}
-    {!! MetaTag::openGraph() !!}
-    {!! MetaTag::twitterCard() !!}
+    {!! SEOMeta::generate() !!}
+    {!! OpenGraph::generate() !!}
+    {!! Twitter::generate() !!}
     @stack('styles')
     @if (!isLocal() && config('app.debug') === false)
         @include('layouts.partials.metrics')

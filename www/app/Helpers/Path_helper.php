@@ -58,10 +58,12 @@ if (!function_exists('formArtWebpFormatRelativePath')) {
 }
 
 if (!function_exists('formDefaultShareArtUrlPath')) {
-    function formDefaultShareArtUrlPath(): string
+    function formDefaultShareArtUrlPath(bool $relative = false): string
     {
         $artFolder = getArtsFolder();
-        return asset("{$artFolder}/d4/11/d4113a118447cb7650a7a7d84b45b153.jpeg");
+        return $relative
+            ? "{$artFolder}d4/11/d4113a118447cb7650a7a7d84b45b153.jpeg"
+            : asset("{$artFolder}d4/11/d4113a118447cb7650a7a7d84b45b153.jpeg");
     }
 }
 

@@ -14,5 +14,4 @@
 Route::get('/', function () {
     return view('welcome');
 });*/
-
-Auth::routes();
+\Illuminate\Support\Facades\Auth::routes();

@@ -2,8 +2,8 @@
 
 namespace App\Http\ViewComposers;
 
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\View\View;
-use MetaTag;
 
 class Error500Composer
 {
@@ -11,7 +11,7 @@ class Error500Composer
     {
         $title = 'Произошла ошибка на стороне сервера';
         $viewData = [];
-        MetaTag::set('title', $title);
+        SEOTools::setTitle($title);
         return $view->with($viewData);
     }
 }

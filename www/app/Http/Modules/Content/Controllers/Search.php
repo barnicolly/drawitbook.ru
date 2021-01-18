@@ -12,10 +12,10 @@ use App\Services\Arts\GetTagsFromPicture;
 use App\Services\Paginator\PaginatorService;
 use App\Services\Search\SearchService;
 use App\Services\Tags\TagsService;
-use App\Services\Validation\SearchValidationService;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\SEOTools;
 use http\Exception\InvalidArgumentException;
 use Illuminate\Http\Request;
-use MetaTag;
 use Validator;
 use Breadcrumbs;
 
@@ -42,8 +42,8 @@ class Search extends Controller
         $viewData['countRelatedPictures'] = $countSearchResults;
         $viewData['pictures'] = $relativePictures;
         //TODO-misha добавить title;
-
-        MetaTag::set('robots', 'noindex');
+        SEOTools::setTitle('Поиск по сайту');
+        SEOMeta::setRobots('noindex, follow');
         return view('Content::search.index', $viewData)->render();
     }
 

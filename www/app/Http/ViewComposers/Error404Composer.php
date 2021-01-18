@@ -2,8 +2,9 @@
 
 namespace App\Http\ViewComposers;
 
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\View\View;
-use MetaTag;
 
 class Error404Composer
 {
@@ -13,7 +14,8 @@ class Error404Composer
         $viewData = [
             'incorrectUrl' => url()->full(),
         ];
-        MetaTag::set('title', $title);
+        SEOTools::setTitle($title);
+        SEOMeta::setRobots('noindex, follow');
         return $view->with($viewData);
     }
 }

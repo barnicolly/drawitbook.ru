@@ -180,7 +180,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 //        sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
-//        Torann\LaravelMetaTags\MetaTagsServiceProvider::class,
         /*
          * Custom Service Providers
          */

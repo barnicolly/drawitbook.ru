@@ -4,8 +4,8 @@ namespace App\Http\Modules\Content\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\Tags\TagsService;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
-use MetaTag;
 use Validator;
 
 class Content extends Controller
@@ -18,12 +18,11 @@ class Content extends Controller
     public function index()
     {
         $viewData = [];
-        MetaTag::set('title', 'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями');
-        MetaTag::set('image', formDefaultShareArtUrlPath());
-        MetaTag::set(
-            'description',
-            'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.'
-        );
+        $title =  'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями';
+        $description = 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.';
+        SEOTools::setTitle($title);
+        $this->setShareImage(formDefaultShareArtUrlPath(true));
+        SEOTools::setDescription($description);
         return view('Content::main_page.index', $viewData);
     }
 
