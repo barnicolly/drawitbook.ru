@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'roles' => \App\Http\Middleware\CheckRole::class,
         'ajax' => \App\Http\Middleware\OnlyAjax::class,
         'no_get' => \App\Http\Middleware\WithoutGet::class,
+        'lower_case' => \App\Http\Middleware\InLowerCase::class,
     ];
 
     /**
