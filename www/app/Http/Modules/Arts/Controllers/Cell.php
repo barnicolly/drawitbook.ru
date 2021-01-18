@@ -15,7 +15,6 @@ use App\Services\Tags\TagsService;
 use App\Traits\BreadcrumbsTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Breadcrumbs;
 use MetaTag;
 use Throwable;
@@ -28,22 +27,20 @@ class Cell extends Controller
     use BreadcrumbsTrait;
 
     private $routeService;
+    private $artsService;
+    private $seoService;
 
-    public function __construct(RouteService $routeService)
+    public function __construct(RouteService $routeService, ArtsService $artsService, SeoService $seoService)
     {
         $this->breadcrumbs = new CollectionAlias();
         $this->routeService = $routeService;
+        $this->seoService = $seoService;
+        $this->artsService = $artsService;
     }
 
     public function index()
     {
-        $pictures = Cache::remember(
-            'pictures.popular',
-            60 * 60,
-            function () {
-                return (new ArtsService())->getInterestingArts(0, 25);
-            }
-        );
+        $pictures = $this->artsService->getInterestingArts(0, 25);
         $checkExistPictures = new CheckExistPictures($pictures);
         $pictures = $checkExistPictures->check();
         $title = 'Рисунки по клеточкам | Drawitbook.ru';
@@ -63,13 +60,6 @@ class Cell extends Controller
     public function tagged(string $tag)
     {
         $pageNum = 1;
-        $cacheName = 'arts.cell.tagged.' . $tag . '.' . $pageNum;
-        if (!isLocal() && empty(session('is_admin'))) {
-            $page = Cache::get($cacheName);
-            if ($page) {
-                return $page;
-            }
-        }
         $tagInfo = (new TagsService())->getByTagSeoName($tag);
         if (!$tagInfo) {
             abort(404);
@@ -94,9 +84,6 @@ class Cell extends Controller
         $this->addBreadcrumb(mbUcfirst($tagInfo->name));
         $viewData['breadcrumbs'] = $this->breadcrumbs;
         $page = view('Arts::cell.tagged', $viewData)->render();
-        if (!isLocal()) {
-            Cache::put($cacheName, $page, config('cache.expiration'));
-        }
         return $page;
     }
 
@@ -174,8 +161,8 @@ class Cell extends Controller
     {
         $tagName = mbUcfirst($tagName);
         $prefix = 'Рисунки по клеточкам';
-        $title = (new SeoService())->createCategoryTitle($prefix, $tagName, $countSearchResults);
-        $description = (new SeoService())->createCategoryDescription($prefix, $tagName, $countSearchResults);
+        $title = $this->seoService->createCategoryTitle($prefix, $tagName, $countSearchResults);
+        $description = $this->seoService->createCategoryDescription($prefix, $tagName, $countSearchResults);
         return [$title, $description];
     }
 
@@ -184,7 +171,7 @@ class Cell extends Controller
         $relativePictures = (new GetPicturesWithTags($relativePictureIds))->get();
         if ($relativePictures) {
             foreach ($relativePictures as $index => $relativePicture) {
-                (new SeoService())->setArtAlt($relativePicture);
+                $this->seoService->setArtAlt($relativePicture);
             }
         }
         return $relativePictures;
