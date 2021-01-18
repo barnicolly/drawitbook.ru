@@ -2,29 +2,47 @@
 
 Route::group(
     [
+        'prefix' => '/risunki-po-kletochkam',
         'middleware' => 'web',
         'namespace' => 'App\Http\Modules\Arts\Controllers'
     ],
     function () {
-        Route::get('/risunki-po-kletochkam', ['uses' => 'Cell@index'])
-            ->middleware(['no_get'])
-            ->name('arts.cell');
 
-        Route::get('/risunki-po-kletochkam/{tag}', ['uses' => 'Cell@tagged'])
-            ->middleware(['no_get'])
-            ->name('arts.cell.tagged');
+        Route::group(
+            [
+                'middleware' => ['lower_case', 'no_get'],
+            ],
+            function () {
+                Route::get('/', ['uses' => 'Cell@index'])
+                    ->name('arts.cell');
 
-        Route::get('/risunki-po-kletochkam/{tag}/slice', ['uses' => 'Cell@slice'])->name('arts.cell.tagged.slice');
+                Route::get('/{tag}', ['uses' => 'Cell@tagged'])
+                    ->name('arts.cell.tagged');
+            });
+
+        Route::get('/{tag}/slice', ['uses' => 'Cell@slice'])
+            ->name('arts.cell.tagged.slice');
     });
 
 Route::group(
     [
+        'prefix' => '/arts',
         'middleware' => 'web',
         'namespace' => 'App\Http\Modules\Arts\Controllers\Art'
     ],
     function () {
-        Route::get('/arts/{id}', ['uses' => 'Art@index'])->name('art');
-        Route::post('/arts/{id}/like', ['uses' => 'Rate@like'])->middleware(['ajax']);
-        Route::post('/arts/{id}/dislike', ['uses' => 'Rate@dislike'])->middleware(['ajax']);
-        Route::post('/arts/{id}/claim', ['uses' => 'Claim@register']);
+        Route::get('/{id}', ['uses' => 'Art@index'])
+            ->middleware(['lower_case', 'no_get'])
+            ->name('art');
+
+        Route::group(
+            [
+                'middleware' => ['ajax'],
+            ],
+            function () {
+                Route::post('/{id}/like', ['uses' => 'Rate@like']);
+                Route::post('/{id}/dislike', ['uses' => 'Rate@dislike']);
+                Route::post('/{id}/claim', ['uses' => 'Claim@register']);
+            });
+
     });
