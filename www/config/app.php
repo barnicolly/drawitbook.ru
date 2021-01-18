@@ -179,15 +179,18 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
-        Torann\LaravelMetaTags\MetaTagsServiceProvider::class,
-        Waavi\Sanitizer\Laravel\SanitizerServiceProvider::class,
-        DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
+//        sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
+//        Torann\LaravelMetaTags\MetaTagsServiceProvider::class,
         /*
          * Custom Service Providers
          */
         App\Providers\ModulesServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
+        /*
+         * Vendor Service Providers
+         * */
+        DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
+        Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
     ],
 
     /*
@@ -219,6 +222,7 @@ return [
         'File' => Illuminate\Support\Facades\File::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
+        'Http' => Illuminate\Support\Facades\Http::class,
         'Lang' => Illuminate\Support\Facades\Lang::class,
         'Log' => Illuminate\Support\Facades\Log::class,
         'Mail' => Illuminate\Support\Facades\Mail::class,
@@ -238,9 +242,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Modules' => App\Providers\ModulesServiceProvider::class,
-        'MetaTag'   => Torann\LaravelMetaTags\Facades\MetaTag::class,
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
-        'Sanitizer' => Waavi\Sanitizer\Laravel\Facade::class,
+        'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::class,
     ],
 

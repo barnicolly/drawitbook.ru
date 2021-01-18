@@ -8,27 +8,29 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.2.5",
+        "artesaos/seotools": "^0.19.1",
         "atehnix/vk-client": "^1.3",
+        "bensampo/laravel-enum": "^2.2",
         "davejamesmiller/laravel-breadcrumbs": "5.x",
-        "fideloper/proxy": "^4.0",
-        "guzzlehttp/guzzle": "~6.0",
-        "htmlmin/htmlmin": "^5.8",
-        "laravel/framework": "5.8.*",
-        "laravel/tinker": "^1.0",
-        "sngrl/sphinxsearch": "dev-master",
-        "spatie/laravel-sitemap": "^5.3",
-        "torann/laravel-meta-tags": "^3.0",
-        "waavi/sanitizer": "~1.0"
+        "fideloper/proxy": "^4.2",
+        "fruitcake/laravel-cors": "^1.0",
+        "guzzlehttp/guzzle": "^6.3",
+        "htmlmin/htmlmin": "^7.0",
+        "laravel/framework": "^7.0",
+        "laravel/tinker": "^2.0",
+        "laravel/ui": "^2.5",
+        "spatie/data-transfer-object": "^1.13",
+        "spatie/laravel-sitemap": "^5.8"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
-        "beyondcode/laravel-dump-server": "^1.0",
-        "filp/whoops": "^2.0",
-        "fzaninotto/faker": "^1.4",
-        "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
-        "phpunit/phpunit": "^7.5"
+        "barryvdh/laravel-ide-helper": "^2.8",
+        "facade/ignition": "^2.0",
+        "fzaninotto/faker": "^1.9.1",
+        "mockery/mockery": "^1.3.1",
+        "nunomaduro/collision": "^4.1",
+        "phpunit/phpunit": "^8.5"
     },
     "config": {
         "optimize-autoloader": true,
@@ -41,11 +43,6 @@
         }
     },
     "autoload": {
-        "files": [
-            "app/Helpers/Functions.php",
-            "app/Helpers/Path_helper.php",
-            "bootstrap/constants.php"
-        ],
         "psr-4": {
             "App\\": "app/"
         },
@@ -59,9 +56,12 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "scripts": {
+        "ide": [
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta",
+            "php artisan ide-helper:models -N"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

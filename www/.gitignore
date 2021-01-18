@@ -24,3 +24,9 @@ storage/framework/views
 storage/framework/sessions
 ^storage/framework/cache/(?!\.gitignore).+$
 storage/framework/cache
+
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
