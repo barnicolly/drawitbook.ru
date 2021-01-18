@@ -1,7 +1,9 @@
 @extends('Arts::template.landing')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('arts.cell.tagged', mbUcfirst($tag->name)) }}
+    @if (!empty($breadcrumbs))
+        {{ Breadcrumbs::render('breadcrumbs.dynamic', $breadcrumbs) }}
+    @endif
 @endsection
 
 @push('links')

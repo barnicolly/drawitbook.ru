@@ -1,7 +1,9 @@
 @extends('layouts.public.layout')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('arts.cell') }}
+    @if (!empty($breadcrumbs))
+        {{ Breadcrumbs::render('breadcrumbs.dynamic', $breadcrumbs) }}
+    @endif
 @endsection
 
 @section('layout.content')

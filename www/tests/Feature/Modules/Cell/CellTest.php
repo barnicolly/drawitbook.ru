@@ -9,6 +9,12 @@ use Tests\TestCase;
 class CellTest extends TestCase
 {
 
+    public function testCellIndexResponseCode200(): void
+    {
+        $response = $this->get((new RouteService())->getRouteArtsCell());
+        $response->assertStatus(200);
+    }
+
     public function providerTestCellCategoryResponseCode200(): array
     {
         return [
@@ -32,12 +38,6 @@ class CellTest extends TestCase
     public function testCellCategoryResponseCode200(string $tag): void
     {
         $response = $this->get((new RouteService())->getRouteArtsCellTagged($tag));
-        $response->assertStatus(200);
-    }
-
-    public function testCellIndexResponseCode200(): void
-    {
-        $response = $this->get((new RouteService())->getRouteArtsCell());
         $response->assertStatus(200);
     }
 

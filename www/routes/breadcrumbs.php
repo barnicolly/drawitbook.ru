@@ -1,15 +1,13 @@
 <?php
 
 Breadcrumbs::for('home', function ($trail) {
-    $trail->push('Главная', '/', ['icon' => 'fa fa-home']);
+    $trail->push('Главная', '/');
 });
 
-Breadcrumbs::for('arts.cell', function ($trail) {
+Breadcrumbs::for('breadcrumbs.dynamic', function ($trail, $breadcrumbs) {
     $trail->parent('home');
-    $trail->push('Рисунки по клеточкам', '/risunki-po-kletochkam');
-});
 
-Breadcrumbs::for('arts.cell.tagged', function ($trail, $tag) {
-    $trail->parent('arts.cell');
-    $trail->push($tag);
+    foreach ($breadcrumbs as $breadcrumb) {
+        $trail->push($breadcrumb->title, $breadcrumb->url);
+    }
 });

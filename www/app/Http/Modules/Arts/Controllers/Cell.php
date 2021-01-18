@@ -8,22 +8,31 @@ use App\Services\Arts\ArtsService;
 use App\Services\Arts\CheckExistPictures;
 use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Paginator\PaginatorService;
+use App\Services\Route\RouteService;
 use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
+use App\Traits\BreadcrumbsTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Breadcrumbs;
 use MetaTag;
 use Throwable;
+use Tightenco\Collect\Support\Collection as CollectionAlias;
 use Validator;
 
 class Cell extends Controller
 {
 
-    public function __construct()
+    use BreadcrumbsTrait;
+
+    private $routeService;
+
+    public function __construct(RouteService $routeService)
     {
+        $this->breadcrumbs = new CollectionAlias();
+        $this->routeService = $routeService;
     }
 
     public function index()
@@ -37,10 +46,14 @@ class Cell extends Controller
         );
         $checkExistPictures = new CheckExistPictures($pictures);
         $pictures = $checkExistPictures->check();
-        $viewData['relativePictures'] = $pictures;
-        $viewData['tagged'] = $this->formTagUrlPrefix();
         $title = 'Рисунки по клеточкам | Drawitbook.ru';
         $description = 'Рисунки по клеточкам. Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.';
+        $this->addBreadcrumb('Рисунки по клеточкам');
+        $viewData = [
+            'tagged' => $this->formTagUrlPrefix(),
+            'relativePictures' => $pictures,
+            'breadcrumbs' => $this->breadcrumbs,
+        ];
         MetaTag::set('title', $title);
         MetaTag::set('image', formDefaultShareArtUrlPath());
         MetaTag::set('description', $description);
@@ -63,11 +76,11 @@ class Cell extends Controller
         }
         try {
             $viewData = $this->formViewData($tagInfo->id, $pageNum);
-            $viewData['tag'] = $tagInfo;
-            $viewData['canonical'] = route('arts.cell.tagged', $tag);
         } catch (NotFoundRelativeArts $e) {
             return abort(404);
         }
+        $viewData['tag'] = $tagInfo;
+        $viewData['canonical'] = route('arts.cell.tagged', $tag);
         $countSearchResults = $viewData['countRelatedPictures'];
         $relativePictures = $viewData['pictures'];
         [$title, $description] = $this->formCategoryTitleAndDescription($countSearchResults, $tagInfo->name);
@@ -77,6 +90,9 @@ class Cell extends Controller
         if ($firstPicture) {
             MetaTag::set('image', formArtUrlPath($firstPicture->path));
         }
+        $this->addBreadcrumb('Рисунки по клеточкам', $this->routeService->getRouteArtsCell());
+        $this->addBreadcrumb(mbUcfirst($tagInfo->name));
+        $viewData['breadcrumbs'] = $this->breadcrumbs;
         $page = view('Arts::cell.tagged', $viewData)->render();
         if (!isLocal()) {
             Cache::put($cacheName, $page, config('cache.expiration'));
