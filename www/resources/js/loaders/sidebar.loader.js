@@ -1,5 +1,4 @@
-export function loadSidebar() {
-    const $sidebar = $('.sidebar');
+export function loadSidebar($sidebar) {
     if ($sidebar.length) {
         import (/* webpackChunkName: "ResizeSensor" */'@plugins/sticky/ResizeSensor')
             .then(_ => {

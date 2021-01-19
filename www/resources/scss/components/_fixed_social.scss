@@ -1,18 +1,20 @@
 .fixed-shared-block-wrapper {
-    position: relative;
+    display: flex;
 
-    .fixed-shared-block {
-        position: absolute;
-        top: 50px;
-        right: -20px;
+    .fixed-shared-block__sidebar {
+        flex: 0 0 50px;
+        height: 500px;
+
+        width: 50px;
+
+        padding-left: 10px;
 
         @media only screen and (max-width: 1300px) {
             display: none;
         }
+    }
 
-        .fixed-shared-block__inner {
-            position: fixed;
-        }
+    .fixed-shared-block {
 
         .jssocials-share {
             padding: 10px;

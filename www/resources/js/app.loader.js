@@ -12,6 +12,7 @@ import { loadSidebar } from '@js/loaders/sidebar.loader';
 import { SentryInstance } from '@js/sentry';
 import { initArtControls } from '@js/loaders/art_control.loader';
 import { FixedShare } from '@js/components/fixed_share';
+import { isMobileOrTablet } from '@js/helpers/screen';
 
 new SentryInstance();
 
@@ -52,8 +53,16 @@ $(function () {
         });
     }
 
+    if (!isMobileOrTablet()) {
+        const $sidebar = $('.fixed-shared-block__sidebar');
+        if ($sidebar.length) {
+            loadSidebar($sidebar);
+        }
+    }
+
     loadFixedShared();
-    loadSidebar();
-    initArtControls($('.art-control'))
+    loadSidebar($('.sidebar'));
+    initArtControls($('.art-control'));
+
 
 });
