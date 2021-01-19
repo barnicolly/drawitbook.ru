@@ -12,36 +12,18 @@ export function reachClickBtnFindSimilar() {
     reachGoal('click_btn_find_similar');
 }
 
-export function reachClickBtnShareVk() {
-    reachGoal('share_vk');
+export function reachClickSharePageFromFixedBar() {
+    reachGoal('share_page.fixed_block');
+    reachClickSharePage();
 }
 
-export function reachClickBtnShareTelegram() {
-    reachGoal('share_telegram');
+export function reachClickBtnShareInFixedShare() {
+    reachGoal('share_page.fixed_share');
+    reachClickSharePage();
 }
 
-export function reachClickBtnShareTwitter() {
-    reachGoal('share_twitter');
-}
-
-export function reachClickBtnShareFacebook() {
-    reachGoal('share_facebook');
-}
-
-export function reachClickBtnSharePinterest() {
-    reachGoal('share_pinterest');
-}
-
-export function reachClickBtnShareWhatsapp() {
-    reachGoal('share_whatsapp');
-}
-
-export function reachClickBtnShareViber() {
-    reachGoal('share_viber');
-}
-
-export function reachClickBtnShareEmail() {
-    reachGoal('share_email');
+function reachClickSharePage() {
+    reachGoal('share_page');
 }
 
 export function reachClickTagItem() {

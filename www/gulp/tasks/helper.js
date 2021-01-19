@@ -25,6 +25,7 @@ gulp.task('styles:fa.purge', function () {
                 'app/Http/Modules/Open/**/*.php',
                 'resources/views/**/*.php',
                 path.join(folderPath.node_modules, 'jssocials/dist/jssocials.js'),
+                'resources/js/**/*.js',
             ]
         }))
         .pipe(plugins.rename('fa-purged.min.css'))

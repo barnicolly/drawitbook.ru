@@ -11,8 +11,15 @@ import { loadFancybox } from '@js/loaders/fancybox.loader';
 import { loadSidebar } from '@js/loaders/sidebar.loader';
 import { SentryInstance } from '@js/sentry';
 import { initArtControls } from '@js/loaders/art_control.loader';
+import { FixedShare } from '@js/components/fixed_share';
 
 new SentryInstance();
+
+const fixedShareOptions = {
+    collapseText: 'Лучшая благодарность',
+    titleText: 'Лучшая благодарность',
+    text: 'Простой репост сайта в соц. сети очень поможет нам. Спасибо.',
+};
 
 loadLazyloadImg();
 loadStackGrid();
@@ -25,6 +32,9 @@ initFixedHeader($('header').first());
 loadFancybox($('body').find('.fullscreen-image__link'));
 
 $(function () {
+    const fixedShareInstance = new FixedShare(fixedShareOptions);
+    fixedShareInstance.init();
+
     let backUpButtonElement = new backUpButton();
     backUpButtonElement.create();
 

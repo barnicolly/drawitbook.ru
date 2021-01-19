@@ -16,8 +16,7 @@ use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use http\Exception\InvalidArgumentException;
 use Illuminate\Http\Request;
-use Validator;
-use Breadcrumbs;
+use Illuminate\Support\Facades\Validator;
 
 class Search extends Controller
 {
@@ -31,7 +30,7 @@ class Search extends Controller
                 1
             );
         } catch (InvalidArgumentException $e) {
-            return abort(404);
+            abort(404);
         }
         if (!$relativePictures) {
             $viewData['popularPictures'] = (new ArtsService())->getInterestingArts(0, 10);
