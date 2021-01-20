@@ -24,9 +24,9 @@ class ArtTest extends TestCase
     /**
      * @dataProvider providerTestArtPageResponseCode200
      *
-     * @param string $id
+     * @param int $id
      */
-    public function testArtPageResponseCode200(string $id): void
+    public function testArtPageResponseCode200(int $id): void
     {
         $response = $this->get((new RouteService())->getRouteArt($id));
         $response->assertStatus(200);

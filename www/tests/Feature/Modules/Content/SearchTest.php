@@ -17,6 +17,6 @@ class SearchTest extends TestCase
     public function testPageHasRobotsNoindex(): void
     {
         $response = $this->get((new RouteService())->getRouteSearch());
-        $response->assertSee('<meta name="robots" content="noindex">', false);
+        $response->assertSee('<meta name="robots" content="noindex, follow">', false);
     }
 }
