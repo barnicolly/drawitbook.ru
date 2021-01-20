@@ -3,7 +3,6 @@
 namespace App\Services\Search;
 
 use Foolz\SphinxQL\Drivers\Mysqli\Connection;
-use Foolz\SphinxQL\Helper;
 use Foolz\SphinxQL\SphinxQL;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +15,7 @@ class SearchService
     public function __construct()
     {
         $this->connection = new Connection();
-        $this->connection->setParams(['host' => env('SEARCH_HOST'), 'port' => 9306]);
+        $this->connection->setParams(['host' => config('app.search_host_sphinx'), 'port' => 9306]);
     }
 
     public function setLimit(int $limit): SearchService

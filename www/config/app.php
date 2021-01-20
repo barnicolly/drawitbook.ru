@@ -46,6 +46,7 @@ return [
 
     'manifest' => $manifest,
 
+    'search_host_sphinx' => env('SEARCH_HOST', 'http://localhost'),
     /*
     |--------------------------------------------------------------------------
     | Application URL
