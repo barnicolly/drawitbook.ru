@@ -1,29 +1,10 @@
-.fixed-shared-block-wrapper {
-    display: flex;
+.fixed-shared-block {
 
-    .fixed-shared-block__sidebar {
-        flex: 0 0 50px;
-        height: 500px;
-
-        width: 50px;
-
-        padding-left: 10px;
-
-        @media only screen and (max-width: 1300px) {
-            display: none;
-        }
+    .jssocials-share {
+        padding: 10px;
     }
 
-    .fixed-shared-block {
-
-        .jssocials-share {
-            padding: 10px;
-        }
-
-        .jssocials-share .fa {
-           font-size: 24px;
-        }
+    .jssocials-share .fa {
+        font-size: 24px;
     }
 }
-
-

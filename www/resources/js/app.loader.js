@@ -54,7 +54,7 @@ $(function () {
     }
 
     if (!isMobileOrTablet()) {
-        const $sidebar = $('.fixed-shared-block__sidebar');
+        const $sidebar = $('.page-layout__share');
         if ($sidebar.length) {
             loadSidebar($sidebar);
         }
