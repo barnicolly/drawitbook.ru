@@ -11,7 +11,6 @@ use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Arts\GetTagsFromPicture;
 use App\Services\Paginator\PaginatorService;
 use App\Services\Search\SearchService;
-use App\Services\Tags\TagsService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use http\Exception\InvalidArgumentException;
@@ -35,6 +34,7 @@ class Search extends Controller
         if (!$relativePictures) {
             $viewData['popularPictures'] = (new ArtsService())->getInterestingArts(0, 10);
         }
+        $viewData['searchQuery'] = !empty($filters['query']) && is_string($filters['query']) ? $filters['query'] : '';
         $viewData['filters'] = $filters;
         $viewData['isLastSlice'] = $isLastSlice;
         $viewData['countLeftPictures'] = $countLeftPictures;
@@ -98,18 +98,20 @@ class Search extends Controller
     private function searchByFilters(array $filters, int $pageNum)
     {
         $query = !empty($filters['query']) ? strip_tags($filters['query']) : '';
-        $tags = $filters['tags'] ?? [];
         $targetSimilarId = $filters['similar'] ?? 0;
         $relativePictureIds = [];
         try {
-            if ($query || $tags) {
-                $tagIds = (new TagsService())->getByTagIdsByNames($tags);
-                $relativePictureIds = (new SearchService(1000))->searchByQuery($query, $tagIds);
+            if ($query) {
+                $relativePictureIds = (new SearchService())
+                    ->setLimit(1000)
+                    ->searchByQuery($query);
             } elseif ($targetSimilarId) {
                 $picture = (new GetPicture($targetSimilarId))->getCached();
                 [$shown, $hidden] = (new GetTagsFromPicture())->getTagIds($picture);
                 if ($shown || $hidden) {
-                    $relativePictureIds = (new SearchService(51))->searchRelatedPicturesIds($shown, $hidden);
+                    $relativePictureIds = (new SearchService())
+                        ->setLimit(51)
+                        ->searchRelatedPicturesIds($shown, $hidden);
                     if ($relativePictureIds) {
                         $relativePictureIds = array_diff($relativePictureIds, [$targetSimilarId]);
                     }

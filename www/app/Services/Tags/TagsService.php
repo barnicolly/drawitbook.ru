@@ -44,15 +44,6 @@ limit {$limit}");
         return $results;
     }
 
-    public function getByTagIdsByNames(array $tagNames): array
-    {
-        return $tagNames
-            ? SprTagsModel::whereIn('name', $tagNames)
-                ->pluck('id')
-                ->toArray()
-            : [];
-    }
-
     public function getByTagSeoName(string $tagSeoName)
     {
         return SprTagsModel::where('seo', '=', $tagSeoName)->first();

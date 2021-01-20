@@ -2,26 +2,113 @@
 
 namespace App\Services\Search;
 
+use Foolz\SphinxQL\Drivers\Mysqli\Connection;
+use Foolz\SphinxQL\Helper;
+use Foolz\SphinxQL\SphinxQL;
 use Illuminate\Support\Facades\DB;
-use sngrl\SphinxSearch\SphinxSearch;
 
 class SearchService
 {
-    private $_limit;
+    private $connection = null;
+    private $index = 'drawitbookByQuery';
+    private $limit = 15;
 
-    public function __construct(int $limit = 15)
+    public function __construct()
     {
-        $this->_limit = $limit;
+        $this->connection = new Connection();
+        $this->connection->setParams(['host' => env('SEARCH_HOST'), 'port' => 9306]);
     }
 
-    public function searchPicturesByTagId(int $tagId)
+    public function setLimit(int $limit): SearchService
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    public function searchByQuery(string $query): array
+    {
+        try {
+            $filters = [
+                'query' => $query,
+            ];
+            $result = $this->searchByString($filters, 0, 20);
+            if (!empty($result)) {
+                return array_column($result, 'id');
+            }
+            return [];
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
+    public function searchRelatedPicturesIds(array $shown, array $hidden = [], int $excludeQuestionId = 0): array
+    {
+        try {
+            $this->index = 'drawItBookSearchByTag';
+            $result = (new SphinxQL($this->connection))
+                ->select('id', 'weight() AS weight')
+                ->option(
+                    'field_weights',
+                    [
+                        'hidden_tag' => 3,
+                        'tag' => 8,
+                    ]
+                )
+                ->from($this->index)
+                ->limit($this->limit);
+            if (!empty($shown)) {
+                $result->where('tag', 'IN', $shown);
+            }
+            if (!empty($hidden)) {
+                $result->where('hidden_tag', 'IN', $hidden);
+            }
+            if ($excludeQuestionId) {
+                $result->where('id', 'NOT IN', [$excludeQuestionId]);
+            }
+            $result = $result->execute()
+                ->fetchAllAssoc();
+            if (!empty($result)) {
+                return array_column($result, 'id');
+            }
+            return [];
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
+    private function searchByString(array $filters, int $excludeQuestionId = 0)
+    {
+        $result = (new SphinxQL($this->connection))
+            ->select('id', 'query', 'weight() AS weight')
+            ->from($this->index)
+            ->limit($this->limit);
+
+        $query = $filters['query'] ?? '';
+        if ($query) {
+            $exploded = explode(' ', $query);
+            $exploded = array_filter(
+                $exploded,
+                function ($item) {
+                    return $item !== '';
+                }
+            );
+            $result->match('query', implode('||', $exploded), true);
+        }
+        if ($excludeQuestionId) {
+            $result->where('id', 'NOT IN', [$excludeQuestionId]);
+        }
+        return $result->execute()
+            ->fetchAllAssoc();
+    }
+
+    public function searchByTagId(int $tagId): array
     {
         $results = DB::table('picture')
             ->select('picture.id')
             ->join('picture_tags', 'picture_tags.picture_id', '=', 'picture.id')
             ->whereRaw('picture_tags.tag_id = ?', [$tagId])
             ->where('picture.is_del', '=', NON_DELETED_ROW)
-            ->limit($this->_limit)
+            ->limit($this->limit)
             ->get();
         $results = collect($results)->map(
             function ($x) {
@@ -30,52 +117,6 @@ class SearchService
         )->toArray();
         if ($results) {
             return array_column($results, 'id');
-        }
-        return [];
-    }
-
-    public function searchRelatedPicturesIds(array $shown, array $hidden = [])
-    {
-        $sphinx = new SphinxSearch();
-        $sphinx->search('', 'drawItBookSearchByTag')
-            ->limit($this->_limit)
-            ->setFieldWeights(
-                [
-                    'hidden_tag' => 3,
-                    'tag' => 8,
-                ]
-            )
-            ->setSortMode(\Sphinx\SphinxClient::SPH_SORT_EXTENDED, '@weight DESC')
-            ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED);
-        if ($hidden) {
-            $sphinx->filter('hidden_tag', $hidden);
-        }
-        if ($shown) {
-            $sphinx->filter('tag', $shown);
-        }
-        $results = $sphinx->query();
-        if (!empty($results['matches'])) {
-            return array_keys($results['matches']);
-        }
-        return [];
-    }
-
-    public function searchByQuery(string $query, array $tags = [])
-    {
-        $sphinx = new SphinxSearch();
-        $sphinx->search($query, 'drawitbookByQuery')
-            ->limit($this->_limit)
-            ->setSortMode(\Sphinx\SphinxClient::SPH_SORT_RELEVANCE, '@relevance DESC')
-            ->setMatchMode(\Sphinx\SphinxClient::SPH_MATCH_EXTENDED);
-        if ($tags) {
-            foreach ($tags as $item) {
-                $sphinx->filter('tag', $item);
-            }
-        }
-        $results = $sphinx->query();
-        if (!empty($results['matches'])) {
-            $pictureIds = array_keys($results['matches']);
-            return $pictureIds;
         }
         return [];
     }

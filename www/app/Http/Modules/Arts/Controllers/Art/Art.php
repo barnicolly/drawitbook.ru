@@ -30,7 +30,7 @@ class Art extends Controller
         [$shown, $hidden] = $getTagsFromPictures->getTagIds($picture);
         $relativePictures = [];
         if ($shown || $hidden) {
-            $pictureIds = []; //$searchByTags->searchRelatedPicturesIds($shown, $hidden);
+            $pictureIds = $searchByTags->searchRelatedPicturesIds($shown, $hidden, $id);
             $relativePictures = $pictureIds
                 ? $this->formRelativePictures($pictureIds)
                 : (new ArtsService())->getInterestingArts($id);

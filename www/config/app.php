@@ -179,7 +179,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-//        sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
         /*
          * Custom Service Providers
          */

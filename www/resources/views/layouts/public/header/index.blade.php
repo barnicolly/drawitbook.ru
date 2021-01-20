@@ -15,7 +15,7 @@
                   role="search"
                   method="get"
                   action="{{ route('search') }}">
-                <input class="search-form__input" type="search" name="query" placeholder="Поиск по сайту">
+                <input class="search-form__input" type="search" name="query" placeholder="Поиск по сайту" value="{{ $searchQuery ?? '' }}">
                 <button class="search-form__btn" type="submit">
                     <svg role="img" width="20" height="20" viewBox="0 0 20 20">
                         <use xlink:href="{{ getUrlFromManifest('icons/sprite.svg') . '#loupe' }}"></use>

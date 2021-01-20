@@ -14,6 +14,7 @@
         "bensampo/laravel-enum": "^2.2",
         "davejamesmiller/laravel-breadcrumbs": "5.x",
         "fideloper/proxy": "^4.2",
+        "foolz/sphinxql-query-builder": "^2.1",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "htmlmin/htmlmin": "^7.0",
@@ -21,8 +22,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.5",
         "spatie/data-transfer-object": "^1.13",
-        "spatie/laravel-sitemap": "^5.8",
-        "ext-http": "*"
+        "spatie/laravel-sitemap": "^5.8"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

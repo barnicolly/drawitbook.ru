@@ -13,7 +13,6 @@ use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
 use App\Traits\BreadcrumbsTrait;
-use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -154,7 +153,9 @@ class Cell extends Controller
 
     private function formSlicePictureIds(int $tagId, int $pageNum): array
     {
-        $relativePictureIds = (new SearchService(1000))->searchPicturesByTagId($tagId);
+        $relativePictureIds = (new SearchService())
+            ->setLimit(1000)
+            ->searchByTagId($tagId);
         return (new PaginatorService())->formSlice($relativePictureIds, $pageNum);
     }
 
