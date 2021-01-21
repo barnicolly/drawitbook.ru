@@ -9,14 +9,19 @@ use App\Http\Modules\Admin\Requests\Art\ArtSetVkPostingOnRequest;
 use App\Http\Modules\Admin\Requests\Art\PostInVkAlbumRequest;
 use App\Http\Modules\Admin\Requests\Art\RemoveFromVkAlbumRequest;
 use App\Services\Arts\GetPicture;
-use App\Services\Posting\Vk\AttachArtToVkAlbum;
-use App\Services\Posting\Vk\DetachArtFromVkAlbum;
-use App\Services\Posting\Vk\GetVkAlbums;
+use App\Services\Posting\VkAlbumService;
 use Validator;
 use App\Entities\Picture\PictureModel;
 
 class Art extends Controller
 {
+
+    private $vkAlbumService;
+
+    public function __construct(VkAlbumService $vkAlbumService)
+    {
+        $this->vkAlbumService = $vkAlbumService;
+    }
 
     public function setVkPostingOnRequest(ArtSetVkPostingOnRequest $request)
     {
@@ -56,8 +61,7 @@ class Art extends Controller
             $getPicture = new GetPicture($artId);
             $picture = $getPicture->get();
             $viewData['picture'] = $picture;
-            $getVkAlbum = new GetVkAlbums();
-            $vkAlbums = $getVkAlbum->get();
+            $vkAlbums = $this->vkAlbumService->get();
 
             $vkAlbumIds = $vkAlbums->pluck('id')->toArray();
             $viewData['vkAlbums'] = $vkAlbums;
@@ -89,8 +93,7 @@ class Art extends Controller
         try {
             $data = $request->validated();
             $albumId = $data['album_id'];
-            $attachArtToVkAlbum = new AttachArtToVkAlbum($albumId, $artId);
-            $attachArtToVkAlbum->attach();
+            $this->vkAlbumService->attachArtOnAlbum($artId, $albumId);
         } catch (\Throwable $e) {
             return response(['success' => false]);
         }
@@ -102,8 +105,7 @@ class Art extends Controller
         try {
             $data = $request->validated();
             $albumId = $data['album_id'];
-            $detachArt = new DetachArtFromVkAlbum($albumId, $artId);
-            $detachArt->detach();
+            $this->vkAlbumService->detachArtFromAlbum($artId, $albumId);
         } catch (\Throwable $e) {
             return response(['success' => false]);
         }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Api\Vk\Core;
+namespace App\Services\Api\Vk;
 
 class PhotoService
 {
@@ -13,38 +13,24 @@ class PhotoService
         $this->instance = $api;
     }
 
-    /* public function getUploadServer(int $albumId = 0)
-     {
-         $data = [];
-         if ($albumId) {
-             $data['album_id'] = $albumId;
-         }
-         $data = array_merge(
-             $data,
-             [
-                 'group_id' => $this->instance->groupId,
-             ]
-         );
-         $response = $this->instance->api->request('photos.getUploadServer', $data);
-         return $response['response']['upload_url'];
-     }*/
-
-    /* public function save(array $server, int $albumId)
-     {
-         $data = [
-             'group_id' => $this->instance->groupId,
-             'album_id' => $albumId,
-             'photos_list' => $server['photos_list'],
-             'server' => $server['server'],
-             'hash' => $server['hash'],
-         ];
-         $response = $this->instance->api->request('photos.save', $data);
-         if ($response) {
-             return $response['response'][0]['id'];
-         } else {
-             throw new \Exception();
-         }
-     }*/
+    public function saveOnAlbum(string $filePath, int $albumId): ?int
+    {
+        $uploadUrl = $this->getAlbumUploadServer($albumId);
+        $server = $this->upload($uploadUrl, $filePath);
+        $data = [
+            'group_id' => $this->instance->groupId,
+            'album_id' => $albumId,
+            'photos_list' => $server['photos_list'],
+            'server' => $server['server'],
+            'hash' => $server['hash'],
+        ];
+        $response = $this->instance->api->request('photos.save', $data);
+        if ($response) {
+            return $response['response'][0]['id'];
+        } else {
+            throw new \Exception();
+        }
+    }
 
     public function edit(int $photoId, array $data): void
     {
@@ -94,9 +80,35 @@ class PhotoService
         }
     }
 
+    public function delete(int $photoId): void
+    {
+        $data = [
+            'owner_id' => '-' . $this->instance->groupId,
+            'photo_id' => $photoId,
+        ];
+        $response = $this->instance->api->request('photos.delete', $data);
+    }
+
     private function getWallUploadServer()
     {
-        $response = $this->instance->api->request('photos.getWallUploadServer', ['group_id' => $this->instance->groupId]);
+        $response = $this->instance->api->request(
+            'photos.getWallUploadServer',
+            ['group_id' => $this->instance->groupId]
+        );
+        return $response['response']['upload_url'];
+    }
+
+    private function getAlbumUploadServer(int $albumId)
+    {
+        $data = [];
+        $data['album_id'] = $albumId;
+        $data = array_merge(
+            $data,
+            [
+                'group_id' => $this->instance->groupId,
+            ]
+        );
+        $response = $this->instance->api->request('photos.getUploadServer', $data);
         return $response['response']['upload_url'];
     }
 
@@ -116,14 +128,5 @@ class PhotoService
         );
         return json_decode($res->getBody()->getContents(), true);
     }
-
-    /*public function delete(int $photoId): void
-    {
-        $data = [
-            'owner_id' => '-' . $this->instance->groupId,
-            'photo_id' => $photoId,
-        ];
-        $response = $this->instance->api->request('photos.delete', $data);
-    }*/
 
 }

@@ -3,9 +3,10 @@
 namespace App\Services\Posting\Strategy\Wall;
 
 use App\Entities\Vk\HistoryPostingModel;
-use App\Services\Api\Vk\Core\PhotoService;
-use App\Services\Api\Vk\Core\VkApi;
-use App\Services\Api\Vk\Core\WallService;
+use App\Services\Api\Vk\PhotoService;
+use App\Services\Api\Vk\VkApi;
+use App\Services\Api\Vk\WallService;
+use App\Services\Posting\PostingService;
 
 class VkWallPostingStrategy
 {
@@ -17,6 +18,7 @@ class VkWallPostingStrategy
 
     private $photoService;
     private $wallService;
+    private $postingService;
 
     private $url = 'https://drawitbook.ru';
 
@@ -29,6 +31,7 @@ class VkWallPostingStrategy
         $this->apiInstance = $apiInstance;
         $this->photoService = (new PhotoService($apiInstance));
         $this->wallService = (new WallService($apiInstance));
+        $this->postingService = (new PostingService());
     }
 
     public function post()
@@ -46,7 +49,7 @@ class VkWallPostingStrategy
 
     private function create()
     {
-        $hashTags = $this->formHashTags($this->tags);
+        $hashTags = $this->postingService->formHashTags($this->tags);
         $uploadedPhoto = $this->photoService->saveWallPhoto($this->artPath);
         $postId = $this->createPost($uploadedPhoto['owner_id'], $uploadedPhoto['id'], $hashTags);
         if (empty($postId)) {
@@ -62,19 +65,7 @@ class VkWallPostingStrategy
         }
     }
 
-    private function formHashTags(array $tags): string
-    {
-        foreach ($tags as $key => $tag) {
-            $tags[$key] = preg_replace('/\s+/', '', $tag);
-            $tags[$key] = str_ireplace('-', '', $tags[$key]);
-        }
-        $hashTags = '#рисунки #рисункипоклеточкам';
-        if ($tags) {
-            $hashTags .= ' #' . implode(' #', $tags);
-        }
-        $hashTags .= ' #drawitbook';
-        return $hashTags;
-    }
+
 
     private function createPost(int $ownerId, int $photoId, string $hashTags): ?int
     {
