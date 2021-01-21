@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\Posting\Vk;
+namespace App\Services\Api\Vk;
 
 use App\Entities\Vk\VkAlbumModel;
 use App\Entities\Vk\VkAlbumPictureModel;
 use App\Services\Arts\GetPicture;
-use App\Services\Posting\Vk\Core\VkCore;
+use App\Services\Api\Vk\Core\VkApi;
 
-class DetachArtFromVkAlbum extends VkCore
+class DetachArtFromVkAlbum extends VkApi
 {
 
     protected $_albumId;

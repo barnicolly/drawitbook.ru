@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Services\Posting\WallPostService;
 use Illuminate\Console\Command;
-use App\Http\Modules\Cron\Controllers\Vk;
 
 class VkPosting extends Command
 {
@@ -38,8 +38,8 @@ class VkPosting extends Command
      */
     public function handle()
     {
-        $vkCron = new Vk();
-        $vkCron->posting();
+        $postingService = new WallPostService();
+        $postingService->broadcast();
         $this->info('Запостил');
     }
 }
