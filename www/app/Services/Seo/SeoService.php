@@ -4,6 +4,7 @@ namespace App\Services\Seo;
 
 use App\Entities\Picture\PictureModel;
 use App\Services\Tags\TagsService;
+use Illuminate\Database\Eloquent\Collection;
 
 class SeoService
 {
@@ -39,6 +40,13 @@ class SeoService
         $tags = (new TagsService)->extractTagsFromArt($art);
         if ($tags) {
             $art->alt = 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags);
+        }
+    }
+
+    public function setArtsAlt(Collection $arts): void
+    {
+        foreach ($arts as $relativePicture) {
+            $this->setArtAlt($relativePicture);
         }
     }
 

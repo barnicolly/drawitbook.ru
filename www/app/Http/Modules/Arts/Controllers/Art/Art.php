@@ -2,6 +2,7 @@
 
 namespace App\Http\Modules\Arts\Controllers\Art;
 
+use App\Entities\Picture\PictureModel;
 use App\Http\Controllers\Controller;
 use App\Services\Arts\ArtsService;
 use App\Services\Arts\CheckExistPictures;
@@ -10,16 +11,26 @@ use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Arts\GetTagsFromPicture;
 use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
+use App\Services\Tags\TagsService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Database\Eloquent\Collection;
 
 class Art extends Controller
 {
+    private $searchService;
+    private $seoService;
+
+    public function __construct(SearchService $searchService, SeoService $seoService)
+    {
+        $this->searchService = $searchService;
+        $this->seoService = $seoService;
+    }
 
     public function index(
         $id,
-        SearchService $searchByTags,
+        TagsService $tagsService,
+        ArtsService $artsService,
         GetTagsFromPicture $getTagsFromPictures
     ) {
         $id = (int) $id;
@@ -27,24 +38,15 @@ class Art extends Controller
         if (!$picture) {
             abort(404);
         }
-        [$shown, $hidden] = $getTagsFromPictures->getTagIds($picture);
-        $relativePictures = [];
-        if ($shown || $hidden) {
-            $pictureIds = $searchByTags->searchRelatedPicturesIds($shown, $hidden, $id);
-            $relativePictures = $pictureIds
-                ? $this->formRelativePictures($pictureIds)
-                : (new ArtsService())->getInterestingArts($id);
-        }
-        (new SeoService())->setArtAlt($picture);
+        $relativePictures = $this->getRelativePictures($id, $getTagsFromPictures, $picture, $artsService);
+        $this->seoService->setArtAlt($picture);
         if ($relativePictures) {
-            foreach ($relativePictures as $index => $relativePicture) {
-                (new SeoService())->setArtAlt($relativePicture);
-            }
+            $this->seoService->setArtsAlt($relativePictures);
         }
         $viewData = [
             'picture' => $picture,
             'relativePictures' => $relativePictures,
-            'popularTags' => $this->getPopularTags(),
+            'popularTags' => $tagsService->getPopular(),
             'tagged' => route('arts.cell.tagged', ''),
         ];
         [$title, $description] = (new SeoService())->formTitleAndDescriptionShowArt($id);
@@ -55,18 +57,17 @@ class Art extends Controller
         return view('Arts::art.index', $viewData);
     }
 
-    private function getPopularTags(): array
+    private function getRelativePictures(int $id, GetTagsFromPicture $getTagsFromPictures, PictureModel $picture, ArtsService $artsService): Collection
     {
-        return [
-            'Мультфильмы' => 'iz-multfilma',
-            'Животные' => 'zhivotnye',
-            'Кошки' => 'koshka',
-            'Собачки' => 'sobachka',
-            'Супергерои' => 'supergeroi',
-            'Единороги' => 'edinorog',
-            'Девочки' => 'devochka',
-            'Цветы' => 'cvety',
-        ];
+        [$shown, $hidden] = $getTagsFromPictures->getTagIds($picture);
+        $relativePictures = [];
+        if ($shown || $hidden) {
+            $pictureIds = $this->searchService->searchRelatedPicturesIds($shown, $hidden, $id);
+            $relativePictures = $pictureIds
+                ? $this->formRelativePictures($pictureIds)
+                : $artsService->getInterestingArts($id);
+        }
+        return $relativePictures;
     }
 
     private function formRelativePictures(array $pictureIds): Collection

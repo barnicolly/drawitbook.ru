@@ -44,6 +44,20 @@ limit {$limit}");
         return $results;
     }
 
+    public function getPopular(): array
+    {
+        return [
+            'Мультфильмы' => 'iz-multfilma',
+            'Животные' => 'zhivotnye',
+            'Кошки' => 'koshka',
+            'Собачки' => 'sobachka',
+            'Супергерои' => 'supergeroi',
+            'Единороги' => 'edinorog',
+            'Девочки' => 'devochka',
+            'Цветы' => 'cvety',
+        ];
+    }
+
     public function getByTagSeoName(string $tagSeoName)
     {
         return SprTagsModel::where('seo', '=', $tagSeoName)->first();
