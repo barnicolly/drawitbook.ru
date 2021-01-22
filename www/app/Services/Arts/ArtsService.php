@@ -3,6 +3,8 @@
 namespace App\Services\Arts;
 
 use App\Entities\Picture\PictureModel;
+use App\Entities\Vk\VkAlbumModel;
+use App\Entities\Vk\VkAlbumPictureModel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -32,6 +34,16 @@ class ArtsService
     public function isArtExist(int $id): bool
     {
         return !empty($this->getById($id));
+    }
+
+    public function attachArtToVkAlbum(int $artId, int $albumId, int $vkAlbumId): void
+    {
+        $album = VkAlbumModel::find($albumId);
+        $vkAlbumPictureModel = new VkAlbumPictureModel();
+        $vkAlbumPictureModel->vk_album_id = $album->id;
+        $vkAlbumPictureModel->out_vk_image_id = $vkAlbumId;
+        $vkAlbumPictureModel->picture_id = $artId;
+        $album->pictures()->save($vkAlbumPictureModel);
     }
 
     public function getIdForPost(): ?int
