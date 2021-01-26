@@ -27,4 +27,28 @@ class PictureTagsModel extends Model
             ->toArray();
     }
 
+    public static function getTagsByArtIds(array $artIds, bool $withHidden): array
+    {
+        $query = self::query();
+        $result = $query->whereIn('picture_id', $artIds)
+            ->join('spr_tags', 'spr_tags.id', '=', 'picture_tags.tag_id')
+            ->where(
+                function ($query) use ($withHidden) {
+                    if (!$withHidden) {
+                        $query->where('spr_tags.hidden', '=', 0);
+                    }
+                }
+            )
+            ->getQuery()
+            ->get()
+            ->toArray();
+        $result = array_map(
+            function ($item) {
+                return (array) $item;
+            },
+            $result
+        );
+        return $result;
+    }
+
 }

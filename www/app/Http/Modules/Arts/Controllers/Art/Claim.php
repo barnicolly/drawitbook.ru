@@ -5,12 +5,21 @@ namespace App\Http\Modules\Arts\Controllers\Art;
 use App\Http\Controllers\Controller;
 use App\Services\Arts\ArtsService;
 use App\Services\Arts\ClaimService;
+use App\Services\Search\SearchService;
+use App\Services\Seo\SeoService;
+use App\Services\Tags\TagsService;
 use App\Services\User\UserService;
 use App\Services\Validation\CreateClaimValidationService;
 use Illuminate\Http\Request;
 
 class Claim extends Controller
 {
+    private $artsService;
+
+    public function __construct(ArtsService $artsService)
+    {
+        $this->artsService = $artsService;
+    }
 
     public function register($id, Request $request)
     {
@@ -19,7 +28,7 @@ class Claim extends Controller
         if (!(new CreateClaimValidationService())->validate($data)) {
             return response($result);
         }
-        $art = (new ArtsService())->isArtExist($id);
+        $art = $this->artsService->isArtExist($id);
         if ($art === null) {
             return response($result);
         }

@@ -16,13 +16,36 @@ class SeoService
         return [$title, $description];
     }
 
-    public function createCategoryTitle(string $category, string $subcategory, int $countResults): string
+    public function formCellTaggedTitleAndDescription(int $countSearchResults, string $tagName): array
     {
-        $countPostfix = $this->formCategoryCountPostfix($countResults);
-        return implode(' ', [$category, frenchQuotes($subcategory), '☆']) . ($countPostfix ? ' ': '') . $countPostfix;
+        $tagName = mbUcfirst($tagName);
+        $prefix = 'Рисунки по клеточкам';
+        $title = $this->createCategoryTitle($prefix, $tagName, $countSearchResults);
+        $description = $this->createCategoryDescription($prefix, $tagName, $countSearchResults);
+        return [$title, $description];
     }
 
-    public function createCategoryDescription(string $category, string $subcategory, int $countResults): string
+    public function formTitleAndDescriptionCellIndex(): array
+    {
+        $title = 'Рисунки по клеточкам | Drawitbook.ru';
+        $description = 'Рисунки по клеточкам. Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.';
+        return [$title, $description];
+    }
+
+    public function formTitleAndDescriptionHome(): array
+    {
+        $title =  'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями';
+        $description = 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.';
+        return [$title, $description];
+    }
+
+    private function createCategoryTitle(string $category, string $subcategory, int $countResults): string
+    {
+        $countPostfix = $this->formCategoryCountPostfix($countResults);
+        return implode(' ', [$category, frenchQuotes($subcategory), '☆']) . ($countPostfix ? ' ' : '') . $countPostfix;
+    }
+
+    private function createCategoryDescription(string $category, string $subcategory, int $countResults): string
     {
         $parts = [
             $subcategory,
@@ -35,19 +58,21 @@ class SeoService
         return $category . ' ✎ ' . implode(' ➣ ', $parts) . '.';
     }
 
-    public function setArtAlt(PictureModel $art): void
+    public function setArtAlt(array $art): array
     {
-        $tags = (new TagsService)->extractTagsFromArt($art);
-        if ($tags) {
-            $art->alt = 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags);
-        }
+        $tags = (new TagsService)->extractNotHiddenTagNamesFromArt($art);
+        $art['alt'] = $tags
+            ? 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags)
+            : 'Рисунки по клеточкам';
+        return $art;
     }
 
-    public function setArtsAlt(Collection $arts): void
+    public function setArtsAlt(array $arts): array
     {
-        foreach ($arts as $relativePicture) {
-            $this->setArtAlt($relativePicture);
+        foreach ($arts as $index => $art) {
+            $arts[$index] = $this->setArtAlt($art);
         }
+        return $arts;
     }
 
     public function formCategoryCountPostfix(int $countResults): string

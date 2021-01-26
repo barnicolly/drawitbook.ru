@@ -1,4 +1,4 @@
-<div class="rate-control" data-id="{{ $pictureId }}">
+<div class="rate-control" data-id="{{ $artId }}">
     <button type="button" class="btn btn-link rate-control__btn like" title="Нравится">
         <svg class="rate-control__icon" role="img" width="23" height="32" viewBox="0 0 23 32">
             <use xlink:href="{{ getUrlFromManifest('icons/sprite.svg') . '#like' }}"></use>

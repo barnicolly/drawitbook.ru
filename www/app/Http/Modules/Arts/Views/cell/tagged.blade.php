@@ -14,12 +14,12 @@
 
 @section('layouts.landing.first_block')
     <h1 class="title form-group">
-        Рисунки по клеточкам «{{ mbUcfirst($tag->name) }}»
+        Рисунки по клеточкам «{{ mbUcfirst($tag['name']) }}»
     </h1>
     <div class="form-group">
         <p>
             Рисовать по клеточкам любит практически каждый ребенок и взрослый. Это очень легко, ведь для этого нужна
-            только тетрадь в клеточку. <strong>Рисунки по клеточкам на тему «{{ mbUcfirst($tag->name) }}»</strong>
+            только тетрадь в клеточку. <strong>Рисунки по клеточкам на тему «{{ mbUcfirst($tag['name']) }}»</strong>
             от легких и простых до сложных схем.
             Рисунки подобраны не только для деток 4-5 лет, и 6-7, и 8-9-10 лет, но и для взрослых.
         </p>
@@ -27,7 +27,7 @@
 @endsection
 
 @section('layouts.landing.content')
-    @include('Arts::template.stack_grid.index', ['pictures' => $pictures, 'tagged' => $tagged])
+    @include('Arts::template.stack_grid.index', ['arts' => $arts])
 @endsection
 
 @section('layouts.landing.seo')

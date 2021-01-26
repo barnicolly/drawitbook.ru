@@ -5,11 +5,19 @@ namespace App\Services\Arts;
 use App\Entities\Picture\PictureModel;
 use App\Entities\Vk\VkAlbumModel;
 use App\Entities\Vk\VkAlbumPictureModel;
-use Illuminate\Database\Eloquent\Collection;
+use App\Services\Tags\TagsService;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ArtsService
 {
+
+    private $tagsService;
+
+    public function __construct()
+    {
+        $this->tagsService = (new TagsService());
+    }
 
     public function isArtExist(int $id): bool
     {
@@ -21,21 +29,52 @@ class ArtsService
         return PictureModel::updateVkPosting($artId, $status);
     }
 
-    public function getInterestingArts(int $excludeId, int $limit = 10): Collection
+    public function getInterestingArts(int $excludeId, int $limit): array
     {
-        //TODO-misha отрефаторить;
-        $pictures = PictureModel::take($limit)
-            ->where('is_del', '=', 0)
-            ->where('id', '!=', $excludeId)
-            ->where('in_common', '=', IN_MAIN_PAGE)
-            ->with(['tags'])->get();
-        $checkExistPictures = new CheckExistPictures($pictures);
-        return $checkExistPictures->check();
+        $arts = PictureModel::getInterestingArts($excludeId, $limit);
+        return $this->prepareArts($arts);
+    }
+
+    private function setTagsOnArts(array $arts, array $tags): array
+    {
+        $tags = groupArray($tags, 'picture_id');
+        foreach ($arts as $key => $art) {
+            $artId = $art['id'];
+            $arts[$key]['tags'] = $tags[$artId] ?? [];
+        }
+        return $arts;
+    }
+
+    public function checkExistArts(array $arts): array
+    {
+        foreach ($arts as $key => $art) {
+            if (!checkExistArt($art['path'])) {
+                unset($arts[$key]);
+                Log::info('Не найдено изображение', ['art' => $art]);
+            }
+        }
+        return $arts;
     }
 
     public function getById(int $id): ?array
     {
         return PictureModel::getById($id);
+    }
+
+    public function getByIdsWithTags(array $ids): array
+    {
+        $arts = PictureModel::getByIds($ids);
+        return $this->prepareArts($arts);
+    }
+
+    private function prepareArts(array $arts): array
+    {
+        $arts = $this->checkExistArts($arts);
+        $artIds = array_column($arts, 'id');
+        $tags = $this->tagsService->getTagsByArtIds($artIds, false);
+        $tags = $this->tagsService->setLinkOnTags($tags);
+        $arts = $this->setTagsOnArts($arts, $tags);
+        return $arts;
     }
 
     public function attachArtToVkAlbum(int $artId, int $albumId, int $vkAlbumId): void

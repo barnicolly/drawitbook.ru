@@ -10,7 +10,7 @@
     <div class="content">
         <div class="d-inline">
             Количество рисунков:
-            <span class="badge badge-info">{{ $countRelatedPictures }}</span>
+            <span class="badge badge-info">{{ $countRelatedArts }}</span>
         </div>
     </div>
     <div class="content">

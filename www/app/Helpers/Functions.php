@@ -90,3 +90,55 @@ if (!function_exists('frenchQuotes')) {
         return '«' . $row . '»';
     }
 }
+
+
+if (!function_exists('groupArray')) {
+    /** Группирует массив в вид
+     *
+     * [
+     *      $formattedItem[$arrayItem[$key]] => [
+     *              [$field1 => $arrayItem[$field1], $field2 => $arrayItem[$field2],
+     *              [$field1 => $arrayItem[$field1], $field2 => $arrayItem[$field2],
+     *      ]
+     * ]
+     *
+     * Например, группировка рейтингов(каждый из которых является массивом) под идентификатор лиги
+     * @param $array
+     * @param $key
+     * @param array $fields в случае пустого массива заносит весь элемент
+     * @return array
+     */
+    function groupArray($array, $key, array $fields = []): array
+    {
+        $formattedArray = [];
+        if ($array) {
+            foreach ($array as $item) {
+                if (empty($formattedArray[$item[$key]])) {
+                    $formattedArray[$item[$key]] = [];
+                }
+                $subArray = [];
+                if ($fields === []) {
+                    $subArray = $item;
+                } else {
+                    foreach ($fields as $field) {
+                        if (isset($item[$field])) {
+                            $subArray[$field] = $item[$field];
+                        }
+                    }
+                }
+                if ($subArray) {
+                    $formattedArray[$item[$key]][] = $subArray;
+                }
+            }
+        }
+        return $formattedArray;
+    }
+}
+
+if (!function_exists('getFirstItemFromArray')) {
+    function getFirstItemFromArray(array $baseArray)
+    {
+        $array = array_slice($baseArray, 0, 1);
+        return array_shift($array);
+    }
+}

@@ -14,12 +14,12 @@
          itemtype="http://schema.org/SiteNavigationElement">
             @include('Arts::template.stack_grid.elements')
     </div>
-    @if (isset($countRelatedPictures, $isLastSlice, $countLeftPictures))
-        @if ($countRelatedPictures && !$isLastSlice)
+    @if (isset($countRelatedArts, $isLastSlice, $countLeftArts))
+        @if ($countRelatedArts && !$isLastSlice)
             <div class="download-more form-group">
-                <?php $leftPicturesText = pluralForm($countLeftPictures, ['рисунок', 'рисунка', 'рисунков']); ?>
+                <?php $leftArtsText = pluralForm($countLeftArts, ['рисунок', 'рисунка', 'рисунков']); ?>
                 <button type="button" class="download-more__btn">
-                    Показать еще (осталось <span class="left-pictures-cnt">{{ $leftPicturesText }}</span>)
+                    Показать еще (осталось <span class="left-pictures-cnt">{{ $leftArtsText }}</span>)
                 </button>
             </div>
         @endif

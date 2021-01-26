@@ -3,34 +3,36 @@
 namespace App\Http\Modules\Content\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
 use Artesaos\SEOTools\Facades\SEOTools;
-use Illuminate\Http\Request;
-use Validator;
 
 class Content extends Controller
 {
+    private $tagsService;
+    private $seoService;
 
-    public function __construct()
+    public function __construct(TagsService $tagsService, SeoService $seoService)
     {
+        $this->tagsService = $tagsService;
+        $this->seoService = $seoService;
     }
 
     public function index()
     {
         $viewData = [];
-        $title =  'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями';
-        $description = 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.';
+        [$title, $description] = $this->seoService->formTitleAndDescriptionHome();
         SEOTools::setTitle($title);
         $this->setShareImage(formDefaultShareArtUrlPath(true));
         SEOTools::setDescription($description);
-        return view('Content::main_page.index', $viewData);
+        return response()->view('Content::main_page.index', $viewData);
     }
 
-    public function tagList(Request $request)
+    public function tagList()
     {
         try {
             $responseList = [];
-            $tagList = (new TagsService())->getMostPopular();
+            $tagList = $this->tagsService->getMostPopular();
             foreach ($tagList as $tag) {
                 $responseList[] = [
                     'link' => route('arts.cell.tagged', ['tag' => $tag->seo]),
@@ -40,7 +42,7 @@ class Content extends Controller
             }
             $result['success'] = true;
             $result['cloud_items'] = $responseList;
-            return response($result);
+            return response()->json($result);
         } catch (\Exception $e) {
             return response(['success' => false]);
         }

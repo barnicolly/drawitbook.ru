@@ -21,6 +21,25 @@ class PictureModel extends Model
         return $this->belongsToMany('App\Entities\Spr\SprTagsModel', 'picture_tags', 'picture_id', 'tag_id');
     }
 
+    public static function getInterestingArts(int $excludeId, int $limit): array
+    {
+        $result = self::query()
+            ->take($limit)
+            ->where('is_del', 0)
+            ->where('id', '!=', $excludeId)
+            ->where('in_common', IN_MAIN_PAGE)
+            ->getQuery()
+            ->get()
+            ->toArray();
+        $result = array_map(
+            function ($item) {
+                return (array) $item;
+            },
+            $result
+        );
+        return $result;
+    }
+
     public static function getById(int $id): ?array
     {
         $art = self::query()
@@ -34,6 +53,23 @@ class PictureModel extends Model
             return $art;
         }
         return null;
+    }
+
+    public static function getByIds(array $ids): array
+    {
+        $result = self::query()
+            ->whereIn('id', $ids)
+            ->where('is_del', 0)
+            ->getQuery()
+            ->get()
+            ->toArray();
+        $result = array_map(
+            function ($item) {
+                return (array) $item;
+            },
+            $result
+        );
+        return $result;
     }
 
     public static function updateVkPosting(int $artId, int $status): bool

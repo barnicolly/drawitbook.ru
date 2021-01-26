@@ -5,8 +5,6 @@ namespace App\Http\Modules\Arts\Controllers;
 use App\Exceptions\NotFoundRelativeArts;
 use App\Http\Controllers\Controller;
 use App\Services\Arts\ArtsService;
-use App\Services\Arts\CheckExistPictures;
-use App\Services\Arts\GetPicturesWithTags;
 use App\Services\Paginator\PaginatorService;
 use App\Services\Route\RouteService;
 use App\Services\Search\SearchService;
@@ -14,9 +12,7 @@ use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
 use App\Traits\BreadcrumbsTrait;
 use Artesaos\SEOTools\Facades\SEOTools;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Breadcrumbs;
 use Throwable;
 use Tightenco\Collect\Support\Collection as CollectionAlias;
 use Validator;
@@ -28,63 +24,70 @@ class Cell extends Controller
 
     private $routeService;
     private $artsService;
+    private $tagsService;
     private $seoService;
+    private $searchService;
 
-    public function __construct(RouteService $routeService, ArtsService $artsService, SeoService $seoService)
-    {
+    public function __construct(
+        RouteService $routeService,
+        ArtsService $artsService,
+        SeoService $seoService,
+        SearchService $searchService,
+        TagsService $tagsService
+    ) {
         $this->breadcrumbs = new CollectionAlias();
         $this->routeService = $routeService;
         $this->seoService = $seoService;
         $this->artsService = $artsService;
+        $this->tagsService = $tagsService;
+        $this->searchService = $searchService;
     }
 
     public function index()
     {
-        $pictures = $this->artsService->getInterestingArts(0, 25);
-        $checkExistPictures = new CheckExistPictures($pictures);
-        $pictures = $checkExistPictures->check();
-        $title = 'Рисунки по клеточкам | Drawitbook.ru';
-        $description = 'Рисунки по клеточкам. Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.';
+        $arts = $this->artsService->getInterestingArts(0, 25);
+        foreach ($arts as $index => $art) {
+            $arts[$index] = $this->seoService->setArtAlt($art);
+        }
+        [$title, $description] = $this->seoService->formTitleAndDescriptionCellIndex();
         $this->addBreadcrumb('Рисунки по клеточкам');
         $viewData = [
-            'tagged' => $this->formTagUrlPrefix(),
-            'relativePictures' => $pictures,
+            'arts' => $arts,
             'breadcrumbs' => $this->breadcrumbs,
         ];
         SEOTools::setTitle($title);
         $this->setShareImage(formDefaultShareArtUrlPath(true));
         SEOTools::setDescription($description);
-        return view('Arts::cell.index', $viewData);
+        return response()->view('Arts::cell.index', $viewData);
     }
 
     public function tagged(string $tag)
     {
         $pageNum = 1;
-        $tagInfo = (new TagsService())->getByTagSeoName($tag);
+        $tagInfo = $this->tagsService->getByTagSeoName($tag);
         if (!$tagInfo) {
             abort(404);
         }
         try {
-            $viewData = $this->formViewData($tagInfo->id, $pageNum);
+            $viewData = $this->formViewData($tagInfo['id'], $pageNum);
         } catch (NotFoundRelativeArts $e) {
             return abort(404);
         }
         $viewData['tag'] = $tagInfo;
-        $viewData['canonical'] = route('arts.cell.tagged', $tag);
-        $countSearchResults = $viewData['countRelatedPictures'];
-        $relativePictures = $viewData['pictures'];
-        [$title, $description] = $this->formCategoryTitleAndDescription($countSearchResults, $tagInfo->name);
+        $viewData['canonical'] = $this->routeService->getRouteArtsCellTagged($tag);
+        $countSearchResults = $viewData['countRelatedArts'];
+        $relativeArts = $viewData['arts'];
+        [$title, $description] = $this->seoService->formCellTaggedTitleAndDescription($countSearchResults, $tagInfo['name']);
         SEOTools::setTitle($title);
         SEOTools::setDescription($description);
-        $firstPicture = $relativePictures->first();
-        if ($firstPicture) {
-            $this->setShareImage(getArtsFolder() . $firstPicture->path);
+        $firstArt = getFirstItemFromArray($relativeArts);
+        if ($firstArt) {
+            $this->setShareImage(getArtsFolder() . $firstArt['path']);
         }
         $this->addBreadcrumb('Рисунки по клеточкам', $this->routeService->getRouteArtsCell());
-        $this->addBreadcrumb(mbUcfirst($tagInfo->name));
+        $this->addBreadcrumb(mbUcfirst($tagInfo['name']));
         $viewData['breadcrumbs'] = $this->breadcrumbs;
-        $page = view('Arts::cell.tagged', $viewData)->render();
-        return $page;
+        return response()->view('Arts::cell.tagged', $viewData);
     }
 
     public function slice(string $tag, Request $request)
@@ -95,27 +98,28 @@ class Cell extends Controller
                 'integer',
             ],
         ];
+        //TODO-misha вынести валадацию;
         $validator = Validator::make($request->input(), $rules);
         if ($validator->fails()) {
             return abort(404);
         }
         $pageNum = (int) $request->input('page');
         try {
-            $tagInfo = (new TagsService())->getByTagSeoName($tag);
+            $tagInfo = $this->tagsService->getByTagSeoName($tag);
             if (!$tagInfo) {
                 throw new Exception('Не найден tag');
             }
-            $viewData = $this->formViewData($tagInfo->id, $pageNum);
-            $countLeftPictures = $viewData['countLeftPictures'];
+            $viewData = $this->formViewData($tagInfo['id'], $pageNum);
+            $countLeftArts = $viewData['countLeftArts'];
             $isLastSlice = $viewData['isLastSlice'];
-            $countLeftPicturesText = $countLeftPictures >= 0
-                ? pluralForm($countLeftPictures, ['рисунок', 'рисунка', 'рисунков'])
+            $countLeftArtsText = $countLeftArts >= 0
+                ? pluralForm($countLeftArts, ['рисунок', 'рисунка', 'рисунков'])
                 : '';
             $result = [
                 'data' => [
                     'html' => view('Arts::template.stack_grid.elements', $viewData)->render(),
                     'page' => $pageNum,
-                    'countLeftPicturesText' => $countLeftPicturesText,
+                    'countLeftArtsText' => $countLeftArtsText,
                     'isLastSlice' => $isLastSlice,
                 ],
             ];
@@ -124,59 +128,36 @@ class Cell extends Controller
                 'error' => 'Произошла ошибка на стороне сервера',
             ];
         }
-        return response($result);
+        return response()->json($result);
     }
 
-    private function formViewData(int $tagId, int $pageNum)
+    private function formViewData(int $tagId, int $pageNum): array
     {
-        [$relativePictureIds, $countSearchResults, $isLastSlice, $countLeftPictures] = $this->formSlicePictureIds(
+        [$relativeArtIds, $countSearchResults, $isLastSlice, $countLeftArts] = $this->formSliceArtIds(
             $tagId,
             $pageNum
         );
-        if (!$relativePictureIds) {
+        if (!$relativeArtIds) {
             throw new NotFoundRelativeArts();
         }
-        $relativePictures = $this->formRelativePictures($relativePictureIds);
-        $viewData['countRelatedPictures'] = $countSearchResults;
-        $viewData['pictures'] = $relativePictures;
-        $viewData['countLeftPictures'] = $countLeftPictures;
+        $relativeArts = $this->artsService->getByIdsWithTags($relativeArtIds);
+        if ($relativeArts) {
+            $relativeArts = $this->seoService->setArtsAlt($relativeArts);
+        }
+        $viewData['countRelatedArts'] = $countSearchResults;
+        $viewData['arts'] = $relativeArts;
+        $viewData['countLeftArts'] = $countLeftArts;
         $viewData['isLastSlice'] = $isLastSlice;
-        $viewData['tagged'] = $this->formTagUrlPrefix();
         $viewData['page'] = $pageNum;
         return $viewData;
     }
 
-    private function formTagUrlPrefix()
+    private function formSliceArtIds(int $tagId, int $pageNum): array
     {
-        return route('arts.cell.tagged', '');
-    }
-
-    private function formSlicePictureIds(int $tagId, int $pageNum): array
-    {
-        $relativePictureIds = (new SearchService())
+        $relativePictureIds = $this->searchService
             ->setLimit(1000)
             ->searchByTagId($tagId);
         return (new PaginatorService())->formSlice($relativePictureIds, $pageNum);
-    }
-
-    private function formCategoryTitleAndDescription(int $countSearchResults, string $tagName): array
-    {
-        $tagName = mbUcfirst($tagName);
-        $prefix = 'Рисунки по клеточкам';
-        $title = $this->seoService->createCategoryTitle($prefix, $tagName, $countSearchResults);
-        $description = $this->seoService->createCategoryDescription($prefix, $tagName, $countSearchResults);
-        return [$title, $description];
-    }
-
-    private function formRelativePictures(array $relativePictureIds): Collection
-    {
-        $relativePictures = (new GetPicturesWithTags($relativePictureIds))->get();
-        if ($relativePictures) {
-            foreach ($relativePictures as $index => $relativePicture) {
-                $this->seoService->setArtAlt($relativePicture);
-            }
-        }
-        return $relativePictures;
     }
 
 }

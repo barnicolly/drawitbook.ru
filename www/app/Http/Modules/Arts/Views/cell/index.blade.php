@@ -27,7 +27,7 @@
         {!! loadAd('before_stack') !!}
     </div>
     <div class="content">
-        @include('Arts::template.stack_grid.index', ['pictures' => $relativePictures, 'tagged' => $tagged])
+        @include('Arts::template.stack_grid.index', ['arts' => $arts])
     </div>
     <div class="form-group mobile-no-padding content">
         {!! loadAd('after_first_stack') !!}
