@@ -2,37 +2,37 @@
 
 namespace App\Http\Modules\Admin\Controllers\Art;
 
-use App\Entities\Vk\VkAlbumPictureModel;
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Admin\Requests\Art\ArtSetVkPostingOffRequest;
 use App\Http\Modules\Admin\Requests\Art\ArtSetVkPostingOnRequest;
 use App\Http\Modules\Admin\Requests\Art\PostInVkAlbumRequest;
 use App\Http\Modules\Admin\Requests\Art\RemoveFromVkAlbumRequest;
-use App\Services\Arts\GetPicture;
+use App\Services\Album\AlbumService;
+use App\Services\Arts\ArtsService;
 use App\Services\Posting\VkAlbumService;
-use Validator;
-use App\Entities\Picture\PictureModel;
 
 class Art extends Controller
 {
 
     private $vkAlbumService;
+    private $albumService;
+    private $artsService;
 
-    public function __construct(VkAlbumService $vkAlbumService)
+    public function __construct(VkAlbumService $vkAlbumService, AlbumService $albumService, ArtsService $artsService)
     {
         $this->vkAlbumService = $vkAlbumService;
+        $this->albumService = $albumService;
+        $this->artsService = $artsService;
     }
 
     public function setVkPostingOnRequest(ArtSetVkPostingOnRequest $request)
     {
         try {
             $data = $request->validated();
-            $art = PictureModel::find($data['id']);
-            if ($art === null) {
+            if (!$this->artsService->isArtExist($data['id'])) {
                 return ['success' => false];
             }
-            $art->in_vk_posting = ON_VK_POSTING;
-            $art->save();
+            $this->artsService->updateVkPosting($data['id'], OFF_VK_POSTING);
         } catch (\Exception $e) {
             return ['success' => false];
         }
@@ -43,12 +43,10 @@ class Art extends Controller
     {
         try {
             $data = $request->validated();
-            $art = PictureModel::find($data['id']);
-            if ($art === null) {
+            if (!$this->artsService->isArtExist($data['id'])) {
                 return ['success' => false];
             }
-            $art->in_vk_posting = OFF_VK_POSTING;
-            $art->save();
+            $this->artsService->updateVkPosting($data['id'], OFF_VK_POSTING);
         } catch (\Exception $e) {
             return ['success' => false];
         }
@@ -58,29 +56,11 @@ class Art extends Controller
     public function getSettingsModal($artId)
     {
         try {
-            $getPicture = new GetPicture($artId);
-            $picture = $getPicture->get();
-            $viewData['picture'] = $picture;
-            $vkAlbums = $this->vkAlbumService->get();
-
-            $vkAlbumIds = $vkAlbums->pluck('id')->toArray();
+            $vkAlbums = $this->albumService->getVkAlbums();
+            $vkAlbumIds = array_column($vkAlbums, 'id');
             $viewData['vkAlbums'] = $vkAlbums;
-
-            $vkAlbumPictures = VkAlbumPictureModel::whereIn('vk_album_id', $vkAlbumIds)
-                ->where('picture_id', $picture->id)
-                ->get()
-                ->toArray();
-            $issetInVkAlbums = [];
-            //TODO-misha вынести в метод
-            if ($vkAlbumPictures) {
-                foreach ($vkAlbumPictures as $vkAlbumPicture) {
-                    $vkAlbumId = $vkAlbumPicture['vk_album_id'];
-                    if (!in_array($vkAlbumId, $issetInVkAlbums, true)) {
-                        $issetInVkAlbums[] = $vkAlbumId;
-                    }
-                }
-            }
-            $viewData['issetInVkAlbums'] = $issetInVkAlbums;
+            $vkAlbumPictures = $this->albumService->getAlbumVkPictures($artId, $vkAlbumIds);
+            $viewData['issetInVkAlbums'] = $this->albumService->extractVkAlbumIds($vkAlbumPictures);
             $modal = view('Admin::art.modal', $viewData)->render();
         } catch (\Throwable $e) {
             return response(['success' => false]);

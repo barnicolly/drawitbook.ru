@@ -3,6 +3,7 @@
 namespace App\Services\Tags;
 
 use App\Entities\Picture\PictureModel;
+use App\Entities\Picture\PictureTagsModel;
 use App\Entities\Spr\SprTagsModel;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,11 @@ class TagsService
     public function __construct()
     {
 
+    }
+
+    public function getNamesWithoutHiddenVkByArtId(int $artId): array
+    {
+        return PictureTagsModel::getNamesWithoutHiddenVkByArtId($artId);
     }
 
     public function extractTagsFromArt(PictureModel $art): array

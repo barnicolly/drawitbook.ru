@@ -37,6 +37,7 @@ class CreateSitemapService
             ->writeToFile(public_path('sitemap-index.xml'));
     }
 
+    //TODO-misha отрефакторить;
     private function _getTags()
     {
         $results = DB::select(

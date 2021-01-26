@@ -42,12 +42,12 @@
                                     </thead>
                                     <tbody>
                                     @foreach($vkAlbums as $vkAlbum)
-                                        <tr data-vk-album-id="{{ $vkAlbum->id }}">
-                                            <td>{{ $vkAlbum->id }}</td>
-                                            <td>{{ $vkAlbum->album_id }}</td>
-                                            <td>{{ $vkAlbum->description }}</td>
+                                        <tr data-vk-album-id="{{ $vkAlbum['id'] }}">
+                                            <td>{{ $vkAlbum['id'] }}</td>
+                                            <td>{{ $vkAlbum['album_id'] }}</td>
+                                            <td>{{ $vkAlbum['description'] }}</td>
                                             <td>
-                                                @if ($issetInVkAlbums && in_array($vkAlbum->id, $issetInVkAlbums, true))
+                                                @if ($issetInVkAlbums && in_array($vkAlbum['id'], $issetInVkAlbums, true))
                                                     <button type="button" class="btn btn-link remove-from-vk-album">
                                                         Убрать из альбома
                                                     </button>

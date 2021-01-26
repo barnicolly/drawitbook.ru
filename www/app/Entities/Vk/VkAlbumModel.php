@@ -20,4 +20,28 @@ class VkAlbumModel extends Model
         return $this->hasMany('App\Entities\Vk\VkAlbumPictureModel', 'vk_album_id', 'id');
     }
 
+    public static function getById(int $vkAlbumId): ?array
+    {
+        $album = self::query()
+            ->find($vkAlbumId);
+        return $album
+            ? $album->toArray()
+            : null;
+    }
+
+    public static function getAll(): array
+    {
+        $result = self::query()
+            ->getQuery()
+            ->get()
+            ->toArray();
+        $result = array_map(
+            function ($item) {
+                return (array) $item;
+            },
+            $result
+        );
+        return $result;
+    }
+
 }

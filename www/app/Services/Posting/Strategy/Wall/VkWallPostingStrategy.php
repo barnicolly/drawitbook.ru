@@ -42,6 +42,7 @@ class VkWallPostingStrategy
 
     private function addHistoryVkPosting()
     {
+        //TODO-misha вынести;
         $historyVkPostingRecord = new HistoryPostingModel();
         $historyVkPostingRecord->picture_id = $this->artId;
         $historyVkPostingRecord->save();
@@ -64,8 +65,6 @@ class VkWallPostingStrategy
             $this->editPost($postId, $hashTags, $lastWallPhotoId);
         }
     }
-
-
 
     private function createPost(int $ownerId, int $photoId, string $hashTags): ?int
     {

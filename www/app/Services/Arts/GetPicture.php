@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 class GetPicture
 {
 
+    //TODO-misha избавиться от класса;
     private $_id;
     private $_cacheName;
     protected $_withHiddenVkTag = false;

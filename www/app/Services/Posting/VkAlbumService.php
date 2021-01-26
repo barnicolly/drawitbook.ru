@@ -2,82 +2,75 @@
 
 namespace App\Services\Posting;
 
-use App\Entities\Vk\VkAlbumModel;
-use App\Entities\Vk\VkAlbumPictureModel;
+use App\Services\Album\AlbumService;
 use App\Services\Api\Vk\PhotoService;
 use App\Services\Api\Vk\VkApi;
 use App\Services\Arts\ArtsService;
-use App\Services\Arts\GetPicture;
+use App\Services\Tags\TagsService;
 
 class VkAlbumService
 {
 
     private $apiInstance;
-    private $photoService;
-    private $postingService;
+    private $apiPhotoService;
+    private $apiPostingService;
     private $artsService;
+    private $tagsService;
+    private $albumService;
 
     public function __construct()
     {
         $apiInstance = (new VkApi());
         $this->apiInstance = $apiInstance;
-        $this->photoService = (new PhotoService($apiInstance));
-        $this->postingService = (new PostingService());
+        $this->apiPhotoService = (new PhotoService($apiInstance));
+        $this->apiPostingService = (new PostingService());
         $this->artsService = (new ArtsService());
+        $this->tagsService = (new TagsService());
+        $this->albumService = (new AlbumService());
     }
 
-    public function get()
+    public function attachArtOnAlbum(int $artId, int $vkAlbumId)
     {
-        return VkAlbumModel::get();
-    }
-
-    public function attachArtOnAlbum(int $artId, int $albumId)
-    {
-        $album = VkAlbumModel::find($albumId);
-        if (!$album) {
+        $vkAlbum = $this->albumService->getById($vkAlbumId);
+        if (!$vkAlbum) {
             throw new \Exception('Не найден альбом');
         }
-        $getPicture = new GetPicture($artId);
-        $picture = $getPicture->withHiddenVkTag()->get();
-
-        $path = formArtFsPath($picture->path);
-
-        $tags = $picture->tags->pluck('name')
-            ->toArray();
-        $photoId = $this->postPhotoInAlbum($album, $path, $tags);
-        $this->artsService->attachArtToVkAlbum($picture->id, $album->id, $photoId);
+        $art = $this->artsService->getById($artId);
+        if (!$art) {
+            throw new \Exception('Не найдено изображения');
+        }
+        $artFsPath = $art['fs_path'];
+        $tags = $this->tagsService->getNamesWithoutHiddenVkByArtId($artId);
+        $photoId = $this->postPhotoInAlbum($vkAlbum['album_id'], $vkAlbum['share'], $artFsPath, $tags);
+        $this->artsService->attachArtToVkAlbum($artId, $vkAlbum['id'], $photoId);
     }
 
-    public function detachArtFromAlbum(int $artId, int $albumId)
+    public function detachArtFromAlbum(int $artId, int $vkAlbumId)
     {
-        $album = VkAlbumModel::find($albumId);
-        if (!$album) {
+        $vkAlbum = $this->albumService->getById($vkAlbumId);
+        if (!$vkAlbum) {
             throw new \Exception('Не найден альбом');
         }
-        //TODO-misha вынести связь с моделью;
-        $vkAlbumPicture = VkAlbumPictureModel::where('vk_album_id', '=', $album->id)
-            ->where('picture_id', '=', $artId)
-            ->first();
+        $vkAlbumPicture = $this->albumService->getRowByVkAlbumIdAndPictureId($vkAlbum['id'], $artId);
         if (!$vkAlbumPicture) {
             throw new \Exception('Не найдена запись связи изображения и альбома ВК');
         }
-        //TODO-misha вынести;
-        $photoId = $vkAlbumPicture->out_vk_image_id;
-        $this->photoService->delete($photoId);
-        $vkAlbumPicture->delete();
+        $photoId = $vkAlbumPicture['out_vk_image_id'];
+        $this->apiPhotoService->delete($photoId);
+        $this->albumService->deleteVkAlbumPictureById($vkAlbumPicture['id']);
     }
 
-    private function postPhotoInAlbum($album, string $path, array $tags): ?int
+    private function postPhotoInAlbum(int $albumId, string $albumShareLink, string $path, array $tags): ?int
     {
-        $photoId = $this->photoService->saveOnAlbum($path, $album->album_id);
-        if ($album->share) {
-            $url = $album->share;
+        $photoId = $this->apiPhotoService->saveOnAlbum($path, $albumId);
+        if ($albumShareLink) {
+            $url = $albumShareLink;
         } else {
             $url = 'https://drawitbook.ru';
         }
-        $hashTags = $this->postingService->formHashTags($tags);
+        $hashTags = $this->apiPostingService->formHashTags($tags);
         sleep(1);
-        $this->photoService->edit($photoId, ['caption' => $hashTags . "\n\n" . ' Больше рисунков ► ' . $url]);
+        $this->apiPhotoService->edit($photoId, ['caption' => $hashTags . "\n\n" . ' Больше рисунков ► ' . $url]);
         return $photoId;
     }
 

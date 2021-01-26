@@ -50,7 +50,7 @@ class SeoService
         }
     }
 
-    private function formCategoryCountPostfix(int $countResults): string
+    public function formCategoryCountPostfix(int $countResults): string
     {
         $countPostfix = '';
         if ($countResults > 10) {

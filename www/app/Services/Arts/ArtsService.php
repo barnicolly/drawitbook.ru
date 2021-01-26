@@ -11,8 +11,19 @@ use Illuminate\Support\Facades\DB;
 class ArtsService
 {
 
+    public function isArtExist(int $id): bool
+    {
+        return !empty($this->getById($id));
+    }
+
+    public function updateVkPosting(int $artId, int $status): bool
+    {
+        return PictureModel::updateVkPosting($artId, $status);
+    }
+
     public function getInterestingArts(int $excludeId, int $limit = 10): Collection
     {
+        //TODO-misha отрефаторить;
         $pictures = PictureModel::take($limit)
             ->where('is_del', '=', 0)
             ->where('id', '!=', $excludeId)
@@ -24,20 +35,12 @@ class ArtsService
 
     public function getById(int $id): ?array
     {
-        $art = PictureModel::query()
-            ->where('id', $id)
-            ->getQuery()
-            ->first();
-        return $art ? (array) $art : null;
-    }
-
-    public function isArtExist(int $id): bool
-    {
-        return !empty($this->getById($id));
+        return PictureModel::getById($id);
     }
 
     public function attachArtToVkAlbum(int $artId, int $albumId, int $vkAlbumId): void
     {
+        //TODO-misha отрефакторить;
         $album = VkAlbumModel::find($albumId);
         $vkAlbumPictureModel = new VkAlbumPictureModel();
         $vkAlbumPictureModel->vk_album_id = $album->id;
@@ -48,6 +51,7 @@ class ArtsService
 
     public function getIdForPost(): ?int
     {
+        //TODO-misha переписать на query;
         $results = DB::select(
             DB::raw(
                 'select picture.id,
