@@ -191,6 +191,7 @@ return [
          * */
         DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
+        Waavi\Sanitizer\Laravel\SanitizerServiceProvider::class,
     ],
 
     /*
