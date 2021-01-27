@@ -2,9 +2,7 @@
 
 namespace App\Services\Seo;
 
-use App\Entities\Picture\PictureModel;
 use App\Services\Tags\TagsService;
-use Illuminate\Database\Eloquent\Collection;
 
 class SeoService
 {

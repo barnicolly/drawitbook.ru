@@ -3,7 +3,6 @@
 namespace App\Services\Arts;
 
 use App\Entities\Picture\PictureModel;
-use App\Entities\Vk\VkAlbumModel;
 use App\Entities\Vk\VkAlbumPictureModel;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
@@ -83,13 +82,12 @@ class ArtsService
 
     public function attachArtToVkAlbum(int $artId, int $albumId, int $vkAlbumId): void
     {
-        //TODO-misha отрефакторить;
-        $album = VkAlbumModel::find($albumId);
-        $vkAlbumPictureModel = new VkAlbumPictureModel();
-        $vkAlbumPictureModel->vk_album_id = $album->id;
-        $vkAlbumPictureModel->out_vk_image_id = $vkAlbumId;
-        $vkAlbumPictureModel->picture_id = $artId;
-        $album->pictures()->save($vkAlbumPictureModel);
+        $data = [
+            'vk_album_id' => $albumId,
+            'out_vk_image_id' => $vkAlbumId,
+            'picture_id' => $artId,
+        ];
+        VkAlbumPictureModel::create($data);
     }
 
     public function getIdForPost(): ?int

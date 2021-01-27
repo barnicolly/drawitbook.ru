@@ -15,11 +15,6 @@ class VkAlbumModel extends Model
         parent::__construct($attributes);
     }
 
-    public function pictures()
-    {
-        return $this->hasMany('App\Entities\Vk\VkAlbumPictureModel', 'vk_album_id', 'id');
-    }
-
     public static function getById(int $vkAlbumId): ?array
     {
         $album = self::query()

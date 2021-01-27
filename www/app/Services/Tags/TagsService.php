@@ -6,7 +6,6 @@ use App\Entities\Picture\PictureTagsModel;
 use App\Entities\Spr\SprTagsModel;
 use App\Services\Route\RouteService;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class TagsService
 {

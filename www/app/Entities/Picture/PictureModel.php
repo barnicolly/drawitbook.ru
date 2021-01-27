@@ -15,12 +15,6 @@ class PictureModel extends Model
         parent::__construct($attributes);
     }
 
-    //TODO-misha избавиться;
-    public function tags()
-    {
-        return $this->belongsToMany('App\Entities\Spr\SprTagsModel', 'picture_tags', 'picture_id', 'tag_id');
-    }
-
     public static function getInterestingArts(int $excludeId, int $limit): array
     {
         $result = self::query()
