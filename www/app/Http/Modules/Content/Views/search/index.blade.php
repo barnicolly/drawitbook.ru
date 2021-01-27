@@ -25,7 +25,7 @@
             Результаты поиска похожих
         @endif
     </h1>
-    @if (!empty($pictures))
+    @if (!empty($arts))
         <div class="form-group">
             <p>
                 Голосуйте за понравившиеся рисунки и делитесь с друзьями.
@@ -35,9 +35,8 @@
 @endsection
 
 @section('layouts.landing.content')
-    @if (!empty($pictures))
-        <?php $viewData = ['pictures' => $pictures]; ?>
-        @include('Arts::template.stack_grid.index', $viewData)
+    @if (!empty($arts))
+        @include('Arts::template.stack_grid.index', ['arts' => $arts])
     @else
         <div class="search-no-results">
             <div class="search-no-results__img">
@@ -70,12 +69,12 @@
                 </ul>
             </div>
         </div>
-        @if (!empty($popularPictures))
+        @if (!empty($popularArts))
             <div class="content form-group">
                 <h2>Популярные рисунки</h2>
             </div>
             <div class="content">
-                @include('Arts::template.stack_grid.index', ['pictures' => $popularPictures, 'tagged' => route('arts.cell.tagged', '')])
+                @include('Arts::template.stack_grid.index', ['arts' => $popularArts])
             </div>
         @endif
     @endif

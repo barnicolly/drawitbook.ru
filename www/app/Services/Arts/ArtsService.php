@@ -5,6 +5,7 @@ namespace App\Services\Arts;
 use App\Entities\Picture\PictureModel;
 use App\Entities\Vk\VkAlbumModel;
 use App\Entities\Vk\VkAlbumPictureModel;
+use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -13,10 +14,12 @@ class ArtsService
 {
 
     private $tagsService;
+    private $seoService;
 
     public function __construct()
     {
         $this->tagsService = (new TagsService());
+        $this->seoService = (new SeoService());
     }
 
     public function isArtExist(int $id): bool
@@ -74,6 +77,7 @@ class ArtsService
         $tags = $this->tagsService->getTagsByArtIds($artIds, false);
         $tags = $this->tagsService->setLinkOnTags($tags);
         $arts = $this->setTagsOnArts($arts, $tags);
+        $arts = $this->seoService->setArtsAlt($arts);
         return $arts;
     }
 

@@ -46,9 +46,6 @@ class Cell extends Controller
     public function index()
     {
         $arts = $this->artsService->getInterestingArts(0, 25);
-        foreach ($arts as $index => $art) {
-            $arts[$index] = $this->seoService->setArtAlt($art);
-        }
         [$title, $description] = $this->seoService->formTitleAndDescriptionCellIndex();
         $this->addBreadcrumb('Рисунки по клеточкам');
         $viewData = [
@@ -141,9 +138,6 @@ class Cell extends Controller
             throw new NotFoundRelativeArts();
         }
         $relativeArts = $this->artsService->getByIdsWithTags($relativeArtIds);
-        if ($relativeArts) {
-            $relativeArts = $this->seoService->setArtsAlt($relativeArts);
-        }
         $viewData['countRelatedArts'] = $countSearchResults;
         $viewData['arts'] = $relativeArts;
         $viewData['countLeftArts'] = $countLeftArts;

@@ -62,11 +62,8 @@ class Art extends Controller
                 $arts = $this->artsService->getByIdsWithTags($artIds);
             }
         }
-        if (!empty($arts)) {
+        if (empty($arts)) {
             $arts = $this->artsService->getInterestingArts($artId, 10);
-        }
-        if ($arts) {
-            $arts = $this->seoService->setArtsAlt($arts);
         }
         return $arts;
     }

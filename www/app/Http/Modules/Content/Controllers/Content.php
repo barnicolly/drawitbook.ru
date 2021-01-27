@@ -32,12 +32,12 @@ class Content extends Controller
     {
         try {
             $responseList = [];
-            $tagList = $this->tagsService->getMostPopular();
+            $tagList = $this->tagsService->getMostPopular(40);
             foreach ($tagList as $tag) {
                 $responseList[] = [
-                    'link' => route('arts.cell.tagged', ['tag' => $tag->seo]),
-                    'text' => $tag->name,
-                    'weight' => $tag->c,
+                    'link' => route('arts.cell.tagged', ['tag' => $tag['seo']]),
+                    'text' => $tag['name'],
+                    'weight' => $tag['count'],
                 ];
             }
             $result['success'] = true;

@@ -2,7 +2,9 @@
 
 namespace App\Entities\Picture;
 
+use App\Entities\Spr\SprTagsModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class PictureTagsModel extends Model
 {
@@ -39,6 +41,34 @@ class PictureTagsModel extends Model
                     }
                 }
             )
+            ->getQuery()
+            ->get()
+            ->toArray();
+        $result = array_map(
+            function ($item) {
+                return (array) $item;
+            },
+            $result
+        );
+        return $result;
+    }
+
+    public static function getTagsWithCountArts(int $limit): array
+    {
+        $query = SprTagsModel::query();
+        $result = $query
+            ->select(
+                [
+                    'spr_tags.name',
+                    'spr_tags.seo',
+                    DB::raw("count(\"picture_tags.id\") as count"),
+                ]
+            )
+            ->where('spr_tags.hidden', 0)
+            ->join('picture_tags', 'picture_tags.tag_id', '=', 'spr_tags.id')
+            ->groupBy('spr_tags.id')
+            ->orderBy('count', 'desc')
+            ->take($limit)
             ->getQuery()
             ->get()
             ->toArray();
