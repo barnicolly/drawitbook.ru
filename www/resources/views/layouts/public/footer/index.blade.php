@@ -17,9 +17,8 @@
     <hr class="footer__delimiter">
     <div class="container">
         <div class="form-group content">
-            <span class="footer__app-name text-uppercase">DRAWITBOOK.RU</span> {{ date('Y') }} г. Приветствуется
-            копирование и
-            распространение материалов.
+            <span class="footer__app-name text-uppercase">DRAWITBOOK.COM</span> {{ date('Y') }}г.
+            {!! __('pages.layout.footer.copyright') !!}
         </div>
     </div>
 </footer>
