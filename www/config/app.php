@@ -165,7 +165,7 @@ return [
         Illuminate\Redis\RedisServiceProvider::class,
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
-        Illuminate\Translation\TranslationServiceProvider::class,
+//        Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
@@ -192,6 +192,7 @@ return [
         DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
         Waavi\Sanitizer\Laravel\SanitizerServiceProvider::class,
+        Waavi\Translation\TranslationServiceProvider::class
     ],
 
     /*
