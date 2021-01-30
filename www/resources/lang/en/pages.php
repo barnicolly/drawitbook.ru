@@ -15,6 +15,7 @@ return [
     'layout' => [
         'footer' => [
             'copyright' => 'Copying and distribution of materials is encouraged.',
+            'slogan' => 'LOVE ART? WE DO TOO.',
         ],
         'header' => [
             'search' => [

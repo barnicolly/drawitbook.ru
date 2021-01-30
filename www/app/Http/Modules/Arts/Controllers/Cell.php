@@ -47,7 +47,7 @@ class Cell extends Controller
     {
         $arts = $this->artsService->getInterestingArts(0, 25);
         [$title, $description] = $this->seoService->formTitleAndDescriptionCellIndex();
-        $this->addBreadcrumb('Рисунки по клеточкам');
+        $this->addBreadcrumb(__('breadcrumbs.pixel_arts'));
         $viewData = [
             'arts' => $arts,
             'breadcrumbs' => $this->breadcrumbs,
@@ -60,8 +60,9 @@ class Cell extends Controller
 
     public function tagged(string $tag)
     {
+        $locale = app()->getLocale();
         $pageNum = 1;
-        $tagInfo = $this->tagsService->getByTagSeoName($tag);
+        $tagInfo = $this->tagsService->getByTagSeoName($tag, $locale);
         if (!$tagInfo) {
             abort(404);
         }
@@ -81,7 +82,7 @@ class Cell extends Controller
         if ($firstArt) {
             $this->setShareImage(getArtsFolder() . $firstArt['path']);
         }
-        $this->addBreadcrumb('Рисунки по клеточкам', $this->routeService->getRouteArtsCell());
+        $this->addBreadcrumb(__('breadcrumbs.pixel_arts'), $this->routeService->getRouteArtsCell());
         $this->addBreadcrumb(mbUcfirst($tagInfo['name']));
         $viewData['breadcrumbs'] = $this->breadcrumbs;
         return response()->view('Arts::cell.tagged', $viewData);
@@ -102,7 +103,8 @@ class Cell extends Controller
         }
         $pageNum = (int) $request->input('page');
         try {
-            $tagInfo = $this->tagsService->getByTagSeoName($tag);
+            $locale = app()->getLocale();
+            $tagInfo = $this->tagsService->getByTagSeoName($tag, $locale);
             if (!$tagInfo) {
                 throw new Exception('Не найден tag');
             }

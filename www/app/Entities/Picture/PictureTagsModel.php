@@ -29,15 +29,44 @@ class PictureTagsModel extends Model
             ->toArray();
     }
 
-    public static function getTagsByArtIds(array $artIds, bool $withHidden): array
+    public static function getTagsByArtIds(array $artIds, bool $withHidden, string $locale): array
     {
         $query = self::query();
+        if ($locale === 'en') {
+            $select =  [
+                'picture_tags.id',
+                'picture_tags.picture_id',
+                'picture_tags.tag_id',
+                'spr_tags.hidden',
+                'spr_tags.hidden_vk',
+                'spr_tags.name_en as name',
+                'spr_tags.slug_en as seo',
+            ];
+        } else {
+            $select =  [
+                'picture_tags.id',
+                'picture_tags.picture_id',
+                'picture_tags.tag_id',
+                'spr_tags.hidden',
+                'spr_tags.hidden_vk',
+                'spr_tags.name',
+                'spr_tags.seo',
+            ];
+        }
         $result = $query->whereIn('picture_id', $artIds)
+            ->select($select)
             ->join('spr_tags', 'spr_tags.id', '=', 'picture_tags.tag_id')
             ->where(
                 function ($query) use ($withHidden) {
                     if (!$withHidden) {
                         $query->where('spr_tags.hidden', '=', 0);
+                    }
+                }
+            )
+            ->where(
+                function ($query) use ($locale) {
+                    if ($locale === 'en') {
+                        $query->whereNotNull('spr_tags.slug_en');
                     }
                 }
             )

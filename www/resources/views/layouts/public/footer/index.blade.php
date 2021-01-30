@@ -11,7 +11,7 @@
     </div>
     <div class="container">
         <div class="footer__slogan text-uppercase content">
-            Love art? We do too.
+            {!! __('pages.layout.footer.slogan') !!}
         </div>
     </div>
     <hr class="footer__delimiter">

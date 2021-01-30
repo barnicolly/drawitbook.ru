@@ -7,6 +7,8 @@ use App\Services\Tags\TagsService;
 class SeoService
 {
 
+    //TODO-misha перевести seo;
+
     public function formTitleAndDescriptionShowArt(int $artId): array
     {
         $title = 'Art #' . $artId . ' | Drawitbook.ru';
@@ -58,10 +60,11 @@ class SeoService
 
     public function setArtAlt(array $art): array
     {
+        $prefix = __('frazes.pixel_arts');
         $tags = (new TagsService)->extractNotHiddenTagNamesFromArt($art);
         $art['alt'] = $tags
-            ? 'Рисунки по клеточкам ➣ ' . implode(' ➣ ', $tags)
-            : 'Рисунки по клеточкам';
+            ? $prefix . " ➣ " . implode(' ➣ ', $tags)
+            : $prefix;
         return $art;
     }
 

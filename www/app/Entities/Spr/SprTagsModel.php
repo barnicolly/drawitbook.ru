@@ -19,10 +19,33 @@ class SprTagsModel extends Model
         parent::__construct($attributes);
     }
 
-    public static function getBySeoName(string $tagSeoName): ?array
+    public static function getBySeoName(string $tagSeoName, string $locale): ?array
     {
+        if ($locale === 'en') {
+            $select =  [
+                'id',
+                'name_en as name',
+                'slug_en as seo',
+            ];
+        } else {
+            $select =  [
+                'id',
+                'name',
+                'seo',
+            ];
+        }
         $result = self::query()
-            ->where('seo', $tagSeoName)
+            ->select($select)
+            ->where(
+                function ($query) use ($tagSeoName, $locale) {
+                    if ($locale === 'en') {
+                        $query->where('slug_en', $tagSeoName);
+                    }
+                    if ($locale === 'ru') {
+                        $query->where('seo', $tagSeoName);
+                    }
+                }
+            )
             ->getQuery()
             ->first();
         if ($result) {

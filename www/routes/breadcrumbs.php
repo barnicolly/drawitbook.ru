@@ -1,7 +1,7 @@
 <?php
 
 Breadcrumbs::for('home', function ($trail) {
-    $trail->push('Главная', '/');
+    $trail->push(__('breadcrumbs.home'), route('home'));
 });
 
 Breadcrumbs::for('breadcrumbs.dynamic', function ($trail, $breadcrumbs) {

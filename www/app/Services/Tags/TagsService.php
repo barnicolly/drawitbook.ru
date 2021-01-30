@@ -24,7 +24,8 @@ class TagsService
 
     public function getTagsByArtIds(array $artIds, bool $withHidden): array
     {
-        return PictureTagsModel::getTagsByArtIds($artIds, $withHidden);
+        $locale = app()->getLocale();
+        return PictureTagsModel::getTagsByArtIds($artIds, $withHidden, $locale);
     }
 
     public function getTagsByArtId(int $artId, bool $withHidden): array
@@ -37,7 +38,8 @@ class TagsService
         foreach ($tags as $key => $tag) {
             $tags[$key]['link'] = $this->routeService->getRouteArtsCellTagged($tag['seo']);
             $tagName = mbUcfirst($tag['name']);
-            $tags[$key]['link_title'] = "Рисунки по клеточкам «{$tagName}»";
+            $prefix = __('frazes.pixel_arts');
+            $tags[$key]['link_title'] = "{$prefix} «{$tagName}»";
         }
         return $tags;
     }
@@ -59,9 +61,9 @@ class TagsService
         $shown = [];
         foreach ($artTags as $tag) {
             if ($tag['hidden'] === 1) {
-                $hidden[] = $tag['id'];
+                $hidden[] = $tag['tag_id'];
             } else {
-                $shown[] = $tag['id'];
+                $shown[] = $tag['tag_id'];
             }
         }
         return [$shown, $hidden];
@@ -96,6 +98,7 @@ class TagsService
 
     public function getPopular(): array
     {
+        //TODO-misha перевести;
         return [
             [
                 'seo' => 'iz-multfilma',
@@ -132,9 +135,9 @@ class TagsService
         ];
     }
 
-    public function getByTagSeoName(string $tagSeoName): array
+    public function getByTagSeoName(string $tagSeoName, string $locale): ?array
     {
-        return SprTagsModel::getBySeoName($tagSeoName);
+        return SprTagsModel::getBySeoName($tagSeoName, $locale);
     }
 
 }
