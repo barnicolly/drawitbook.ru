@@ -4,7 +4,7 @@ Route::group(
     [
         'middleware' => 'web',
         'prefix' => '/',
-        'namespace' => 'App\Http\Modules\Auth\Controllers'
+        'namespace' => 'App\Http\Modules\Auth\Controllers',
     ],
     function () {
         Route::get('/login', ['uses' => 'Login@showLoginForm'])->name('login');
@@ -15,4 +15,5 @@ Route::group(
         Route::get('password/reset/{token}', ['uses' => 'Login@dump']);
         Route::post('password/reset', ['uses' => 'Login@dump']);
         Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
-    });
+    }
+);
