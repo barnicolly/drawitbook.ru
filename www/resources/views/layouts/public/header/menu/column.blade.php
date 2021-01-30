@@ -1,18 +1,17 @@
-<?php $searchRoute = route('arts.cell') . '/'; ?>
 @foreach ($parts as $part)
     <div class="form-group">
         <div class="category">
-            @if ($part['slug'])
-                <a href="{{ $searchRoute . $part['slug'] }}" rel="nofollow" itemprop="url">
-                    <span itemprop="name">{{ $part['title'] }}</span>
+            @if ($part['parent']['link'])
+                <a href="{{ $part['parent']['link'] }}" rel="nofollow" itemprop="url">
+                    <span itemprop="name">{{ $part['parent']['title'] }}</span>
                 </a>
             @else
-                {{ $part['title'] }}
+                {{ $part['parent']['title'] }}
             @endif
         </div>
         @foreach ($part['items'] as $item)
             <div class="category-item">
-                <a href="{{ $searchRoute. $item['slug'] }}" rel="nofollow" itemprop="url">
+                <a href="{{ $item['link'] }}" rel="nofollow" itemprop="url">
                     <span itemprop="name">{{ $item['title'] }}</span>
                 </a>
             </div>

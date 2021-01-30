@@ -3,7 +3,7 @@
 return [
     'main' => [
         'hello' => ' <p>
-                    Near <strong>2&nbsp;700 drawings by cells</strong> collected on the site.
+                    Near <strong>2&nbsp;700 pixel arts</strong> collected on the site.
                 </p>
                 <p>
                     You can use site search or <a href="#tag-list">tags cloud</a> to find something specific.
