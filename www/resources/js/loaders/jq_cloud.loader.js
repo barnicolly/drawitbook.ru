@@ -1,5 +1,6 @@
 import { sendRequest } from '@js/helpers/utils';
 import { debounce } from '@js/helpers/optimization';
+import { getApplyedLocaleLink } from '@js/helpers/navigation';
 
 export function loadJQcloud() {
     const $jqCloudContainer = $('#tagContainer');
@@ -7,7 +8,7 @@ export function loadJQcloud() {
     if ($jqCloudContainer.length) {
         import (/* webpackChunkName: "jqcloud" */'@plugins/cloud/jqcloud.css');
         import (/* webpackChunkName: "jqcloud" */'@plugins/cloud/jqcloud-1.0.4.min').then(_ => {
-            sendRequest('get', '/tag/list', {}, function (res) {
+            sendRequest('get', getApplyedLocaleLink('/tag/list'), {}, function (res) {
                 if (res.success) {
                     var cloudTags = res.cloud_items;
                     reinitJQcloud(cloudTags);

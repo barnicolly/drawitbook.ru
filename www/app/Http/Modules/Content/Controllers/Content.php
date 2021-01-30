@@ -3,6 +3,7 @@
 namespace App\Http\Modules\Content\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Services\Route\RouteService;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -11,11 +12,13 @@ class Content extends Controller
 {
     private $tagsService;
     private $seoService;
+    private $routeService;
 
-    public function __construct(TagsService $tagsService, SeoService $seoService)
+    public function __construct(TagsService $tagsService, SeoService $seoService, RouteService $routeService)
     {
         $this->tagsService = $tagsService;
         $this->seoService = $seoService;
+        $this->routeService = $routeService;
     }
 
     public function index()
@@ -32,10 +35,11 @@ class Content extends Controller
     {
         try {
             $responseList = [];
-            $tagList = $this->tagsService->getMostPopular(40);
+            $locale = app()->getLocale();
+            $tagList = $this->tagsService->getMostPopular(40, $locale);
             foreach ($tagList as $tag) {
                 $responseList[] = [
-                    'link' => route('arts.cell.tagged', ['tag' => $tag['seo']]),
+                    'link' => $this->routeService->getRouteArtsCellTagged($tag['seo']),
                     'text' => $tag['name'],
                     'weight' => $tag['count'],
                 ];

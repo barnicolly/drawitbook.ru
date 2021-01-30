@@ -53,16 +53,31 @@ class PictureTagsModel extends Model
         return $result;
     }
 
-    public static function getTagsWithCountArts(int $limit): array
+    public static function getTagsWithCountArts(int $limit, string $locale): array
     {
+        $locale = mb_strtolower($locale);
         $query = SprTagsModel::query();
+        if ($locale === 'en') {
+            $select =  [
+                'spr_tags.name_en as name',
+                'spr_tags.slug_en as seo',
+                DB::raw("count(\"picture_tags.id\") as count"),
+            ];
+        } else {
+            $select =  [
+                'spr_tags.name',
+                'spr_tags.seo',
+                DB::raw("count(\"picture_tags.id\") as count"),
+            ];
+        }
         $result = $query
-            ->select(
-                [
-                    'spr_tags.name',
-                    'spr_tags.seo',
-                    DB::raw("count(\"picture_tags.id\") as count"),
-                ]
+            ->select($select)
+            ->where(
+                function ($query) use ($locale) {
+                    if ($locale === 'en') {
+                        $query->whereNotNull('spr_tags.slug_en');
+                    }
+                }
             )
             ->where('spr_tags.hidden', 0)
             ->join('picture_tags', 'picture_tags.tag_id', '=', 'spr_tags.id')

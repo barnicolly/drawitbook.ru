@@ -78,15 +78,16 @@ class TagsService
         return $tags;
     }
 
-    public function getMostPopular(int $limit): array
+    public function getMostPopular(int $limit, string $locale): array
     {
-        $results = Cache::get('spr.tag_cloud');
+        $cacheName = $locale . '.spr.tag_cloud';
+        $results = Cache::get($cacheName);
         if (!$results) {
             $results = Cache::remember(
-                'spr.tag_cloud',
+                $cacheName,
                 config('cache.expiration'),
-                function () use ($limit) {
-                    return PictureTagsModel::getTagsWithCountArts($limit);
+                function () use ($limit, $locale) {
+                    return PictureTagsModel::getTagsWithCountArts($limit, $locale);
                 }
             );
         }
