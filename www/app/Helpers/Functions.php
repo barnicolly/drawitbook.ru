@@ -27,8 +27,8 @@ if (!function_exists('loadAd')) {
     function loadAd(string $id, string $idPostFix = '', bool $integrated = false)
     {
         $viewData = [
-            'id' => $idPostFix ? ($id . '-' . $idPostFix): $id,
-            'integratedText' => $integrated ? 'true': 'false',
+            'id' => $idPostFix ? ($id . '-' . $idPostFix) : $id,
+            'integratedText' => $integrated ? 'true' : 'false',
             'isDummy' => isLocal(),
             'configurationKey' => $id,
         ];
@@ -41,6 +41,15 @@ if (!function_exists('pluralForm')) {
     {
         $cases = [2, 0, 1, 1, 1, 2];
         return $number . ' ' . $after[($number % 100 > 4 && $number % 100 < 20) ? 2 : $cases[min($number % 10, 5)]];
+    }
+}
+if (!function_exists('pluralFormEn')) {
+    function pluralFormEn(int $amount, $singular, $plural): string
+    {
+        if ($amount === 1) {
+            return $amount . ' ' . $singular;
+        }
+        return $amount . ' ' . $plural;
     }
 }
 

@@ -71,11 +71,18 @@ class Cell extends Controller
         } catch (NotFoundRelativeArts $e) {
             return abort(404);
         }
+        $leftArtsText = $locale === 'ru'
+            ? pluralForm($viewData['countLeftArts'], ['рисунок', 'рисунка', 'рисунков'])
+            : pluralFormEn($viewData['countLeftArts'], 'art', 'arts');
+        $viewData['leftArtsText'] = $leftArtsText;
         $viewData['tag'] = $tagInfo;
         $viewData['canonical'] = $this->routeService->getRouteArtsCellTagged($tag);
         $countSearchResults = $viewData['countRelatedArts'];
         $relativeArts = $viewData['arts'];
-        [$title, $description] = $this->seoService->formCellTaggedTitleAndDescription($countSearchResults, $tagInfo['name']);
+        [$title, $description] = $this->seoService->formCellTaggedTitleAndDescription(
+            $countSearchResults,
+            $tagInfo['name']
+        );
         SEOTools::setTitle($title);
         SEOTools::setDescription($description);
         $firstArt = getFirstItemFromArray($relativeArts);
@@ -111,9 +118,13 @@ class Cell extends Controller
             $viewData = $this->formViewData($tagInfo['id'], $pageNum);
             $countLeftArts = $viewData['countLeftArts'];
             $isLastSlice = $viewData['isLastSlice'];
-            $countLeftArtsText = $countLeftArts >= 0
-                ? pluralForm($countLeftArts, ['рисунок', 'рисунка', 'рисунков'])
-                : '';
+            if ($locale === 'ru') {
+                $countLeftArtsText = $countLeftArts >= 0
+                    ? pluralForm($countLeftArts, ['рисунок', 'рисунка', 'рисунков'])
+                    : '';
+            } else {
+                $countLeftArtsText = pluralFormEn($countLeftArts, 'art', 'arts');
+            }
             $result = [
                 'data' => [
                     'html' => view('Arts::template.stack_grid.elements', $viewData)->render(),

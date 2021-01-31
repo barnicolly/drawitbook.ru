@@ -2,7 +2,7 @@
     <div class="stack-loader-container">
         <div class="stack-loader-wrapper">
             <div class="stack-loader-text">
-                Загрузка
+                {{ __('common.loading') }}
             </div>
             <div class="stack-loader"></div>
         </div>
@@ -17,9 +17,8 @@
     @if (isset($countRelatedArts, $isLastSlice, $countLeftArts))
         @if ($countRelatedArts && !$isLastSlice)
             <div class="download-more form-group">
-                <?php $leftArtsText = pluralForm($countLeftArts, ['рисунок', 'рисунка', 'рисунков']); ?>
                 <button type="button" class="download-more__btn">
-                    Показать еще (осталось <span class="left-pictures-cnt">{{ $leftArtsText }}</span>)
+                    {!! __('common.arts_left', ['countLeftArtsText' => $leftArtsText]) !!}
                 </button>
             </div>
         @endif

@@ -9,8 +9,7 @@
     </div>
     <div class="content">
         <div class="d-inline">
-            Количество рисунков:
-            <span class="badge badge-info">{{ $countRelatedArts }}</span>
+            {!! __('common.arts_count', ['countArts' => $countRelatedArts]) !!}
         </div>
     </div>
     <div class="content">

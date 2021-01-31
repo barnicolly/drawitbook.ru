@@ -9,18 +9,10 @@
 @section('layout.content')
     <div class="content">
         <h1 class="title form-group">
-            Рисунки по клеточкам
+            {{ __('pages.pixel_arts.index.h1') }}
         </h1>
         <div class="form-group">
-            <p>
-                Рисовать по клеточкам любит практически каждый ребенок и взрослый. Это очень легко, ведь для этого нужна
-                только тетрадь в клеточку. <strong>Рисунки по клеточкам</strong>
-                от легких и простых до сложных схем.
-                Рисунки подобраны не только для деток 4-5 лет, и 6-7, и 8-9-10 лет, но и для взрослых.
-            </p>
-            <p>
-                Голосуйте за понравившиеся рисунки и делитесь с друзьями.
-            </p>
+            {!! __('pages.pixel_arts.index.seo_text') !!}
         </div>
     </div>
     <div class="form-group mobile-no-padding content">
