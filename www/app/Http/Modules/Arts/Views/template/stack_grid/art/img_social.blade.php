@@ -26,15 +26,6 @@
         <div class="fullscreen-image__rate">
             @include('Arts::template.stack_grid.art.rate', ['artId' => $art['id']])
         </div>
-        <div class="fullscreen-image__find-similar find-similar">
-            <a itemprop="url" href="{{ route('search') . '?similar=' . $art['id'] }}" rel="nofollow"
-               class="find-similar__btn"
-               title="Найти похожие">
-                <svg class="find-similar__icon" role="img" width="26" height="26" viewBox="0 0 26 26">
-                    <use xlink:href="{{ getUrlFromManifest('icons/sprite.svg') . '#image-similar' }}"></use>
-                </svg>
-            </a>
-        </div>
     </div>
     <link itemprop="url" href="{{ $artUrlPath }}">
     <link itemprop="contentUrl" href="{{ $artUrlPath }}">

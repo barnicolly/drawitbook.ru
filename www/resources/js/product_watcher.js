@@ -1,6 +1,5 @@
 import {
     reachClickBtnExternalLink,
-    reachClickBtnFindSimilar,
     reachClickBtnRate,
     reachClickDownloadMoreBtn,
     reachClickSharePageFromFixedBar,
@@ -9,7 +8,6 @@ import {
 
 $('body')
     .on('click', '.stack-grid__external-link a', reachClickBtnExternalLink)
-    .on('click', '.fullscreen-image__find-similar a', reachClickBtnFindSimilar)
     .on('click', '.tag-list a', reachClickTagItem)
     .on('click', '.rate-button', reachClickBtnRate)
     .on('click', '.download-more__btn', reachClickDownloadMoreBtn)

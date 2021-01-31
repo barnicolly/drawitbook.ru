@@ -8,10 +8,6 @@ export function reachClickBtnExternalLink() {
     reachGoal('click_btn_in_new_window');
 }
 
-export function reachClickBtnFindSimilar() {
-    reachGoal('click_btn_find_similar');
-}
-
 export function reachClickSharePageFromFixedBar() {
     reachGoal('share_page.fixed_block');
     reachClickSharePage();

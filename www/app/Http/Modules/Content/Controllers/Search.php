@@ -111,21 +111,12 @@ class Search extends Controller
     private function searchByFilters(array $filters, int $pageNum): array
     {
         $query = !empty($filters['query']) ? strip_tags($filters['query']) : '';
-        $targetSimilarId = $filters['similar'] ?? 0;
         $relativeArtIds = [];
         try {
             if ($query) {
                 $relativeArtIds = $this->searchService
                     ->setLimit(1000)
                     ->searchByQuery($query);
-            } elseif ($targetSimilarId) {
-                $artTags = $this->tagsService->getTagsByArtId($targetSimilarId, true);
-                [$shown, $hidden] = $this->tagsService->separateTagsForHiddenAndShowIds($artTags);
-                if ($shown || $hidden) {
-                    $relativeArtIds = $this->searchService
-                        ->setLimit(50)
-                        ->searchRelatedPicturesIds($shown, $hidden, $targetSimilarId);
-                }
             }
             if ($relativeArtIds) {
                 [$relativeArts, $countSearchResults, $isLastSlice, $countLeftArts] = $this->formSlice(
