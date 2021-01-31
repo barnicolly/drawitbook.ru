@@ -60,7 +60,7 @@ class SeoService
 
     public function setArtAlt(array $art): array
     {
-        $prefix = __('frazes.pixel_arts');
+        $prefix = __('common.pixel_arts');
         $tags = (new TagsService)->extractNotHiddenTagNamesFromArt($art);
         $art['alt'] = $tags
             ? $prefix . " ➣ " . implode(' ➣ ', $tags)

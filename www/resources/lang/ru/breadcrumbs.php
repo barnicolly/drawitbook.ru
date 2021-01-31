@@ -2,5 +2,5 @@
 
 return [
     'home' => 'Главная',
-    'pixel_arts' => __('frazes.pixel_arts'),
+    'pixel_arts' => __('common.pixel_arts'),
 ];

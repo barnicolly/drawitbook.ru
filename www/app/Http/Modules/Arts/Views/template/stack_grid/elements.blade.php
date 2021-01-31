@@ -7,7 +7,9 @@
                     {!! loadAd('integrated-' . $loop->index, $adPostfix, true) !!}
                 </div>
                 <div class="integration__label">
-                    <span class="integration__text float-right">Реклама</span>
+                    <span class="integration__text float-right">
+                        {{ __('common.advertisement') }}
+                    </span>
                 </div>
             </div>
 
@@ -26,7 +28,9 @@
                 {!! loadAd('in_stack_arts_last', $adPostfix, true) !!}
             </div>
             <div class="integration__label">
-                <span class="integration__text float-right">Реклама</span>
+                <span class="integration__text float-right">
+                      {{ __('common.advertisement') }}
+                </span>
             </div>
         </div>
     </div>

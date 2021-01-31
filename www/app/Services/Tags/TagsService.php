@@ -38,7 +38,7 @@ class TagsService
         foreach ($tags as $key => $tag) {
             $tags[$key]['link'] = $this->routeService->getRouteArtsCellTagged($tag['seo']);
             $tagName = mbUcfirst($tag['name']);
-            $prefix = __('frazes.pixel_arts');
+            $prefix = __('common.pixel_arts');
             $tags[$key]['link_title'] = "{$prefix} «{$tagName}»";
         }
         return $tags;

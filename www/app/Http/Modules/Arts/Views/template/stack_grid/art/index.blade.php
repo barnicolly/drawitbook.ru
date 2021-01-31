@@ -35,7 +35,7 @@
             </div>
             <div class="stack-grid__external-link">
                 <a itemprop="url" href="{{ route('art', ['id' => $art['id']]) }}" rel="nofollow"
-                   title="Открыть в новом окне">
+                   title="{{ __('common.button.open_in_new_window') }}">
                     <svg role="img" width="26" height="26" viewBox="0 0 26 26">
                         <use xlink:href="{{ getUrlFromManifest('icons/sprite.svg') . '#external-link' }}"></use>
                     </svg>
