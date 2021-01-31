@@ -96,43 +96,9 @@ class TagsService
         return $results;
     }
 
-    public function getPopular(): array
+    public function getPopular(string $locale): array
     {
-        //TODO-misha перевести;
-        return [
-            [
-                'seo' => 'iz-multfilma',
-                'name' => 'Мультфильмы',
-            ],
-            [
-                'seo' => 'zhivotnye',
-                'name' => 'Животные',
-            ],
-            [
-                'seo' => 'koshka',
-                'name' => 'Кошки',
-            ],
-            [
-                'seo' => 'sobachka',
-                'name' => 'Собачки',
-            ],
-            [
-                'seo' => 'supergeroi',
-                'name' => 'Супергерои',
-            ],
-            [
-                'seo' => 'edinorog',
-                'name' => 'Единороги',
-            ],
-            [
-                'seo' => 'devochka',
-                'name' => 'Девочки',
-            ],
-            [
-                'seo' => 'cvety',
-                'name' => 'Цветы',
-            ],
-        ];
+        return PictureTagsModel::getPopularTags($locale);
     }
 
     public function getByTagSeoName(string $tagSeoName, string $locale): ?array

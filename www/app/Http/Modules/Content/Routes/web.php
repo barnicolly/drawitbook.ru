@@ -30,5 +30,6 @@ foreach (config('translator.available_locales') as $prefix) {
                     Route::get('/search/slice', ['uses' => 'Search@slice'])->name($prefix . '_search.slice');
                 }
             );
+
         });
 }

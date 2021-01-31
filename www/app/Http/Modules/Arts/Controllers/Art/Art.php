@@ -76,7 +76,8 @@ class Art extends Controller
 
     private function getPopularTags(): array
     {
-        $popularTags = $this->tagsService->getPopular();
+        $locale = app()->getLocale();
+        $popularTags = $this->tagsService->getPopular($locale);
         return $this->tagsService->setLinkOnTags($popularTags);
     }
 

@@ -125,4 +125,40 @@ class PictureTagsModel extends Model
         return $result;
     }
 
+    public static function getPopularTags(string $locale): array
+    {
+        $locale = mb_strtolower($locale);
+        $query = SprTagsModel::query();
+        if ($locale === 'en') {
+            $select =  [
+                'spr_tags.name_en as name',
+                'spr_tags.slug_en as seo',
+            ];
+        } else {
+            $select =  [
+                'spr_tags.name',
+                'spr_tags.seo',
+            ];
+        }
+        $result = $query
+            ->select($select)
+            ->where(
+                function ($query) use ($locale) {
+                    if ($locale === 'en') {
+                        $query->whereNotNull('spr_tags.slug_en');
+                    }
+                }
+            )
+            ->where('spr_tags.is_popular', 1)
+            ->get()
+            ->toArray();
+        $result = array_map(
+            function ($item) {
+                return (array) $item;
+            },
+            $result
+        );
+        return $result;
+    }
+
 }

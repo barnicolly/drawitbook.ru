@@ -19,7 +19,7 @@
                     <div class="form-group clearfix">
                         <button type="button" class="btn btn-link float-right claim-button"
                                 data-id="{{ $art['id'] }}">
-                            Пожаловаться
+                            {{ __('common.claim') }}
                         </button>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
             <div class="theiaStickySidebar">
                 <div class="form-group">
                     <h3 class="form-group">
-                        Популярные #теги
+                        {{ __('common.popular_hash_tags') }}
                     </h3>
                     <div class="tag-list">
                         @include('Arts::template.stack_grid.art.tag_list', ['tags' => $popularTags])
@@ -46,7 +46,7 @@
     @if (!empty($arts))
         <div class="content">
             <p class="relative-title">
-                Похожие
+                {{ __('common.similar') }}
             </p>
             <div>
                 @include('Arts::template.stack_grid.index', ['arts' => $arts])
