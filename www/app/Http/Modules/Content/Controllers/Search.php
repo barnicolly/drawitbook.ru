@@ -47,6 +47,7 @@ class Search extends Controller
         }
         if (!$relativeArts) {
             $viewData['popularArts'] = (new ArtsService())->getInterestingArts(0, 10);
+            $viewData['popularTags'] = $this->getPopularTags();
         }
         $viewData['searchQuery'] = !empty($filters['query']) && is_string($filters['query']) ? $filters['query'] : '';
         $viewData['filters'] = $filters;
@@ -54,6 +55,15 @@ class Search extends Controller
         $viewData['countLeftArts'] = $countLeftArts;
         $viewData['countRelatedArts'] = $countSearchResults;
         $viewData['arts'] = $relativeArts;
+        $locale = app()->getLocale();
+        if ($locale === 'ru') {
+            $countLeftArtsText = $countLeftArts >= 0
+                ? pluralForm($countLeftArts, ['рисунок', 'рисунка', 'рисунков'])
+                : '';
+        } else {
+            $countLeftArtsText = pluralFormEn($countLeftArts, 'art', 'arts');
+        }
+        $viewData['leftArtsText'] = $countLeftArtsText;
         //TODO-misha добавить title;
         SEOTools::setTitle('Поиск по сайту');
         SEOMeta::setRobots('noindex, follow');
@@ -89,9 +99,14 @@ class Search extends Controller
                 'arts' => $relativeArts,
                 'countRelatedArts' => $countSearchResults,
             ];
-            $countLeftArtsText = $countLeftArts >= 0
-                ? pluralForm($countLeftArts, ['рисунок', 'рисунка', 'рисунков'])
-                : '';
+            $locale = app()->getLocale();
+            if ($locale === 'ru') {
+                $countLeftArtsText = $countLeftArts >= 0
+                    ? pluralForm($countLeftArts, ['рисунок', 'рисунка', 'рисунков'])
+                    : '';
+            } else {
+                $countLeftArtsText = pluralFormEn($countLeftArts, 'art', 'arts');
+            }
             $result = [
                 'data' => [
                     'html' => view('Arts::template.stack_grid.elements', $viewData)->render(),
@@ -133,6 +148,13 @@ class Search extends Controller
         $isLastSlice = $isLastSlice ?? false;
         $countLeftArts = $countLeftArts ?? 0;
         return [$relativeArts, $countSearchResults, $isLastSlice, $countLeftArts];
+    }
+
+    private function getPopularTags(): array
+    {
+        $locale = app()->getLocale();
+        $popularTags = $this->tagsService->getPopular($locale);
+        return $this->tagsService->setLinkOnTags($popularTags);
     }
 
     private function formSlice(array $relativeArtIds, int $pageNum): array

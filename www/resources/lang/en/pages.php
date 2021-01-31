@@ -12,6 +12,15 @@ return [
                     Vote for the pictures you like and share them with your friends.
                 </p>',
     ],
+    'search' => [
+        'popular_arts' => 'Popular arts',
+        'vote_liked' => 'Vote for the pictures you like and share them with your friends.',
+        'h1_by_query' => 'Search results by query «:Query»',
+        'img_not_found_alt' => 'No search results',
+        'not_found_results_title' => 'Sorry, no results were found for your query.',
+        'suggest' => 'Check is your typing correctly and try reduce the word count.',
+        'popular_tags' => 'Popular tags',
+    ],
     'pixel_arts' => [
         'index' => [
             'h1' => __('common.pixel_arts'),

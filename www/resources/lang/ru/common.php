@@ -12,6 +12,6 @@ return [
     'popular_hash_tags' => 'Популярные #теги',
     'claim' => 'Пожаловаться',
     'loading' => 'Загрузка',
-    'arts_left' => 'Показать еще (осталось <span class="left-pictures-cnt">:countLeftArtsText</span>)',
+    'arts_left' => 'Показать еще (осталось <span class="left-arts-cnt">:countLeftArtsText</span>)',
     'arts_count' => 'Количество рисунков: <span class="badge badge-info">:countArts</span>',
 ];

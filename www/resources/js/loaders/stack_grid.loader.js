@@ -60,7 +60,7 @@ export function loadStackGrid() {
                         const $newImages = $stackGrid.find(`.art-container[data-page="${res.data.page}"]`).find('.fullscreen-image__link');
                         loadFancybox($newImages);
                         $stackGrid.attr('data-page', res.data.page);
-                        $downloadBtn.find('.left-pictures-cnt').text(res.data.countLeftPicturesText);
+                        $downloadBtn.find('.left-arts-cnt').text(res.data.countLeftArtsText);
                         if (res.data.isLastSlice) {
                             $downloadBtn.remove();
                         }

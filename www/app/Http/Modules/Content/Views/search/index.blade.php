@@ -2,33 +2,14 @@
 
 @section('layouts.landing.first_block')
     <h1 class="title form-group">
-        @if (!empty($filters['query']) && !empty($filters['tag']))
-            Результаты поиска по запросу «{{ $filters['query'] }}» и тегам
-            @foreach($filters['tag'] as $tag)
-                #{{ $tag }}
-            @endforeach
-        @elseif (!empty($filters['query']))
-            Результаты поиска по запросу «{{ $filters['query'] }}»
-        @elseif (!empty($filters['tag']))
-            @if (count($filters['tag']) === 1)
-                Результаты поиска по тегу
-                @foreach($filters['tag'] as $tag)
-                    #{{ $tag }}
-                @endforeach
-            @else
-                Результаты поиска по тегам
-                @foreach($filters['tag'] as $tag)
-                    #{{ $tag }}
-                @endforeach
-            @endif
-        @elseif (!empty($filters['targetSimilarId']))
-            Результаты поиска похожих
+        @if (!empty($filters['query']))
+            {!! __('pages.search.h1_by_query', ['query' => $filters['query']]) !!}
         @endif
     </h1>
     @if (!empty($arts))
         <div class="form-group">
             <p>
-                Голосуйте за понравившиеся рисунки и делитесь с друзьями.
+                {!! __('pages.search.vote_liked') !!}
             </p>
         </div>
     @endif
@@ -41,29 +22,27 @@
         <div class="search-no-results">
             <div class="search-no-results__img">
                 <img src="{{ buildUrl('img/results-not-found.png') }}" class="img-responsive lazyload"
-                     alt="По запросу ничего не найдено">
+                     alt="{{ __('pages.search.img_not_found_alt') }}">
             </div>
             <div class="search-no-results__suggests">
                 <p>
-                    К сожалению, результатов по запросу не найдено.
+                    {{ __('pages.search.not_found_results_title') }}
                 </p>
                 <small>
-                    Проверьте правильность ввода, попробуйте уменьшить количество слов.
+                    {{ __('pages.search.suggest') }}
                 </small>
-                <?php $popularQueries = [
-                    'из мультфильма',
-                    'животные',
-                    'кошечка',
-                    'девочки',
-                ]; ?>
                 <div>
-                    Популярные запросы:
+                    {{ __('pages.search.popular_tags') }}:
                 </div>
                 <ul>
-                    @foreach($popularQueries as $popularQuery)
+                    @foreach($popularTags as $tag)
                         <li>
-                            <a itemprop="url" rel="nofollow"
-                               href="{{ route('search') . '?query=' . urlencode($popularQuery) }}">{{ $popularQuery }}</a>
+                            <a itemprop="url"
+                               rel="follow"
+                               title="{{ $tag['link_title'] }}"
+                               href="{{ $tag['link'] }}">
+                                {{ $tag['name'] }}
+                            </a>
                         </li>
                     @endforeach
                 </ul>
@@ -71,7 +50,9 @@
         </div>
         @if (!empty($popularArts))
             <div class="content form-group">
-                <h2>Популярные рисунки</h2>
+                <h2>
+                    {!! __('pages.search.popular_arts') !!}
+                </h2>
             </div>
             <div class="content">
                 @include('Arts::template.stack_grid.index', ['arts' => $popularArts])
