@@ -1,4 +1,4 @@
-@extends('Arts::template.landing')
+@extends('Arts::template.landing',  ['showSocial' => true])
 
 @section('breadcrumbs')
     @if (!empty($breadcrumbs))

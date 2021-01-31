@@ -11,7 +11,7 @@
                     </div>
                     @yield('layout.content')
                 </div>
-                @if (!isset($hideSocial) || !$hideSocial)
+                @if (!empty($showSocial))
                     <div class="page-layout__share">
                         <div class="theiaStickySidebar">
                             <div class="fixed-shared-block">

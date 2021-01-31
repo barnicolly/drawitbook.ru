@@ -1,4 +1,4 @@
-@extends('layouts.public.layout', ['hideSocial' => true])
+@extends('layouts.public.layout')
 
 @section('layout.content')
     <div class="container">

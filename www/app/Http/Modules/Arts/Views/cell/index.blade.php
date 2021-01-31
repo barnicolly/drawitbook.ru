@@ -1,4 +1,4 @@
-@extends('layouts.public.layout')
+@extends('layouts.public.layout',  ['showSocial' => true])
 
 @section('breadcrumbs')
     @if (!empty($breadcrumbs))
