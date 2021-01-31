@@ -36,7 +36,9 @@
                         </a>
                     </li>
                     <li class="menu__item dropdown">
-                        <a class="menu__link header__link dropdown__toggle" href="#">{!! __('pages.layout.header.menu.categories') !!}</a>
+                        <a class="menu__link header__link dropdown__toggle" href="#">
+                            {!! __('pages.layout.header.menu.categories') !!}
+                        </a>
                         <div class="dropdown__menu categories-dropdown">
                             <div class="dropdown__inner">
                                 @foreach($groups as $group)
@@ -48,6 +50,12 @@
                         </div>
                     </li>
                 </ul>
+                <div class="lang-switcher">
+                    <select class="lang-switcher__select" name="lang">
+                        <option value="en" {{ $selectedLocale === 'en' ? 'selected': '' }}>English</option>
+                        <option value="ru" {{ $selectedLocale === 'ru' ? 'selected': '' }}>Русский</option>
+                    </select>
+                </div>
             </div>
         </nav>
     </div>

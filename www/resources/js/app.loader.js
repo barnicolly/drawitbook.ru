@@ -64,5 +64,19 @@ $(function () {
     loadSidebar($('.sidebar'));
     initArtControls($('.art-control'));
 
+    $('.lang-switcher')
+        .on('change', '.lang-switcher__select', function () {
+            const selectedLocale = $(this).val();
+            let pathNameParts = window.location.pathname.split('/').filter(item => item);
+            pathNameParts.shift();
+            pathNameParts =  [selectedLocale].concat(pathNameParts);
+            const searchParams = window.location.search;
+            let newURL = window.location.protocol + '//' + window.location.host;
+            newURL += '/' + pathNameParts.join('/');
+            if (searchParams) {
+                newURL += searchParams;
+            }
+            window.location.href = newURL;
+        });
 
 });

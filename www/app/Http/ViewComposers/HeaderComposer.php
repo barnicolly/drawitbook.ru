@@ -20,6 +20,7 @@ class HeaderComposer
         $locale = app()->getLocale();
         $viewData = [
             'groups' => $this->viewService->formCategoriesGroups($locale),
+            'selectedLocale' => app()->getLocale(),
         ];
         return $view->with($viewData);
     }

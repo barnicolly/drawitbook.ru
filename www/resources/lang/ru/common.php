@@ -8,4 +8,7 @@ return [
         'dislike' => 'Не нравится',
         'open_in_new_window' => 'Открыть в новом окне',
     ],
+    'similar' => 'ПОХОЖИЕ',
+    'popular_hash_tags' => 'Популярные #теги',
+    'claim' => 'Пожаловаться',
 ];
