@@ -1,24 +1,14 @@
 @extends('layouts.errors')
 
 @section('errors.title')
-    <h1>Страница не найдена или была удалена</h1>
+    <h1>{{ __('pages.404.h1') }}</h1>
 @endsection
 
 @section('errors.content')
     <div>
         <p class="form-group">
-            Вы обратились к странице «{{ $incorrectUrl }}».
+            {{ __('pages.404.subtitle', ['url' => $incorrectUrl]) }}
         </p>
-        <p>
-            К сожалению, страница не найдена или была удалена. Чтобы найти нужную страницу:
-        </p>
-        <ul>
-            <li>
-                проверьте правильность ссылки (если копировали вручную);
-            </li>
-            <li>
-                воспользуйтесь навигацией по сайту.
-            </li>
-        </ul>
+        {!! __('pages.404.suggests') !!}
     </div>
 @endsection

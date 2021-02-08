@@ -4,7 +4,7 @@
     <div class="errors-page">
         <div class="errors-page__img">
             <img class="img-responsive lazyload"
-                 data-src="{{ buildUrl('img/page-not-found.png') }}" alt="Произошла ошибка">
+                 data-src="{{ buildUrl('img/page-not-found.png') }}" alt="{{ __('pages.errors_alt') }}">
         </div>
         <div class="errors-page__content">
             <div class="content">

@@ -20,6 +20,9 @@ class WallPostService
     public function broadcast()
     {
         $artIdForPosting = $this->artsService->getIdForPost();
+        if (!$artIdForPosting) {
+            throw new \Exception('Не найден id изображения для постинга');
+        }
         $art = $this->artsService->getById($artIdForPosting);
         if (!$art) {
             throw new \Exception('Не найдено изображения для постинга');

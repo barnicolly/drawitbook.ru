@@ -1,6 +1,26 @@
 <?php
 
 return [
+    'errors_alt' => 'Error',
+    '404' => [
+        'h1' => 'PAGE NOT FOUND OR HAS BEEN DELETED',
+        'subtitle' => 'You have try visit the page «:url».',
+        'suggests' => '<p>
+            Sorry, this page was not found or has been deleted. You can try:
+        </p>
+        <ul>
+            <li>
+                checking link (if copied manually);
+            </li>
+            <li>
+                using site navigation.
+            </li>
+        </ul>',
+    ],
+    '500' => [
+        'h1' => 'A server side error has occurred.',
+        'subtitle' => 'Our specialists are already working to fix it.',
+    ],
     'main' => [
         'hello' => ' <p>
                     Near <strong>2&nbsp;700 pixel arts</strong> collected on the site.
