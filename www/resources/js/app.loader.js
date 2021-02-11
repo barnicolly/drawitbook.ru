@@ -14,12 +14,14 @@ import { initArtControls } from '@js/loaders/art_control.loader';
 import { FixedShare } from '@js/components/fixed_share';
 import { isMobileOrTablet } from '@js/helpers/screen';
 
+import '@js/translations';
+
 new SentryInstance();
 
 const fixedShareOptions = {
-    collapseText: 'Лучшая благодарность',
-    titleText: 'Лучшая благодарность',
-    text: 'Простой репост сайта в соц. сети очень поможет нам. Спасибо.',
+    collapseText: Lang.get('js.fixed_share.collapsed_text'),
+    titleText: Lang.get('js.fixed_share.title'),
+    text: Lang.get('js.fixed_share.sub_title'),
 };
 
 loadLazyloadImg();

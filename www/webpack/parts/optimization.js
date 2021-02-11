@@ -36,6 +36,17 @@ module.exports = function (isProduction) {
                     priority: 1,
                     enforce: true,
                 },
+                'translations.js': {
+                    name: 'translations',
+                    test(module, chunks) {
+                        const path = require('path');
+                        return module.resource &&
+                            (module.resource.includes(`js${path.sep}translations`));
+                    },
+                    chunks: 'all',
+                    priority: 1,
+                    enforce: true,
+                },
                 'vendors.js': {
                     name: 'vendors',
                     test: (module) => module.resource ? checkPrimaryVendor(module.resource): false,

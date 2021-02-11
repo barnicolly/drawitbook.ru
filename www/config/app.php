@@ -192,7 +192,8 @@ return [
         DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
         Waavi\Sanitizer\Laravel\SanitizerServiceProvider::class,
-        Waavi\Translation\TranslationServiceProvider::class
+        Waavi\Translation\TranslationServiceProvider::class,
+        Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class
     ],
 
     /*

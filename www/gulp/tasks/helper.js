@@ -2,6 +2,7 @@ const path = require('path');
 const folderPath = {
     build: path.join(__dirname, '../../public/build'),
     plugin: path.join(__dirname, '../../resources/plugins'),
+    js: path.join(__dirname, '../../resources/js'),
     node_modules: path.join(__dirname, '../../node_modules'),
 };
 
@@ -30,4 +31,12 @@ gulp.task('styles:fa.purge', function () {
         }))
         .pipe(plugins.rename('fa-purged.min.css'))
         .pipe(gulp.dest(targetPath));
+});
+
+gulp.task('string:replace', function () {
+    return gulp.src(folderPath.js + '/translations.js')
+        .pipe(plugins.replace('this,function()', 'window,function()'))
+        .pipe(gulp.dest(function (file) {
+            return file.base;
+        }));
 });

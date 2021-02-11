@@ -25,6 +25,7 @@
 </head>
 <body>
 @yield('content')
+<script src="{{ getUrlFromManifest('translations.js') }}" defer></script>
 <script src="{{ getUrlFromManifest('polyfills.js') }}" defer></script>
 <script src="{{ getUrlFromManifest('runtime.js') }}" defer></script>
 <script src="{{ getUrlFromManifest('vendors.js') }}" defer></script>

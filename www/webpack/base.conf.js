@@ -78,19 +78,19 @@ module.exports = {
             {
                 test: /\.svg$/,
                 include: [
-                    paths.src.img
+                    paths.src.img,
                 ],
                 use: [
                     helper.loaders.SvgSpriteLoader(isProduction(), {
-                        outputPath: 'icons/'
+                        outputPath: 'icons/',
                     }),
                     helper.loaders.SvgoLoader(isProduction()),
-                ]
+                ],
             },
             {
                 test: /\.(png|svg)$/,
                 exclude: [
-                    paths.src.img
+                    paths.src.img,
                 ],
                 use: [
                     helper.loaders.FileLoader(isProduction(), {
