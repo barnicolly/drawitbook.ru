@@ -29,7 +29,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable  $exception
+     * @param \Throwable $exception
      * @return void
      *
      * @throws \Exception
@@ -42,14 +42,25 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Throwable $exception
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Throwable
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            $url = $request->url();
+            if (mb_stripos($url, '/en/risunki-po-kletochkam') !== false) {
+                $redirectTo = str_ireplace('en/risunki-po-kletochkam', 'en/pixel-arts', $url);
+            } elseif (mb_stripos($url, '/ru/pixel-arts') !== false) {
+                $redirectTo = str_ireplace('ru/pixel-arts', 'ru/risunki-po-kletochkam', $url);
+            }
+            if (!empty($redirectTo)) {
+                return redirect($redirectTo);
+            }
+        }
         return parent::render($request, $exception);
     }
 }

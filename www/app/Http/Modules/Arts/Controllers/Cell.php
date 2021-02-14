@@ -64,6 +64,19 @@ class Cell extends Controller
         $pageNum = 1;
         $tagInfo = $this->tagsService->getByTagSeoName($tag, $locale);
         if (!$tagInfo) {
+            $alternativeLang = $locale === 'ru' ? 'en': 'ru';
+            if ($locale === 'ru') {
+                $tagInfo = $this->tagsService->getByTagSeoName($tag, $alternativeLang);
+            } elseif ($locale === 'en') {
+                $tagInfo = $this->tagsService->getByTagSeoName($tag, $alternativeLang);
+            }
+            if (!empty($tagInfo)) {
+                $tagInfo = $this->tagsService->getById($tagInfo['id']);
+                $slug = $locale === 'ru'
+                    ? $tagInfo['seo']
+                    : $tagInfo['slug_en'];
+                return redirect($this->routeService->getRouteArtsCellTagged($slug), 301);
+            }
             abort(404);
         }
         try {

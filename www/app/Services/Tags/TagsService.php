@@ -106,5 +106,10 @@ class TagsService
         return SprTagsModel::getBySeoName($tagSeoName, $locale);
     }
 
+    public function getById(int $id): ?array
+    {
+        return SprTagsModel::getById($id);
+    }
+
 }
 

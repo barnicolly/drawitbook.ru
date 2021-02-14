@@ -151,3 +151,11 @@ if (!function_exists('getFirstItemFromArray')) {
         return array_shift($array);
     }
 }
+
+if (!function_exists('getLastItemFromArray')) {
+    function getLastItemFromArray(array $baseArray)
+    {
+        $array = array_slice($baseArray, -1);
+        return array_shift($array);
+    }
+}

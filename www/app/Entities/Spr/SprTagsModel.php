@@ -22,13 +22,13 @@ class SprTagsModel extends Model
     public static function getBySeoName(string $tagSeoName, string $locale): ?array
     {
         if ($locale === 'en') {
-            $select =  [
+            $select = [
                 'id',
                 'name_en as name',
                 'slug_en as seo',
             ];
         } else {
-            $select =  [
+            $select = [
                 'id',
                 'name',
                 'seo',
@@ -52,5 +52,16 @@ class SprTagsModel extends Model
             return (array) $result;
         }
         return null;
+    }
+
+    public static function getById(int $id): ?array
+    {
+        $result = self::query()
+            ->where('id', '=', $id)
+            ->getQuery()
+            ->first();
+        return $result
+            ? (array) $result
+            : null;
     }
 }
