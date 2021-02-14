@@ -36,7 +36,6 @@
                                  data-lang="{{ $language['lang'] }}">
                         @endforeach
                     </div>
-
                 </div>
             </div>
         </div>

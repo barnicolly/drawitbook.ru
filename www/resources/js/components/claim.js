@@ -65,15 +65,15 @@ import { getRandomInt, sendRequest } from '@js/helpers/utils';
     function getClaimContainer() {
         var claimContainer = $('<form>', {class: 'claim-container form-group'});
         var wrapper = $('<div>', {class: 'list-group-item'});
-        wrapper.append($('<p>').html('Помогите нам сделать проект лучше. Обращение обязательно будет рассмотрено модератором.'));
-        wrapper.append($('<span>').html('Причина жалобы:'));
+        wrapper.append($('<p>').html(Lang.get('js.claim.title')));
+        wrapper.append($('<span>').html(Lang.get('js.claim.subtitle')));
         var claimList = $('<div>', {class: 'claim-list form-group'});
         var sprClaim = {
-            1: 'Оскорбление',
-            2: 'Материал для взрослых',
-            3: 'Пропаганда наркотиков',
-            4: 'Насилие',
-            5: 'Призыв к суициду',
+            1: Lang.get('js.claim.spr.1'),
+            2: Lang.get('js.claim.spr.2'),
+            3: Lang.get('js.claim.spr.3'),
+            4: Lang.get('js.claim.spr.4'),
+            5: Lang.get('js.claim.spr.5'),
         };
         for (var claimIndex in sprClaim) {
             var radio = $('<div>', {class: 'radio'});
@@ -89,8 +89,10 @@ import { getRandomInt, sendRequest } from '@js/helpers/utils';
             claimList.append(radio);
         }
         wrapper.append(claimList);
-        var submit = $('<button>', {type: 'button', class: 'btn btn-link submit-claim'}).html('Отправить');
-        var cancel = $('<button>', {type: 'button', class: 'btn btn-link cancel-claim'}).html('Отменить');
+        const submitButtonText = Lang.get('js.claim.submit.text');
+        const cancelButtonText = Lang.get('js.claim.cancel.text');
+        var submit = $('<button>', {type: 'button', class: 'btn btn-link submit-claim'}).html(submitButtonText);
+        var cancel = $('<button>', {type: 'button', class: 'btn btn-link cancel-claim'}).html(cancelButtonText);
         wrapper.append(submit);
         wrapper.append(cancel);
         claimContainer.append(wrapper);

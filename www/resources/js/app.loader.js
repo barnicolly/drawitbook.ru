@@ -15,6 +15,7 @@ import { FixedShare } from '@js/components/fixed_share';
 import { isMobileOrTablet } from '@js/helpers/screen';
 
 import '@js/translations';
+import { getLocale } from '@js/helpers/navigation';
 
 new SentryInstance();
 
@@ -23,6 +24,16 @@ const fixedShareOptions = {
     titleText: Lang.get('js.fixed_share.title'),
     text: Lang.get('js.fixed_share.sub_title'),
 };
+
+const fixedShareLibOptions = {
+    text: Lang.get('js.fixed_share.share_title'),
+    shares: ['vkontakte', 'facebook', 'twitter', 'pinterest', 'telegram', 'whatsapp', 'viber'],
+};
+
+const locale = getLocale();
+if (locale === 'en') {
+    fixedShareLibOptions.shares = ['facebook', 'twitter', 'vkontakte', 'pinterest', 'telegram', 'whatsapp', 'viber'];
+}
 
 loadLazyloadImg();
 loadStackGrid();
@@ -35,7 +46,7 @@ initFixedHeader($('header').first());
 loadFancybox($('body').find('.fullscreen-image__link'));
 
 $(function () {
-    const fixedShareInstance = new FixedShare(fixedShareOptions);
+    const fixedShareInstance = new FixedShare(fixedShareOptions, null, fixedShareLibOptions);
     fixedShareInstance.init();
 
     let backUpButtonElement = new backUpButton();
@@ -71,7 +82,7 @@ $(function () {
             const selectedLocale = $(this).data('lang');
             let pathNameParts = window.location.pathname.split('/').filter(item => item);
             pathNameParts.shift();
-            pathNameParts =  [selectedLocale].concat(pathNameParts);
+            pathNameParts = [selectedLocale].concat(pathNameParts);
             const searchParams = window.location.search;
             let newURL = window.location.protocol + '//' + window.location.host;
             newURL += '/' + pathNameParts.join('/');
@@ -79,6 +90,6 @@ $(function () {
                 newURL += searchParams;
             }
             window.location.href = newURL;
-        })
+        });
 
 });

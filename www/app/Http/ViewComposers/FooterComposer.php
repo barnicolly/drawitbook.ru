@@ -29,16 +29,16 @@ class FooterComposer
     {
         return [
             [
-                'lang' => Lang::RU,
-                'selected' => Lang::RU === $selectedLocale,
-                'src' => 'ru.png',
-                'title' => 'Русский'
-            ],
-            [
                 'lang' => Lang::EN,
                 'selected' => Lang::EN === $selectedLocale,
                 'src' => 'en.png',
                 'title' => 'English'
+            ],
+            [
+                'lang' => Lang::RU,
+                'selected' => Lang::RU === $selectedLocale,
+                'src' => 'ru.png',
+                'title' => 'Русский'
             ],
         ];
     }

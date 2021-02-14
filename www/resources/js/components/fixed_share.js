@@ -4,7 +4,7 @@ import { reachClickBtnShareInFixedShare } from '@js/components/ya_target';
 
 export class FixedShare {
 
-    constructor(options = {}, onClickExtended = null) {
+    constructor(options = {}, onClickExtended = null, libOptions = {}) {
         //время для появления в ms после инициализации
         this.timeAppear = 4000;
         //спустя сколько дней возобновить показ после закрытия окна
@@ -20,6 +20,13 @@ export class FixedShare {
 
         this.$container = null;
         this.storage = new Storage();
+
+        this.libOptions = {
+            url: 'https://drawitbook.com',
+            text: 'Drawitbook.com. Картинки для срисовки - рисуйте, делитесь с друзьями',
+        };
+
+        this.libOptions = merge(this.libOptions, libOptions);
 
         this.options = merge({
             collapseText: 'Сохранить страницу',
@@ -105,11 +112,9 @@ export class FixedShare {
                 showCount: false,
                 shares: ['vkontakte', 'facebook',  'twitter','pinterest', 'telegram', 'whatsapp', 'viber'],
             };
-            this.$container.find('#fixed-share')
-                .jsSocials(merge(defaultOptions, {
-                    url: 'https://drawitbook.ru',
-                    text: 'Drawitbook.ru. Картинки для срисовки - рисуйте, делитесь с друзьями',
-                }));
+            this.$container
+                .find('#fixed-share')
+                .jsSocials(merge(defaultOptions, this.libOptions));
         });
 
         this.$container

@@ -13,5 +13,5 @@ return [
     'claim' => 'Claim',
     'loading' => 'Loading',
     'arts_left' => 'Show more (<span class="left-arts-cnt">:countLeftArtsText</span> left)',
-    'arts_count' => 'Arts count: <span class="badge badge-info">:countArts</span>',
+    'arts_count' => 'Arts: <span class="badge badge-info">:countArts</span>',
 ];

@@ -7,8 +7,9 @@ export default class Back_up_button {
 
     create() {
         let id = 'pageUp';
+        const buttonTitle = Lang.get('js.btn_up.title');
         let html = `
-            <button type="button" id="${id}" title="К началу страницы">
+            <button type="button" id="${id}" title="${buttonTitle}">
 
             </button>
         `;
