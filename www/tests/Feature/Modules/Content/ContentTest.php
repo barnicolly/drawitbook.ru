@@ -8,8 +8,14 @@ use Tests\TestCase;
 class ContentTest extends TestCase
 {
 
-    public function testHomePageResponseCode200(): void
+    /**
+     * @dataProvider \Tests\Providers\CommonProvider::providerLanguages
+     *
+     * @param string $locale
+     */
+    public function testHomePageResponseCode200(string $locale): void
     {
+        $this->app->setLocale($locale);
         $response = $this->get((new RouteService())->getRouteHome());
         $response->assertStatus(200);
     }

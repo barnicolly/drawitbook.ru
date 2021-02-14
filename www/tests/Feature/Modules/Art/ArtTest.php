@@ -14,9 +14,19 @@ class ArtTest extends TestCase
         return [
             [
                 144,
+                'ru',
             ],
             [
                 7,
+                'ru',
+            ],
+            [
+                144,
+                'en',
+            ],
+            [
+                7,
+                'en',
             ],
         ];
     }
@@ -25,16 +35,24 @@ class ArtTest extends TestCase
      * @dataProvider providerTestArtPageResponseCode200
      *
      * @param int $id
+     * @param string $locale
      */
-    public function testArtPageResponseCode200(int $id): void
+    public function testArtPageResponseCode200(int $id, string $locale): void
     {
+        $this->app->setLocale($locale);
         $response = $this->get((new RouteService())->getRouteArt($id));
         $response->assertStatus(200);
     }
 
-    public function testPageHasRobotsNoindex(): void
+    /**
+     * @dataProvider \Tests\Providers\CommonProvider::providerLanguages
+     *
+     * @param string $locale
+     */
+    public function testPageHasRobotsNoindex(string $locale): void
     {
         $id = 144;
+        $this->app->setLocale($locale);
         $response = $this->get((new RouteService())->getRouteArt($id));
         $response->assertSee('<meta name="robots" content="noindex">', false);
     }
@@ -50,10 +68,22 @@ class ArtTest extends TestCase
             [
                 ' ?',
                 [],
+                'ru',
             ],
             [
                 '',
                 ['test' => 1],
+                'ru',
+            ],
+            [
+                ' ?',
+                [],
+                'en',
+            ],
+            [
+                '',
+                ['test' => 1],
+                'en',
             ]
         ];
     }
@@ -63,10 +93,12 @@ class ArtTest extends TestCase
      *
      * @param string $postfix
      * @param array $params
+     * @param string $locale
      */
-    public function testHasRedirects(string $postfix, array $params): void
+    public function testHasRedirects(string $postfix, array $params, string $locale): void
     {
         $id = 144;
+        $this->app->setLocale($locale);
         $url = (new RouteService())->getRouteArt($id) . $postfix;
         if (!empty($params)) {
             $url .= '?' . http_build_query($params);
@@ -77,9 +109,16 @@ class ArtTest extends TestCase
         $response->assertRedirect($assetRedirect);
     }
 
-    public function testArtResponseCode404() : void
+    /**
+     * @dataProvider \Tests\Providers\CommonProvider::providerLanguages
+     *
+     * @param string $locale
+     */
+    public function testArtResponseCode404(string $locale) : void
     {
-        $response = $this->get('/art');
+        $this->app->setLocale($locale);
+        $response = $this->followingRedirects()
+            ->get('/art');
         $response->assertStatus(404);
     }
 }

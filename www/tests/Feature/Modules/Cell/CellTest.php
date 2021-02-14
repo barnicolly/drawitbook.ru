@@ -9,8 +9,14 @@ use Tests\TestCase;
 class CellTest extends TestCase
 {
 
-    public function testCellIndexResponseCode200(): void
+    /**
+     * @dataProvider \Tests\Providers\CommonProvider::providerLanguages
+     *
+     * @param string $locale
+     */
+    public function testCellIndexResponseCode200(string $locale): void
     {
+        $this->app->setLocale($locale);
         $response = $this->get((new RouteService())->getRouteArtsCell());
         $response->assertStatus(200);
     }
@@ -20,12 +26,15 @@ class CellTest extends TestCase
         return [
             [
                'supergeroi',
+                'ru',
             ],
             [
                 'supermen',
+                'ru',
             ],
             [
                 'koshka',
+                'ru',
             ],
         ];
     }
@@ -34,9 +43,11 @@ class CellTest extends TestCase
      * @dataProvider providerTestCellCategoryResponseCode200
      *
      * @param string $tag
+     * @param string $locale
      */
-    public function testCellCategoryResponseCode200(string $tag): void
+    public function testCellCategoryResponseCode200(string $tag, string $locale): void
     {
+        $this->app->setLocale($locale);
         $response = $this->get((new RouteService())->getRouteArtsCellTagged($tag));
         $response->assertStatus(200);
     }
@@ -79,6 +90,7 @@ class CellTest extends TestCase
      */
     public function testHasCellCategoryRedirects(string $tag, array $params): void
     {
+        $this->app->setLocale('ru');
         $expectedTag = 'supergeroi';
         $url = (new RouteService())->getRouteArtsCellTagged($tag);
         if (!empty($params)) {

@@ -15,6 +15,9 @@ class PaginatorService
             $isLastSlice = $offset >= $countSearchResults;
             $relativePictureIds = array_slice($relativePictureIds, ($pageNum - 1) * $perPage, $perPage);
             $countLeftPictures = $countSearchResults - ($perPage * $pageNum);
+            if ($countLeftPictures < 0) {
+                $countLeftPictures = 0;
+            }
         } else {
             $countSearchResults = 0;
             $isLastSlice = false;
