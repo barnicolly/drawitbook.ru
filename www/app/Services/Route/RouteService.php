@@ -5,31 +5,31 @@ namespace App\Services\Route;
 class RouteService
 {
 
-    public function getRouteHome(): string
+    public function getRouteHome(array $parameters = [], $absolute = true, $lang = null): string
     {
-        $url = $this->route('home');
+        $url = $this->route('home', $parameters, $absolute, $lang);
         return $this->postProcessing($url);
     }
 
-    public function getRouteSearch(): string
+    public function getRouteSearch(array $parameters = [], $absolute = true, $lang = null): string
     {
-        $url = $this->route('search');
+        $url = $this->route('search', $parameters, $absolute, $lang);
         return $this->postProcessing($url);
     }
 
-    public function getRouteArt(int $id): string
+    public function getRouteArt(int $id, $absolute = true, $lang = null): string
     {
-        $url = $this->route('art', ['id' => $id]);
+        $url = $this->route('art', ['id' => $id], $absolute, $lang);
         return $this->postProcessing($url);
     }
 
-    public function getRouteArtsCell(): string
+    public function getRouteArtsCell(array $parameters = [], $absolute = true, $lang = null): string
     {
-        $url = $this->route('arts.cell');
+        $url = $this->route('arts.cell', $parameters, $absolute, $lang);
         return $this->postProcessing($url);
     }
 
-    public function getRouteArtsCellTagged(string $tag): string
+    public function getRouteArtsCellTagged(string $tag, $absolute = true, $lang = null): string
     {
         $url = $this->route('arts.cell.tagged', ['tag' => $tag]);
         return $this->postProcessing($url);
@@ -39,7 +39,7 @@ class RouteService
     {
         return urldecode($url);
     }
-//getLangRoute
+
     public function route($name, $parameters = [], $absolute = true, $lang = null)
     {
         /*

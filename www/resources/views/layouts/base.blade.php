@@ -13,6 +13,11 @@
     @auth
         <link rel="stylesheet" href="{{ getUrlFromManifest('admin.css') }}">
     @endauth
+    @if (!empty($alternateLinks))
+        @foreach($alternateLinks as $alternateLink)
+            <link rel="alternate" href="{{ $alternateLink['href'] }}" hreflang="{{ $alternateLink['lang'] }}">
+        @endforeach
+    @endif
     @stack('links')
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
@@ -20,7 +25,8 @@
     @stack('styles')
     @if (!isLocal() && config('app.debug') === false)
         @include('layouts.partials.metrics')
-        <script data-ad-client="ca-pub-1368141699085758" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script data-ad-client="ca-pub-1368141699085758" async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     @endif
 </head>
 <body>

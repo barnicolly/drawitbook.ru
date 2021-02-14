@@ -53,14 +53,31 @@ class Cell extends Controller
         $arts = $this->artsService->getInterestingArts(0, 25);
         [$title, $description] = $this->seoService->formTitleAndDescriptionCellIndex();
         $this->addBreadcrumb(__('breadcrumbs.pixel_arts'));
+        $alternateLinks = $this->getAlternateLinks();
         $viewData = [
             'arts' => $arts,
             'breadcrumbs' => $this->breadcrumbs,
+            'alternateLinks' => $alternateLinks,
         ];
+        SEOTools::setCanonical($this->routeService->getRouteArtsCell());
         SEOTools::setTitle($title);
         $this->setShareImage(formDefaultShareArtUrlPath(true));
         SEOTools::setDescription($description);
         return response()->view('Arts::cell.index', $viewData);
+    }
+
+    private function getAlternateLinks(): array
+    {
+        $links = [];
+        $links[] = [
+            'lang' => Lang::RU,
+            'href' => $this->routeService->getRouteArtsCell([], true, Lang::RU),
+        ];
+        $links[] = [
+            'lang' => Lang::EN,
+            'href' => $this->routeService->getRouteArtsCell([], true, Lang::EN),
+        ];
+        return $links;
     }
 
     public function tagged(string $tag)
@@ -69,7 +86,7 @@ class Cell extends Controller
         $pageNum = 1;
         $tagInfo = $this->tagsService->getByTagSeoName($tag, $locale);
         if (!$tagInfo) {
-            $alternativeLang = $locale === Lang::RU ? Lang::EN: Lang::RU;
+            $alternativeLang = $locale === Lang::RU ? Lang::EN : Lang::RU;
             if ($locale === Lang::RU) {
                 $tagInfo = $this->tagsService->getByTagSeoName($tag, $alternativeLang);
             } elseif ($locale === Lang::EN) {
@@ -92,11 +109,33 @@ class Cell extends Controller
             return abort(404);
         }
         if (!$viewData['isLastSlice']) {
-            $leftArtsText = $this->translationService->getPluralForm($viewData['countLeftArts'], Lang::fromValue($locale));
+            $leftArtsText = $this->translationService->getPluralForm(
+                $viewData['countLeftArts'],
+                Lang::fromValue($locale)
+            );
+        }
+        $forFormAlternateLinks[] = [
+            'lang' => $locale,
+            'tag' => $tagInfo['seo'],
+        ];
+        $tagInfo = $this->tagsService->getById($tagInfo['id']);
+        $alternativeLang = $locale === Lang::RU ? Lang::EN : Lang::RU;
+        $slug = $alternativeLang === Lang::RU
+            ? $tagInfo['seo']
+            : $tagInfo['slug_en'];
+        if (!empty($slug)) {
+            $forFormAlternateLinks[] = [
+                'lang' => $alternativeLang,
+                'tag' => $slug,
+            ];
+            $alternateLinks = $this->getTaggedAlternateLinks($forFormAlternateLinks);
+        } else {
+            $alternateLinks = [];
         }
         $viewData['leftArtsText'] = $leftArtsText ?? null;
         $viewData['tag'] = $tagInfo;
         $viewData['canonical'] = $this->routeService->getRouteArtsCellTagged($tag);
+        $viewData['alternateLinks'] = count($alternateLinks) > 1 ? $alternateLinks : [];
         $countSearchResults = $viewData['countRelatedArts'];
         $relativeArts = $viewData['arts'];
         [$title, $description] = $this->seoService->formCellTaggedTitleAndDescription(
@@ -105,6 +144,7 @@ class Cell extends Controller
         );
         SEOTools::setTitle($title);
         SEOTools::setDescription($description);
+        SEOTools::setCanonical($this->routeService->getRouteArtsCellTagged($tagInfo['seo']));
         $firstArt = getFirstItemFromArray($relativeArts);
         if ($firstArt) {
             $this->setShareImage(getArtsFolder() . $firstArt['path']);
@@ -113,6 +153,18 @@ class Cell extends Controller
         $this->addBreadcrumb(mbUcfirst($tagInfo['name']));
         $viewData['breadcrumbs'] = $this->breadcrumbs;
         return response()->view('Arts::cell.tagged', $viewData);
+    }
+
+    private function getTaggedAlternateLinks(array $forFormAlternateLinks): array
+    {
+        $links = [];
+        foreach ($forFormAlternateLinks as $link) {
+            $links[] = [
+                'lang' => $link['lang'],
+                'href' => $this->routeService->getRouteArtsCellTagged($link['tag'], true, $link['lang']),
+            ];
+        }
+        return $links;
     }
 
     public function slice(string $tag, Request $request)
@@ -138,7 +190,10 @@ class Cell extends Controller
             $viewData = $this->formViewData($tagInfo['id'], $pageNum);
             $isLastSlice = $viewData['isLastSlice'];
             if (!$isLastSlice) {
-                $countLeftArtsText = $this->translationService->getPluralForm($viewData['countLeftArts'], Lang::fromValue($locale));
+                $countLeftArtsText = $this->translationService->getPluralForm(
+                    $viewData['countLeftArts'],
+                    Lang::fromValue($locale)
+                );
             }
             $result = [
                 'data' => [

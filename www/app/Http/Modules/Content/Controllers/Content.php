@@ -2,6 +2,7 @@
 
 namespace App\Http\Modules\Content\Controllers;
 
+use App\Enums\Lang;
 use App\Http\Controllers\Controller;
 use App\Services\Route\RouteService;
 use App\Services\Seo\SeoService;
@@ -23,12 +24,30 @@ class Content extends Controller
 
     public function index()
     {
-        $viewData = [];
+        $alternateLinks = $this->getAlternateLinks();
+        $viewData = [
+            'alternateLinks' => $alternateLinks,
+        ];
+        SEOTools::setCanonical($this->routeService->getRouteHome());
         [$title, $description] = $this->seoService->formTitleAndDescriptionHome();
         SEOTools::setTitle($title);
         $this->setShareImage(formDefaultShareArtUrlPath(true));
         SEOTools::setDescription($description);
         return response()->view('Content::main_page.index', $viewData);
+    }
+
+    private function getAlternateLinks(): array
+    {
+        $links = [];
+        $links[] = [
+            'lang' => Lang::RU,
+            'href' => $this->routeService->getRouteHome([], true, Lang::RU),
+        ];
+        $links[] = [
+            'lang' => Lang::EN,
+            'href' => $this->routeService->getRouteHome([], true, Lang::EN),
+        ];
+        return $links;
     }
 
     public function tagList()

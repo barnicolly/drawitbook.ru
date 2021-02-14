@@ -2,8 +2,10 @@
 
 namespace App\Http\Modules\Arts\Controllers\Art;
 
+use App\Enums\Lang;
 use App\Http\Controllers\Controller;
 use App\Services\Arts\ArtsService;
+use App\Services\Route\RouteService;
 use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
@@ -16,17 +18,20 @@ class Art extends Controller
     private $seoService;
     private $tagsService;
     private $artsService;
+    private $routeService;
 
     public function __construct(
         SearchService $searchService,
         SeoService $seoService,
         TagsService $tagsService,
-        ArtsService $artsService
+        ArtsService $artsService,
+        RouteService $routeService
     ) {
         $this->searchService = $searchService;
         $this->seoService = $seoService;
         $this->tagsService = $tagsService;
         $this->artsService = $artsService;
+        $this->routeService = $routeService;
     }
 
     public function index(
@@ -39,17 +44,34 @@ class Art extends Controller
         $artTags = $this->tagsService->getTagsByArtId($artId, true);
         $art['tags'] = $this->prepareArtTags($artTags);
         $art = $this->seoService->setArtAlt($art);
+        $alternateLinks = $this->getAlternateLinks($artId);
         $viewData = [
             'art' => $art,
             'arts' => $this->formRelativeArts($artTags, $artId),
             'popularTags' => $this->getPopularTags(),
+            'alternateLinks' => $alternateLinks,
         ];
         [$title, $description] = $this->seoService->formTitleAndDescriptionShowArt($artId);
         SEOTools::setTitle($title);
         SEOTools::setDescription($description);
+        SEOTools::setCanonical($this->routeService->getRouteArt($artId));
         SEOMeta::setRobots('noindex');
         $this->setShareImage(getArtsFolder() . $art['path']);
         return response()->view('Arts::art.index', $viewData);
+    }
+
+    private function getAlternateLinks(int $id): array
+    {
+        $links = [];
+        $links[] = [
+            'lang' => Lang::RU,
+            'href' => $this->routeService->getRouteArt($id, true, Lang::RU),
+        ];
+        $links[] = [
+            'lang' => Lang::EN,
+            'href' => $this->routeService->getRouteArt($id, true, Lang::EN),
+        ];
+        return $links;
     }
 
     private function formRelativeArts(array $artTags, int $artId): array

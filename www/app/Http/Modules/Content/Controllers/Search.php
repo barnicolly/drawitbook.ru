@@ -7,6 +7,7 @@ use App\Exceptions\NotFoundRelativeArts;
 use App\Http\Controllers\Controller;
 use App\Services\Arts\ArtsService;
 use App\Services\Paginator\PaginatorService;
+use App\Services\Route\RouteService;
 use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
@@ -21,6 +22,7 @@ class Search extends Controller
 {
     private $searchService;
     private $seoService;
+    private $routeService;
     private $artsService;
     private $tagsService;
     private $translationService;
@@ -28,12 +30,14 @@ class Search extends Controller
     public function __construct(
         SearchService $searchService,
         SeoService $seoService,
+        RouteService $routeService,
         ArtsService $artsService,
         TranslationService $translationService,
         TagsService $tagsService
     ) {
         $this->searchService = $searchService;
         $this->seoService = $seoService;
+        $this->routeService = $routeService;
         $this->artsService = $artsService;
         $this->tagsService = $tagsService;
         $this->translationService = $translationService;
@@ -54,6 +58,8 @@ class Search extends Controller
             $viewData['popularArts'] = (new ArtsService())->getInterestingArts(0, 10);
             $viewData['popularTags'] = $this->getPopularTags();
         }
+        $alternateLinks = $this->getAlternateLinks();
+        $viewData['alternateLinks'] = $alternateLinks;
         $viewData['searchQuery'] = !empty($filters['query']) && is_string($filters['query']) ? $filters['query'] : '';
         $viewData['filters'] = $filters;
         $viewData['isLastSlice'] = $isLastSlice;
@@ -65,10 +71,25 @@ class Search extends Controller
             $countLeftArtsText = $this->translationService->getPluralForm($countLeftArts, Lang::fromValue($locale));
         }
         $viewData['leftArtsText'] = $countLeftArtsText ?? null;
-        //TODO-misha добавить title;
+        SEOTools::setCanonical($this->routeService->getRouteSearch());
+        //TODO-misha добавить генерацию title;
         SEOTools::setTitle('Поиск по сайту');
         SEOMeta::setRobots('noindex, follow');
         return view('Content::search.index', $viewData)->render();
+    }
+
+    private function getAlternateLinks(): array
+    {
+        $links = [];
+        $links[] = [
+            'lang' => Lang::RU,
+            'href' => $this->routeService->getRouteSearch([], true, Lang::RU),
+        ];
+        $links[] = [
+            'lang' => Lang::EN,
+            'href' => $this->routeService->getRouteSearch([], true, Lang::EN),
+        ];
+        return $links;
     }
 
     public function slice(Request $request)

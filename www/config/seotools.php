@@ -41,7 +41,7 @@ return [
             'type'        => 'website',
             'site_name'   => false,
             'images'      => [],
-            'locale'      => 'ru_RU',
+//            'locale'      => 'ru',
         ],
     ],
     'twitter' => [
