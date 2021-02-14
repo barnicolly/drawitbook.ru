@@ -50,12 +50,6 @@
                         </div>
                     </li>
                 </ul>
-                <div class="lang-switcher">
-                    <select class="lang-switcher__select" name="lang">
-                        <option value="en" {{ $selectedLocale === \App\Enums\Lang::EN ? 'selected': '' }}>English</option>
-                        <option value="ru" {{ $selectedLocale === \App\Enums\Lang::RU ? 'selected': '' }}>Русский</option>
-                    </select>
-                </div>
             </div>
         </nav>
     </div>

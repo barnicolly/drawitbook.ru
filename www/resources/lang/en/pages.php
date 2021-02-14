@@ -71,6 +71,7 @@ If you want to make a creative postcard with your own hands or fill the diary wi
         'footer' => [
             'copyright' => 'Copying and distribution of materials is encouraged.',
             'slogan' => 'LOVE ART? WE DO TOO.',
+            'switch_lang' => 'Switch language',
         ],
         'header' => [
             'search' => [

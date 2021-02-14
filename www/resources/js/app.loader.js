@@ -67,8 +67,8 @@ $(function () {
     initArtControls($('.art-control'));
 
     $('.lang-switcher')
-        .on('change', '.lang-switcher__select', function () {
-            const selectedLocale = $(this).val();
+        .on('click', '.lang-switcher__option', function () {
+            const selectedLocale = $(this).data('lang');
             let pathNameParts = window.location.pathname.split('/').filter(item => item);
             pathNameParts.shift();
             pathNameParts =  [selectedLocale].concat(pathNameParts);
@@ -79,6 +79,6 @@ $(function () {
                 newURL += searchParams;
             }
             window.location.href = newURL;
-        });
+        })
 
 });
