@@ -55,14 +55,14 @@ class CustomTranslationMiddleware extends TranslationMiddleware
         // If no locale was set in the url, check the session locale
         if ($request->hasSession() && $sessionLocale = $request->session()->get('waavi.translation.locale')) {
             if ($this->languageRepository->isValidLocale($sessionLocale)) {
-                return redirect()->to($this->uriLocalizer->localize($currentUrl, $sessionLocale, $segment));
+                return redirect()->to($this->uriLocalizer->localize($currentUrl, $sessionLocale, $segment), 301);
             }
         }
 
         // If no locale was set in the url, check the browser's locale:
         $browserLocale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
         if ($this->languageRepository->isValidLocale($browserLocale)) {
-            return redirect()->to($this->uriLocalizer->localize($currentUrl, $browserLocale, $segment));
+            return redirect()->to($this->uriLocalizer->localize($currentUrl, $browserLocale, $segment), 301);
         }
 
         // If not, redirect to the default locale:
@@ -70,6 +70,6 @@ class CustomTranslationMiddleware extends TranslationMiddleware
         if ($request->hasSession()) {
             $request->session()->reflash();
         }
-        return redirect()->to($this->uriLocalizer->localize($currentUrl, $defaultLocale, $segment));
+        return redirect()->to($this->uriLocalizer->localize($currentUrl, $defaultLocale, $segment), 301);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Tests\Providers;
 
+use App\Enums\Lang;
+
 class CommonProvider
 {
 
@@ -9,10 +11,10 @@ class CommonProvider
     {
         return [
             [
-                'ru',
+                Lang::RU,
             ],
             [
-                'en',
+                Lang::EN,
             ],
         ];
     }
