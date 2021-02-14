@@ -3,6 +3,7 @@
 namespace App\Entities\Picture;
 
 use App\Entities\Spr\SprTagsModel;
+use App\Enums\Lang;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -32,7 +33,7 @@ class PictureTagsModel extends Model
     public static function getTagsByArtIds(array $artIds, bool $withHidden, string $locale): array
     {
         $query = self::query();
-        if ($locale === 'en') {
+        if ($locale === Lang::EN) {
             $select =  [
                 'picture_tags.id',
                 'picture_tags.picture_id',
@@ -65,7 +66,7 @@ class PictureTagsModel extends Model
             )
             ->where(
                 function ($query) use ($locale) {
-                    if ($locale === 'en') {
+                    if ($locale === Lang::EN) {
                         $query->whereNotNull('spr_tags.slug_en');
                     }
                 }
@@ -86,7 +87,7 @@ class PictureTagsModel extends Model
     {
         $locale = mb_strtolower($locale);
         $query = SprTagsModel::query();
-        if ($locale === 'en') {
+        if ($locale === Lang::EN) {
             $select =  [
                 'spr_tags.name_en as name',
                 'spr_tags.slug_en as seo',
@@ -103,7 +104,7 @@ class PictureTagsModel extends Model
             ->select($select)
             ->where(
                 function ($query) use ($locale) {
-                    if ($locale === 'en') {
+                    if ($locale === Lang::EN) {
                         $query->whereNotNull('spr_tags.slug_en');
                     }
                 }
@@ -129,7 +130,7 @@ class PictureTagsModel extends Model
     {
         $locale = mb_strtolower($locale);
         $query = SprTagsModel::query();
-        if ($locale === 'en') {
+        if ($locale === Lang::EN) {
             $select =  [
                 'spr_tags.name_en as name',
                 'spr_tags.slug_en as seo',
@@ -144,7 +145,7 @@ class PictureTagsModel extends Model
             ->select($select)
             ->where(
                 function ($query) use ($locale) {
-                    if ($locale === 'en') {
+                    if ($locale === Lang::EN) {
                         $query->whereNotNull('spr_tags.slug_en');
                     }
                 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Modules\Arts\Controllers;
 
+use App\Enums\Lang;
 use App\Exceptions\NotFoundRelativeArts;
 use App\Http\Controllers\Controller;
 use App\Services\Arts\ArtsService;
@@ -10,6 +11,7 @@ use App\Services\Route\RouteService;
 use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
+use App\Services\Translation\TranslationService;
 use App\Traits\BreadcrumbsTrait;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
@@ -27,12 +29,14 @@ class Cell extends Controller
     private $tagsService;
     private $seoService;
     private $searchService;
+    private $translationService;
 
     public function __construct(
         RouteService $routeService,
         ArtsService $artsService,
         SeoService $seoService,
         SearchService $searchService,
+        TranslationService $translationService,
         TagsService $tagsService
     ) {
         $this->breadcrumbs = new CollectionAlias();
@@ -41,6 +45,7 @@ class Cell extends Controller
         $this->artsService = $artsService;
         $this->tagsService = $tagsService;
         $this->searchService = $searchService;
+        $this->translationService = $translationService;
     }
 
     public function index()
@@ -64,15 +69,15 @@ class Cell extends Controller
         $pageNum = 1;
         $tagInfo = $this->tagsService->getByTagSeoName($tag, $locale);
         if (!$tagInfo) {
-            $alternativeLang = $locale === 'ru' ? 'en': 'ru';
-            if ($locale === 'ru') {
+            $alternativeLang = $locale === Lang::RU ? Lang::EN: Lang::RU;
+            if ($locale === Lang::RU) {
                 $tagInfo = $this->tagsService->getByTagSeoName($tag, $alternativeLang);
-            } elseif ($locale === 'en') {
+            } elseif ($locale === Lang::EN) {
                 $tagInfo = $this->tagsService->getByTagSeoName($tag, $alternativeLang);
             }
             if (!empty($tagInfo)) {
                 $tagInfo = $this->tagsService->getById($tagInfo['id']);
-                $slug = $locale === 'ru'
+                $slug = $locale === Lang::RU
                     ? $tagInfo['seo']
                     : $tagInfo['slug_en'];
                 if ($slug) {
@@ -86,10 +91,10 @@ class Cell extends Controller
         } catch (NotFoundRelativeArts $e) {
             return abort(404);
         }
-        $leftArtsText = $locale === 'ru'
-            ? pluralForm($viewData['countLeftArts'], ['рисунок', 'рисунка', 'рисунков'])
-            : pluralFormEn($viewData['countLeftArts'], 'art', 'arts');
-        $viewData['leftArtsText'] = $leftArtsText;
+        if (!$viewData['isLastSlice']) {
+            $leftArtsText = $this->translationService->getPluralForm($viewData['countLeftArts'], Lang::fromValue($locale));
+        }
+        $viewData['leftArtsText'] = $leftArtsText ?? null;
         $viewData['tag'] = $tagInfo;
         $viewData['canonical'] = $this->routeService->getRouteArtsCellTagged($tag);
         $countSearchResults = $viewData['countRelatedArts'];
@@ -131,20 +136,15 @@ class Cell extends Controller
                 throw new Exception('Не найден tag');
             }
             $viewData = $this->formViewData($tagInfo['id'], $pageNum);
-            $countLeftArts = $viewData['countLeftArts'];
             $isLastSlice = $viewData['isLastSlice'];
-            if ($locale === 'ru') {
-                $countLeftArtsText = $countLeftArts >= 0
-                    ? pluralForm($countLeftArts, ['рисунок', 'рисунка', 'рисунков'])
-                    : '';
-            } else {
-                $countLeftArtsText = pluralFormEn($countLeftArts, 'art', 'arts');
+            if (!$isLastSlice) {
+                $countLeftArtsText = $this->translationService->getPluralForm($viewData['countLeftArts'], Lang::fromValue($locale));
             }
             $result = [
                 'data' => [
                     'html' => view('Arts::template.stack_grid.elements', $viewData)->render(),
                     'page' => $pageNum,
-                    'countLeftArtsText' => $countLeftArtsText,
+                    'countLeftArtsText' => $countLeftArtsText ?? null,
                     'isLastSlice' => $isLastSlice,
                 ],
             ];

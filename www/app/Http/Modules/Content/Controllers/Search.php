@@ -2,6 +2,7 @@
 
 namespace App\Http\Modules\Content\Controllers;
 
+use App\Enums\Lang;
 use App\Exceptions\NotFoundRelativeArts;
 use App\Http\Controllers\Controller;
 use App\Services\Arts\ArtsService;
@@ -9,6 +10,7 @@ use App\Services\Paginator\PaginatorService;
 use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
+use App\Services\Translation\TranslationService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
@@ -21,17 +23,20 @@ class Search extends Controller
     private $seoService;
     private $artsService;
     private $tagsService;
+    private $translationService;
 
     public function __construct(
         SearchService $searchService,
         SeoService $seoService,
         ArtsService $artsService,
+        TranslationService $translationService,
         TagsService $tagsService
     ) {
         $this->searchService = $searchService;
         $this->seoService = $seoService;
         $this->artsService = $artsService;
         $this->tagsService = $tagsService;
+        $this->translationService = $translationService;
     }
 
     public function index(Request $request)
@@ -56,14 +61,10 @@ class Search extends Controller
         $viewData['countRelatedArts'] = $countSearchResults;
         $viewData['arts'] = $relativeArts;
         $locale = app()->getLocale();
-        if ($locale === 'ru') {
-            $countLeftArtsText = $countLeftArts >= 0
-                ? pluralForm($countLeftArts, ['рисунок', 'рисунка', 'рисунков'])
-                : '';
-        } else {
-            $countLeftArtsText = pluralFormEn($countLeftArts, 'art', 'arts');
+        if (!$isLastSlice) {
+            $countLeftArtsText = $this->translationService->getPluralForm($countLeftArts, Lang::fromValue($locale));
         }
-        $viewData['leftArtsText'] = $countLeftArtsText;
+        $viewData['leftArtsText'] = $countLeftArtsText ?? null;
         //TODO-misha добавить title;
         SEOTools::setTitle('Поиск по сайту');
         SEOMeta::setRobots('noindex, follow');
@@ -100,18 +101,14 @@ class Search extends Controller
                 'countRelatedArts' => $countSearchResults,
             ];
             $locale = app()->getLocale();
-            if ($locale === 'ru') {
-                $countLeftArtsText = $countLeftArts >= 0
-                    ? pluralForm($countLeftArts, ['рисунок', 'рисунка', 'рисунков'])
-                    : '';
-            } else {
-                $countLeftArtsText = pluralFormEn($countLeftArts, 'art', 'arts');
+            if (!$isLastSlice) {
+                $countLeftArtsText = $this->translationService->getPluralForm($countLeftArts, Lang::fromValue($locale));
             }
             $result = [
                 'data' => [
                     'html' => view('Arts::template.stack_grid.elements', $viewData)->render(),
                     'page' => $pageNum,
-                    'countLeftArtsText' => $countLeftArtsText,
+                    'countLeftArtsText' => $countLeftArtsText ?? null,
                     'isLastSlice' => $isLastSlice,
                 ],
             ];

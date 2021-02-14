@@ -2,8 +2,8 @@
 
 namespace App\Entities;
 
+use App\Enums\Lang;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class MenuLevelsModel extends Model
 {
@@ -25,7 +25,7 @@ class MenuLevelsModel extends Model
             'menu_levels.parent_level_id',
             'menu_levels.column',
         ];
-        if ($locale === 'en') {
+        if ($locale === Lang::EN) {
             $select = array_merge(
                 $select,
                 [
@@ -48,10 +48,10 @@ class MenuLevelsModel extends Model
             ->select($select)
             ->where(
                 function ($query) use ($locale) {
-                    if ($locale === 'en') {
+                    if ($locale === Lang::EN) {
                         $query->where('menu_levels.show_en', 1);
                     }
-                    if ($locale === 'ru') {
+                    if ($locale === Lang::RU) {
                         $query->where('menu_levels.show_ru', 1);
                     }
                 }
