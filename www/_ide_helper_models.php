@@ -10,6 +10,33 @@
  */
 
 
+namespace App\Entities{
+/**
+ * App\Entities\MenuLevelsModel
+ *
+ * @property int $id
+ * @property int|null $spr_tag_id
+ * @property int|null $parent_level_id
+ * @property string|null $custom_name_ru
+ * @property string|null $custom_name_en
+ * @property int $show_ru
+ * @property int|null $show_en
+ * @property int|null $column
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuLevelsModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuLevelsModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuLevelsModel query()
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuLevelsModel whereColumn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuLevelsModel whereCustomNameEn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuLevelsModel whereCustomNameRu($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuLevelsModel whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuLevelsModel whereParentLevelId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuLevelsModel whereShowEn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuLevelsModel whereShowRu($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuLevelsModel whereSprTagId($value)
+ */
+	class MenuLevelsModel extends \Eloquent {}
+}
+
 namespace App\Entities\Picture{
 /**
  * App\Entities\Picture\PictureModel
@@ -24,8 +51,6 @@ namespace App\Entities\Picture{
  * @property int|null $in_vk_posting
  * @property int|null $width
  * @property int|null $height
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Spr\SprTagsModel[] $tags
- * @property-read int|null $tags_count
  * @method static \Illuminate\Database\Eloquent\Builder|PictureModel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PictureModel newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PictureModel query()
@@ -66,17 +91,23 @@ namespace App\Entities\Spr{
  *
  * @property int $id
  * @property string|null $name
+ * @property string|null $name_en
  * @property int|null $hidden
  * @property int|null $hidden_vk
  * @property string|null $seo
+ * @property string|null $slug_en
+ * @property int|null $is_popular
  * @method static \Illuminate\Database\Eloquent\Builder|SprTagsModel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SprTagsModel newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SprTagsModel query()
  * @method static \Illuminate\Database\Eloquent\Builder|SprTagsModel whereHidden($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SprTagsModel whereHiddenVk($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SprTagsModel whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SprTagsModel whereIsPopular($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SprTagsModel whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SprTagsModel whereNameEn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SprTagsModel whereSeo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SprTagsModel whereSlugEn($value)
  */
 	class SprTagsModel extends \Eloquent {}
 }
@@ -159,8 +190,6 @@ namespace App\Entities\Vk{
  * @property int $album_id
  * @property string $description
  * @property string|null $share
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Vk\VkAlbumPictureModel[] $pictures
- * @property-read int|null $pictures_count
  * @method static \Illuminate\Database\Eloquent\Builder|VkAlbumModel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|VkAlbumModel newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|VkAlbumModel query()

@@ -15587,6 +15587,146 @@
      
 }
 
+    namespace App\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class RouterFacade {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getRouteHome()
+        {
+                        /** @var \App\Services\Route\RouteService $instance */
+                        return $instance->getRouteHome();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getRouteSearch()
+        {
+                        /** @var \App\Services\Route\RouteService $instance */
+                        return $instance->getRouteSearch();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getRouteArt($id)
+        {
+                        /** @var \App\Services\Route\RouteService $instance */
+                        return $instance->getRouteArt($id);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getRouteArtsCell()
+        {
+                        /** @var \App\Services\Route\RouteService $instance */
+                        return $instance->getRouteArtsCell();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getRouteArtsCellTagged($tag)
+        {
+                        /** @var \App\Services\Route\RouteService $instance */
+                        return $instance->getRouteArtsCellTagged($tag);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function route($name, $parameters = [], $absolute = true, $lang = null)
+        {
+                        /** @var \App\Services\Route\RouteService $instance */
+                        return $instance->route($name, $parameters, $absolute, $lang);
+        }
+         
+    }
+     
+}
+
+    namespace Waavi\Translation\Facades { 
+            /**
+     * 
+     *
+     * @see \Waavi\Translation\UriLocalizer
+     */ 
+        class UriLocalizer {
+                    /**
+         * Returns the locale present in the current url, if any.
+         * 
+         * @param  integer $segment     Index of the segment containing locale info
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function localeFromRequest($segment = 0)
+        {
+                        /** @var \Waavi\Translation\UriLocalizer $instance */
+                        return $instance->localeFromRequest($segment);
+        }
+                    /**
+         * Localizes the given url to the given locale. Removes domain if present.
+         * 
+         * Ex: /home => /es/home, /en/home => /es/home, http://www.domain.com/en/home => /en/home, https:://domain.com/ => /en
+         *  If a non zero segment index is given, and the url doesn't have enought segments, the url is unchanged.
+         *
+         * @param string $url @param  string  $locale
+         *  @param  integer $segment     Index of the segment containing locale info
+         *  @return string
+         * @static 
+         */ 
+        public static function localize($url, $locale, $segment = 0)
+        {
+                        /** @var \Waavi\Translation\UriLocalizer $instance */
+                        return $instance->localize($url, $locale, $segment);
+        }
+                    /**
+         * Extract the first valid locale from a url
+         * 
+         * @param  string  $url
+         *
+         * @param integer $segment Index of the segment containing locale info
+         *  @return string|null $locale
+         * @static 
+         */ 
+        public static function getLocaleFromUrl($url, $segment = 0)
+        {
+                        /** @var \Waavi\Translation\UriLocalizer $instance */
+                        return $instance->getLocaleFromUrl($url, $segment);
+        }
+                    /**
+         * Removes the domain and locale (if present) of a given url.
+         * 
+         * Ex: http://www.domain.com/locale/random => /random, https://www.domain.com/random => /random, http://domain.com/random?param=value => /random?param=value
+         *
+         * @param string $url @param  integer $segment     Index of the segment containing locale info
+         *  @return string
+         * @static 
+         */ 
+        public static function cleanUrl($url, $segment = 0)
+        {
+                        /** @var \Waavi\Translation\UriLocalizer $instance */
+                        return $instance->cleanUrl($url, $segment);
+        }
+         
+    }
+     
+}
+
     namespace Barryvdh\Debugbar { 
             /**
      * 
@@ -16423,6 +16563,47 @@
         {
                         /** @var \Intervention\Image\ImageManager $instance */
                         return $instance->cache($callback, $lifetime, $returnObj);
+        }
+         
+    }
+     
+}
+
+    namespace Waavi\Sanitizer\Laravel { 
+            /**
+     * 
+     *
+     * @see \Illuminate\Validation\Factory
+     */ 
+        class Facade {
+                    /**
+         * Create a new Sanitizer instance
+         * 
+         * @param  array   $data       Data to be sanitized
+         *
+         * @param array $rules Filters to be applied to the given data
+         *  @return Sanitizer
+         * @static 
+         */ 
+        public static function make($data, $rules)
+        {
+                        /** @var \Waavi\Sanitizer\Laravel\Factory $instance */
+                        return $instance->make($data, $rules);
+        }
+                    /**
+         * Add a custom filters to all Sanitizers created with this Factory.
+         * 
+         * @param  string  $name       Name of the filter
+         *
+         * @param mixed $extension Either the full class name of a Filter class implementing the Filter contract, or a \Closure.
+         *  @throws InvalidArgumentException
+         *  @return void
+         * @static 
+         */ 
+        public static function extend($name, $customFilter)
+        {
+                        /** @var \Waavi\Sanitizer\Laravel\Factory $instance */
+                        return $instance->extend($name, $customFilter);
         }
          
     }
@@ -19507,6 +19688,8 @@ namespace  {
             class HTMLMin extends \HTMLMin\HTMLMin\Facades\HTMLMin {}
             class SEO extends \Artesaos\SEOTools\Facades\SEOTools {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
+            class Router extends \App\Facades\RouterFacade {}
+            class UriLocalizer extends \Waavi\Translation\Facades\UriLocalizer {}
             class SEOMeta extends \Artesaos\SEOTools\Facades\SEOMeta {}
             class OpenGraph extends \Artesaos\SEOTools\Facades\OpenGraph {}
             class Twitter extends \Artesaos\SEOTools\Facades\TwitterCard {}
@@ -19514,6 +19697,7 @@ namespace  {
             class Debugbar extends \Barryvdh\Debugbar\Facade {}
             class Flare extends \Facade\Ignition\Facades\Flare {}
             class Image extends \Intervention\Image\Facades\Image {}
+            class Sanitizer extends \Waavi\Sanitizer\Laravel\Facade {}
      
 }
 

@@ -6,7 +6,7 @@
             </i>
         </div>
         <div class="header__logo">
-            <a href="{{ route('home') }}" rel="nofollow">
+            <a href="{{ Router::route('home') }}" rel="nofollow">
                 <img class="img-responsive header__logo-img" src="{{ buildUrl('img/logo.png') }}" alt="Drawitbook.com">
             </a>
         </div>
@@ -14,7 +14,7 @@
             <form class="search-form"
                   role="search"
                   method="get"
-                  action="{{ route('search') }}">
+                  action="{{ Router::route('search') }}">
                 <input class="search-form__input"
                        type="search"
                        name="query"
@@ -31,7 +31,7 @@
             <div class="container">
                 <ul class=" menu">
                     <li class="menu__item">
-                        <a class="menu__link header__link" href="{{ route('home') }}" rel="nofollow" itemprop="url">
+                        <a class="menu__link header__link" href="{{ Router::route('home') }}" rel="nofollow" itemprop="url">
                             {!! __('pages.layout.header.menu.home') !!}
                         </a>
                     </li>

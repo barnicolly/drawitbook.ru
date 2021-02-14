@@ -159,3 +159,11 @@ if (!function_exists('getLastItemFromArray')) {
         return array_shift($array);
     }
 }
+
+if (!function_exists('getLangRoute')) {
+    function getLangRoute(string $name): string
+    {
+        $locale = app()->getLocale();
+        return $locale . '.' . $name;
+    }
+}

@@ -186,6 +186,7 @@ return [
          */
         App\Providers\ModulesServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
+        App\Providers\RouterServiceProvider::class,
         /*
          * Vendor Service Providers
          * */
@@ -248,6 +249,8 @@ return [
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
         'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::class,
+        'Router' => \App\Facades\RouterFacade::class,
+        'UriLocalizer'	=> Waavi\Translation\Facades\UriLocalizer::class,
     ],
 
     'debug_blacklist' => [

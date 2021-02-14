@@ -75,7 +75,9 @@ class Cell extends Controller
                 $slug = $locale === 'ru'
                     ? $tagInfo['seo']
                     : $tagInfo['slug_en'];
-                return redirect($this->routeService->getRouteArtsCellTagged($slug), 301);
+                if ($slug) {
+                    return redirect($this->routeService->getRouteArtsCellTagged($slug), 301);
+                }
             }
             abort(404);
         }

@@ -1,7 +1,7 @@
 <?php
 
 Breadcrumbs::for('home', function ($trail) {
-    $trail->push(__('breadcrumbs.home'), route('home'));
+    $trail->push(__('breadcrumbs.home'), Router::route('home'));
 });
 
 Breadcrumbs::for('breadcrumbs.dynamic', function ($trail, $breadcrumbs) {
