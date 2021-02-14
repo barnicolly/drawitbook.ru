@@ -22,7 +22,4 @@ class CellTest extends TestCase
         $response->assertStatus(200);
     }
 
-    //TODO-misha затестить редиректы при смене языка и без языка;
-
-
 }

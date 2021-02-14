@@ -31,4 +31,16 @@ class SearchTest extends TestCase
         $response = $this->get((new RouteService())->getRouteSearch());
         $response->assertSee('<meta name="robots" content="noindex, follow">', false);
     }
+
+    /**
+     * @dataProvider \Tests\Providers\CommonProvider::providerLanguages
+     *
+     * @param string $locale
+     */
+    public function testHasAlternate(string $locale)
+    {
+        $this->app->setLocale($locale);
+        $response = $this->get((new RouteService())->getRouteSearch());
+        $response->assertSee('<link rel="alternate" href="', false);
+    }
 }

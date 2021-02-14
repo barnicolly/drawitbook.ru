@@ -111,4 +111,16 @@ class CellTestEn extends TestCase
         $response->assertStatus(Response::HTTP_MOVED_PERMANENTLY);
         $response->assertRedirect($assetRedirect);
     }
+
+    public function testHasNotRedirect()
+    {
+        $response = $this->get((new RouteService())->getRouteArtsCellTagged('imena'));
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    public function testHasAlternate()
+    {
+        $response = $this->get((new RouteService())->getRouteArtsCellTagged('flowers'));
+        $response->assertSee('<link rel="alternate" href="', false);
+    }
 }

@@ -112,4 +112,17 @@ class ArtTest extends TestCase
             ->get('/art');
         $response->assertStatus(404);
     }
+
+    /**
+     * @dataProvider \Tests\Providers\CommonProvider::providerLanguages
+     *
+     * @param string $locale
+     */
+    public function testHasAlternate(string $locale)
+    {
+        $this->app->setLocale($locale);
+        $id = 144;
+        $response = $this->get((new RouteService())->getRouteArt($id));
+        $response->assertSee('<link rel="alternate" href="', false);
+    }
 }
