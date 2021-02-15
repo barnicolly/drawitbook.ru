@@ -2,24 +2,30 @@
 
 namespace App\Services\Seo;
 
+use App\Enums\Lang;
 use App\Services\Tags\TagsService;
+use App\Services\Translation\TranslationService;
 
 class SeoService
 {
 
-    //TODO-misha перевести seo;
+    public function formTitleAndDescriptionSearch(): array
+    {
+        $title = __('seo.search.title');
+        return [$title];
+    }
 
     public function formTitleAndDescriptionShowArt(int $artId): array
     {
         $title = 'Art #' . $artId . ' | Drawitbook.com';
-        $description = 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.';
+        $description = __('seo.art.description');
         return [$title, $description];
     }
 
     public function formCellTaggedTitleAndDescription(int $countSearchResults, string $tagName): array
     {
         $tagName = mbUcfirst($tagName);
-        $prefix = 'Рисунки по клеточкам';
+        $prefix = __('seo.tagged.prefix');
         $title = $this->createCategoryTitle($prefix, $tagName, $countSearchResults);
         $description = $this->createCategoryDescription($prefix, $tagName, $countSearchResults);
         return [$title, $description];
@@ -27,22 +33,22 @@ class SeoService
 
     public function formTitleAndDescriptionCellIndex(): array
     {
-        $title = 'Рисунки по клеточкам | Drawitbook.com';
-        $description = 'Рисунки по клеточкам. Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.';
+        $title = __('seo.cell_index.prefix') . ' | Drawitbook.com';
+        $description = __('seo.cell_index.description');
         return [$title, $description];
     }
 
     public function formTitleAndDescriptionHome(): array
     {
-        $title =  'Drawitbook.com - рисуйте, развлекайтесь, делитесь с друзьями';
-        $description = 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.';
+        $title = 'Drawitbook.com - ' . __('seo.home.title');
+        $description = __('seo.home.description');
         return [$title, $description];
     }
 
     private function createCategoryTitle(string $category, string $subcategory, int $countResults): string
     {
         $countPostfix = $this->formCategoryCountPostfix($countResults);
-        return implode(' ', [$category, frenchQuotes($subcategory), '☆']) . ($countPostfix ? ' ' : '') . $countPostfix;
+        return implode(' ', [$category, frenchQuotes($subcategory)]) . ($countPostfix ? ' ☆ ' : '') . $countPostfix;
     }
 
     private function createCategoryDescription(string $category, string $subcategory, int $countResults): string
@@ -54,7 +60,7 @@ class SeoService
         if (!empty($countPostfix)) {
             $parts[] = $countPostfix;
         }
-        $parts[] = 'Схемы чёрно-белых и цветных рисунков от легких и простых до сложных';
+        $parts[] = __('seo.tagged.description_part');
         return $category . ' ✎ ' . implode(' ➣ ', $parts) . '.';
     }
 
@@ -80,7 +86,8 @@ class SeoService
     {
         $countPostfix = '';
         if ($countResults > 10) {
-            $countPostfix = pluralForm($countResults, ['рисунок', 'рисунка', 'рисунков']);
+            $locale = app()->getLocale();
+            $countPostfix = (new TranslationService())->getPluralForm($countResults, Lang::fromValue($locale));
         }
         return $countPostfix;
     }

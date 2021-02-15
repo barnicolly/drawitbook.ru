@@ -86,20 +86,9 @@ class Cell extends Controller
         $pageNum = 1;
         $tagInfo = $this->tagsService->getByTagSeoName($tag, $locale);
         if (!$tagInfo) {
-            $alternativeLang = $locale === Lang::RU ? Lang::EN : Lang::RU;
-            if ($locale === Lang::RU) {
-                $tagInfo = $this->tagsService->getByTagSeoName($tag, $alternativeLang);
-            } elseif ($locale === Lang::EN) {
-                $tagInfo = $this->tagsService->getByTagSeoName($tag, $alternativeLang);
-            }
-            if (!empty($tagInfo)) {
-                $tagInfo = $this->tagsService->getById($tagInfo['id']);
-                $slug = $locale === Lang::RU
-                    ? $tagInfo['seo']
-                    : $tagInfo['slug_en'];
-                if ($slug) {
-                    return redirect($this->routeService->getRouteArtsCellTagged($slug), 301);
-                }
+            $redirectSlug = $this->getRedirectSlug($locale, $tag);
+            if ($redirectSlug) {
+                return redirect($this->routeService->getRouteArtsCellTagged($redirectSlug), 301);
             }
             abort(404);
         }
@@ -114,24 +103,7 @@ class Cell extends Controller
                 Lang::fromValue($locale)
             );
         }
-        $forFormAlternateLinks[] = [
-            'lang' => $locale,
-            'tag' => $tagInfo['seo'],
-        ];
-        $tagInfo = $this->tagsService->getById($tagInfo['id']);
-        $alternativeLang = $locale === Lang::RU ? Lang::EN : Lang::RU;
-        $slug = $alternativeLang === Lang::RU
-            ? $tagInfo['seo']
-            : $tagInfo['slug_en'];
-        if (!empty($slug)) {
-            $forFormAlternateLinks[] = [
-                'lang' => $alternativeLang,
-                'tag' => $slug,
-            ];
-            $alternateLinks = $this->getTaggedAlternateLinks($forFormAlternateLinks);
-        } else {
-            $alternateLinks = [];
-        }
+        $alternateLinks = $this->formTaggedAlternateLinks($locale, $tag, $tagInfo['id']);
         $viewData['leftArtsText'] = $leftArtsText ?? null;
         $viewData['tag'] = $tagInfo;
         $viewData['alternateLinks'] = count($alternateLinks) > 1 ? $alternateLinks : [];
@@ -152,6 +124,49 @@ class Cell extends Controller
         $this->addBreadcrumb(mbUcfirst($tagInfo['name']));
         $viewData['breadcrumbs'] = $this->breadcrumbs;
         return response()->view('Arts::cell.tagged', $viewData);
+    }
+
+    private function formTaggedAlternateLinks(string $locale, string $initSlug, int $tagId): array
+    {
+        $forFormAlternateLinks[] = [
+            'lang' => $locale,
+            'tag' => $initSlug,
+        ];
+        $tagInfo = $this->tagsService->getById($tagId);
+        $alternativeLang = $locale === Lang::RU ? Lang::EN : Lang::RU;
+        $slug = $alternativeLang === Lang::RU
+            ? $tagInfo['seo']
+            : $tagInfo['slug_en'];
+        if (!empty($slug)) {
+            $forFormAlternateLinks[] = [
+                'lang' => $alternativeLang,
+                'tag' => $slug,
+            ];
+            $alternateLinks = $this->getTaggedAlternateLinks($forFormAlternateLinks);
+        } else {
+            $alternateLinks = [];
+        }
+        return $alternateLinks;
+    }
+
+    private function getRedirectSlug(string $locale, string $initSlug): ?string
+    {
+        $alternativeLang = $locale === Lang::RU ? Lang::EN : Lang::RU;
+        if ($locale === Lang::RU) {
+            $tagInfo = $this->tagsService->getByTagSeoName($initSlug, $alternativeLang);
+        } elseif ($locale === Lang::EN) {
+            $tagInfo = $this->tagsService->getByTagSeoName($initSlug, $alternativeLang);
+        }
+        if (!empty($tagInfo)) {
+            $tagInfo = $this->tagsService->getById($tagInfo['id']);
+            $slug = $locale === Lang::RU
+                ? $tagInfo['seo']
+                : $tagInfo['slug_en'];
+            if ($slug) {
+                return $slug;
+            }
+        }
+        return null;
     }
 
     private function getTaggedAlternateLinks(array $forFormAlternateLinks): array

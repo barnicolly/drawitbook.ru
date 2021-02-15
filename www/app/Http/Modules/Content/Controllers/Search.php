@@ -73,7 +73,8 @@ class Search extends Controller
         $viewData['leftArtsText'] = $countLeftArtsText ?? null;
         SEOTools::setCanonical($this->routeService->getRouteSearch());
         //TODO-misha добавить генерацию title;
-        SEOTools::setTitle('Поиск по сайту');
+        [$title] = $this->seoService->formTitleAndDescriptionSearch();
+        SEOTools::setTitle($title);
         SEOMeta::setRobots('noindex, follow');
         return view('Content::search.index', $viewData)->render();
     }
