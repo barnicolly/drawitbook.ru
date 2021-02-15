@@ -31,7 +31,7 @@ class RouteService
 
     public function getRouteArtsCellTagged(string $tag, $absolute = true, $lang = null): string
     {
-        $url = $this->route('arts.cell.tagged', ['tag' => $tag]);
+        $url = $this->route('arts.cell.tagged', ['tag' => $tag], $absolute, $lang);
         return $this->postProcessing($url);
     }
 

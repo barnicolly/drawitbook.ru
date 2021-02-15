@@ -134,7 +134,6 @@ class Cell extends Controller
         }
         $viewData['leftArtsText'] = $leftArtsText ?? null;
         $viewData['tag'] = $tagInfo;
-        $viewData['canonical'] = $this->routeService->getRouteArtsCellTagged($tag);
         $viewData['alternateLinks'] = count($alternateLinks) > 1 ? $alternateLinks : [];
         $countSearchResults = $viewData['countRelatedArts'];
         $relativeArts = $viewData['arts'];

@@ -34,7 +34,7 @@ class PictureTagsModel extends Model
     {
         $query = self::query();
         if ($locale === Lang::EN) {
-            $select =  [
+            $select = [
                 'picture_tags.id',
                 'picture_tags.picture_id',
                 'picture_tags.tag_id',
@@ -44,7 +44,7 @@ class PictureTagsModel extends Model
                 'spr_tags.slug_en as seo',
             ];
         } else {
-            $select =  [
+            $select = [
                 'picture_tags.id',
                 'picture_tags.picture_id',
                 'picture_tags.tag_id',
@@ -88,13 +88,13 @@ class PictureTagsModel extends Model
         $locale = mb_strtolower($locale);
         $query = SprTagsModel::query();
         if ($locale === Lang::EN) {
-            $select =  [
+            $select = [
                 'spr_tags.name_en as name',
                 'spr_tags.slug_en as seo',
                 DB::raw("count(\"picture_tags.id\") as count"),
             ];
         } else {
-            $select =  [
+            $select = [
                 'spr_tags.name',
                 'spr_tags.seo',
                 DB::raw("count(\"picture_tags.id\") as count"),
@@ -131,12 +131,12 @@ class PictureTagsModel extends Model
         $locale = mb_strtolower($locale);
         $query = SprTagsModel::query();
         if ($locale === Lang::EN) {
-            $select =  [
+            $select = [
                 'spr_tags.name_en as name',
                 'spr_tags.slug_en as seo',
             ];
         } else {
-            $select =  [
+            $select = [
                 'spr_tags.name',
                 'spr_tags.seo',
             ];
@@ -162,4 +162,27 @@ class PictureTagsModel extends Model
         return $result;
     }
 
+    public static function getTagsForSitemap(): array
+    {
+        $query = SprTagsModel::query();
+        $select = [
+            'spr_tags.*',
+        ];
+        $result = $query
+            ->select($select)
+            ->join('picture_tags', 'picture_tags.tag_id', '=', 'spr_tags.id')
+            ->join('picture', 'picture.id', '=', 'picture_tags.picture_id')
+            ->where('picture.is_del', 0)
+            ->groupBy('spr_tags.id')
+            ->getQuery()
+            ->get()
+            ->toArray();
+        $result = array_map(
+            function ($item) {
+                return (array) $item;
+            },
+            $result
+        );
+        return $result;
+    }
 }

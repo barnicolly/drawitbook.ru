@@ -6,12 +6,6 @@
     @endif
 @endsection
 
-@push('links')
-    @if (!empty($canonical))
-        <link rel="canonical" href="{{ $canonical }}">
-    @endif
-@endpush
-
 @section('layouts.landing.first_block')
     <h1 class="title form-group">
         {{ __('pages.pixel_arts.landing.h1', ['tag' => $tag['name']]) }}
