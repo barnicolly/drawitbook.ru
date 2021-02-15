@@ -1,5 +1,5 @@
 set :application, 'drawitbook'
-set :repo_url, 'ssh://git@bitbucket.org/ratnikov-mikhail/drawitbook.ru'
+set :repo_url, 'ssh://git@bitbucket.org/ratnikov-mikhail/drawitbook.com'
 
 # Default value for :linked_files is []
 set :linked_files, fetch(:linked_files, []).push(

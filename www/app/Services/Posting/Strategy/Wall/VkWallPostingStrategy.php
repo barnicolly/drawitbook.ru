@@ -20,7 +20,7 @@ class VkWallPostingStrategy
     private $wallService;
     private $postingService;
 
-    private $url = 'https://drawitbook.ru';
+    private $url = 'https://drawitbook.com/ru';
 
     public function __construct(int $artId, array $tags, string $artPath)
     {

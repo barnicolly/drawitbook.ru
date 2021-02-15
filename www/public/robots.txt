@@ -1,5 +1,5 @@
-Host: https://drawitbook.ru
+Host: https://drawitbook.com
 User-agent: *
 Disallow: /admin/
 
-Sitemap: https://drawitbook.ru/sitemap-index.xml
+Sitemap: https://drawitbook.com/sitemap-index.xml

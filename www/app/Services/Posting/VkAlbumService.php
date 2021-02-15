@@ -66,7 +66,7 @@ class VkAlbumService
         if ($albumShareLink) {
             $url = $albumShareLink;
         } else {
-            $url = 'https://drawitbook.ru';
+            $url = 'https://drawitbook.com/ru';
         }
         $hashTags = $this->apiPostingService->formHashTags($tags);
         sleep(1);

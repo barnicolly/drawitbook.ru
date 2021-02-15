@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * Пример linux: crontab -e; * * * * * php /var/www/deployer/data/repo/drawitbook.ru/current/www/artisan schedule:run >/dev/null 2>&1
+     * Пример linux: crontab -e; * * * * * php /var/www/deployer/data/repo/drawitbook.com/current/www/artisan schedule:run >/dev/null 2>&1
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */

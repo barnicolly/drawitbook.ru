@@ -1,5 +1,5 @@
 {
-    "name": "drawitbook.ru",
+    "name": "drawitbook.com",
     "version": "1.7.2",
     "description": "",
     "main": "index.js",
@@ -9,7 +9,7 @@
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack/dev.conf.js",
         "build": "cross-env NODE_ENV=production webpack --config webpack/build.conf.js",
-        "build.production": "cross-env NODE_ENV=production PROJECT_DOMAIN='https://drawitbook.ru' webpack --config webpack/build.conf.js",
+        "build.production": "cross-env NODE_ENV=production PROJECT_DOMAIN='https://drawitbook.com' webpack --config webpack/build.conf.js",
         "php.test": "php vendor/phpunit/phpunit/phpunit --testdox",
         "lang.create": "php artisan lang:js resources/js/translations.js && gulp string:replace",
         "fa.purge": "gulp styles:fa.purge"

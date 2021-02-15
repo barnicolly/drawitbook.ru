@@ -16,7 +16,7 @@
                             data-srcset="{{ $artUrlPath }}"/>
                     <img width="{{ $art['width'] }}"
                          height="{{ $art['height'] }}"
-                         data-title="Art #{{ $art['id'] }} | Drawitbook.ru"
+                         data-title="Art #{{ $art['id'] }} | Drawitbook.com"
                          class="img-responsive lazyload fullscreen-image__img"
                          data-src="{{ $artUrlPath }}"
                          alt="{{ $art['alt'] }}">

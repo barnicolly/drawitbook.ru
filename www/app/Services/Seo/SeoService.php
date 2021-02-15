@@ -11,7 +11,7 @@ class SeoService
 
     public function formTitleAndDescriptionShowArt(int $artId): array
     {
-        $title = 'Art #' . $artId . ' | Drawitbook.ru';
+        $title = 'Art #' . $artId . ' | Drawitbook.com';
         $description = 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.';
         return [$title, $description];
     }
@@ -27,14 +27,14 @@ class SeoService
 
     public function formTitleAndDescriptionCellIndex(): array
     {
-        $title = 'Рисунки по клеточкам | Drawitbook.ru';
+        $title = 'Рисунки по клеточкам | Drawitbook.com';
         $description = 'Рисунки по клеточкам. Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.';
         return [$title, $description];
     }
 
     public function formTitleAndDescriptionHome(): array
     {
-        $title =  'Drawitbook.ru - рисуйте, развлекайтесь, делитесь с друзьями';
+        $title =  'Drawitbook.com - рисуйте, развлекайтесь, делитесь с друзьями';
         $description = 'Главное при рисовании по клеточкам придерживаться пропорций будущей картинки. У вас обязательно всё получится.';
         return [$title, $description];
     }
