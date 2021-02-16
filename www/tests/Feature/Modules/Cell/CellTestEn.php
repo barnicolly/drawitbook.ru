@@ -123,4 +123,16 @@ class CellTestEn extends TestCase
         $response = $this->get((new RouteService())->getRouteArtsCellTagged('flowers'));
         $response->assertSee('<link rel="alternate" href="', false);
     }
+
+    public function testHasTranslatedTitle()
+    {
+        $response = $this->get((new RouteService())->getRouteArtsCellTagged('flowers'));
+        $response->assertSee('<title>Pixel arts «Flowers» ☆ 84 arts</title>', false);
+    }
+
+    public function testHasTranslatedDescription()
+    {
+        $response = $this->get((new RouteService())->getRouteArtsCellTagged('flowers'));
+        $response->assertSee('<meta name="description" content="Pixel arts ✎ Flowers ➣ 84 arts ➣ Black/white and colored schemes of pixel arts from light and simple to complex.">', false);
+    }
 }

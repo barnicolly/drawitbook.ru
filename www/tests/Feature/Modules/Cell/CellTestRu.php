@@ -123,4 +123,16 @@ class CellTestRu extends TestCase
         $response = $this->get((new RouteService())->getRouteArtsCellTagged('imena'));
         $response->assertDontSee('<link rel="alternate" href="', false);
     }
+
+    public function testHasTranslatedTitle()
+    {
+        $response = $this->get((new RouteService())->getRouteArtsCellTagged('cvety'));
+        $response->assertSee('<title>Рисунки по клеточкам «Цветы» ☆ 84 рисунка</title>', false);
+    }
+
+    public function testHasTranslatedDescription()
+    {
+        $response = $this->get((new RouteService())->getRouteArtsCellTagged('cvety'));
+        $response->assertSee('<meta name="description" content="Рисунки по клеточкам ✎ Цветы ➣ 84 рисунка ➣ Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.">', false);
+    }
 }
