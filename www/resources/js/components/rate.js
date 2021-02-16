@@ -1,10 +1,11 @@
 import { getRandomInt, sendRequest } from '@js/helpers/utils';
+import { getApplyedLocaleLink } from '@js/helpers/navigation';
 
 (function ($) {
     $.rateContainer = $.rateContainer || [];
     var routes = {
-        like: '/arts/{id}/like',
-        dislike: '/arts/{id}/dislike',
+        like: getApplyedLocaleLink('/arts/{id}/like'),
+        dislike: getApplyedLocaleLink('/arts/{id}/dislike'),
     };
 
     function rateContainer() {

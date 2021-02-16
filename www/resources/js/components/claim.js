@@ -1,4 +1,5 @@
 import { getRandomInt, sendRequest } from '@js/helpers/utils';
+import { getApplyedLocaleLink } from '@js/helpers/navigation';
 
 (function ($) {
     $.claimContainer = $.claimContainer || [];
@@ -54,7 +55,7 @@ import { getRandomInt, sendRequest } from '@js/helpers/utils';
                 .on('click', '.submit-claim', function () {
                     if ($(self.artContainer).find('.claim-container').length) {
                         const data = $(self.artContainer).find('.claim-container').serialize();
-                        sendRequest('post', '/arts/' + self.artId + '/claim', data, function () {
+                        sendRequest('post', getApplyedLocaleLink('/arts/' + self.artId + '/claim'), data, function () {
                             $(self.artContainer).find('.cancel-claim').trigger('click');
                         })
                     }
