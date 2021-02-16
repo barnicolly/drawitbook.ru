@@ -23,9 +23,9 @@
                         </button>
                     </div>
                 </div>
-                <div class="content mobile-no-padding">
-                    {!! loadAd('after_detail_picture') !!}
-                </div>
+{{--                <div class="content mobile-no-padding">--}}
+{{--                    {!! loadAd('after_detail_picture') !!}--}}
+{{--                </div>--}}
             </div>
         </div>
 
@@ -39,7 +39,7 @@
                         @include('Arts::template.stack_grid.art.tag_list', ['tags' => $popularTags])
                     </div>
                 </div>
-                {!! loadAd('sidebar') !!}
+{{--                {!! loadAd('sidebar') !!}--}}
             </div>
         </div>
     </div>

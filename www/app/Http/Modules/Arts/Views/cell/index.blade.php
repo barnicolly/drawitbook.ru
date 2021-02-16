@@ -15,13 +15,13 @@
             {!! __('pages.pixel_arts.index.seo_text') !!}
         </div>
     </div>
-    <div class="form-group mobile-no-padding content">
-        {!! loadAd('before_stack') !!}
-    </div>
+{{--    <div class="form-group mobile-no-padding content">--}}
+{{--        {!! loadAd('before_stack') !!}--}}
+{{--    </div>--}}
     <div class="content">
         @include('Arts::template.stack_grid.index', ['arts' => $arts])
     </div>
-    <div class="form-group mobile-no-padding content">
-        {!! loadAd('after_first_stack') !!}
-    </div>
+{{--    <div class="form-group mobile-no-padding content">--}}
+{{--        {!! loadAd('after_first_stack') !!}--}}
+{{--    </div>--}}
 @endsection

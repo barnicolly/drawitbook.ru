@@ -2,7 +2,7 @@ import './product_watcher';
 import backUpButton from '@js/components/back_up_button';
 import { initHeaderMenu } from '@js/components/header_menu';
 import { initFixedHeader } from '@js/components/header_fixed';
-import { initAds } from '@js/loaders/ads.loader';
+// import { initAds } from '@js/loaders/ads.loader';
 import { loadStackGrid } from '@js/loaders/stack_grid.loader';
 import { loadJQcloud } from '@js/loaders/jq_cloud.loader';
 import { loadLazyloadImg } from '@js/loaders/lazy.loader';
@@ -38,7 +38,7 @@ if (locale === 'en') {
 loadLazyloadImg();
 loadStackGrid();
 loadJQcloud();
-initAds();
+// initAds();
 
 initHeaderMenu($('.header__menu'));
 initFixedHeader($('header').first());
