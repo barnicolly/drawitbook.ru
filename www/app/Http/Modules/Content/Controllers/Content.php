@@ -28,7 +28,7 @@ class Content extends Controller
         $viewData = [
             'alternateLinks' => $alternateLinks,
         ];
-        SEOTools::setCanonical($this->routeService->getRouteHome());
+//        SEOTools::setCanonical($this->routeService->getRouteHome());
         [$title, $description] = $this->seoService->formTitleAndDescriptionHome();
         SEOTools::setTitle($title);
         $this->setShareImage(formDefaultShareArtUrlPath(true));

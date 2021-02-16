@@ -59,7 +59,7 @@ class Cell extends Controller
             'breadcrumbs' => $this->breadcrumbs,
             'alternateLinks' => $alternateLinks,
         ];
-        SEOTools::setCanonical($this->routeService->getRouteArtsCell());
+//        SEOTools::setCanonical($this->routeService->getRouteArtsCell());
         SEOTools::setTitle($title);
         $this->setShareImage(formDefaultShareArtUrlPath(true));
         SEOTools::setDescription($description);
@@ -115,7 +115,7 @@ class Cell extends Controller
         );
         SEOTools::setTitle($title);
         SEOTools::setDescription($description);
-        SEOTools::setCanonical($this->routeService->getRouteArtsCellTagged($tagInfo['seo']));
+//        SEOTools::setCanonical($this->routeService->getRouteArtsCellTagged($tagInfo['seo']));
         $firstArt = getFirstItemFromArray($relativeArts);
         if ($firstArt) {
             $this->setShareImage(getArtsFolder() . $firstArt['path']);

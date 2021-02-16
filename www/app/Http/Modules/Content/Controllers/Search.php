@@ -71,7 +71,7 @@ class Search extends Controller
             $countLeftArtsText = $this->translationService->getPluralForm($countLeftArts, Lang::fromValue($locale));
         }
         $viewData['leftArtsText'] = $countLeftArtsText ?? null;
-        SEOTools::setCanonical($this->routeService->getRouteSearch());
+//        SEOTools::setCanonical($this->routeService->getRouteSearch());
         //TODO-misha добавить генерацию title;
         [$title] = $this->seoService->formTitleAndDescriptionSearch();
         SEOTools::setTitle($title);
