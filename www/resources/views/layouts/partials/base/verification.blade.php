@@ -1,2 +1,2 @@
-<meta name="yandex-verification" content="e78a61097fbbb899"/>
-<meta name="google-site-verification" content="44qvqCqXAJ59PJZMKJB4zmk8zDa57Ff1mpau2pNfm3Q"/>
+<meta name="yandex-verification" content="d8ea1d7bc86cefde" />
+<meta name="google-site-verification" content="VNU4DTs_VreeF6E_w_iYUmMitUhYJKyF__Yd5RE0BI0" />
