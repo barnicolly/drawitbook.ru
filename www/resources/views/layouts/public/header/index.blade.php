@@ -27,9 +27,9 @@
                 </button>
             </form>
         </div>
-        <nav class="header__menu">
+        <nav class="header__menu" itemscope itemtype="http://schema.org/SiteNavigationElement">
             <div class="container">
-                <ul class=" menu">
+                <ul class="menu">
                     <li class="menu__item">
                         <a class="menu__link header__link" href="{{ Router::route('home') }}" rel="nofollow" itemprop="url">
                             {!! __('pages.layout.header.menu.home') !!}

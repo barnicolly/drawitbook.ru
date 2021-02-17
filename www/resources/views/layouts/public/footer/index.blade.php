@@ -1,13 +1,13 @@
 <footer class="footer">
     <div class="footer__line"></div>
     <div class="container">
-        <div class="footer-nav">
+        <nav class="footer-nav" itemscope itemtype="http://schema.org/SiteNavigationElement">
             @foreach($groups as $group)
                 <div class="footer-nav__column">
                     @include('layouts.public.footer.links_column', ['parts' => $group])
                 </div>
             @endforeach
-        </div>
+        </nav>
     </div>
     <div class="container">
         <div class="footer__slogan text-uppercase content">
