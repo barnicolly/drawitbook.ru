@@ -16,21 +16,21 @@ export function initAds() {
         let configurations = {};
         if (bvw >= 993) {
             configurations = {
-                'sidebar': 'R-A-400272-1',
-                'after_detail_picture': 'R-A-400272-2',
-                'before_stack': 'R-A-400272-4',
-                'after_first_stack': 'R-A-400272-7',
+                'sidebar': 'R-A-734726-1',
+                'after_detail_picture': 'R-A-734726-2',
+                'before_stack': 'R-A-734726-4',
+                'after_first_stack': 'R-A-734726-7',
             };
         } else {
             configurations = {
-                'after_detail_picture': 'R-A-400272-3',
-                'before_stack': 'R-A-400272-5',
-                'after_first_stack': 'R-A-400272-6',
+                'after_detail_picture': 'R-A-734726-3',
+                'before_stack': 'R-A-734726-5',
+                'after_first_stack': 'R-A-734726-6',
             };
         }
         let client = 'ca-pub-1368141699085758';
         const failovers = {
-            'after_detail_picture': {
+        /*    'after_detail_picture': {
                 'class': 'adsbygoogle',
                 'data-ad-client': client,
                 'data-ad-slot': '6153216946',
@@ -53,7 +53,7 @@ export function initAds() {
                 'data-full-width-responsive': 'true',
                 'data-ad-format': 'auto',
                 'style': 'display: block',
-            },
+            },*/
         }
         return {configurations, failovers};
     }
@@ -71,22 +71,22 @@ export function initStackGridAds($stackGrid, pageNumber = 1) {
         let configurations = {};
         if (bvw >= 768) {
             configurations = {
-                'integrated-5': 'R-A-400272-8',
-                'integrated-12': 'R-A-400272-9',
-                'integrated-18': 'R-A-400272-10',
-                'in_stack_arts_last': 'R-A-400272-21',
+                'integrated-5': 'R-A-734726-11',
+                'integrated-12': 'R-A-734726-12',
+                'integrated-18': 'R-A-734726-13',
+                'in_stack_arts_last': 'R-A-734726-14',
             };
         } else {
             configurations = {
-                'integrated-5': 'R-A-400272-18',
-                'integrated-12': 'R-A-400272-19',
-                'integrated-18': 'R-A-400272-20',
-                'in_stack_arts_last': 'R-A-400272-22',
+                'integrated-5': 'R-A-734726-8',
+                'integrated-12': 'R-A-734726-9',
+                'integrated-18': 'R-A-734726-10',
+                'in_stack_arts_last': 'R-A-734726-15',
             };
         }
         let client = 'ca-pub-1368141699085758';
         const failovers = {
-            'integrated-5': {
+            /*'integrated-5': {
                 'class': 'adsbygoogle',
                 'data-ad-client': client,
                 'data-ad-slot': '6776690019',
@@ -117,7 +117,7 @@ export function initStackGridAds($stackGrid, pageNumber = 1) {
                 'data-full-width-responsive': 'true',
                 'data-ad-format': 'auto',
                 'style': 'display: block',
-            },
+            },*/
         }
         return {configurations, failovers};
     }
