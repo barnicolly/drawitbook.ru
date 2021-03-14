@@ -4,6 +4,8 @@
     <div class="content">
         @yield('layouts.landing.first_block')
     </div>
+    <div id="before_stack"></div>
+
 {{--    <div class="form-group content mobile-no-padding">--}}
 {{--        {!! loadAd('before_stack') !!}--}}
 {{--    </div>--}}
