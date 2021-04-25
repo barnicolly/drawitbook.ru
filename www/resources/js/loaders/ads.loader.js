@@ -1,126 +1,161 @@
-import {isOnScreen} from '@js/helpers/dom';
+import { isOnScreen } from '@js/helpers/dom';
 import throttle from 'lodash/throttle';
 import { getScreenWidth } from '@js/helpers/screen';
 import { initStackGrid } from '@js/components/stack_grid';
+import AdsenseLoader from '@js/loaders/ads/adsense';
+import YandexLoader from '@js/loaders/ads/yandex';
 
-export function initAds() {
-    const $monPlaces = $('body').find('.mon-place[data-integrated="false"]');
-
-    if ($monPlaces.length) {
-        const {configurations, failovers} = getConfigurations();
-        initWatcher($monPlaces, configurations, failovers);
-    }
-
-    function getConfigurations() {
+export function initAds(locale) {
+    const $monPlaces = $('body').find('.mon-place[data-integrated="false"]#before_stack');
+    // const $monPlaces = $('#before_stack');
+    //
+    const ads = [];
+    if (locale === 'ru') {
         const bvw = getScreenWidth();
         let configurations = {};
-        if (bvw >= 993) {
-            configurations = {
-                'sidebar': 'R-A-734726-1',
-                'after_detail_picture': 'R-A-734726-2',
-                'before_stack': 'R-A-734726-4',
-                'after_first_stack': 'R-A-734726-7',
-            };
-        } else {
-            configurations = {
-                'after_detail_picture': 'R-A-734726-3',
-                'before_stack': 'R-A-734726-5',
-                'after_first_stack': 'R-A-734726-6',
-            };
-        }
-        let client = 'ca-pub-1368141699085758';
-        const failovers = {
-        /*    'after_detail_picture': {
-                'class': 'adsbygoogle',
-                'data-ad-client': client,
-                'data-ad-slot': '6153216946',
-                'data-full-width-responsive': 'true',
-                'data-ad-format': 'auto',
-                'style': 'display: block',
-            },
-            'before_stack': {
-                'class': 'adsbygoogle',
-                'data-ad-client': client,
-                'data-ad-slot': '1076984235',
-                'data-full-width-responsive': 'true',
-                'data-ad-format': 'auto',
-                'style': 'display: block',
-            },
-            'after_first_stack': {
-                'class': 'adsbygoogle',
-                'data-ad-client': client,
-                'data-ad-slot': 'draw_after_stack',
-                'data-full-width-responsive': 'true',
-                'data-ad-format': 'auto',
-                'style': 'display: block',
-            },*/
-        }
-        return {configurations, failovers};
+        // if (bvw >= 993) {
+        //     configurations = {
+        //         'sidebar': 'R-A-734726-1',
+        //         'after_detail_picture': 'R-A-734726-2',
+        //         'before_stack': 'R-A-734726-4',
+        //         'after_first_stack': 'R-A-734726-7',
+        //     };
+        // } else {
+        //     configurations = {
+        //         'after_detail_picture': 'R-A-734726-3',
+        //         'before_stack': 'R-A-734726-5',
+        //         'after_first_stack': 'R-A-734726-6',
+        //     };
+        // }
+        // console.log(this);
+        $monPlaces.each(function () {
+            const instance = new YandexLoader($(this), window);
+            ads.push(instance);
+            // console.log( $(this).attr('class'))
+        });
+
+        // })
     }
+    ads.forEach(function (instance){
+        instance.init();
+    })
+    // console.log(ads);
+
+    // if ($monPlaces.length) {
+    //     const {configurations, failovers} = getConfigurations();
+    //     initWatcher($monPlaces, configurations, failovers);
+    // }
+
+    // function getConfigurations() {
+    // const bvw = getScreenWidth();
+    // let configurations = {};
+    // if (bvw >= 993) {
+    //     configurations = {
+    //         'sidebar': 'R-A-734726-1',
+    //         'after_detail_picture': 'R-A-734726-2',
+    //         'before_stack': 'R-A-734726-4',
+    //         'after_first_stack': 'R-A-734726-7',
+    //     };
+    // } else {
+    //     configurations = {
+    //         'after_detail_picture': 'R-A-734726-3',
+    //         'before_stack': 'R-A-734726-5',
+    //         'after_first_stack': 'R-A-734726-6',
+    //     };
+    // }
+    // let client = 'ca-pub-1368141699085758';
+    // const failovers = {
+    /*    'after_detail_picture': {
+            'class': 'adsbygoogle',
+            'data-ad-client': client,
+            'data-ad-slot': '6153216946',
+            'data-full-width-responsive': 'true',
+            'data-ad-format': 'auto',
+            'style': 'display: block',
+        },
+        'before_stack': {
+            'class': 'adsbygoogle',
+            'data-ad-client': client,
+            'data-ad-slot': '1076984235',
+            'data-full-width-responsive': 'true',
+            'data-ad-format': 'auto',
+            'style': 'display: block',
+        },
+        'after_first_stack': {
+            'class': 'adsbygoogle',
+            'data-ad-client': client,
+            'data-ad-slot': 'draw_after_stack',
+            'data-full-width-responsive': 'true',
+            'data-ad-format': 'auto',
+            'style': 'display: block',
+        },*/
+    // }
+    // return {configurations, failovers};
+    // }
 }
 
 export function initStackGridAds($stackGrid, pageNumber = 1) {
-    const $monPlaces = $stackGrid.find('.mon-place[data-integrated="true"][data-loaded="false"]');
-    if ($monPlaces.length) {
-        const {configurations, failovers} = getConfigurations();
-        initWatcher($monPlaces, configurations, failovers, pageNumber);
-    }
-
-    function getConfigurations() {
-        const bvw = getScreenWidth();
-        let configurations = {};
-        if (bvw >= 768) {
-            configurations = {
-                'integrated-5': 'R-A-734726-11',
-                'integrated-12': 'R-A-734726-12',
-                'integrated-18': 'R-A-734726-13',
-                'in_stack_arts_last': 'R-A-734726-14',
-            };
-        } else {
-            configurations = {
-                'integrated-5': 'R-A-734726-8',
-                'integrated-12': 'R-A-734726-9',
-                'integrated-18': 'R-A-734726-10',
-                'in_stack_arts_last': 'R-A-734726-15',
-            };
-        }
-        let client = 'ca-pub-1368141699085758';
-        const failovers = {
-            /*'integrated-5': {
-                'class': 'adsbygoogle',
-                'data-ad-client': client,
-                'data-ad-slot': '6776690019',
-                'data-full-width-responsive': 'true',
-                'data-ad-format': 'auto',
-                'style': 'display: block',
-            },
-            'integrated-12': {
-                'class': 'adsbygoogle',
-                'data-ad-client': client,
-                'data-ad-slot': '6776690019',
-                'data-full-width-responsive': 'true',
-                'data-ad-format': 'auto',
-                'style': 'display: block',
-            },
-            'integrated-18': {
-                'class': 'adsbygoogle',
-                'data-ad-client': client,
-                'data-ad-slot': '6776690019',
-                'data-full-width-responsive': 'true',
-                'data-ad-format': 'auto',
-                'style': 'display: block',
-            },
-            'in_stack_arts_last': {
-                'class': 'adsbygoogle',
-                'data-ad-client': client,
-                'data-ad-slot': '6776690019',
-                'data-full-width-responsive': 'true',
-                'data-ad-format': 'auto',
-                'style': 'display: block',
-            },*/
-        }
-        return {configurations, failovers};
-    }
+    // const $monPlaces = $stackGrid.find('.mon-place[data-integrated="true"][data-loaded="false"]');
+    // if ($monPlaces.length) {
+    //     const {configurations, failovers} = getConfigurations();
+    //     initWatcher($monPlaces, configurations, failovers, pageNumber);
+    // }
+    //
+    // function getConfigurations() {
+    //     const bvw = getScreenWidth();
+    //     let configurations = {};
+    //     if (bvw >= 768) {
+    //         configurations = {
+    //             'integrated-5': 'R-A-734726-11',
+    //             'integrated-12': 'R-A-734726-12',
+    //             'integrated-18': 'R-A-734726-13',
+    //             'in_stack_arts_last': 'R-A-734726-14',
+    //         };
+    //     } else {
+    //         configurations = {
+    //             'integrated-5': 'R-A-734726-8',
+    //             'integrated-12': 'R-A-734726-9',
+    //             'integrated-18': 'R-A-734726-10',
+    //             'in_stack_arts_last': 'R-A-734726-15',
+    //         };
+    //     }
+    //     let client = 'ca-pub-1368141699085758';
+    //     const failovers = {
+    //         /*'integrated-5': {
+    //             'class': 'adsbygoogle',
+    //             'data-ad-client': client,
+    //             'data-ad-slot': '6776690019',
+    //             'data-full-width-responsive': 'true',
+    //             'data-ad-format': 'auto',
+    //             'style': 'display: block',
+    //         },
+    //         'integrated-12': {
+    //             'class': 'adsbygoogle',
+    //             'data-ad-client': client,
+    //             'data-ad-slot': '6776690019',
+    //             'data-full-width-responsive': 'true',
+    //             'data-ad-format': 'auto',
+    //             'style': 'display: block',
+    //         },
+    //         'integrated-18': {
+    //             'class': 'adsbygoogle',
+    //             'data-ad-client': client,
+    //             'data-ad-slot': '6776690019',
+    //             'data-full-width-responsive': 'true',
+    //             'data-ad-format': 'auto',
+    //             'style': 'display: block',
+    //         },
+    //         'in_stack_arts_last': {
+    //             'class': 'adsbygoogle',
+    //             'data-ad-client': client,
+    //             'data-ad-slot': '6776690019',
+    //             'data-full-width-responsive': 'true',
+    //             'data-ad-format': 'auto',
+    //             'style': 'display: block',
+    //         },*/
+    //     }
+    //     return {configurations, failovers};
+    // }
 }
 
 function initWatcher($monPlaces, configurations, failovers, pageNumber) {
@@ -146,7 +181,7 @@ function initWatcher($monPlaces, configurations, failovers, pageNumber) {
                             if (typeof window.adsbygoogle !== 'undefined') {
                                 (adsbygoogle = window.adsbygoogle || []).push({});
                             }
-                        }
+                        };
                         const renderOptions = {
                             blockId: configurations[configurationKey],
                             renderTo: id,
@@ -157,7 +192,7 @@ function initWatcher($monPlaces, configurations, failovers, pageNumber) {
                                 if ($stackGrid.length && $stackGrid.attr('data-loaded') !== 'true' && screenWidth >= 700) {
                                     initStackGrid($stackGrid);
                                 }
-                            }
+                            },
                         };
 
                         if (typeof pageNumber !== 'undefined') {
@@ -181,7 +216,7 @@ function initWatcher($monPlaces, configurations, failovers, pageNumber) {
             }
         });
         const $stayNotLoadedPlaces = $monPlaces.filter(function () {
-           return $(this).attr('data-loaded') === 'false';
+            return $(this).attr('data-loaded') === 'false';
         });
         if (!$stayNotLoadedPlaces.length) {
             $(window).off('scroll', scrollEventThrottled);

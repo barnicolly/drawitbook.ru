@@ -5,6 +5,7 @@ set :repo_url, 'ssh://git@bitbucket.org/ratnikov-mikhail/drawitbook.com'
 set :linked_files, fetch(:linked_files, []).push(
 	'www/.env',
 	'www/config/logging.php',
+	'www/public/ads.txt',
 	'www/app/Providers/AppServiceProvider.php',
 )
 
@@ -70,7 +71,7 @@ namespace :deploy do
   end
 end
 
-before "deploy:starting", "tests:run"
+#before "deploy:starting", "tests:run"
 before "deploy:starting", "static:precompile"
 before "deploy:symlink:shared", "deploy:before_symlink_shared"
 after "deploy:symlink:shared", "deploy:after_symlink_shared"

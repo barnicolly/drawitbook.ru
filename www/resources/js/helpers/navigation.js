@@ -1,5 +1,5 @@
 export function getLocale() {
-    return $('html').attr('lang');
+    return $('html').attr('lang').toLowerCase();
 }
 
 export function getApplyedLocaleLink(link) {

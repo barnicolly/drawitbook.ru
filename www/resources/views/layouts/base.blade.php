@@ -25,7 +25,6 @@
     @stack('styles')
     @if (!isLocal() && config('app.debug') === false)
         @include('layouts.partials.metrics')
-        <script src="https://yastatic.net/pcode/adfox/loader.js" crossorigin="anonymous"></script>
         <script data-ad-client="ca-pub-1368141699085758" async
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     @endif
