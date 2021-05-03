@@ -14,7 +14,6 @@ export default class YandexLoader {
         const self = this;
         testWatcher(self.$container, () => {
             self.$container.attr('data-loaded', true);
-            console.log('Загрузился ', self.renderOptions);
             if (!isTest) {
                 (function (w, d, n, s, t) {
                     w[n] = w[n] || [];

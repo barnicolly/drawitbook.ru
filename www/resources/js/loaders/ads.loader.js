@@ -1,10 +1,12 @@
-import { isOnScreen } from '@js/helpers/dom';
-import throttle from 'lodash/throttle';
-import { getScreenWidth, isMobileOrTablet } from '@js/helpers/screen';
-import { initStackGrid } from '@js/components/stack_grid';
+import { isMobileOrTablet } from '@js/helpers/screen';
 import AdsenseLoader from '@js/loaders/ads/adsense';
 import YandexLoader from '@js/loaders/ads/yandex';
-import { getEnAdsenseStackLayoutAds, getRuAdsenseStackLayoutAds } from '@js/loaders/ads/adsense_configurations';
+import {
+    getEnAdsenseStackGridAds,
+    getEnAdsenseStackLayoutAds,
+    getRuAdsenseStackGridAds,
+    getRuAdsenseStackLayoutAds,
+} from '@js/loaders/ads/adsense_configurations';
 import { getYandexStackGridAds, getYandexStackLayoutAds } from '@js/loaders/ads/yandex_configurations';
 import { getLocale } from '@js/helpers/navigation';
 
@@ -66,8 +68,8 @@ export function initStackGridAds($stackGrid, pageNumber = 1) {
             yandexConfigurations[objectKey].pageNumber = pageNumber;
         });
         const adsenseConfigurations = locale === 'ru'
-            ? getRuAdsenseStackLayoutAds(mobileOrTablet)
-            : getEnAdsenseStackLayoutAds(mobileOrTablet);
+            ? getRuAdsenseStackGridAds(mobileOrTablet)
+            : getEnAdsenseStackGridAds(mobileOrTablet);
         const ads = getAdsLoaders(locale, $monPlaces, yandexConfigurations, adsenseConfigurations);
         ads.forEach(function (instance) {
             instance.init();
