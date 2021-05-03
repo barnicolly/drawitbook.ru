@@ -4,93 +4,66 @@ import { getScreenWidth } from '@js/helpers/screen';
 import { initStackGrid } from '@js/components/stack_grid';
 import AdsenseLoader from '@js/loaders/ads/adsense';
 import YandexLoader from '@js/loaders/ads/yandex';
+import { getEnAdsenseStackLayoutAds, getRuAdsenseStackLayoutAds } from '@js/loaders/ads/adsense_configurations';
+import { getYandexStackLayoutAds } from '@js/loaders/ads/yandex_configurations';
 
 export function initAds(locale) {
-    const $monPlaces = $('body').find('.mon-place[data-integrated="false"]#before_stack');
-    // const $monPlaces = $('#before_stack');
-    //
+    const $monPlaces = $('body').find('.mon-place[data-integrated="false"]');
     const ads = [];
-    if (locale === 'ru') {
-        const bvw = getScreenWidth();
-        let configurations = {};
-        // if (bvw >= 993) {
-        //     configurations = {
-        //         'sidebar': 'R-A-734726-1',
-        //         'after_detail_picture': 'R-A-734726-2',
-        //         'before_stack': 'R-A-734726-4',
-        //         'after_first_stack': 'R-A-734726-7',
-        //     };
-        // } else {
-        //     configurations = {
-        //         'after_detail_picture': 'R-A-734726-3',
-        //         'before_stack': 'R-A-734726-5',
-        //         'after_first_stack': 'R-A-734726-6',
-        //     };
-        // }
-        // console.log(this);
-        $monPlaces.each(function () {
-            const instance = new YandexLoader($(this), window);
+    const screenWidth = getScreenWidth();
+    const yandexConfigurations = getYandexStackLayoutAds(screenWidth);
+    const adsenseConfigurations = locale === 'ru'
+        ? getRuAdsenseStackLayoutAds(screenWidth)
+        : getEnAdsenseStackLayoutAds(screenWidth);
+    $monPlaces.each(function () {
+        const configurationKey = $(this).attr('data-configuration-key');
+        const renderTo = $(this).attr('id');
+        const $place = $(this);
+        if (typeof yandexConfigurations[configurationKey] !== 'undefined') {
+            const failOverOptions = typeof adsenseConfigurations[configurationKey] !== 'undefined'
+                ? adsenseConfigurations[configurationKey]
+                : null;
+            let failOverCallback = () => {
+            };
+            if (failOverOptions !== null) {
+                failOverCallback = () => {
+                    const instance = new AdsenseLoader($(this), window, failOverOptions);
+                    instance.init();
+                };
+            }
+            const renderOptions = {
+                blockId: yandexConfigurations[configurationKey],
+                renderTo,
+                async: true,
+                // onRender: function (data) {
+                //     const $stackGrid = $place.closest('.stack-grid');
+                //     const screenWidth = getScreenWidth();
+                //     if ($stackGrid.length && $stackGrid.attr('data-loaded') !== 'true' && screenWidth >= 700) {
+                //         initStackGrid($stackGrid);
+                //     }
+                // },
+            };
+            const instance = new YandexLoader($(this), window, renderOptions, failOverCallback);
             ads.push(instance);
-            // console.log( $(this).attr('class'))
-        });
-
-        // })
-    }
-    ads.forEach(function (instance){
+        } else {
+            const failOverOptions = typeof adsenseConfigurations[configurationKey] !== 'undefined'
+                ? adsenseConfigurations[configurationKey]
+                : null;
+            if (failOverOptions !== null) {
+                const instance = new AdsenseLoader($(this), window, failOverOptions);
+                ads.push(instance);
+            }
+        }
+    });
+    //TODO-misha initWatcher;
+    ads.forEach(function (instance) {
         instance.init();
-    })
+    });
     // console.log(ads);
 
     // if ($monPlaces.length) {
     //     const {configurations, failovers} = getConfigurations();
     //     initWatcher($monPlaces, configurations, failovers);
-    // }
-
-    // function getConfigurations() {
-    // const bvw = getScreenWidth();
-    // let configurations = {};
-    // if (bvw >= 993) {
-    //     configurations = {
-    //         'sidebar': 'R-A-734726-1',
-    //         'after_detail_picture': 'R-A-734726-2',
-    //         'before_stack': 'R-A-734726-4',
-    //         'after_first_stack': 'R-A-734726-7',
-    //     };
-    // } else {
-    //     configurations = {
-    //         'after_detail_picture': 'R-A-734726-3',
-    //         'before_stack': 'R-A-734726-5',
-    //         'after_first_stack': 'R-A-734726-6',
-    //     };
-    // }
-    // let client = 'ca-pub-1368141699085758';
-    // const failovers = {
-    /*    'after_detail_picture': {
-            'class': 'adsbygoogle',
-            'data-ad-client': client,
-            'data-ad-slot': '6153216946',
-            'data-full-width-responsive': 'true',
-            'data-ad-format': 'auto',
-            'style': 'display: block',
-        },
-        'before_stack': {
-            'class': 'adsbygoogle',
-            'data-ad-client': client,
-            'data-ad-slot': '1076984235',
-            'data-full-width-responsive': 'true',
-            'data-ad-format': 'auto',
-            'style': 'display: block',
-        },
-        'after_first_stack': {
-            'class': 'adsbygoogle',
-            'data-ad-client': client,
-            'data-ad-slot': 'draw_after_stack',
-            'data-full-width-responsive': 'true',
-            'data-ad-format': 'auto',
-            'style': 'display: block',
-        },*/
-    // }
-    // return {configurations, failovers};
     // }
 }
 
@@ -102,7 +75,7 @@ export function initStackGridAds($stackGrid, pageNumber = 1) {
     // }
     //
     // function getConfigurations() {
-    //     const bvw = getScreenWidth();
+    //     const bvw = getScreenWidth();y
     //     let configurations = {};
     //     if (bvw >= 768) {
     //         configurations = {

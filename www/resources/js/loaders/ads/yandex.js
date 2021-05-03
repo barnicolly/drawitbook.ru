@@ -1,22 +1,19 @@
 export default class YandexLoader {
-    constructor($container, window) {
+    constructor($container, window, renderOptions, failOverCallback) {
         this.$container = $container;
+        this.renderOptions = renderOptions;
+        this.failOverCallback = failOverCallback;
         this.window = window;
-        this.id = $container.attr('id');
     }
 
     init() {
         const isTest = this.$container.hasClass('dummy');
+        const self = this;
         if (!isTest) {
-            const self = this;
             (function(w, d, n, s, t) {
                 w[n] = w[n] || [];
                 w[n].push(function() {
-                    Ya.Context.AdvManager.render({
-                        blockId: "R-A-734726-4",
-                        renderTo: self.id,
-                        async: true
-                    });
+                    Ya.Context.AdvManager.render(self.renderOptions, self.failOverCallback);
                 });
                 t = d.getElementsByTagName("script")[0];
                 s = d.createElement("script");
@@ -25,6 +22,10 @@ export default class YandexLoader {
                 s.async = true;
                 t.parentNode.insertBefore(s, t);
             })(this.window, this.window.document, "yandexContextAsyncCallbacks");
+        } else {
+            if (typeof self.failOverCallback === 'function') {
+                self.failOverCallback();
+            }
         }
     }
 }
