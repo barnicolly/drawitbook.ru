@@ -4,11 +4,14 @@ export function getRuAdsenseStackLayoutAds(isMobileOrTablet) {
     let result;
     if (!isMobileOrTablet) {
         result = {
+            'sidebar': getResponsiveBlock('4114195518'),
+            'after_detail_picture': getResponsiveBlock('6153216946'),
             'before_stack': getResponsiveBlock('1076984235'),
             'after_first_stack': getResponsiveBlock('6517669710'),
         };
     } else {
         result = {
+            'after_detail_picture': getResponsiveBlock('2254318936'),
             'before_stack': getResponsiveBlock('7389427247'),
             'after_first_stack': getResponsiveBlock('8894080608'),
         };
@@ -20,11 +23,14 @@ export function getEnAdsenseStackLayoutAds(isMobileOrTablet) {
     let result;
     if (!isMobileOrTablet) {
         result = {
+            'sidebar': getResponsiveBlock('5427277188'),
+            'after_detail_picture': getResponsiveBlock('3567400605'),
             'before_stack': getResponsiveBlock('2955358216'),
             'after_first_stack': getResponsiveBlock('1752095368'),
         };
     } else {
         result = {
+            'after_detail_picture': getResponsiveBlock('4688910585'),
             'before_stack': getResponsiveBlock('6894603229'),
             'after_first_stack': getResponsiveBlock('3146929902'),
         };

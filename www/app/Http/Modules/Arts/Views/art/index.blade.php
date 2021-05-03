@@ -23,13 +23,14 @@
                         </button>
                     </div>
                 </div>
-{{--                <div class="content mobile-no-padding">--}}
-{{--                    {!! loadAd('after_detail_picture') !!}--}}
-{{--                </div>--}}
+                <div class="content mobile-no-padding">
+                    {!! loadAd('after_detail_picture') !!}
+                </div>
             </div>
         </div>
 
         <div class="detail-art-page__sidebar sidebar">
+            {!! loadAd('sidebar') !!}
             <div class="theiaStickySidebar">
                 <div class="form-group">
                     <h3 class="form-group">
@@ -39,7 +40,6 @@
                         @include('Arts::template.stack_grid.art.tag_list', ['tags' => $popularTags])
                     </div>
                 </div>
-{{--                {!! loadAd('sidebar') !!}--}}
             </div>
         </div>
     </div>
