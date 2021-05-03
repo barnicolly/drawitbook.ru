@@ -1,6 +1,6 @@
 import { isOnScreen } from '@js/helpers/dom';
 import throttle from 'lodash/throttle';
-import { getScreenWidth } from '@js/helpers/screen';
+import { getScreenWidth, isMobileOrTablet } from '@js/helpers/screen';
 import { initStackGrid } from '@js/components/stack_grid';
 import AdsenseLoader from '@js/loaders/ads/adsense';
 import YandexLoader from '@js/loaders/ads/yandex';
@@ -8,63 +8,45 @@ import { getEnAdsenseStackLayoutAds, getRuAdsenseStackLayoutAds } from '@js/load
 import { getYandexStackLayoutAds } from '@js/loaders/ads/yandex_configurations';
 
 export function initAds(locale) {
-    const $monPlaces = $('body').find('.mon-place[data-integrated="false"]');
-    const ads = [];
-    const screenWidth = getScreenWidth();
-    const yandexConfigurations = getYandexStackLayoutAds(screenWidth);
-    const adsenseConfigurations = locale === 'ru'
-        ? getRuAdsenseStackLayoutAds(screenWidth)
-        : getEnAdsenseStackLayoutAds(screenWidth);
-    $monPlaces.each(function () {
-        const configurationKey = $(this).attr('data-configuration-key');
-        const renderTo = $(this).attr('id');
-        const $place = $(this);
-        if (typeof yandexConfigurations[configurationKey] !== 'undefined' && locale === 'ru') {
-            const failOverOptions = typeof adsenseConfigurations[configurationKey] !== 'undefined'
-                ? adsenseConfigurations[configurationKey]
-                : null;
-            let failOverCallback = () => {
-            };
-            if (failOverOptions !== null) {
-                failOverCallback = () => {
-                    const instance = new AdsenseLoader($(this), window, failOverOptions);
-                    instance.init();
+    const $monPlaces = $('body').find('.mon-place[data-loaded="false"]');
+    if ($monPlaces.length) {
+        const ads = [];
+        const mobileOrTablet = isMobileOrTablet();
+        const yandexConfigurations = getYandexStackLayoutAds(mobileOrTablet);
+        const adsenseConfigurations = locale === 'ru'
+            ? getRuAdsenseStackLayoutAds(mobileOrTablet)
+            : getEnAdsenseStackLayoutAds(mobileOrTablet);
+        $monPlaces.each(function () {
+            const configurationKey = $(this).attr('data-configuration-key');
+            if (typeof yandexConfigurations[configurationKey] !== 'undefined' && locale === 'ru') {
+                const failOverOptions = typeof adsenseConfigurations[configurationKey] !== 'undefined'
+                    ? adsenseConfigurations[configurationKey]
+                    : null;
+                let failOverCallback = () => {
                 };
-            }
-            const renderOptions = {
-                blockId: yandexConfigurations[configurationKey],
-                renderTo,
-                async: true,
-                // onRender: function (data) {
-                //     const $stackGrid = $place.closest('.stack-grid');
-                //     const screenWidth = getScreenWidth();
-                //     if ($stackGrid.length && $stackGrid.attr('data-loaded') !== 'true' && screenWidth >= 700) {
-                //         initStackGrid($stackGrid);
-                //     }
-                // },
-            };
-            const instance = new YandexLoader($(this), window, renderOptions, failOverCallback);
-            ads.push(instance);
-        } else {
-            const failOverOptions = typeof adsenseConfigurations[configurationKey] !== 'undefined'
-                ? adsenseConfigurations[configurationKey]
-                : null;
-            if (failOverOptions !== null) {
-                const instance = new AdsenseLoader($(this), window, failOverOptions);
+                if (failOverOptions !== null) {
+                    failOverCallback = () => {
+                        const instance = new AdsenseLoader($(this), window, failOverOptions);
+                        instance.init();
+                    };
+                }
+                const renderOptions = yandexConfigurations[configurationKey];
+                const instance = new YandexLoader($(this), window, renderOptions, failOverCallback);
                 ads.push(instance);
+            } else {
+                const failOverOptions = typeof adsenseConfigurations[configurationKey] !== 'undefined'
+                    ? adsenseConfigurations[configurationKey]
+                    : null;
+                if (failOverOptions !== null) {
+                    const instance = new AdsenseLoader($(this), window, failOverOptions);
+                    ads.push(instance);
+                }
             }
-        }
-    });
-    //TODO-misha initWatcher;
-    ads.forEach(function (instance) {
-        instance.init();
-    });
-    // console.log(ads);
-
-    // if ($monPlaces.length) {
-    //     const {configurations, failovers} = getConfigurations();
-    //     initWatcher($monPlaces, configurations, failovers);
-    // }
+        });
+        ads.forEach(function (instance) {
+            instance.init();
+        });
+    }
 }
 
 export function initStackGridAds($stackGrid, pageNumber = 1) {

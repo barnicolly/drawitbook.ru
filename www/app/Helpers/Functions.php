@@ -28,7 +28,6 @@ if (!function_exists('loadAd')) {
     {
         $viewData = [
             'id' => $idPostFix ? ($id . '-' . $idPostFix) : $id,
-            'integratedText' => $integrated ? 'true' : 'false',
             'isDummy' => isLocal(),
             'configurationKey' => $id,
         ];
