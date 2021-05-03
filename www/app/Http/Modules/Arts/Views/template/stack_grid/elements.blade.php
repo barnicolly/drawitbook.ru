@@ -3,13 +3,13 @@
     @if(in_array($loop->index, [5, 12, 18], true))
         <div class="art-container art-container-ad">
             <div class="art-wrapper integration">
-                <div class="integration__content">
-                    {!! loadAd('integrated-' . $loop->index, $adPostfix) !!}
-                </div>
                 <div class="integration__label">
                     <span class="integration__text float-right">
                         {{ __('common.advertisement') }}
                     </span>
+                </div>
+                <div class="integration__content">
+                    {!! loadAd('integrated-' . $loop->index, $adPostfix) !!}
                 </div>
             </div>
         </div>
@@ -23,13 +23,13 @@
 @if (count($arts) > 21)
     <div class="art-container art-container-ad">
         <div class="art-wrapper integration">
-            <div class="integration__content">
-                {!! loadAd('in_stack_arts_last', $adPostfix) !!}
-            </div>
             <div class="integration__label">
                 <span class="integration__text float-right">
                       {{ __('common.advertisement') }}
                 </span>
+            </div>
+            <div class="integration__content">
+                {!! loadAd('in_stack_arts_last', $adPostfix) !!}
             </div>
         </div>
     </div>

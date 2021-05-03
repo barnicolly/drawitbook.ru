@@ -1,4 +1,7 @@
 .integration {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
     .integration__text {
         color: #939393;
@@ -7,10 +10,10 @@
 
     .integration__content {
         min-height: 600px;
+        width: 100%;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        align-items: flex-start;
     }
 }
 
