@@ -38,7 +38,7 @@ if (locale === 'en') {
 loadLazyloadImg();
 loadStackGrid();
 loadJQcloud();
-initAds(locale);
+initAds();
 
 initHeaderMenu($('.header__menu'));
 initFixedHeader($('header').first());

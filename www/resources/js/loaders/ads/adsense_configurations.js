@@ -32,6 +32,46 @@ export function getEnAdsenseStackLayoutAds(isMobileOrTablet) {
     return result;
 }
 
+export function getRuAdsenseStackGridAds(isMobileOrTablet) {
+    let result;
+    if (!isMobileOrTablet) {
+        result = {
+            'integrated-5': getResponsiveBlock('3533749199'),
+            'integrated-12': getResponsiveBlock('3533749199'),
+            'integrated-18': getResponsiveBlock('3533749199'),
+            'in_stack_arts_last': getResponsiveBlock('6159912535'),
+        };
+    } else {
+        result = {
+            'integrated-5': getResponsiveBlock('5968340840'),
+            'integrated-12': getResponsiveBlock('5968340840'),
+            'integrated-18': getResponsiveBlock('5968340840'),
+            'in_stack_arts_last': getResponsiveBlock('8594504181'),
+        };
+    }
+    return result;
+}
+
+export function getEnAdsenseStackGridAds(isMobileOrTablet) {
+    let result;
+    if (!isMobileOrTablet) {
+        result = {
+            'integrated-5': getResponsiveBlock('3468517621'),
+            'integrated-12': getResponsiveBlock('3468517621'),
+            'integrated-18': getResponsiveBlock('3468517621'),
+            'in_stack_arts_last': getResponsiveBlock('1963864266'),
+        };
+    } else {
+        result = {
+            'integrated-5': getResponsiveBlock('6641475874'),
+            'integrated-12': getResponsiveBlock('6641475874'),
+            'integrated-18': getResponsiveBlock('6641475874'),
+            'in_stack_arts_last': getResponsiveBlock('6449904189'),
+        };
+    }
+    return result;
+}
+
 function getResponsiveBlock(slot) {
     return {
         'class': 'adsbygoogle',

@@ -24,7 +24,7 @@ if (!function_exists('isLocal')) {
 }
 
 if (!function_exists('loadAd')) {
-    function loadAd(string $id, string $idPostFix = '', bool $integrated = false)
+    function loadAd(string $id, string $idPostFix = '')
     {
         $viewData = [
             'id' => $idPostFix ? ($id . '-' . $idPostFix) : $id,
