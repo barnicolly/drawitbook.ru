@@ -19,7 +19,7 @@ export function initAds(locale) {
         const configurationKey = $(this).attr('data-configuration-key');
         const renderTo = $(this).attr('id');
         const $place = $(this);
-        if (typeof yandexConfigurations[configurationKey] !== 'undefined') {
+        if (typeof yandexConfigurations[configurationKey] !== 'undefined' && locale === 'ru') {
             const failOverOptions = typeof adsenseConfigurations[configurationKey] !== 'undefined'
                 ? adsenseConfigurations[configurationKey]
                 : null;
