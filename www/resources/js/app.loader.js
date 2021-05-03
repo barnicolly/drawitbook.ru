@@ -74,7 +74,6 @@ $(function () {
     }
 
     loadFixedShared();
-    loadSidebar($('.sidebar'));
     initArtControls($('.art-control'));
 
     $('.lang-switcher')

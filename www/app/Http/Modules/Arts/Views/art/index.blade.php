@@ -29,15 +29,19 @@
             </div>
         </div>
 
-        <div class="detail-art-page__sidebar sidebar">
-            {!! loadAd('sidebar') !!}
-            <div class="theiaStickySidebar">
-                <div class="form-group">
-                    <h3 class="form-group">
-                        {{ __('common.popular_hash_tags') }}
-                    </h3>
-                    <div class="tag-list">
-                        @include('Arts::template.stack_grid.art.tag_list', ['tags' => $popularTags])
+        <div class="detail-art-page__sidebar">
+            <div class="form-group clearfix">
+                {!! loadAd('sidebar') !!}
+            </div>
+            <div class="sidebar">
+                <div class="theiaStickySidebar">
+                    <div class="form-group">
+                        <h3 class="form-group">
+                            {{ __('common.popular_hash_tags') }}
+                        </h3>
+                        <div class="tag-list">
+                            @include('Arts::template.stack_grid.art.tag_list', ['tags' => $popularTags])
+                        </div>
                     </div>
                 </div>
             </div>
