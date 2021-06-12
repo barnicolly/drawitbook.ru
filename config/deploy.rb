@@ -19,7 +19,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
 
 set :keep_releases, 2
 
-role :app, %w{deployer@62.109.31.189}
+role :app, %w{deployer@37.46.135.216}
 
   ask(:password, nil, echo: false)
   set :ssh_options, {
