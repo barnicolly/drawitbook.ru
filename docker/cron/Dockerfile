@@ -21,12 +21,13 @@ COPY www/resources/lang /var/www/html/resources/lang
 COPY --from=vendor /var/www/html/vendor/ ./vendor/
 COPY docker/php/files/core/View.php vendor/laravel/framework/src/Illuminate/View/View.php
 
-COPY docker/cron/laravel.sh laravel.sh
-COPY docker/cron/crontab.txt /crontab.txt
-RUN /usr/bin/crontab /crontab.txt
 # Assign permissions of the working directory to the www-data user
 RUN chown -R www-data:www-data \
         /var/www/html/storage \
         /var/www/html/bootstrap/cache
+
+COPY docker/cron/laravel.sh laravel.sh
+COPY docker/cron/crontab.txt /crontab.txt
+RUN /usr/bin/crontab /crontab.txt
 
 CMD ["crond","-f", "-l", "8"]
