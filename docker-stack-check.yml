@@ -25,6 +25,18 @@ services:
       placement:
         constraints: [ node.labels.projects == true ]
 
+  cronjob:
+    image: dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/cronjob
+    networks:
+      - inner
+    env_file:
+      - .env
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [ node.labels.projects == true ]
+
 #Docker Networks
 networks:
   inner:

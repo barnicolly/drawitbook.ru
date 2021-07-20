@@ -13,6 +13,7 @@ imageWebServer="${imagePrefix}/web_server"
 imageVendorLibraries="${imagePrefix}/vendor"
 imageNpmLibraries="${imagePrefix}/npm"
 imageStatic="${imagePrefix}/static"
+imageCronjob="${imagePrefix}/cronjob"
 timeZone="Europe/Moscow"
 
 docker build -t ${imageNpmLibraries} -f docker/npm/Dockerfile .
@@ -22,8 +23,11 @@ docker build -t ${imageVendorLibraries} -f docker/vendor/Dockerfile .
 docker build -t ${imagePhp} -f docker/php/Dockerfile .
 docker build -t ${imageWebServer} -f docker/nginx/Dockerfile --build-arg TIME_ZONE=${timeZone} .
 
+docker build -t ${imageCronjob} -f docker/cron/Dockerfile  .
+
 docker push ${imageNpmLibraries}
 docker push ${imageStatic}
 docker push ${imageVendorLibraries}
 docker push ${imagePhp}
 docker push ${imageWebServer}
+docker push ${imageCronjob}
