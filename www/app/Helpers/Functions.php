@@ -16,10 +16,10 @@ if (!function_exists('listDir')) {
     }
 }
 
-if (!function_exists('isLocal')) {
-    function isLocal()
+if (!function_exists('isDevelop')) {
+    function isDevelop(): bool
     {
-        return !(app()->runningInConsole() || !in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '192.168.1.5'], true));
+        return config('app.debug');
     }
 }
 
@@ -28,7 +28,7 @@ if (!function_exists('loadAd')) {
     {
         $viewData = [
             'id' => $idPostFix ? ($id . '-' . $idPostFix) : $id,
-            'isDummy' => isLocal(),
+            'isDummy' => isDevelop(),
             'configurationKey' => $id,
         ];
         return view('partials.ad_dummy', $viewData)->render();

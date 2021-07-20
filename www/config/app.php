@@ -1,10 +1,19 @@
 <?php
 
-$manifest = file_get_contents(base_path('public/build/manifest.json'));
-$manifest = json_decode($manifest, true);
+$buildAssetsPath = base_path('public/build/manifest.json');
+if (file_exists($buildAssetsPath)) {
+    $manifest = file_get_contents($buildAssetsPath);
+    $manifest = json_decode($manifest, true);
+}
 
 return [
 
+
+    'manifest' => $manifest,
+
+    'search_host_sphinx' => env('SEARCH_HOST', 'http://localhost'),
+    'vk_key' => env('VK_KEY', 'example'),
+    'forceHttps' => env('FORCE_HTTPS', false),
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -43,11 +52,6 @@ return [
     */
 
     'debug' => env('APP_DEBUG', true),
-
-    'manifest' => $manifest,
-
-    'search_host_sphinx' => env('SEARCH_HOST', 'http://localhost'),
-    'vk_key' => env('VK_KEY', 'example'),
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -187,6 +191,7 @@ return [
         App\Providers\ModulesServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         App\Providers\RouterServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
         /*
          * Vendor Service Providers
          * */

@@ -16,11 +16,13 @@ class Controller extends BaseController
 
     public function setShareImage(string $relativeShareImgPath)
     {
-        [$width, $height] = getimagesize(public_path($relativeShareImgPath));
-        OpenGraph::addImage(asset($relativeShareImgPath), ['width' => $width, 'height' => $height]);
+        if (file_exists(public_path($relativeShareImgPath))) {
+            [$width, $height] = getimagesize(public_path($relativeShareImgPath));
+            OpenGraph::addImage(asset($relativeShareImgPath), ['width' => $width, 'height' => $height]);
+            TwitterCard::setImage(asset($relativeShareImgPath));
+        }
         $url = urldecode(URL::current());
         OpenGraph::setUrl($url);
-        TwitterCard::setImage(asset($relativeShareImgPath));
         TwitterCard::setUrl($url);
     }
 }

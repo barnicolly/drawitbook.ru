@@ -1,0 +1,51 @@
+version: '3.3'
+services:
+  webserver:
+    build:
+      context: .
+      dockerfile: docker/dev/nginx/Dockerfile
+      labels:
+        dev: true
+    image: 'dev/drawitbook_com/webserver'
+    restart: unless-stopped
+    ports:
+      - "8099:80"
+    volumes:
+      - ./www:/var/www/html
+    depends_on:
+      - fpm
+  fpm:
+    build:
+      context: .
+      dockerfile: docker/dev/php/Dockerfile
+      labels:
+        dev: true
+    image: 'dev/drawitbook_com/php'
+    volumes:
+      - ./www:/var/www/html
+      - ./docker/dev/php/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./docker/dev/php/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    environment:
+      #Настройки для работы с Xdebug
+      - XDEBUG_CONFIG=mode=debug client_port=9003 start_with_request=yes
+      - PHP_IDE_CONFIG=serverName=docker
+    env_file:
+      - www/.env
+    restart: unless-stopped
+  webpack:
+    build:
+      context: .
+      dockerfile: docker/dev/webpack/Dockerfile
+      labels:
+        dev: true
+    image: 'dev/drawitbook_com/webpack'
+    volumes:
+      - ./www:/var/www/html
+    ports:
+      - "10007:10007"
+    environment:
+      - WEBPACK_DEVSERVER_IN_PORT=10007
+      - NODE_ENV=development
+    env_file:
+      - www/.env
+    restart: unless-stopped

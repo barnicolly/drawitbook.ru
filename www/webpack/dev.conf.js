@@ -2,14 +2,14 @@ const merge = require('webpack-merge');
 const helper = require('./utilites/parts');
 const baseWebpackConfig = require('./base.conf');
 
-
-const {domain} = baseWebpackConfig.externals.settings;
+const {staticInPort: inPort} = baseWebpackConfig.externals.settings;
+const domain = 'http://127.0.0.1';
 const  devWebpackConfig = merge(baseWebpackConfig, {
     mode: 'development',
     output: {
         filename: '[name].js',
         chunkFilename: '[name].js',
-        publicPath: `${domain}:8080/build/`,
+        publicPath: `${domain}:${inPort}/build/`,
     },
     devServer: {
         hot: true,
@@ -17,7 +17,7 @@ const  devWebpackConfig = merge(baseWebpackConfig, {
         inline: true,
         overlay: true,
         quiet: false,
-        port: 8080,
+        port: inPort,
         host: '0.0.0.0',
         proxy: {
             '**': {
@@ -45,6 +45,16 @@ const  devWebpackConfig = merge(baseWebpackConfig, {
     ],
     module: {
         rules: [
+            {
+                test: /\.scss$/,
+                use: [
+                    helper.loaders.MiniCssExtractPluginLoader(isProduction()),
+                    helper.loaders.CacheLoader(isProduction()),
+                    helper.loaders.CssLoader(isProduction()),
+                    helper.loaders.PostcssLoader(isProduction()),
+                    helper.loaders.SassLoader(isProduction()),
+                ],
+            },
             {
                 test: /\.css$/,
                 use: [

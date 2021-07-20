@@ -8,7 +8,9 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
     mode: 'production',
     output: {
         filename: 'js/[name].[contenthash].js',
-        publicPath: `${domain}/build/`,
+        chunkFilename: 'js/[name].[contenthash].js',
+        publicPath: `/build/`,
+        sourceMapFilename: '[file].[hash].map',
     },
     devtool: 'none',
     plugins: [
@@ -32,6 +34,15 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
     ],
     module: {
         rules: [
+            {
+                test: /\.scss$/,
+                use: [
+                    helper.loaders.MiniCssExtractPluginLoader(isProduction()),
+                    helper.loaders.CssLoader(isProduction()),
+                    helper.loaders.PostcssLoader(isProduction()),
+                    helper.loaders.SassLoader(isProduction()),
+                ],
+            },
             {
                 test: /\.css$/,
                 use: [

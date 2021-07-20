@@ -1,0 +1,104 @@
+#!groovy
+
+properties([disableConcurrentBuilds()]) // отключить одновременные сборки
+
+def sshCredId = 'ssh_manager'
+def sshUser = 'root'
+def sshServer = '62.109.9.30'
+
+def registry = 'dockerhub.ratnikovmikhail.ru'
+def registryUrl = "https://${registry}"
+
+def projectName = 'drawitbook_com'
+def projectsPrefix = 'projects'
+
+def bitbucketBranch = 'develop'
+def bitbucketRepository = 'https://ratnikov-mikhail@bitbucket.org/ratnikov-mikhail/drawitbook.com.git'
+def timeZone = 'Europe/Moscow'
+
+pipeline {
+    agent {
+        label 'master'
+    }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        timestamps()
+    }
+    stages {
+        stage("git clone") {
+            steps {
+                script {
+                    git branch: bitbucketBranch, credentialsId: 'bitbucket', url: bitbucketRepository
+                }
+            }
+        }
+        stage('Build artefacts') {
+            parallel {
+               stage('static') {
+                   steps {
+                        script {
+                            docker.withRegistry(registryUrl, 'registry') {
+                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/npm", "-f docker/npm/Dockerfile .")
+                                customImage.push()
+                            }
+                        }
+                        script {
+                            docker.withRegistry(registryUrl, 'registry') {
+                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/static", "-f docker/static/Dockerfile --build-arg NODE_ENV=production .")
+                                customImage.push()
+                            }
+                        }
+                   }
+               }
+                stage('vendor') {
+                    steps {
+                        script {
+                            docker.withRegistry(registryUrl, 'registry') {
+                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/vendor", "-f docker/vendor/Dockerfile .")
+                                customImage.push()
+                            }
+                        }
+                   }
+                }
+           }
+        }
+        stage('Build services') {
+            parallel {
+               stage('web_server') {
+                   steps {
+                        script {
+                            docker.withRegistry(registryUrl, 'registry') {
+                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/web_server", "-f docker/nginx/Dockerfile --build-arg TIME_ZONE=${timeZone} .")
+                                customImage.push()
+                            }
+                        }
+                   }
+               }
+                stage('php') {
+                    steps {
+                        script {
+                            docker.withRegistry(registryUrl, 'registry') {
+                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/php", "-f docker/php/Dockerfile .")
+                                customImage.push()
+                            }
+                        }
+                   }
+                }
+           }
+        }
+        stage("deploy") {
+            steps {
+                sshagent(credentials: [sshCredId]) {
+                    script
+                    {
+                        withCredentials([usernamePassword(credentialsId: 'registry', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker login ${registry} -u ${USERNAME} -p ${PASSWORD}"
+                            sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --force ${projectName}_fpm --with-registry-auth"
+                            sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --force ${projectName}_webserver --with-registry-auth"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

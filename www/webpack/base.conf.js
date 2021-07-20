@@ -1,23 +1,27 @@
 global.isProduction = () => process.env.NODE_ENV === 'production';
 const path = require('path');
-
+const fs = require('fs');
 const paths = {
     src: {
-        self: path.join(__dirname, '../resources/'),
-        js: path.join(__dirname, '../resources/js/'),
-        css: path.join(__dirname, '../resources/css/'),
-        scss: path.join(__dirname, '../resources/scss/'),
-        img: path.join(__dirname, '../resources/img/'),
-        plugins: path.join(__dirname, '../resources/plugins/'),
+        self: path.join(__dirname, '../resources/static/'),
+        js: path.join(__dirname, '../resources/static/js/'),
+        css: path.join(__dirname, '../resources/static/css/'),
+        scss: path.join(__dirname, '../resources/static/scss/'),
+        img: path.join(__dirname, '../resources/static/img/'),
+        plugins: path.join(__dirname, '../resources/static/plugins/'),
     },
     public: path.join(__dirname, '../public/'),
     dist: path.join(__dirname, '../public/build/'),
 };
 
 const helper = require('./utilites/parts');
-const settings = require('./settings.json');
-if (process.env.PROJECT_DOMAIN) {
-    settings.domain = process.env.PROJECT_DOMAIN;
+let settings = {}
+const settingsFilePath = __dirname + '/settings.json';
+if (fs.existsSync(settingsFilePath)) {
+    settings = require(settingsFilePath);
+}
+if (process.env.WEBPACK_DEVSERVER_IN_PORT) {
+    settings.staticInPort = process.env.WEBPACK_DEVSERVER_IN_PORT;
 }
 module.exports = {
     externals: {
@@ -58,15 +62,6 @@ module.exports = {
     ],
     module: {
         rules: [
-            {
-                test: /\.scss$/,
-                use: [
-                    helper.loaders.MiniCssExtractPluginLoader(isProduction()),
-                    helper.loaders.CssLoader(isProduction()),
-                    helper.loaders.PostcssLoader(isProduction()),
-                    helper.loaders.SassLoader(isProduction()),
-                ],
-            },
             {
                 test: /\.(ttf|eot|woff|woff2)$/,
                 use: [
