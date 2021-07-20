@@ -18,6 +18,9 @@ services:
         constraints: [ node.labels.projects == true ]
   fpm:
     image: dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/php
+    volumes:
+      - "/var/www/html/drawitbook.com/public/sitemaps:/var/www/html/public/sitemaps"
+      - "/var/www/html/drawitbook.com/public/content:/var/www/html/public/content"
     networks:
       - inner
     env_file:
