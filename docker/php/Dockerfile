@@ -29,7 +29,8 @@ COPY --from=assets /var/www/html/public/build/ ./public/build/
 # Assign permissions of the working directory to the www-data user
 RUN chown -R www-data:www-data \
         /var/www/html/storage \
-        /var/www/html/bootstrap/cache
+        /var/www/html/bootstrap/cache \
+        /var/www/html/storage/framework/cache/data
 
 COPY docker/php/entrypoint.sh /var/www/html/entrypoint.sh
 RUN ["chmod", "+x", "/var/www/html/entrypoint.sh"]
