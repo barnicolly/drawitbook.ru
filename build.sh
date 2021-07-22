@@ -20,10 +20,10 @@ docker build -t ${imageNpmLibraries} -f docker/npm/Dockerfile .
 docker build -t ${imageStatic} -f docker/static/Dockerfile --build-arg NODE_ENV=production .
 docker build -t ${imageVendorLibraries} -f docker/vendor/Dockerfile .
 
-docker build -t ${imagePhp} -f docker/php/Dockerfile .
+docker build -t ${imagePhp} -f docker/php/Dockerfile TIME_ZONE=${timeZone} .
 docker build -t ${imageWebServer} -f docker/nginx/Dockerfile --build-arg TIME_ZONE=${timeZone} .
 
-docker build -t ${imageCronjob} -f docker/cron/Dockerfile  .
+docker build -t ${imageCronjob} -f docker/cron/Dockerfile TIME_ZONE=${timeZone} .
 
 docker push ${imageNpmLibraries}
 docker push ${imageStatic}
