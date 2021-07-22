@@ -78,13 +78,13 @@ pipeline {
                     steps {
                         script {
                             docker.withRegistry(registryUrl, 'registry') {
-                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/php", "-f docker/php/Dockerfile TIME_ZONE=${timeZone} .")
+                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/php", "-f docker/php/Dockerfile --build-arg TIME_ZONE=${timeZone} .")
                                 customImage.push()
                             }
                         }
                         script {
                              docker.withRegistry(registryUrl, 'registry') {
-                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/cronjob", "-f docker/cron/Dockerfile TIME_ZONE=${timeZone} .")
+                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/cronjob", "-f docker/cron/Dockerfile --build-arg TIME_ZONE=${timeZone} .")
                                 customImage.push()
                              }
                         }
