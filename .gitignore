@@ -1,4 +1,1 @@
 .idea
-#capistrano logs
-log/
-php.ini

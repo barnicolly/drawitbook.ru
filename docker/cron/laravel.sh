@@ -1,3 +1,4 @@
 #!/bin/sh
 
-php /var/www/html/artisan schedule:run
+echo "running artisan"
+#php /var/www/html/artisan schedule:run
