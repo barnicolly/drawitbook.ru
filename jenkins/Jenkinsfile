@@ -4,7 +4,7 @@ properties([disableConcurrentBuilds()]) // отключить одновреме
 
 def sshCredId = 'ssh_manager'
 def sshUser = 'root'
-def sshServer = '62.109.9.30'
+def sshServer = '94.250.255.154'
 
 def registry = 'dockerhub.ratnikovmikhail.ru'
 def registryUrl = "https://${registry}"
