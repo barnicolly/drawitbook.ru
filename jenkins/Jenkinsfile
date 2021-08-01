@@ -102,7 +102,7 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'registry', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker login ${registry} -u ${USERNAME} -p ${PASSWORD}"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --force ${projectName}_fpm --with-registry-auth"
-                            sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --force ${projectName}_cronjob --with-registry-auth"
+//                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --force ${projectName}_cronjob --with-registry-auth"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --force ${projectName}_webserver --with-registry-auth"
                         }
                     }
