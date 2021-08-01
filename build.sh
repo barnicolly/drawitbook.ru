@@ -16,7 +16,7 @@ imageStatic="${imagePrefix}/static"
 imageCronjob="${imagePrefix}/cronjob"
 timeZone="Europe/Moscow"
 
-docker build -t ${imageNpmLibraries} -f docker/npm/Dockerfile .
+docker build -t ${imageNpmLibraries} -f docker/npm/Dockerfile --build-arg NPM_TOKEN=${NPM_TOKEN} .
 docker build -t ${imageStatic} -f docker/static/Dockerfile --build-arg NODE_ENV=production .
 docker build -t ${imageVendorLibraries} -f docker/vendor/Dockerfile .
 

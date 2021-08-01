@@ -37,9 +37,11 @@ pipeline {
                stage('static') {
                    steps {
                         script {
-                            docker.withRegistry(registryUrl, 'registry') {
-                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/npm", "-f docker/npm/Dockerfile .")
-                                customImage.push()
+                            withCredentials([string(credentialsId: 'npm_token', variable: 'NPM_TOKEN')]) {
+                                docker.withRegistry(registryUrl, 'registry') {
+                                    def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/npm", "-f docker/npm/Dockerfile --build-arg NPM_TOKEN=${NPM_TOKEN} .")
+                                    customImage.push()
+                                }
                             }
                         }
                         script {
