@@ -18,7 +18,7 @@ timeZone="Europe/Moscow"
 
 docker build -t ${imageNpmLibraries} -f docker/npm/Dockerfile --build-arg NPM_TOKEN=${NPM_TOKEN} .
 docker build -t ${imageStatic} -f docker/static/Dockerfile --build-arg NODE_ENV=production .
-docker build -t ${imageVendorLibraries} -f docker/vendor/Dockerfile .
+docker build -t ${imageVendorLibraries} -f docker/vendor/Dockerfile --build-arg COMPOSER_TOKEN=${COMPOSER_TOKEN} .
 
 docker build -t ${imagePhp} -f docker/php/Dockerfile --build-arg TIME_ZONE=${timeZone} .
 docker build -t ${imageWebServer} -f docker/nginx/Dockerfile --build-arg TIME_ZONE=${timeZone} .

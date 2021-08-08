@@ -55,9 +55,11 @@ pipeline {
                 stage('vendor') {
                     steps {
                         script {
-                            docker.withRegistry(registryUrl, 'registry') {
-                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/vendor", "-f docker/vendor/Dockerfile .")
-                                customImage.push()
+                            withCredentials([string(credentialsId: 'composer_token', variable: 'COMPOSER_TOKEN')]) {
+                                docker.withRegistry(registryUrl, 'registry') {
+                                    def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/vendor", "-f docker/vendor/Dockerfile --build-arg COMPOSER_TOKEN=${COMPOSER_TOKEN} .")
+                                    customImage.push()
+                                }
                             }
                         }
                    }

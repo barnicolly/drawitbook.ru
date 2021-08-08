@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
-use Waavi\Sanitizer\Laravel\SanitizesInput;
+use Elegant\Sanitizer\Laravel\SanitizesInput;
 
 abstract class BaseFormRequest extends FormRequest
 {
