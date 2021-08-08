@@ -25,6 +25,7 @@ services:
       - ./www:/var/www/html
       - ./docker/dev/php/php.ini:/usr/local/etc/php/php.ini:ro
       - ./docker/dev/php/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./docker/dev/php/conf.d/docker-php-ext-opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
     environment:
       #Настройки для работы с Xdebug
       - XDEBUG_CONFIG=mode=debug client_port=9003 start_with_request=yes

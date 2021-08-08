@@ -4,7 +4,9 @@ LABEL stage=builder
 FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/static as assets
 LABEL stage=builder
 
-FROM dockerhub.ratnikovmikhail.ru/php:7.4
+FROM dockerhub.ratnikovmikhail.ru/php:8.0.9-composer
+
+COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/
 
 EXPOSE 9000
 WORKDIR /var/www/html
@@ -21,6 +23,7 @@ COPY www/artisan /var/www/html/artisan
 COPY www/composer.json /var/www/html/composer.json
 COPY www/resources/views /var/www/html/resources/views
 COPY www/resources/lang /var/www/html/resources/lang
+COPY www/preload.php /var/www/html/preload.php
 
 COPY --from=vendor /var/www/html/vendor/ ./vendor/
 COPY docker/php/files/core/View.php vendor/laravel/framework/src/Illuminate/View/View.php
