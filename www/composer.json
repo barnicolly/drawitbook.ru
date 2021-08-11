@@ -20,8 +20,8 @@
         "laravel/framework": "^8",
         "laravel/ui": "^3",
         "mariuzzo/laravel-js-localization": "^1.7",
-        "mik009/sanitizer": "dev-master",
-        "mik009/translation": "master",
+        "mik009/sanitizer": "1.2.0",
+        "mik009/translation": "2.6",
         "spatie/data-transfer-object": "^3.3",
         "spatie/laravel-sitemap": "^5.8",
         "tightenco/collect": "^8.34"
@@ -67,7 +67,6 @@
             "url": "https://github.com/mik009/sanitizer.git"
         }
     ],
-    "minimum-stability": "dev",
     "scripts": {
         "ide": [
             "php artisan ide-helper:generate",
