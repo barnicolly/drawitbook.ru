@@ -2,9 +2,9 @@
 
 namespace App\Entities\Vk;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\CoreModel;
 
-class HistoryPostingModel extends Model
+class HistoryPostingModel extends CoreModel
 {
     public $timestamps = false;
     protected $dates = ['created_at'];

@@ -2,9 +2,9 @@
 
 namespace App\Entities\Vk;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\CoreModel;
 
-class VkAlbumModel extends Model
+class VkAlbumModel extends CoreModel
 {
     protected $table = 'vk_album';
 
@@ -30,13 +30,7 @@ class VkAlbumModel extends Model
             ->getQuery()
             ->get()
             ->toArray();
-        $result = array_map(
-            function ($item) {
-                return (array) $item;
-            },
-            $result
-        );
-        return $result;
+        return self::mapToArray($result);
     }
 
 }

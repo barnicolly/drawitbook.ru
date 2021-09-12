@@ -2,9 +2,9 @@
 
 namespace App\Entities\Picture;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\CoreModel;
 
-class PictureModel extends Model
+class PictureModel extends CoreModel
 {
     protected $table = 'picture';
 
@@ -25,13 +25,7 @@ class PictureModel extends Model
             ->getQuery()
             ->get()
             ->toArray();
-        $result = array_map(
-            function ($item) {
-                return (array) $item;
-            },
-            $result
-        );
-        return $result;
+        return self::mapToArray($result);
     }
 
     public static function getById(int $id): ?array
@@ -57,13 +51,7 @@ class PictureModel extends Model
             ->getQuery()
             ->get()
             ->toArray();
-        $result = array_map(
-            function ($item) {
-                return (array) $item;
-            },
-            $result
-        );
-        return $result;
+        return self::mapToArray($result);
     }
 
     public static function updateVkPosting(int $artId, int $status): bool

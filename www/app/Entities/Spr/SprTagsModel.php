@@ -3,9 +3,9 @@
 namespace App\Entities\Spr;
 
 use App\Enums\Lang;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\CoreModel;
 
-class SprTagsModel extends Model
+class SprTagsModel extends CoreModel
 {
     protected $table = 'spr_tags';
 

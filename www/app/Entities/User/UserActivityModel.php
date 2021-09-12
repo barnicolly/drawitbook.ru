@@ -2,9 +2,9 @@
 
 namespace App\Entities\User;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\CoreModel;
 
-class UserActivityModel extends Model
+class UserActivityModel extends CoreModel
 {
     protected $table = 'user_activity';
     public $timestamps = true;

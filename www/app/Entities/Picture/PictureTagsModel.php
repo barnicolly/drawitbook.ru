@@ -4,10 +4,10 @@ namespace App\Entities\Picture;
 
 use App\Entities\Spr\SprTagsModel;
 use App\Enums\Lang;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\CoreModel;
 use Illuminate\Support\Facades\DB;
 
-class PictureTagsModel extends Model
+class PictureTagsModel extends CoreModel
 {
     protected $table = 'picture_tags';
 
@@ -74,13 +74,7 @@ class PictureTagsModel extends Model
             ->getQuery()
             ->get()
             ->toArray();
-        $result = array_map(
-            function ($item) {
-                return (array) $item;
-            },
-            $result
-        );
-        return $result;
+        return self::mapToArray($result);
     }
 
     public static function getTagsWithCountArts(int $limit, string $locale): array
@@ -117,13 +111,7 @@ class PictureTagsModel extends Model
             ->getQuery()
             ->get()
             ->toArray();
-        $result = array_map(
-            function ($item) {
-                return (array) $item;
-            },
-            $result
-        );
-        return $result;
+        return self::mapToArray($result);
     }
 
     public static function getPopularTags(string $locale): array
@@ -153,13 +141,7 @@ class PictureTagsModel extends Model
             ->where('spr_tags.is_popular', 1)
             ->get()
             ->toArray();
-        $result = array_map(
-            function ($item) {
-                return (array) $item;
-            },
-            $result
-        );
-        return $result;
+        return self::mapToArray($result);
     }
 
     public static function getTagsForSitemap(): array
@@ -177,12 +159,6 @@ class PictureTagsModel extends Model
             ->getQuery()
             ->get()
             ->toArray();
-        $result = array_map(
-            function ($item) {
-                return (array) $item;
-            },
-            $result
-        );
-        return $result;
+        return self::mapToArray($result);
     }
 }

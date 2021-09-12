@@ -2,9 +2,9 @@
 
 namespace App\Entities\Vk;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\CoreModel;
 
-class VkAlbumPictureModel extends Model
+class VkAlbumPictureModel extends CoreModel
 {
     protected $table = 'vk_album_picture';
 

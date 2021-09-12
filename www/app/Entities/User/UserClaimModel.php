@@ -2,9 +2,9 @@
 
 namespace App\Entities\User;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\CoreModel;
 
-class UserClaimModel extends Model
+class UserClaimModel extends CoreModel
 {
     protected $table = 'user_claim';
 

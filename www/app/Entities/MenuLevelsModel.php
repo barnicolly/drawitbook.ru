@@ -3,9 +3,9 @@
 namespace App\Entities;
 
 use App\Enums\Lang;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\CoreModel;
 
-class MenuLevelsModel extends Model
+class MenuLevelsModel extends CoreModel
 {
     protected $table = 'menu_levels';
 
@@ -61,13 +61,7 @@ class MenuLevelsModel extends Model
             ->getQuery()
             ->get()
             ->toArray();
-        $result = array_map(
-            function ($item) {
-                return (array) $item;
-            },
-            $result
-        );
-        return $result;
+        return self::mapToArray($result);
     }
 
 }
