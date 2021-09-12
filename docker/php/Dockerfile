@@ -1,7 +1,9 @@
-FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/vendor as vendor
+ARG TAG
+
+FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/vendor:${TAG} as vendor
 LABEL stage=builder
 
-FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/static as assets
+FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/static:${TAG} as assets
 LABEL stage=builder
 
 FROM dockerhub.ratnikovmikhail.ru/php:8.0.9-composer

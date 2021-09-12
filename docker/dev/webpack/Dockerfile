@@ -1,4 +1,4 @@
-FROM dockerhub.ratnikovmikhail.ru/node
+FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/node
 ARG NPM_TOKEN
 WORKDIR /var/www/html
 

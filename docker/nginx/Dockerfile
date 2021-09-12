@@ -1,4 +1,6 @@
-FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/static as assets
+ARG TAG
+
+FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/static:${TAG} as assets
 LABEL stage=builder
 
 FROM dockerhub.ratnikovmikhail.ru/nginx:1.21 AS builder

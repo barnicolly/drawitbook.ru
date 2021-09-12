@@ -31,3 +31,7 @@ docker push ${imageVendorLibraries}
 docker push ${imagePhp}
 docker push ${imageWebServer}
 docker push ${imageCronjob}
+
+imageNode="${imagePrefix}/node"
+docker build -t ${imageNode} -f docker/base/node/Dockerfile .
+docker push ${imageNode}

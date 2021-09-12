@@ -1,4 +1,6 @@
-FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/npm
+ARG TAG
+
+FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/npm:${TAG}
 
 ARG NODE_ENV
 COPY www/webpack /var/www/html/webpack
