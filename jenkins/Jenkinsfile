@@ -10,11 +10,10 @@ def registry = 'dockerhub.ratnikovmikhail.ru'
 def registryUrl = "https://${registry}"
 
 def projectName = 'drawitbook_com'
-def projectsPrefix = 'projects'
 
-def bitbucketBranch = 'develop'
-def bitbucketRepository = 'https://ratnikov-mikhail@bitbucket.org/ratnikov-mikhail/drawitbook.com.git'
 def timeZone = 'Europe/Moscow'
+def dockerImagePrefix = "${registry}/projects/${projectName}"
+def TAG = ''
 
 pipeline {
     agent {
@@ -25,40 +24,36 @@ pipeline {
         timestamps()
     }
     stages {
-        stage("git clone") {
-            steps {
-                script {
-                    git branch: bitbucketBranch, credentialsId: 'bitbucket', url: bitbucketRepository
-                }
-            }
-        }
-        stage('Build artefacts') {
+        stage('Preparing') {
+                  steps {
+                      script {
+                          TAG = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+                      }
+                  }
+          }
+        stage('Install vendor') {
             parallel {
-               stage('static') {
+               stage('npm') {
                    steps {
                         script {
                             withCredentials([string(credentialsId: 'npm_token', variable: 'NPM_TOKEN')]) {
                                 docker.withRegistry(registryUrl, 'registry') {
-                                    def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/npm", "-f docker/npm/Dockerfile --build-arg NPM_TOKEN=${NPM_TOKEN} .")
-                                    customImage.push()
+                                    def imageName = "${dockerImagePrefix}/npm:${TAG}"
+                                    def buildArgs = "--build-arg NPM_TOKEN=${NPM_TOKEN} ."
+                                    def customImage = docker.build(imageName, "-f docker/npm/Dockerfile ${buildArgs}")
                                 }
-                            }
-                        }
-                        script {
-                            docker.withRegistry(registryUrl, 'registry') {
-                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/static", "-f docker/static/Dockerfile --build-arg NODE_ENV=production .")
-                                customImage.push()
                             }
                         }
                    }
                }
-                stage('vendor') {
+                stage('composer') {
                     steps {
                         script {
                             withCredentials([string(credentialsId: 'composer_token', variable: 'COMPOSER_TOKEN')]) {
                                 docker.withRegistry(registryUrl, 'registry') {
-                                    def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/vendor", "-f docker/vendor/Dockerfile --build-arg COMPOSER_TOKEN=${COMPOSER_TOKEN} .")
-                                    customImage.push()
+                                    def imageName = "${dockerImagePrefix}/vendor:${TAG}"
+                                    def buildArgs = "."
+                                    def customImage = docker.build(imageName, "-f docker/vendor/Dockerfile ${buildArgs}")
                                 }
                             }
                         }
@@ -66,13 +61,30 @@ pipeline {
                 }
            }
         }
+        stage('Build artefacts') {
+            parallel {
+                stage('Static minimization') {
+                    steps {
+                        script {
+                             docker.withRegistry(registryUrl, 'registry') {
+                                def imageName = "${dockerImagePrefix}/static:${TAG}"
+                                def buildArgs = "--build-arg NODE_ENV=production --build-arg TAG=${TAG} ."
+                                def customImage = docker.build(imageName, "-f docker/static/Dockerfile ${buildArgs}")
+                            }
+                        }
+                    }
+                }
+            }
+        }
         stage('Build services') {
             parallel {
                stage('web_server') {
                    steps {
                         script {
                             docker.withRegistry(registryUrl, 'registry') {
-                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/web_server", "-f docker/nginx/Dockerfile --build-arg TIME_ZONE=${timeZone} .")
+                                def imageName = "${dockerImagePrefix}/web_server:${TAG}"
+                                def buildArgs = "--build-arg TIME_ZONE=${timeZone} --build-arg TAG=${TAG} ."
+                                def customImage = docker.build(imageName, "-f docker/nginx/Dockerfile ${buildArgs}")
                                 customImage.push()
                             }
                         }
@@ -82,15 +94,11 @@ pipeline {
                     steps {
                         script {
                             docker.withRegistry(registryUrl, 'registry') {
-                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/php", "-f docker/php/Dockerfile --build-arg TIME_ZONE=${timeZone} .")
+                                def imageName = "${dockerImagePrefix}/php:${TAG}"
+                                def buildArgs = "--build-arg TAG=${TAG} ."
+                                def customImage = docker.build(imageName, "-f docker/php/Dockerfile ${buildArgs}")
                                 customImage.push()
                             }
-                        }
-                        script {
-                             docker.withRegistry(registryUrl, 'registry') {
-                                def customImage = docker.build("${registry}/${projectsPrefix}/${projectName}/cronjob", "-f docker/cron/Dockerfile --build-arg TIME_ZONE=${timeZone} .")
-                                customImage.push()
-                             }
                         }
                    }
                 }
@@ -102,13 +110,20 @@ pipeline {
                     script
                     {
                         withCredentials([usernamePassword(credentialsId: 'registry', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            def phpImageName = "${dockerImagePrefix}/php:${TAG}"
+                            def webServerImageName = "${dockerImagePrefix}/web_server:${TAG}"
+                            def sshLogin = "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer}"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker login ${registry} -u ${USERNAME} -p ${PASSWORD}"
-                            sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --force ${projectName}_fpm --with-registry-auth"
-//                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --force ${projectName}_cronjob --with-registry-auth"
-                            sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --force ${projectName}_webserver --with-registry-auth"
+                            sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${phpImageName} ${projectName}_fpm --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
+                            sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${webServerImageName} ${projectName}_webserver --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
                         }
                     }
                 }
+            }
+        }
+        stage('cleanup') {
+            steps {
+                sh 'docker image prune -f --filter label=stage=builder'
             }
         }
     }
