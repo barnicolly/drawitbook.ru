@@ -20,7 +20,7 @@ WORKDIR /var/www/html
 
 COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY www/ /var/www/html/
+COPY www/public /var/www/html/public
 
 COPY --from=assets /var/www/html/public/build/ ./public/build/
 
