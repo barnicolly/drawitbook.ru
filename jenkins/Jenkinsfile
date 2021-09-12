@@ -52,7 +52,7 @@ pipeline {
                             withCredentials([string(credentialsId: 'composer_token', variable: 'COMPOSER_TOKEN')]) {
                                 docker.withRegistry(registryUrl, 'registry') {
                                     def imageName = "${dockerImagePrefix}/vendor:${TAG}"
-                                    def buildArgs = "."
+                                    def buildArgs = "--build-arg COMPOSER_TOKEN=${COMPOSER_TOKEN} ."
                                     def customImage = docker.build(imageName, "-f docker/vendor/Dockerfile ${buildArgs}")
                                 }
                             }
