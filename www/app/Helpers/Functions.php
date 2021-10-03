@@ -143,6 +143,45 @@ if (!function_exists('groupArray')) {
     }
 }
 
+if (!function_exists('setFieldAsArrayKey')) {
+    /** Устанавливает в качестве ключа массива, значения из элемента-массива по ключу
+     *
+     * @param array $array
+     * @param string $key - новый ключ массив
+     * @param array $stayFields - массив ключей, которые нужно оставить в массиве
+     * @param boolean $onlyValue - добавление указанного $stayFields в массив без ключа отработает в случае,
+     * если передан только один ключ
+     * @return array
+     */
+    function setFieldAsArrayKey($array = [], $key = 'id', $stayFields = [], $onlyValue = false): array
+    {
+        if (is_array($array) && $array != []) {
+            $formattedArray = [];
+            foreach ($array as $item) {
+                if ($stayFields !== []) {
+                    if (count($stayFields) === 1 && $onlyValue) {
+                        foreach ($stayFields as $stayField) {
+                            if (isset($item[$stayField])) {
+                                $formattedArray[$item[$key]] = $item[$stayField];
+                            }
+                        }
+                    } else {
+                        foreach ($stayFields as $stayField) {
+                            if (isset($item[$stayField])) {
+                                $formattedArray[$item[$key]][$stayField] = $item[$stayField];
+                            }
+                        }
+                    }
+                } else {
+                    $formattedArray[$item[$key]] = $item;
+                }
+            }
+            return $formattedArray;
+        }
+        return [];
+    }
+}
+
 if (!function_exists('getFirstItemFromArray')) {
     function getFirstItemFromArray(array $baseArray)
     {

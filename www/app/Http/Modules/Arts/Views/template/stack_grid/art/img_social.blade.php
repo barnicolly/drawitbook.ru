@@ -1,21 +1,23 @@
 <figure class="fullscreen-image" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-    <?php $artUrlPath = formArtUrlPath($art['path']); ?>
+    <?php
+    $primaryImage = $art['images']['primary'];
+    $optimizedImage = $art['images']['optimized'] ?? [];
+    $artUrlPath = formArtUrlPath($primaryImage['path']); ?>
     <div>
         <a itemprop="url" class="fullscreen-image__link" href="{{ $artUrlPath }}"
            rel="nofollow"
            data-id="{{ $art['id'] }}">
             <div class="fullscreen-image__inner"
-                 style="padding-top:{{ (int) ($art['height'] / $art['width'] * 100) }}%;">
+                 style="padding-top:{{ (int) ($primaryImage['height'] / $primaryImage['width'] * 100) }}%;">
                 <picture>
-                    <?php $webpSourceRelativePath = formArtWebpFormatRelativePath($art['path']) ?>
-                    @if (!empty($webpSourceRelativePath) && checkExistArt($webpSourceRelativePath))
-                        <source type="image/webp"
-                                data-srcset="<?= formArtUrlPath($webpSourceRelativePath) ?>"/>
+                    @if (!empty($optimizedImage))
+                        <?php $optimizedImagePath = formArtUrlPath($optimizedImage['path']) ?>
+                        <source type="image/webp" data-srcset="{{ $optimizedImagePath }}"/>
                     @endif
-                    <source type="{{ getMimeType($art['path']) }}"
+                    <source type="{{ getMimeType($primaryImage['path']) }}"
                             data-srcset="{{ $artUrlPath }}"/>
-                    <img width="{{ $art['width'] }}"
-                         height="{{ $art['height'] }}"
+                    <img width="{{ $primaryImage['width'] }}"
+                         height="{{ $primaryImage['height'] }}"
                          data-title="Art #{{ $art['id'] }} | Drawitbook.com"
                          class="img-responsive lazyload fullscreen-image__img"
                          data-src="{{ $artUrlPath }}"
@@ -29,7 +31,7 @@
     </div>
     <link itemprop="url" href="{{ $artUrlPath }}">
     <link itemprop="contentUrl" href="{{ $artUrlPath }}">
-    <meta itemprop="height" content="{{ $art['height'] }}px">
-    <meta itemprop="width" content="{{ $art['width'] }}px">
+    <meta itemprop="height" content="{{ $primaryImage['height'] }}px">
+    <meta itemprop="width" content="{{ $primaryImage['width'] }}px">
     <meta itemprop="representativeOfPage" content="True">
 </figure>

@@ -18,7 +18,7 @@ services:
     networks:
       - inner
     env_file:
-      - .env
+      - docker/.env
     deploy:
       mode: replicated
       replicas: 1
@@ -30,7 +30,7 @@ services:
     networks:
       - inner
     env_file:
-      - .env
+      - docker/.env
     deploy:
       mode: replicated
       replicas: 1

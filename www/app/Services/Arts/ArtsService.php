@@ -2,6 +2,7 @@
 
 namespace App\Services\Arts;
 
+use App\Entities\Picture\PictureExtensionsModel;
 use App\Entities\Picture\PictureModel;
 use App\Entities\Vk\VkAlbumPictureModel;
 use App\Services\Seo\SeoService;
@@ -47,20 +48,15 @@ class ArtsService
         return $arts;
     }
 
-    public function checkExistArts(array $arts): array
-    {
-        foreach ($arts as $key => $art) {
-            if (!checkExistArt($art['path'])) {
-                unset($arts[$key]);
-                Log::info('Не найдено изображение', ['art' => $art]);
-            }
-        }
-        return $arts;
-    }
-
     public function getById(int $id): ?array
     {
-        return PictureModel::getById($id);
+        $art = PictureModel::getById($id);
+        if (!empty($art)) {
+            $files = $this->getFilesByArtIds([$id]);
+            $arts = $this->setFilesOnArts([$art], $files);
+            $art = getFirstItemFromArray($arts);
+        }
+        return $art;
     }
 
     public function getByIdsWithTags(array $ids): array
@@ -69,14 +65,45 @@ class ArtsService
         return $this->prepareArts($arts);
     }
 
+    private function getFilesByArtIds(array $artIds): array
+    {
+        return PictureExtensionsModel::getByPictureIds($artIds);
+    }
+
     private function prepareArts(array $arts): array
     {
-        $arts = $this->checkExistArts($arts);
         $artIds = array_column($arts, 'id');
+        $files = $this->getFilesByArtIds($artIds);
+        $arts = $this->setFilesOnArts($arts, $files);
         $tags = $this->tagsService->getTagsByArtIds($artIds, false);
         $tags = $this->tagsService->setLinkOnTags($tags);
         $arts = $this->setTagsOnArts($arts, $tags);
         $arts = $this->seoService->setArtsAlt($arts);
+        return $arts;
+    }
+
+    private function setFilesOnArts(array $arts, array $files): array
+    {
+        foreach ($arts as $key => $art) {
+            $artId = $art['id'];
+            if (!empty($files[$artId])) {
+                $artFiles = $files[$artId];
+                $mainArt = null;
+                $optimizedArt = null;
+                foreach ($artFiles as $file) {
+                    $file['fs_path'] = formArtFsPath($file['path']);
+                    if ($file['ext'] === 'webp') {
+                        $optimizedArt = $file;
+                    } else {
+                        $mainArt = $file;
+                    }
+                }
+                $arts[$key]['images'] = [
+                   'primary' => $mainArt ?? '',
+                   'optimized' => $optimizedArt ?? '',
+                ];
+            }
+        }
         return $arts;
     }
 

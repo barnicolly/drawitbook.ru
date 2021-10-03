@@ -39,7 +39,7 @@ class VkAlbumService
         if (!$art) {
             throw new \Exception('Не найдено изображения');
         }
-        $artFsPath = $art['fs_path'];
+        $artFsPath = $art['images']['primary']['fs_path'];
         $tags = $this->tagsService->getNamesWithoutHiddenVkByArtId($artId);
         $photoId = $this->postPhotoInAlbum($vkAlbum['album_id'], $vkAlbum['share'], $artFsPath, $tags);
         $this->artsService->attachArtToVkAlbum($artId, $vkAlbum['id'], $photoId);

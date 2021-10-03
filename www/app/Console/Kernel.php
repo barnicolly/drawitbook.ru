@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         'App\Console\Commands\CreateSitemap',
         'App\Console\Commands\VkPosting',
+        'App\Console\Commands\SingleUse\MigratePictureExtensions',
     ];
 
     /**

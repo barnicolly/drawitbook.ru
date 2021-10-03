@@ -12,6 +12,8 @@ services:
       - "8099:80"
     volumes:
       - ./www:/var/www/html
+    networks:
+      - main_network
     depends_on:
       - fpm
   fpm:
@@ -27,12 +29,13 @@ services:
       - ./docker/dev/php/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - ./docker/dev/php/conf.d/docker-php-ext-opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
     environment:
-      #Настройки для работы с Xdebug
-      - XDEBUG_CONFIG=mode=debug client_port=9003 start_with_request=yes
+      - XDEBUG_CONFIG=mode=debug client_port=9003 client_host=${XDEBUG_REMOTE_HOST}
       - PHP_IDE_CONFIG=serverName=docker
     env_file:
       - www/.env
     restart: unless-stopped
+    networks:
+      - main_network
   webpack:
     build:
       context: .
@@ -52,3 +55,13 @@ services:
     env_file:
       - www/.env
     restart: unless-stopped
+    networks:
+      - main_network
+
+networks:
+  main_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: ${SUBNET_IP}/${SUBNET_MASK}

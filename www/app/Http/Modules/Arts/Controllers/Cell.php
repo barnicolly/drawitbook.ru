@@ -118,7 +118,7 @@ class Cell extends Controller
 //        SEOTools::setCanonical($this->routeService->getRouteArtsCellTagged($tagInfo['seo']));
         $firstArt = getFirstItemFromArray($relativeArts);
         if ($firstArt) {
-            $this->setShareImage(getArtsFolder() . $firstArt['path']);
+            $this->setShareImage(getArtsFolder() . $firstArt['images']['primary']['path']);
         }
         $this->addBreadcrumb(__('breadcrumbs.pixel_arts'), $this->routeService->getRouteArtsCell());
         $this->addBreadcrumb(mbUcfirst($tagInfo['name']));

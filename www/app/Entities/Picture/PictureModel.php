@@ -36,9 +36,7 @@ class PictureModel extends CoreModel
             ->getQuery()
             ->first();
         if ($art) {
-            $art = (array) $art;
-            $art['fs_path'] = formArtFsPath($art['path']);
-            return $art;
+            return (array) $art;
         }
         return null;
     }

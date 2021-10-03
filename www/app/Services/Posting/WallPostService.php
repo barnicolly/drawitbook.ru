@@ -28,7 +28,7 @@ class WallPostService
             throw new \Exception('Не найдено изображения для постинга');
         }
         $tags = $this->tagsService->getNamesWithoutHiddenVkByArtId($artIdForPosting);
-        $artFsPath = $art['fs_path'];
+        $artFsPath = $art['images']['primary']['fs_path'];
         $postingStrategy = new VkWallPostingStrategy($artIdForPosting, $tags, $artFsPath);
         $postingStrategy->post();
     }

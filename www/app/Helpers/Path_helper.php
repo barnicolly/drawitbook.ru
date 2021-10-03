@@ -40,20 +40,7 @@ if (!function_exists('formArtFsPath')) {
     function formArtFsPath(string $artRelativePath): string
     {
         $artFolder = getArtsFolder();
-        return public_path("{$artFolder}/{$artRelativePath}");
-    }
-}
-
-if (!function_exists('formArtWebpFormatRelativePath')) {
-    function formArtWebpFormatRelativePath(string $artRelativePath): string
-    {
-        $artUrlPath = formArtUrlPath($artRelativePath);
-        $fileInfo = pathinfo($artUrlPath);
-        if (!empty($fileInfo['extension'])) {
-            $extension = $fileInfo['extension'];
-            return str_ireplace(".{$extension}", '.webp', $artRelativePath);
-        }
-        return '';
+        return public_path("{$artFolder}{$artRelativePath}");
     }
 }
 

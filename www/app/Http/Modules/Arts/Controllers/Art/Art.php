@@ -56,7 +56,8 @@ class Art extends Controller
         SEOTools::setDescription($description);
 //        SEOTools::setCanonical($this->routeService->getRouteArt($artId));
         SEOMeta::setRobots('noindex');
-        $this->setShareImage(getArtsFolder() . $art['path']);
+        $primaryImage = $art['images']['primary'];
+        $this->setShareImage(getArtsFolder() . $primaryImage['path']);
         return response()->view('Arts::art.index', $viewData);
     }
 
