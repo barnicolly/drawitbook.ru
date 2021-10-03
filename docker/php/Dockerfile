@@ -7,7 +7,7 @@ FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/static:${TAG} as asset
 LABEL stage=builder
 
 FROM dockerhub.ratnikovmikhail.ru/php:8.0.9-composer
-
+RUN apk add --no-cache bash
 COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/
 
 EXPOSE 9000

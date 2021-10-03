@@ -27,13 +27,13 @@ services:
       replicas: 1
       placement:
         constraints: [ node.labels.projects == true ]
-
-  cronjob:
-    image: dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/cronjob
+  scheduler:
+    image: dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/scheduler
+    command: /var/www/run-scheduler.sh
+    env_file:
+      - www/.env
     networks:
       - inner
-    env_file:
-      - docker/.env
     deploy:
       mode: replicated
       replicas: 1

@@ -104,6 +104,18 @@ pipeline {
                 }
            }
         }
+          stage('Build scheduler') {
+                  steps {
+                      script {
+                          docker.withRegistry(registryUrl, 'registry') {
+                              def imageName = "${dockerImagePrefix}/scheduler:${TAG}"
+                              def buildArgs = "--build-arg TAG=${TAG} ."
+                              def customImage = docker.build(imageName, "-f docker/scheduler/Dockerfile ${buildArgs}")
+                              customImage.push()
+                          }
+                      }
+                  }
+          }
         stage("deploy") {
             steps {
                 sshagent(credentials: [sshCredId]) {
@@ -112,10 +124,12 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'registry', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             def phpImageName = "${dockerImagePrefix}/php:${TAG}"
                             def webServerImageName = "${dockerImagePrefix}/web_server:${TAG}"
+                            def schedulerImageName = "${dockerImagePrefix}/scheduler:${TAG}"
                             def sshLogin = "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer}"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker login ${registry} -u ${USERNAME} -p ${PASSWORD}"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${phpImageName} ${projectName}_fpm --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${webServerImageName} ${projectName}_webserver --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
+                            sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${schedulerImageName} ${projectName}_scheduler --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
                         }
                     }
                 }
