@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Modules\Arts\Controllers\Art\Art;
+use App\Http\Modules\Arts\Controllers\Art\Claim;
+use App\Http\Modules\Arts\Controllers\Art\Rate;
+use App\Http\Modules\Arts\Controllers\Cell;
+
 foreach (config('translator.available_locales') as $prefix) {
     Route::group(
         ['prefix' => $prefix],
@@ -8,7 +13,6 @@ foreach (config('translator.available_locales') as $prefix) {
                 [
                     'prefix' => Lang::get('routes.pixel_arts', [], $prefix),
                     'middleware' => 'web',
-                    'namespace' => 'App\Http\Modules\Arts\Controllers',
                 ],
                 function () use ($prefix) {
                     Route::group(
@@ -16,15 +20,15 @@ foreach (config('translator.available_locales') as $prefix) {
                             'middleware' => ['lower_case', 'no_get'],
                         ],
                         function () use ($prefix) {
-                            Route::get('/', ['uses' => 'Cell@index'])
+                            Route::get('/', [Cell::class, 'index'])
                                 ->name($prefix . '_arts.cell');
 
-                            Route::get('/{tag}', ['uses' => 'Cell@tagged'])
+                            Route::get('/{tag}', [Cell::class, 'tagged'])
                                 ->name($prefix . '_arts.cell.tagged');
                         }
                     );
 
-                    Route::get('/{tag}/slice', ['uses' => 'Cell@slice']);
+                    Route::get('/{tag}/slice', [Cell::class, 'slice']);
                 }
             );
 
@@ -32,10 +36,9 @@ foreach (config('translator.available_locales') as $prefix) {
                 [
                     'prefix' => '/arts',
                     'middleware' => 'web',
-                    'namespace' => 'App\Http\Modules\Arts\Controllers\Art',
                 ],
                 function () use ($prefix) {
-                    Route::get('/{id}', ['uses' => 'Art@index'])
+                    Route::get('/{id}', [Art::class, 'index'])
                         ->middleware(['lower_case', 'no_get'])
                         ->name($prefix . '_art');
 
@@ -44,9 +47,9 @@ foreach (config('translator.available_locales') as $prefix) {
                             'middleware' => ['ajax'],
                         ],
                         function () {
-                            Route::post('/{id}/like', ['uses' => 'Rate@like']);
-                            Route::post('/{id}/dislike', ['uses' => 'Rate@dislike']);
-                            Route::post('/{id}/claim', ['uses' => 'Claim@register']);
+                            Route::post('/{id}/like', [Rate::class, 'like']);
+                            Route::post('/{id}/dislike',[Rate::class, 'dislike']);
+                            Route::post('/{id}/claim', [Claim::class, 'register']);
                         }
                     );
                 }
