@@ -4,7 +4,7 @@ properties([disableConcurrentBuilds()]) // отключить одновреме
 
 def sshCredId = 'ssh_manager'
 def sshUser = 'root'
-def sshServer = '94.250.255.154'
+def sshServer = ''
 
 def registry = 'dockerhub.ratnikovmikhail.ru'
 def registryUrl = "https://${registry}"
@@ -25,12 +25,17 @@ pipeline {
     }
     stages {
         stage('Preparing') {
-                  steps {
-                      script {
-                          TAG = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-                      }
+          steps {
+              script {
+                  TAG = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+              }
+              script {
+                  withCredentials([string(credentialsId: 'ssh_manager_server', variable: 'SSH_MANAGER_SERVER')]) {
+                      sshServer = SSH_MANAGER_SERVER
                   }
+              }
           }
+        }
         stage('Install vendor') {
             parallel {
                stage('npm') {
