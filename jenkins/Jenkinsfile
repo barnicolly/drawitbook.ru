@@ -87,10 +87,11 @@ pipeline {
                    steps {
                         script {
                             docker.withRegistry(registryUrl, 'registry') {
-                                def imageName = "${dockerImagePrefix}/web_server:${TAG}"
+                                def imageName = "${dockerImagePrefix}/web_server"
                                 def buildArgs = "--build-arg TIME_ZONE=${timeZone} --build-arg TAG=${TAG} ."
                                 def customImage = docker.build(imageName, "-f docker/nginx/Dockerfile ${buildArgs}")
-                                customImage.push()
+                                customImage.push("${TAG}")
+                                customImage.push("latest")
                             }
                         }
                    }
@@ -99,10 +100,11 @@ pipeline {
                     steps {
                         script {
                             docker.withRegistry(registryUrl, 'registry') {
-                                def imageName = "${dockerImagePrefix}/php:${TAG}"
+                                def imageName = "${dockerImagePrefix}/php"
                                 def buildArgs = "--build-arg TAG=${TAG} ."
                                 def customImage = docker.build(imageName, "-f docker/php/Dockerfile ${buildArgs}")
-                                customImage.push()
+                                customImage.push("${TAG}")
+                                customImage.push("latest")
                             }
                         }
                    }
@@ -113,10 +115,11 @@ pipeline {
                   steps {
                       script {
                           docker.withRegistry(registryUrl, 'registry') {
-                              def imageName = "${dockerImagePrefix}/scheduler:${TAG}"
+                              def imageName = "${dockerImagePrefix}/scheduler"
                               def buildArgs = "--build-arg TAG=${TAG} ."
                               def customImage = docker.build(imageName, "-f docker/scheduler/Dockerfile ${buildArgs}")
-                              customImage.push()
+                              customImage.push("${TAG}")
+                              customImage.push("latest")
                           }
                       }
                   }
