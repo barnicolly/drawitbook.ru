@@ -5,6 +5,8 @@ www/public/content
 www/node_modules
 www/vendor
 
+www/app/Modules/*/Tests
+
 www/bootstrap/cache/*
 !www/bootstrap/cache/.gitignore
 

@@ -79,7 +79,7 @@ class ClpPreloader
                 $this->ignores[] = $name;
             } else {
                 if (true === $this->debug) {
-                    echo sprintf('Preloader] Failed to ignore path %s', $name).PHP_EOL;
+                    echo sprintf('Preloader] Failed to ignore path %s', $name) . PHP_EOL;
                 }
             }
         }
@@ -96,7 +96,7 @@ class ClpPreloader
             $this->loadPath($path);
         }
         if (true === $this->debug) {
-            echo sprintf('[Preloader] Preloaded: %s files', $this->count).PHP_EOL;
+            echo sprintf('[Preloader] Preloaded: %s files', $this->count) . PHP_EOL;
         }
     }
 
@@ -184,13 +184,13 @@ class ClpPreloader
         }
         if (true === \in_array(\realpath($path), $this->included)) {
             if (true === $this->debug) {
-                echo sprintf('[Preloader] Skipped: %s', $path).PHP_EOL;
+                echo sprintf('[Preloader] Skipped: %s', $path) . PHP_EOL;
             }
             return;
         }
         if (true === \in_array(\realpath($path), $this->loaded)) {
             if (true === $this->debug) {
-                echo sprintf('[Preloader] Skipped: %s', $path).PHP_EOL;
+                echo sprintf('[Preloader] Skipped: %s', $path) . PHP_EOL;
             }
             return;
         }
@@ -198,13 +198,43 @@ class ClpPreloader
             require $path;
         } catch (\Throwable $th) {
             if (true === $this->debug) {
-                echo sprintf('[[Preloader] Failed to load: %s, Error Message: %s', $path, $th->getMessage()).PHP_EOL;
+                echo sprintf('[[Preloader] Failed to load: %s, Error Message: %s', $path, $th->getMessage()) . PHP_EOL;
             }
             return;
         }
         $this->loaded = get_included_files();
         $this->included[] = $path;
         $this->count++;
+    }
+
+    public function excludeViews(string $directory): void
+    {
+        $folders = $this->getExcludeFolders($directory);
+        if (!empty($folders)) {
+            foreach ($folders as $folder) {
+                $this->ignore($folder);
+            }
+        }
+    }
+
+    private function getExcludeFolders(string $directory, array $excludeFolders = []): array
+    {
+        $files = array_diff(scandir($directory), ['.', '..']);
+
+        foreach ($files as $file) {
+            $fullPath = $directory . DIRECTORY_SEPARATOR . $file;
+
+            if (is_dir($fullPath)) {
+                $needExclude = mb_stripos($fullPath, '/views') !== false;
+                if ($needExclude) {
+                    $excludeFolders[] = $fullPath;
+                } else {
+                    $excludeFolders += $this->getExcludeFolders($fullPath, $excludeFolders);
+                }
+            }
+        }
+
+        return $excludeFolders;
     }
 
     /**
@@ -221,7 +251,10 @@ class ClpPreloader
             return true;
         }
         $pathExtension = \pathinfo($path, PATHINFO_EXTENSION);
-        if (false === \in_array($pathExtension, ['php']) || 'html.php' == substr($path, -8) || 'tpl.php' == substr($path, -7)) {
+        if (false === \in_array($pathExtension, ['php']) || 'html.php' == substr($path, -8) || 'tpl.php' == substr(
+                $path,
+                -7
+            )) {
             return true;
         }
         foreach ($this->ignores as $ignore) {
@@ -233,7 +266,7 @@ class ClpPreloader
     }
 }
 
-$vendorDirectory = __DIR__.'/vendor/';
+$vendorDirectory = __DIR__ . '/vendor/';
 $vendorAutoloadFile = sprintf('%s/autoload.php', \rtrim($vendorDirectory, '/'));
 if (true === file_exists($vendorAutoloadFile)) {
     require $vendorAutoloadFile;
@@ -243,5 +276,16 @@ $clpPreloader = new ClpPreloader();
 $clpPreloader->setDebug(false);
 $clpPreloader->paths(realpath(__DIR__ . '/app'));
 $clpPreloader->paths(realpath(__DIR__ . '/vendor/laravel'));
-$clpPreloader->ignore(realpath(__DIR__ . '/ignore-directory'));
+
+$clpPreloader->ignore(realpath(__DIR__ . '/vendor/laravel/framework/src/Illuminate/Database'));
+$clpPreloader->ignore(realpath(__DIR__ . '/vendor/laravel/framework/src/Illuminate/Filesystem'));
+$clpPreloader->ignore(realpath(__DIR__ . '/vendor/laravel/framework/src/Illuminate/Testing'));
+$clpPreloader->ignore(realpath(__DIR__ . '/vendor/laravel/framework/src/Illuminate/Notifications'));
+$clpPreloader->ignore(realpath(__DIR__ . '/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/views'));
+$clpPreloader->ignore(realpath(__DIR__ . '/vendor/laravel/framework/src/Illuminate/Mail/resources/views'));
+$clpPreloader->ignore(realpath(__DIR__ . '/vendor/laravel/framework/src/Illuminate/Pagination/resources/views'));
+$clpPreloader->ignore(realpath(__DIR__ . '/vendor/laravel/framework/src/Illuminate/Foundation/Testing'));
+$clpPreloader->ignore(realpath(__DIR__ . '/vendor/symfony/console'));
+$clpPreloader->excludeViews(realpath(__DIR__ . '/app'));
+
 $clpPreloader->preload();
