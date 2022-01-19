@@ -23,6 +23,7 @@ COPY www/storage /var/www/html/storage
 COPY www/server.php /var/www/html/server.php
 COPY www/artisan /var/www/html/artisan
 COPY www/composer.json /var/www/html/composer.json
+COPY www/composer.lock /var/www/html/composer.lock
 COPY www/resources/views /var/www/html/resources/views
 COPY www/resources/lang /var/www/html/resources/lang
 COPY www/preload.php /var/www/html/preload.php
