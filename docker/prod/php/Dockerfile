@@ -27,7 +27,6 @@ COPY www/resources/lang /var/www/html/resources/lang
 COPY www/preload.php /var/www/html/preload.php
 
 COPY --from=vendor /var/www/html/vendor/ ./vendor/
-COPY docker/prod/php/files/core/View.php vendor/laravel/framework/src/Illuminate/View/View.php
 COPY --from=assets /var/www/html/public/build/ ./public/build/
 
 # Assign permissions of the working directory to the www-data user

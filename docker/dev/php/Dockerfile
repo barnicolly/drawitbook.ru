@@ -7,7 +7,6 @@ RUN apk add --no-cache $PHPIZE_DEPS \
 WORKDIR /var/www/html
 
 COPY docker/dev/php/entrypoint.sh /var/www/entrypoint.sh
-COPY docker/dev/php/files /var/www/files
 RUN ["chmod", "+x", "/var/www/entrypoint.sh"]
 
 EXPOSE 9000
