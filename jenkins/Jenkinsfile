@@ -14,6 +14,7 @@ def projectName = 'drawitbook_com'
 def timeZone = 'Europe/Moscow'
 def dockerImagePrefix = "${registry}/projects/${projectName}"
 def TAG = ''
+def PREVIOUS_TAG = ''
 
 pipeline {
     agent {
@@ -143,9 +144,23 @@ pipeline {
                 }
             }
         }
-        stage('cleanup') {
+        stage('cleanup preparing') {
             steps {
-                sh 'docker image prune -f --filter label=stage=builder'
+                script {
+                    PREVIOUS_TAG = sh (script: "docker images ${dockerImagePrefix}/npm --format=\"{{ .Tag }}\" | grep -i -v -E 'latest|${TAG}' | head -n 1", returnStdout: true)
+                }
+            }
+        }
+        stage('cleanup') {
+            when { expression { PREVIOUS_TAG } }
+            steps {
+                sh "docker rmi ${dockerImagePrefix}/npm:${PREVIOUS_TAG}"
+                sh "docker rmi ${dockerImagePrefix}/vendor:${PREVIOUS_TAG}"
+                sh "docker rmi ${dockerImagePrefix}/static:${PREVIOUS_TAG}"
+                sh "docker rmi ${dockerImagePrefix}/scheduler:${PREVIOUS_TAG}"
+                sh "docker rmi ${dockerImagePrefix}/web_server:${PREVIOUS_TAG}"
+                sh "docker rmi ${dockerImagePrefix}/php:${PREVIOUS_TAG}"
+                sh "docker rmi \$(docker images -f dangling=true -q) | true"
             }
         }
     }
