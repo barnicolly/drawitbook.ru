@@ -48,9 +48,9 @@ services:
     volumes:
       - ./www:/var/www/html
     ports:
-      - "10007:10007"
+      - "10008:10008"
     environment:
-      - WEBPACK_DEVSERVER_IN_PORT=10007
+      - WEBPACK_DEVSERVER_IN_PORT=10008
       - NODE_ENV=development
     env_file:
       - www/.env

@@ -1,4 +1,4 @@
-FROM dockerhub.ratnikovmikhail.ru/php:8.0.9-composer
+FROM dockerhub.ratnikovmikhail.ru/php:8.1.6-composer
 
 RUN apk add --no-cache $PHPIZE_DEPS \
     && pecl install xdebug \

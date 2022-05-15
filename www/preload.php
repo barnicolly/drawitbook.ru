@@ -286,6 +286,8 @@ $clpPreloader->ignore(realpath(__DIR__ . '/vendor/laravel/framework/src/Illumina
 $clpPreloader->ignore(realpath(__DIR__ . '/vendor/laravel/framework/src/Illuminate/Pagination/resources/views'));
 $clpPreloader->ignore(realpath(__DIR__ . '/vendor/laravel/framework/src/Illuminate/Foundation/Testing'));
 $clpPreloader->ignore(realpath(__DIR__ . '/vendor/symfony/console'));
+$clpPreloader->ignore(realpath(__DIR__ . '/vendor/opis/closure/src/SerializableClosure.php'));
+$clpPreloader->ignore(realpath(__DIR__ . '/vendor/laravel/framework/src/Illuminate/Queue/SerializableClosure.php'));
 $clpPreloader->excludeViews(realpath(__DIR__ . '/app'));
 
 $clpPreloader->preload();
