@@ -154,13 +154,27 @@ pipeline {
         stage('cleanup') {
             when { expression { PREVIOUS_TAG } }
             steps {
-                sh "docker 2>/dev/null 1>&2 rmi ${dockerImagePrefix}/npm:${PREVIOUS_TAG} || true"
-                sh "docker 2>/dev/null 1>&2 rmi ${dockerImagePrefix}/vendor:${PREVIOUS_TAG} || true"
-                sh "docker 2>/dev/null 1>&2 rmi ${dockerImagePrefix}/static:${PREVIOUS_TAG} || true"
-                sh "docker 2>/dev/null 1>&2 rmi ${dockerImagePrefix}/scheduler:${PREVIOUS_TAG} || true"
-                sh "docker 2>/dev/null 1>&2 rmi ${dockerImagePrefix}/web_server:${PREVIOUS_TAG} || true"
-                sh "docker 2>/dev/null 1>&2 rmi ${dockerImagePrefix}/php:${PREVIOUS_TAG} || true"
-                sh "docker rmi \$(docker images -f dangling=true -q) | true"
+                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                    sh "docker rmi ${dockerImagePrefix}/npm:${PREVIOUS_TAG}"
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                    sh "docker rmi ${dockerImagePrefix}/vendor:${PREVIOUS_TAG}"
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                    sh "docker rmi ${dockerImagePrefix}/static:${PREVIOUS_TAG}"
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                    sh "docker rmi ${dockerImagePrefix}/scheduler:${PREVIOUS_TAG}"
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                    sh "docker rmi ${dockerImagePrefix}/web_server:${PREVIOUS_TAG}"
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                    sh "docker rmi ${dockerImagePrefix}/php:${PREVIOUS_TAG}"
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                    sh "docker rmi \$(docker images -f dangling=true -q)"
+                }
             }
         }
     }
