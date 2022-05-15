@@ -16,8 +16,8 @@ COPY --from=builder  /usr/local/nginx/modules/ngx_http_brotli_static_module.so /
 
 WORKDIR /var/www/html
 
-COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY docker/prod/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY docker/prod/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY www/public /var/www/html/public
 
 COPY --from=assets /var/www/html/public/build/ ./public/build/
