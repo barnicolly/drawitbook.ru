@@ -19,6 +19,7 @@ const vendorModules = [
     'font-awesome',
     'animate.css',
     'lodash',
+    'translation',
 ];
 let optimization = helper.parts.optimization.chunks(vendorModules);
 if (isProduction) {
@@ -49,6 +50,7 @@ const webpackConfig = {
             jQuery: 'jquery',
             'window.jQuery': 'jquery',
             'window.$': 'jquery',
+            'window.Lang': `${paths.src.plugins}translation/index.js`,
         }),
     ],
 }
