@@ -6,7 +6,7 @@ FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/static:${TAG} as asset
 
 FROM dockerhub.ratnikovmikhail.ru/php:8.0.9-composer
 RUN apk add --no-cache bash
-COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/
+COPY docker/prod/php/opcache.ini /usr/local/etc/php/conf.d/
 
 EXPOSE 9000
 WORKDIR /var/www/html
