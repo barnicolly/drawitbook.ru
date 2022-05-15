@@ -46,7 +46,7 @@ pipeline {
                                 docker.withRegistry(registryUrl, 'registry') {
                                     def imageName = "${dockerImagePrefix}/npm:${TAG}"
                                     def buildArgs = "--build-arg NPM_TOKEN=${NPM_TOKEN} ."
-                                    def customImage = docker.build(imageName, "-f docker/npm/Dockerfile ${buildArgs}")
+                                    def customImage = docker.build(imageName, "-f docker/prod/npm/Dockerfile ${buildArgs}")
                                 }
                             }
                         }
@@ -59,7 +59,7 @@ pipeline {
                                 docker.withRegistry(registryUrl, 'registry') {
                                     def imageName = "${dockerImagePrefix}/vendor:${TAG}"
                                     def buildArgs = "--build-arg COMPOSER_TOKEN=${COMPOSER_TOKEN} ."
-                                    def customImage = docker.build(imageName, "-f docker/vendor/Dockerfile ${buildArgs}")
+                                    def customImage = docker.build(imageName, "-f docker/prod/vendor/Dockerfile ${buildArgs}")
                                 }
                             }
                         }
@@ -75,7 +75,7 @@ pipeline {
                              docker.withRegistry(registryUrl, 'registry') {
                                 def imageName = "${dockerImagePrefix}/static:${TAG}"
                                 def buildArgs = "--build-arg NODE_ENV=production --build-arg TAG=${TAG} ."
-                                def customImage = docker.build(imageName, "-f docker/static/Dockerfile ${buildArgs}")
+                                def customImage = docker.build(imageName, "-f docker/prod/static/Dockerfile ${buildArgs}")
                             }
                         }
                     }
@@ -90,7 +90,7 @@ pipeline {
                             docker.withRegistry(registryUrl, 'registry') {
                                 def imageName = "${dockerImagePrefix}/web_server"
                                 def buildArgs = "--build-arg TIME_ZONE=${timeZone} --build-arg TAG=${TAG} ."
-                                def customImage = docker.build(imageName, "-f docker/nginx/Dockerfile ${buildArgs}")
+                                def customImage = docker.build(imageName, "-f docker/prod/nginx/Dockerfile ${buildArgs}")
                                 customImage.push("${TAG}")
                                 customImage.push("latest")
                             }
@@ -103,7 +103,7 @@ pipeline {
                             docker.withRegistry(registryUrl, 'registry') {
                                 def imageName = "${dockerImagePrefix}/php"
                                 def buildArgs = "--build-arg TAG=${TAG} ."
-                                def customImage = docker.build(imageName, "-f docker/php/Dockerfile ${buildArgs}")
+                                def customImage = docker.build(imageName, "-f docker/prod/php/Dockerfile ${buildArgs}")
                                 customImage.push("${TAG}")
                                 customImage.push("latest")
                             }
@@ -118,7 +118,7 @@ pipeline {
                           docker.withRegistry(registryUrl, 'registry') {
                               def imageName = "${dockerImagePrefix}/scheduler"
                               def buildArgs = "--build-arg TAG=${TAG} ."
-                              def customImage = docker.build(imageName, "-f docker/scheduler/Dockerfile ${buildArgs}")
+                              def customImage = docker.build(imageName, "-f docker/prod/scheduler/Dockerfile ${buildArgs}")
                               customImage.push("${TAG}")
                               customImage.push("latest")
                           }

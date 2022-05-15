@@ -27,7 +27,7 @@ COPY www/resources/lang /var/www/html/resources/lang
 COPY www/preload.php /var/www/html/preload.php
 
 COPY --from=vendor /var/www/html/vendor/ ./vendor/
-COPY docker/php/files/core/View.php vendor/laravel/framework/src/Illuminate/View/View.php
+COPY docker/prod/php/files/core/View.php vendor/laravel/framework/src/Illuminate/View/View.php
 COPY --from=assets /var/www/html/public/build/ ./public/build/
 
 # Assign permissions of the working directory to the www-data user
@@ -36,7 +36,7 @@ RUN chown -R www-data:www-data \
         /var/www/html/bootstrap/cache \
         /var/www/html/storage/framework/cache/data
 
-COPY docker/php/entrypoint.sh /var/www/html/entrypoint.sh
+COPY docker/prod/php/entrypoint.sh /var/www/html/entrypoint.sh
 RUN ["chmod", "+x", "/var/www/html/entrypoint.sh"]
 
 CMD ["/var/www/html/entrypoint.sh","php-fpm","-F"]

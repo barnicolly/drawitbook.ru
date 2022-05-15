@@ -16,14 +16,14 @@ imageStatic="${imagePrefix}/static"
 imageCronjob="${imagePrefix}/cronjob"
 timeZone="Europe/Moscow"
 
-docker build -t ${imageNpmLibraries} -f docker/npm/Dockerfile --build-arg NPM_TOKEN=${NPM_TOKEN} .
-docker build -t ${imageStatic} -f docker/static/Dockerfile --build-arg NODE_ENV=production .
-docker build -t ${imageVendorLibraries} -f docker/vendor/Dockerfile --build-arg COMPOSER_TOKEN=${COMPOSER_TOKEN} .
+docker build -t ${imageNpmLibraries} -f docker/prod/npm/Dockerfile --build-arg NPM_TOKEN=${NPM_TOKEN} .
+docker build -t ${imageStatic} -f docker/prod/static/Dockerfile --build-arg NODE_ENV=production .
+docker build -t ${imageVendorLibraries} -f docker/prod/vendor/Dockerfile --build-arg COMPOSER_TOKEN=${COMPOSER_TOKEN} .
 
-docker build -t ${imagePhp} -f docker/php/Dockerfile --build-arg TIME_ZONE=${timeZone} .
-docker build -t ${imageWebServer} -f docker/nginx/Dockerfile --build-arg TIME_ZONE=${timeZone} .
+docker build -t ${imagePhp} -f docker/prod/php/Dockerfile --build-arg TIME_ZONE=${timeZone} .
+docker build -t ${imageWebServer} -f docker/prod/nginx/Dockerfile --build-arg TIME_ZONE=${timeZone} .
 
-docker build -t ${imageCronjob} -f docker/cron/Dockerfile --build-arg TIME_ZONE=${timeZone} .
+docker build -t ${imageCronjob} -f docker/prod/cron/Dockerfile --build-arg TIME_ZONE=${timeZone} .
 
 docker push ${imageNpmLibraries}
 docker push ${imageStatic}
