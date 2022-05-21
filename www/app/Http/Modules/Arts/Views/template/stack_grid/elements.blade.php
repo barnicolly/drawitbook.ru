@@ -1,6 +1,8 @@
-<?php $adPostfix = $page ?? 1; ?>
+<?php $adPostfix = $page ?? 1;
+$showAds = app()->getLocale() === App\Enums\Lang::RU;
+?>
 @foreach($arts as $art)
-    @if(in_array($loop->index, [5, 12, 18], true))
+    @if(in_array($loop->index, [5, 12, 18], true) && $showAds)
         <div class="art-container art-container-ad">
             <div class="art-wrapper integration">
                 <div class="integration__label">
@@ -20,7 +22,7 @@
     ]; ?>
     @include('Arts::template.stack_grid.art.index', $viewData)
 @endforeach
-@if (count($arts) > 21)
+@if (count($arts) > 21 && $showAds)
     <div class="art-container art-container-ad">
         <div class="art-wrapper integration">
             <div class="integration__label">
