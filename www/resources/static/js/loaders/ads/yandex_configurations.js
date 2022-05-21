@@ -1,22 +1,3 @@
-export function getYandexStackLayoutAds(isMobileOrTablet) {
-    let result;
-    if (!isMobileOrTablet) {
-        result = {
-            'sidebar': getYandexBlock('R-A-734726-1'),
-            'after_detail_picture': getYandexBlock('R-A-734726-2'),
-            'before_stack': getYandexBlock('R-A-734726-4'),
-            'after_first_stack': getYandexBlock('R-A-734726-7'),
-        };
-    } else {
-        result = {
-            'after_detail_picture': getYandexBlock('R-A-734726-3'),
-            'before_stack': getYandexBlock('R-A-734726-5'),
-            'after_first_stack': getYandexBlock('R-A-734726-6'),
-        };
-    }
-    return result;
-}
-
 export function getYandexStackGridAds(isMobileOrTablet) {
     let result;
     if (!isMobileOrTablet) {

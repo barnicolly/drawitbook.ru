@@ -1,19 +1,90 @@
 import { isMobileOrTablet } from '@js/helpers/screen';
 import YandexLoader from '@js/loaders/ads/yandex';
-import {getYandexStackGridAds, getYandexStackLayoutAds} from '@js/loaders/ads/yandex_configurations';
+import {getYandexStackGridAds} from '@js/loaders/ads/yandex_configurations';
 import { getLocale } from '@js/helpers/navigation';
 
 export function initAds() {
-    const locale = getLocale();
-    const $monPlaces = $('body').find('.mon-place[data-loaded="false"]');
+    const $monPlaces = $('body').find('.mon-place');
     if ($monPlaces.length) {
-        const mobileOrTablet = isMobileOrTablet();
-        const yandexConfigurations = getYandexStackLayoutAds(mobileOrTablet);
-        const ads = getAdsLoaders(locale, $monPlaces, yandexConfigurations);
-        ads.forEach(function (instance) {
-            instance.init();
-        });
+
+        const timerId = setInterval(() => {
+            if (typeof Ya !== 'undefined' && typeof window.yaContextCb !== 'undefined') {
+                tryInitLandingAds();
+                clearInterval(timerId);
+            }
+        }, 200);
+
+        loadScript();
     }
+}
+
+function tryInitLandingAds() {
+    const mobileOrTablet = isMobileOrTablet();
+    if ($('body').find('#before_stack:not(.dummy)').length) {
+        if (mobileOrTablet) {
+            window.yaContextCb.push(()=>{
+                Ya.adfoxCode.createScroll({
+                    ownerId: 281565,
+                    containerId: 'before_stack',
+                    params: {
+                        pp: 'cidf',
+                        ps: 'euiz',
+                        p2: 'hcsy'
+                    }
+                })
+            })
+        } else {
+            window.yaContextCb.push(()=>{
+                Ya.adfoxCode.createScroll({
+                    ownerId: 281565,
+                    containerId: 'before_stack',
+                    params: {
+                        pp: 'cidg',
+                        ps: 'euiz',
+                        p2: 'hcsx'
+                    }
+                })
+            })
+        }
+    }
+
+    if ($('body').find('#after_first_stack:not(.dummy)').length) {
+        if (mobileOrTablet) {
+            window.yaContextCb.push(()=>{
+                Ya.adfoxCode.createScroll({
+                    ownerId: 281565,
+                    containerId: 'after_first_stack',
+                    params: {
+                        pp: 'cidd',
+                        ps: 'euiz',
+                        p2: 'hcsy'
+                    }
+                })
+            })
+        } else {
+            window.yaContextCb.push(()=>{
+                Ya.adfoxCode.createScroll({
+                    ownerId: 281565,
+                    containerId: 'after_first_stack',
+                    params: {
+                        pp: 'cide',
+                        ps: 'euiz',
+                        p2: 'hcsx'
+                    }
+                })
+            })
+        }
+    }
+}
+
+function loadScript() {
+    const scriptCounter = document.createElement('script');
+    scriptCounter.innerHTML = 'window.yaContextCb = window.yaContextCb || []';
+    document.head.appendChild(scriptCounter);
+    const scriptContext = document.createElement('script');
+    scriptContext.src = 'https://yandex.ru/ads/system/context.js';
+    scriptContext.async = true;
+    document.head.appendChild(scriptContext);
 }
 
 function getAdsLoaders(locale, $monPlaces, yandexConfigurations) {
