@@ -9,6 +9,7 @@ export function initAds() {
 
         const timerId = setInterval(() => {
             if (typeof Ya !== 'undefined' && typeof window.yaContextCb !== 'undefined') {
+                tryInitFullscreenAd();
                 tryInitLandingAds();
                 tryInitDetailsAds();
                 clearInterval(timerId);
@@ -16,6 +17,24 @@ export function initAds() {
         }, 200);
 
         loadScript();
+    }
+}
+
+function tryInitFullscreenAd() {
+    if ($('body').find('#layout-floor').length) {
+        if (isMobileOrTablet()) {
+            window.yaContextCb.push(()=>{
+                Ya.adfoxCode.create({
+                    ownerId: 281565,
+                    containerId: 'layout-floor',
+                    params: {
+                        pp: 'chub',
+                        ps: 'euiz',
+                        p2: 'hcsy'
+                    }
+                })
+            })
+        }
     }
 }
 

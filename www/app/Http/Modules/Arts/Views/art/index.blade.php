@@ -47,6 +47,7 @@
             </div>
         </div>
     </div>
+    <div id="layout-floor"></div>
     @if (!empty($arts))
         <div class="content">
             <p class="relative-title">

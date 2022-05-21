@@ -21,6 +21,7 @@
     <div class="content">
         @include('Arts::template.stack_grid.index', ['arts' => $arts])
     </div>
+    <div id="layout-floor"></div>
     <div class="form-group mobile-no-padding content">
         {!! loadAd('after_first_stack') !!}
     </div>

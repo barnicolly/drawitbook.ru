@@ -17,6 +17,7 @@
     <div class="content">
         @yield('layouts.landing.content')
     </div>
+    <div id="layout-floor"></div>
     <div class="form-group content mobile-no-padding">
         {!! loadAd('after_first_stack') !!}
     </div>
