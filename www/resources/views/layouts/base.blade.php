@@ -25,8 +25,6 @@
     @stack('styles')
     @if (!isDevelop())
         @include('layouts.partials.metrics')
-        <script data-ad-client="ca-pub-1368141699085758" async
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     @endif
 </head>
 <body>
