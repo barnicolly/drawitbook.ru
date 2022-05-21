@@ -1,5 +1,6 @@
 import {debounce} from "../helpers/optimization";
 import {getWindowScrollPositionTop, scrollUpPage} from "../helpers/scroll";
+import Lang from '@js/translations';
 
 export default class Back_up_button {
     constructor() {

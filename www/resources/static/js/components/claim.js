@@ -1,5 +1,6 @@
 import { getRandomInt, sendRequest } from '@js/helpers/utils';
 import { getApplyedLocaleLink } from '@js/helpers/navigation';
+import Lang from '@js/translations';
 
 (function ($) {
     $.claimContainer = $.claimContainer || [];

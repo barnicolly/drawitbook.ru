@@ -10,6 +10,7 @@ const paths = {
         scss: path.join(__dirname, '../resources/static/scss/'),
         img: path.join(__dirname, '../resources/static/img/'),
         plugins: path.join(__dirname, '../resources/static/plugins/'),
+        lang: path.join(__dirname, '../resources/static/lang/'),
     },
     public: path.join(__dirname, '../public/'),
     dist: path.join(__dirname, '../public/build/'),
@@ -19,6 +20,7 @@ const vendorModules = [
     'font-awesome',
     'animate.css',
     'lodash',
+    'lang.js',
 ];
 let optimization = helper.parts.optimization.chunks(vendorModules);
 if (isProduction) {
@@ -33,6 +35,7 @@ const webpackConfig = {
             '@img': paths.src.img,
             '@scss': paths.src.scss,
             '@plugins': paths.src.plugins,
+            '@lang': paths.src.lang,
         },
     },
     entry: {

@@ -10,7 +10,7 @@
         "dev": "nodemon --exec \"node_modules/.bin/webpack serve --config webpack/dev.conf.js\"",
         "build": "node_modules/.bin/webpack --config webpack/build.conf.js",
         "php.test": "php vendor/phpunit/phpunit/phpunit --testdox",
-        "lang.create": "php artisan lang:js resources/js/translations.js && gulp string:replace",
+        "lang.create": "php artisan lang:js --no-lib && gulp string:replace",
         "fa.purge": "gulp styles:fa.purge"
     },
     "author": "",
@@ -52,6 +52,7 @@
         "hc-sticky": "^2.2.3",
         "jquery": "^3.5.1",
         "jssocials": "^1.5.0",
+        "lang.js": "^1.1.14",
         "lazysizes": "^5.2.2",
         "little-loader": "^0.2.0",
         "lodash": "^4.17.21",
