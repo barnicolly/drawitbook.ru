@@ -10,6 +10,7 @@ export function initAds() {
         const timerId = setInterval(() => {
             if (typeof Ya !== 'undefined' && typeof window.yaContextCb !== 'undefined') {
                 tryInitLandingAds();
+                tryInitDetailsAds();
                 clearInterval(timerId);
             }
         }, 200);
@@ -68,6 +69,53 @@ function tryInitLandingAds() {
                     containerId: 'after_first_stack',
                     params: {
                         pp: 'cide',
+                        ps: 'euiz',
+                        p2: 'hcsx'
+                    }
+                })
+            })
+        }
+    }
+}
+
+function tryInitDetailsAds() {
+    const mobileOrTablet = isMobileOrTablet();
+    if ($('body').find('#after_detail_picture:not(.dummy)').length) {
+        if (mobileOrTablet) {
+            window.yaContextCb.push(()=>{
+                Ya.adfoxCode.createScroll({
+                    ownerId: 281565,
+                    containerId: 'after_detail_picture',
+                    params: {
+                        pp: 'cidc',
+                        ps: 'euiz',
+                        p2: 'hcsy'
+                    }
+                })
+            })
+        } else {
+            window.yaContextCb.push(()=>{
+                Ya.adfoxCode.createScroll({
+                    ownerId: 281565,
+                    containerId: 'after_detail_picture',
+                    params: {
+                        pp: 'cidb',
+                        ps: 'euiz',
+                        p2: 'hcsx'
+                    }
+                })
+            })
+        }
+    }
+
+    if ($('body').find('#sidebar:not(.dummy)').length) {
+        if (!mobileOrTablet) {
+            window.yaContextCb.push(()=>{
+                Ya.adfoxCode.createScroll({
+                    ownerId: 281565,
+                    containerId: 'sidebar',
+                    params: {
+                        pp: 'cida',
                         ps: 'euiz',
                         p2: 'hcsx'
                     }
