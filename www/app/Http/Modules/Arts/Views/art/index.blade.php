@@ -57,5 +57,8 @@
                 @include('Arts::template.stack_grid.index', ['arts' => $arts])
             </div>
         </div>
+        <div class="content mobile-no-padding form-group">
+            {!! loadAd('details_after_stack') !!}
+        </div>
     @endif
 @endsection

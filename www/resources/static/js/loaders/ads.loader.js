@@ -127,6 +127,34 @@ function tryInitDetailsAds() {
         }
     }
 
+    if ($('body').find('#details_after_stack:not(.dummy)').length) {
+        if (mobileOrTablet) {
+            window.yaContextCb.push(()=>{
+                Ya.adfoxCode.createScroll({
+                    ownerId: 281565,
+                    containerId: 'details_after_stack',
+                    params: {
+                        pp: 'cidh',
+                        ps: 'euiz',
+                        p2: 'hcsy'
+                    }
+                })
+            })
+        } else {
+            window.yaContextCb.push(()=>{
+                Ya.adfoxCode.createScroll({
+                    ownerId: 281565,
+                    containerId: 'details_after_stack',
+                    params: {
+                        pp: 'cidh',
+                        ps: 'euiz',
+                        p2: 'hcsx'
+                    }
+                })
+            })
+        }
+    }
+
     if ($('body').find('#sidebar:not(.dummy)').length) {
         if (!mobileOrTablet) {
             window.yaContextCb.push(()=>{
