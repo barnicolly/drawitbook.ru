@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'namespace' => 'App/Containers',
+    'namespace' => 'App\Containers',
 
     /*
     |--------------------------------------------------------------------------
@@ -28,8 +28,8 @@ return [
         'enabled' => false,
         'path' => base_path() . '/vendor/nwidart/laravel-modules/src/Commands/stubs',
         'files' => [
-            'routes/web' => 'Routes/web.php',
-            //            'routes/api' => 'Routes/api.php',
+            'routes/web' => 'Http/Routes/web.php',
+            'routes/api' => 'Http/Routes/api.php',
             'views/index' => 'Http/Views/index.blade.php',
             //            'views/master' => 'Http/views/layouts/master.blade.php',
             'scaffold/config' => 'Config/config.php',
@@ -106,7 +106,7 @@ return [
             'seeder' => ['path' => 'Database/Seeders', 'generate' => false],
             'factory' => ['path' => 'Database/factories', 'generate' => false],
             'model' => ['path' => 'Models', 'generate' => true],
-            'routes' => ['path' => 'Routes', 'generate' => true],
+            'routes' => ['path' => 'Http/Routes', 'generate' => true],
             'controller' => ['path' => 'Http/Controllers', 'generate' => true],
             'filter' => ['path' => 'Http/Middleware', 'generate' => true],
             'request' => ['path' => 'Http/Requests', 'generate' => true],

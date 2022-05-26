@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Modules\Content;
+namespace App\Containers\Content\Tests\Feature\Http;
 
 use App\Services\Route\RouteService;
 use Tests\TestCase;
 
-class ContentTest extends TestCase
+class ContentControllerTest extends TestCase
 {
 
     /**

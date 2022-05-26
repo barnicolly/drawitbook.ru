@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Modules\Content\Controllers;
+namespace App\Containers\Content\Http\Controllers;
 
 use App\Enums\Lang;
 use App\Http\Controllers\Controller;
@@ -9,7 +9,7 @@ use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
 use Artesaos\SEOTools\Facades\SEOTools;
 
-class Content extends Controller
+class ContentController extends Controller
 {
     private $tagsService;
     private $seoService;
@@ -33,7 +33,7 @@ class Content extends Controller
         SEOTools::setTitle($title);
         $this->setShareImage(formDefaultShareArtUrlPath(true));
         SEOTools::setDescription($description);
-        return response()->view('Content::main_page.index', $viewData);
+        return response()->view('content::mainPage.index', $viewData);
     }
 
     private function getAlternateLinks(): array
@@ -50,6 +50,7 @@ class Content extends Controller
         return $links;
     }
 
+//    todo-misha вынести в контейнер tags;
     public function tagList()
     {
         try {
