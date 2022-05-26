@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Modules\Content\Controllers;
+namespace App\Containers\Search\Http\Controllers;
 
+use App\Containers\Search\Services\SearchService;
 use App\Enums\Lang;
 use App\Exceptions\NotFoundRelativeArts;
 use App\Http\Controllers\Controller;
 use App\Services\Arts\ArtsService;
 use App\Services\Paginator\PaginatorService;
 use App\Services\Route\RouteService;
-use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
 use App\Services\Translation\TranslationService;
@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
-class Search extends Controller
+class SearchController extends Controller
 {
     private $searchService;
     private $seoService;
@@ -76,7 +76,7 @@ class Search extends Controller
         [$title] = $this->seoService->formTitleAndDescriptionSearch();
         SEOTools::setTitle($title);
         SEOMeta::setRobots('noindex, follow');
-        return view('Content::search.index', $viewData)->render();
+        return view('search::index', $viewData)->render();
     }
 
     private function getAlternateLinks(): array
@@ -93,6 +93,7 @@ class Search extends Controller
         return $links;
     }
 
+//    todo-misha вынести в отдельный контроллер api;
     public function slice(Request $request)
     {
         //TODO-misha вынести и объединить с кодом из cell;

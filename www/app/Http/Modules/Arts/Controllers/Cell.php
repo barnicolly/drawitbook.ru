@@ -2,13 +2,13 @@
 
 namespace App\Http\Modules\Arts\Controllers;
 
+use App\Containers\Search\Services\SearchService;
 use App\Enums\Lang;
 use App\Exceptions\NotFoundRelativeArts;
 use App\Http\Controllers\Controller;
 use App\Services\Arts\ArtsService;
 use App\Services\Paginator\PaginatorService;
 use App\Services\Route\RouteService;
-use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
 use App\Services\Translation\TranslationService;

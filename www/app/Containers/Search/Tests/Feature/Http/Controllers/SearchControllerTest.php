@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Modules\Content;
+namespace App\Containers\Search\Tests\Feature\Http\Controllers;
 
 use App\Services\Route\RouteService;
 use Tests\TestCase;
 
-class SearchTest extends TestCase
+class SearchControllerTest extends TestCase
 {
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Search;
+namespace App\Containers\Search\Services;
 
 use Foolz\SphinxQL\Drivers\Mysqli\Connection;
 use Foolz\SphinxQL\SphinxQL;

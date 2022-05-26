@@ -2,11 +2,11 @@
 
 namespace App\Http\Modules\Arts\Controllers\Art;
 
+use App\Containers\Search\Services\SearchService;
 use App\Enums\Lang;
 use App\Http\Controllers\Controller;
 use App\Services\Arts\ArtsService;
 use App\Services\Route\RouteService;
-use App\Services\Search\SearchService;
 use App\Services\Seo\SeoService;
 use App\Services\Tags\TagsService;
 use Artesaos\SEOTools\Facades\SEOMeta;
