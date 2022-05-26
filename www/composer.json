@@ -20,6 +20,7 @@
         "mariuzzo/laravel-js-localization": "^1.7",
         "mik009/sanitizer": "^1.3",
         "mik009/translation": "^2.7",
+        "nwidart/laravel-modules": "8.2",
         "spatie/data-transfer-object": "^3.3",
         "spatie/laravel-sitemap": "^6",
         "tightenco/collect": "^9"
