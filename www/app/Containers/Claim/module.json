@@ -1,0 +1,13 @@
+{
+    "name": "Claim",
+    "alias": "claim",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Containers\\Claim\\Providers\\ClaimServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

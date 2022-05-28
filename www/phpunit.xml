@@ -6,12 +6,6 @@
         </include>
     </coverage>
     <testsuites>
-        <testsuite name="Feature Tests">
-            <directory suffix="Test.php">./tests/Feature</directory>
-        </testsuite>
-        <testsuite name="Unit Tests">
-            <directory suffix="Test.php">./tests/Unit</directory>
-        </testsuite>
         <testsuite name="Containers Tests">
             <directory suffix="Test.php">./app/Containers</directory>
         </testsuite>

@@ -2,5 +2,6 @@
     "Content": true,
     "Search": true,
     "Picture": true,
-    "Translation": true
+    "Translation": true,
+    "Claim": true
 }

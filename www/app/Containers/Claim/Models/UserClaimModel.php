@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\User;
+namespace App\Containers\Claim\Models;
 
 use App\Models\CoreModel;
 

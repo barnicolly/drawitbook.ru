@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Picture\Services;
+namespace App\Containers\Claim\Service;
 
-use App\Entities\User\UserClaimModel;
+use App\Containers\Claim\Models\UserClaimModel;
 use Illuminate\Support\Facades\DB;
 
 class ClaimService
