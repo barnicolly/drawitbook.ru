@@ -3,7 +3,6 @@
 namespace App\Containers\Authorization\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
 class AuthorizationServiceProvider extends ServiceProvider
 {
@@ -37,7 +36,6 @@ class AuthorizationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(RouteServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
     }
 

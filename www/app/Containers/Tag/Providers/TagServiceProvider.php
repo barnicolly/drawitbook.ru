@@ -3,7 +3,6 @@
 namespace App\Containers\Tag\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
 class TagServiceProvider extends ServiceProvider
 {

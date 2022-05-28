@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Containers\Picture\Providers;
+namespace App\Containers\Authentication\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class PictureServiceProvider extends ServiceProvider
+class AuthenticationServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'Picture';
+    protected $moduleName = 'Authentication';
 
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'picture';
+    protected $moduleNameLower = 'authentication';
 
     /**
      * Boot the application events.

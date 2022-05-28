@@ -3,7 +3,6 @@
 namespace App\Containers\Vk\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
 class VkServiceProvider extends ServiceProvider
 {

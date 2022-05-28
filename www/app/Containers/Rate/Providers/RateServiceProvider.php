@@ -3,7 +3,6 @@
 namespace App\Containers\Rate\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
 class RateServiceProvider extends ServiceProvider
 {

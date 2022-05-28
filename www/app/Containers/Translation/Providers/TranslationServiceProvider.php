@@ -3,7 +3,6 @@
 namespace App\Containers\Translation\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
 class TranslationServiceProvider extends ServiceProvider
 {

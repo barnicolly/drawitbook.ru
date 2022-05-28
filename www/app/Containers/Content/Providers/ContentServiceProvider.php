@@ -3,7 +3,6 @@
 namespace App\Containers\Content\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
 class ContentServiceProvider extends ServiceProvider
 {

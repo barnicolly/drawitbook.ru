@@ -10,5 +10,6 @@
     "Admin": true,
     "Vk": true,
     "Seo": true,
-    "Authorization": true
+    "Authorization": true,
+    "Authentication": true
 }

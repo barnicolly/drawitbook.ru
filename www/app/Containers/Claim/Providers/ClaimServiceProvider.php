@@ -3,7 +3,6 @@
 namespace App\Containers\Claim\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
 class ClaimServiceProvider extends ServiceProvider
 {

@@ -3,7 +3,6 @@
 namespace App\Containers\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
 class AdminServiceProvider extends ServiceProvider
 {

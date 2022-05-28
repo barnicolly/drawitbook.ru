@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Modules\Auth\Controllers;
+namespace App\Containers\Authentication\Http\Controllers;
 
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LoginController as parentLoginController;
 
-class Login extends LoginController
+class LoginController extends parentLoginController
 {
 
     public function __construct()
