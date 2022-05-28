@@ -1,5 +1,6 @@
 {
     "Content": true,
     "Search": true,
-    "Picture": true
+    "Picture": true,
+    "Translation": true
 }

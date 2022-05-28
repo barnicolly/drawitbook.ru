@@ -2,13 +2,14 @@
 
 namespace App\Services\Seo;
 
-use App\Enums\Lang;
+use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Services\TranslationService;
 use App\Services\Tags\TagsService;
-use App\Services\Translation\TranslationService;
 
 class SeoService
 {
 
+//    todo-misha вынести в контроллеры;
     public function formTitleAndDescriptionSearch(): array
     {
         $title = __('seo.search.title');

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Translation;
+namespace App\Containers\Translation\Services;
 
-use App\Enums\Lang;
+use App\Containers\Translation\Enum\Lang;
 
 class TranslationService
 {

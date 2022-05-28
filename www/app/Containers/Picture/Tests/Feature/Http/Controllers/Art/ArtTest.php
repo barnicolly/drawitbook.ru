@@ -2,7 +2,7 @@
 
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Art;
 
-use App\Enums\Lang;
+use App\Containers\Translation\Enum\Lang;
 use App\Services\Route\RouteService;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -11,7 +11,7 @@ class ArtTest extends TestCase
 {
 
     /**
-     * @dataProvider \Tests\Providers\CommonProvider::providerLanguages
+     * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      *
      * @param string $locale
      */
@@ -101,7 +101,7 @@ class ArtTest extends TestCase
     }
 
     /**
-     * @dataProvider \Tests\Providers\CommonProvider::providerLanguages
+     * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      *
      * @param string $locale
      */
@@ -114,7 +114,7 @@ class ArtTest extends TestCase
     }
 
     /**
-     * @dataProvider \Tests\Providers\CommonProvider::providerLanguages
+     * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      *
      * @param string $locale
      */

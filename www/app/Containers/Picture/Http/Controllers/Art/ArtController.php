@@ -4,7 +4,7 @@ namespace App\Containers\Picture\Http\Controllers\Art;
 
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Search\Services\SearchService;
-use App\Enums\Lang;
+use App\Containers\Translation\Enum\Lang;
 use App\Http\Controllers\Controller;
 use App\Services\Route\RouteService;
 use App\Services\Seo\SeoService;

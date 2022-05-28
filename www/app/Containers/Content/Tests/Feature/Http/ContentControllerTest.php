@@ -9,7 +9,7 @@ class ContentControllerTest extends TestCase
 {
 
     /**
-     * @dataProvider \Tests\Providers\CommonProvider::providerLanguages
+     * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      *
      * @param string $locale
      */
@@ -21,7 +21,7 @@ class ContentControllerTest extends TestCase
     }
 
     /**
-     * @dataProvider \Tests\Providers\CommonProvider::providerLanguages
+     * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      *
      * @param string $locale
      */

@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Providers;
+namespace App\Containers\Translation\Tests\Providers;
 
-use App\Enums\Lang;
+use App\Containers\Translation\Enum\Lang;
 
 class CommonProvider
 {

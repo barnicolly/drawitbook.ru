@@ -2,7 +2,7 @@
 
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Cell;
 
-use App\Enums\Lang;
+use App\Containers\Translation\Enum\Lang;
 use App\Services\Route\RouteService;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;

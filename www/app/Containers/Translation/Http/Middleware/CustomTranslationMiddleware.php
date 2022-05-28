@@ -1,8 +1,8 @@
 <?php
-namespace App\Http\Middleware;
+namespace App\Containers\Translation\Http\Middleware;
 
-use Waavi\Translation\Middleware\TranslationMiddleware;
 use Closure;
+use Waavi\Translation\Middleware\TranslationMiddleware;
 
 class CustomTranslationMiddleware extends TranslationMiddleware
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace App\Containers\Translation\Tests\Unit\Services;
 
-use App\Enums\Lang;
-use App\Services\Translation\TranslationService;
+use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Services\TranslationService;
 use Tests\TestCase;
 
 class TranslationServiceTest extends TestCase

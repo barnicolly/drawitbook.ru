@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rules;
+namespace App\Containers\Picture\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 

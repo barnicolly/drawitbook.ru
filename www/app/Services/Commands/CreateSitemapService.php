@@ -3,7 +3,7 @@
 namespace App\Services\Commands;
 
 use App\Containers\Picture\Models\PictureTagsModel;
-use App\Enums\Lang;
+use App\Containers\Translation\Enum\Lang;
 use App\Services\Route\RouteService;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapIndex;

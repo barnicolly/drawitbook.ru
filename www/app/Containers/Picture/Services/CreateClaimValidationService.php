@@ -2,7 +2,7 @@
 
 namespace App\Containers\Picture\Services;
 
-use App\Rules\ReasonIdRule;
+use App\Containers\Picture\Rules\ReasonIdRule;
 use Validator;
 
 class CreateClaimValidationService

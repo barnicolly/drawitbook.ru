@@ -2,7 +2,7 @@
 
 namespace App\Entities;
 
-use App\Enums\Lang;
+use App\Containers\Translation\Enum\Lang;
 use App\Models\CoreModel;
 
 class MenuLevelsModel extends CoreModel

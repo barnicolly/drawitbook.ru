@@ -2,7 +2,7 @@
 
 namespace App\Containers\Content\Http\Controllers;
 
-use App\Enums\Lang;
+use App\Containers\Translation\Enum\Lang;
 use App\Http\Controllers\Controller;
 use App\Services\Route\RouteService;
 use App\Services\Seo\SeoService;

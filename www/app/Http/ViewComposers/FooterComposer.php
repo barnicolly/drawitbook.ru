@@ -2,7 +2,7 @@
 
 namespace App\Http\ViewComposers;
 
-use App\Enums\Lang;
+use App\Containers\Translation\Enum\Lang;
 use App\Services\View\ViewService;
 use Illuminate\View\View;
 
