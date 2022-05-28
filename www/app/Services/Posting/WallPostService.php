@@ -2,7 +2,7 @@
 
 namespace App\Services\Posting;
 
-use App\Services\Arts\ArtsService;
+use App\Containers\Picture\Services\ArtsService;
 use App\Services\Posting\Strategy\Wall\VkWallPostingStrategy;
 use App\Services\Tags\TagsService;
 

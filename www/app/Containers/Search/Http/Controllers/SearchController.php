@@ -2,11 +2,11 @@
 
 namespace App\Containers\Search\Http\Controllers;
 
+use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
+use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Search\Services\SearchService;
 use App\Enums\Lang;
-use App\Exceptions\NotFoundRelativeArts;
 use App\Http\Controllers\Controller;
-use App\Services\Arts\ArtsService;
 use App\Services\Paginator\PaginatorService;
 use App\Services\Route\RouteService;
 use App\Services\Seo\SeoService;
@@ -129,7 +129,7 @@ class SearchController extends Controller
             }
             $result = [
                 'data' => [
-                    'html' => view('Arts::template.stack_grid.elements', $viewData)->render(),
+                    'html' => view('picture::template.stack_grid.elements', $viewData)->render(),
                     'page' => $pageNum,
                     'countLeftArtsText' => $countLeftArtsText ?? null,
                     'isLastSlice' => $isLastSlice,

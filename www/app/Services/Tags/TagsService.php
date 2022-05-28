@@ -2,7 +2,7 @@
 
 namespace App\Services\Tags;
 
-use App\Entities\Picture\PictureTagsModel;
+use App\Containers\Picture\Models\PictureTagsModel;
 use App\Entities\Spr\SprTagsModel;
 use App\Services\Route\RouteService;
 use Illuminate\Support\Facades\Cache;

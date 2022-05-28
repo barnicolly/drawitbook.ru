@@ -1,0 +1,13 @@
+{
+    "name": "Picture",
+    "alias": "picture",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Containers\\Picture\\Providers\\PictureServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

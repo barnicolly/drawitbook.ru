@@ -2,10 +2,9 @@
 
 namespace App\Services\Commands;
 
-use App\Entities\Picture\PictureTagsModel;
+use App\Containers\Picture\Models\PictureTagsModel;
 use App\Enums\Lang;
 use App\Services\Route\RouteService;
-use Illuminate\Support\Facades\DB;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapIndex;
 use Spatie\Sitemap\Tags\Url;

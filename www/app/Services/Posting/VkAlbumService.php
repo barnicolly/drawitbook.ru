@@ -2,10 +2,10 @@
 
 namespace App\Services\Posting;
 
+use App\Containers\Picture\Services\ArtsService;
 use App\Services\Album\AlbumService;
 use App\Services\Api\Vk\PhotoService;
 use App\Services\Api\Vk\VkApi;
-use App\Services\Arts\ArtsService;
 use App\Services\Tags\TagsService;
 
 class VkAlbumService

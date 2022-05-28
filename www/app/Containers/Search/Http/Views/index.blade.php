@@ -1,4 +1,4 @@
-@extends('Arts::template.landing')
+@extends('picture::template.landing')
 
 @section('layouts.landing.first_block')
     <h1 class="title form-group">
@@ -17,7 +17,7 @@
 
 @section('layouts.landing.content')
     @if (!empty($arts))
-        @include('Arts::template.stack_grid.index', ['arts' => $arts])
+        @include('picture::template.stack_grid.index', ['arts' => $arts])
     @else
         <div class="search-no-results">
             <div class="search-no-results__img">
@@ -55,7 +55,7 @@
                 </h2>
             </div>
             <div class="content">
-                @include('Arts::template.stack_grid.index', ['arts' => $popularArts])
+                @include('picture::template.stack_grid.index', ['arts' => $popularArts])
             </div>
         @endif
     @endif

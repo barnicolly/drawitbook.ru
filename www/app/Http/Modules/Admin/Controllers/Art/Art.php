@@ -2,13 +2,13 @@
 
 namespace App\Http\Modules\Admin\Controllers\Art;
 
+use App\Containers\Picture\Services\ArtsService;
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Admin\Requests\Art\ArtSetVkPostingOffRequest;
 use App\Http\Modules\Admin\Requests\Art\ArtSetVkPostingOnRequest;
 use App\Http\Modules\Admin\Requests\Art\PostInVkAlbumRequest;
 use App\Http\Modules\Admin\Requests\Art\RemoveFromVkAlbumRequest;
 use App\Services\Album\AlbumService;
-use App\Services\Arts\ArtsService;
 use App\Services\Posting\VkAlbumService;
 
 class Art extends Controller
