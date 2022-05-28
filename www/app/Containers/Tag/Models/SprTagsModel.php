@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\Spr;
+namespace App\Containers\Tag\Models;
 
 use App\Containers\Translation\Enum\Lang;
 use App\Models\CoreModel;

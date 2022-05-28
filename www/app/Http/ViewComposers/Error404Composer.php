@@ -2,8 +2,8 @@
 
 namespace App\Http\ViewComposers;
 
+use App\Containers\Tag\Services\TagsService;
 use App\Services\Route\RouteService;
-use App\Services\Tags\TagsService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\View\View;

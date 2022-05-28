@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Services\Tags;
+namespace App\Containers\Tag\Services;
 
 use App\Containers\Picture\Models\PictureTagsModel;
-use App\Entities\Spr\SprTagsModel;
+use App\Containers\Tag\Models\SprTagsModel;
 use App\Services\Route\RouteService;
 use Illuminate\Support\Facades\Cache;
 
 class TagsService
 {
+    //    todo-misha вынести в модуль picture все что связано с ними, оставить только получение справочных данных;
 
     private $routeService;
 

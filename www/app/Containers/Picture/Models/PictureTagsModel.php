@@ -2,8 +2,8 @@
 
 namespace App\Containers\Picture\Models;
 
+use App\Containers\Tag\Models\SprTagsModel;
 use App\Containers\Translation\Enum\Lang;
-use App\Entities\Spr\SprTagsModel;
 use App\Models\CoreModel;
 use Illuminate\Support\Facades\DB;
 

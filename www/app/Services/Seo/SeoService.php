@@ -2,9 +2,9 @@
 
 namespace App\Services\Seo;
 
+use App\Containers\Tag\Services\TagsService;
 use App\Containers\Translation\Enum\Lang;
 use App\Containers\Translation\Services\TranslationService;
-use App\Services\Tags\TagsService;
 
 class SeoService
 {

@@ -4,5 +4,6 @@
     "Picture": true,
     "Translation": true,
     "Claim": true,
-    "User": true
+    "User": true,
+    "Tag": true
 }

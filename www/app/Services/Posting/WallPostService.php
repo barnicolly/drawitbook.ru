@@ -3,8 +3,8 @@
 namespace App\Services\Posting;
 
 use App\Containers\Picture\Services\ArtsService;
+use App\Containers\Tag\Services\TagsService;
 use App\Services\Posting\Strategy\Wall\VkWallPostingStrategy;
-use App\Services\Tags\TagsService;
 
 class WallPostService
 {

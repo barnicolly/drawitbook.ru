@@ -4,9 +4,9 @@ namespace App\Containers\Picture\Services;
 
 use App\Containers\Picture\Models\PictureExtensionsModel;
 use App\Containers\Picture\Models\PictureModel;
+use App\Containers\Tag\Services\TagsService;
 use App\Entities\Vk\VkAlbumPictureModel;
 use App\Services\Seo\SeoService;
-use App\Services\Tags\TagsService;
 use Illuminate\Support\Facades\DB;
 
 class ArtsService

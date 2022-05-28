@@ -3,7 +3,7 @@
 namespace App\Containers\Picture\Services;
 
 use App\Containers\Picture\Models\PictureModel;
-use App\Entities\User\UserActivityModel;
+use App\Containers\Picture\Models\UserActivityModel;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
