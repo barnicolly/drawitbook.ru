@@ -33,7 +33,7 @@ class ConsoleServiceProvider extends ServiceProvider
         $modules = Module::all();
         foreach ($modules as $module) {
             $moduleName = $module->getName();
-            $namespace = "App\Modules\\" . $moduleName;
+            $namespace = "App\Containers\\" . $moduleName;
             $this->loadCommands($moduleName, $namespace);
         }
     }

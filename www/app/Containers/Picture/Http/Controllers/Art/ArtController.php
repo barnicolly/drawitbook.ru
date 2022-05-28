@@ -4,11 +4,11 @@ namespace App\Containers\Picture\Http\Controllers\Art;
 
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Search\Services\SearchService;
+use App\Containers\Seo\Services\SeoService;
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Http\Controllers\Controller;
 use App\Services\Route\RouteService;
-use App\Services\Seo\SeoService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 

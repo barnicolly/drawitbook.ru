@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Commands;
+namespace App\Containers\Seo\Services;
 
 use App\Containers\Picture\Models\PictureTagsModel;
 use App\Containers\Translation\Enums\LangEnum;

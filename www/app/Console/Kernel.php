@@ -12,11 +12,7 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    protected $commands = [
-        'App\Console\Commands\CreateSitemap',
-        'App\Containers\Vk\Console\VkPostingCommand',
-        'App\Console\Commands\SingleUse\MigratePictureExtensions',
-    ];
+    protected $commands = [];
 
     /**
      * Define the application's command schedule.

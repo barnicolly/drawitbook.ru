@@ -2,11 +2,11 @@
 
 namespace App\Containers\Content\Http\Controllers;
 
+use App\Containers\Seo\Services\SeoService;
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Http\Controllers\Controller;
 use App\Services\Route\RouteService;
-use App\Services\Seo\SeoService;
 use Artesaos\SEOTools\Facades\SEOTools;
 
 class ContentController extends Controller

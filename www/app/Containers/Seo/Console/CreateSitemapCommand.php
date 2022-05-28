@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Containers\Seo\Console;
 
+use App\Containers\Seo\Services\CreateSitemapService;
 use Illuminate\Console\Command;
-use App\Services\Commands\CreateSitemapService;
 
-class CreateSitemap extends Command
+class CreateSitemapCommand extends Command
 {
     /**
      * The name and signature of the console command.

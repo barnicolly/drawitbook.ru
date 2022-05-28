@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Seo;
+namespace App\Containers\Seo\Services;
 
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Translation\Enums\LangEnum;
