@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Containers\Vk\Console;
 
-use App\Services\Posting\WallPostService;
+use App\Containers\Vk\Services\Posting\WallPostService;
 use Illuminate\Console\Command;
 
-class VkPosting extends Command
+class VkPostingCommand extends Command
 {
     /**
      * The name and signature of the console command.

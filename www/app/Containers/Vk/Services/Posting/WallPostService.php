@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Posting;
+namespace App\Containers\Vk\Services\Posting;
 
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Tag\Services\TagsService;
-use App\Services\Posting\Strategy\Wall\VkWallPostingStrategy;
+use App\Containers\Vk\Services\Posting\Strategy\Wall\VkWallPostingStrategy;
 
 class WallPostService
 {

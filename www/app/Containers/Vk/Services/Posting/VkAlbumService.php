@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Posting;
+namespace App\Containers\Vk\Services\Posting;
 
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Tag\Services\TagsService;
-use App\Services\Album\AlbumService;
-use App\Services\Api\Vk\PhotoService;
-use App\Services\Api\Vk\VkApi;
+use App\Containers\Vk\Services\AlbumService;
+use App\Containers\Vk\Services\Api\PhotoService;
+use App\Containers\Vk\Services\Api\VkApi;
 
 class VkAlbumService
 {

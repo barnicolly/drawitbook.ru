@@ -7,9 +7,9 @@ use App\Containers\Admin\Http\Requests\Art\ArtSetVkPostingOnRequest;
 use App\Containers\Admin\Http\Requests\Art\PostInVkAlbumRequest;
 use App\Containers\Admin\Http\Requests\Art\RemoveFromVkAlbumRequest;
 use App\Containers\Picture\Services\ArtsService;
+use App\Containers\Vk\Services\AlbumService;
+use App\Containers\Vk\Services\Posting\VkAlbumService;
 use App\Http\Controllers\Controller;
-use App\Services\Album\AlbumService;
-use App\Services\Posting\VkAlbumService;
 
 class ArtController extends Controller
 {

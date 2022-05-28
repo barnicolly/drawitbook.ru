@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Posting;
+namespace App\Containers\Vk\Services\Posting;
 
 class PostingService
 {

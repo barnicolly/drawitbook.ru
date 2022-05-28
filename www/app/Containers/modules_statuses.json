@@ -7,5 +7,6 @@
     "User": true,
     "Tag": true,
     "Rate": true,
-    "Admin": true
+    "Admin": true,
+    "Vk": true
 }

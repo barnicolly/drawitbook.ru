@@ -1,0 +1,13 @@
+{
+    "name": "Vk",
+    "alias": "vk",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Containers\\Vk\\Providers\\VkServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

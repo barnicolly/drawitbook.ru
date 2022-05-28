@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\Vk;
+namespace App\Containers\Vk\Models;
 
 use App\Models\CoreModel;
 

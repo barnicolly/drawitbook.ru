@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Services\Album;
+namespace App\Containers\Vk\Services;
 
-
-use App\Entities\Vk\VkAlbumModel;
-use App\Entities\Vk\VkAlbumPictureModel;
+use App\Containers\Vk\Models\VkAlbumModel;
+use App\Containers\Vk\Models\VkAlbumPictureModel;
 
 class AlbumService
 {

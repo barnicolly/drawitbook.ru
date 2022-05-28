@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Api\Vk;
+namespace App\Containers\Vk\Services\Api;
 
 class WallService
 {

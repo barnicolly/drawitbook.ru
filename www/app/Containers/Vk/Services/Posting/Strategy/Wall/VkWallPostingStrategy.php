@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Posting\Strategy\Wall;
+namespace App\Containers\Vk\Services\Posting\Strategy\Wall;
 
-use App\Entities\Vk\HistoryPostingModel;
-use App\Services\Api\Vk\PhotoService;
-use App\Services\Api\Vk\VkApi;
-use App\Services\Api\Vk\WallService;
-use App\Services\Posting\PostingService;
+use App\Containers\Vk\Models\HistoryPostingModel;
+use App\Containers\Vk\Services\Api\PhotoService;
+use App\Containers\Vk\Services\Api\VkApi;
+use App\Containers\Vk\Services\Api\WallService;
+use App\Containers\Vk\Services\Posting\PostingService;
 
 class VkWallPostingStrategy
 {
