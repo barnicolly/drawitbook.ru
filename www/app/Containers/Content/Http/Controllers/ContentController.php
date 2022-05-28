@@ -7,7 +7,6 @@ use App\Containers\Tag\Services\TagsService;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Http\Controllers\Controller;
 use App\Services\Route\RouteService;
-use Artesaos\SEOTools\Facades\SEOTools;
 
 class ContentController extends Controller
 {
@@ -28,11 +27,9 @@ class ContentController extends Controller
         $viewData = [
             'alternateLinks' => $alternateLinks,
         ];
-//        SEOTools::setCanonical($this->routeService->getRouteHome());
         [$title, $description] = $this->seoService->formTitleAndDescriptionHome();
-        SEOTools::setTitle($title);
+        $this->setMeta($title, $description);
         $this->setShareImage(formDefaultShareArtUrlPath(true));
-        SEOTools::setDescription($description);
         return response()->view('content::mainPage.index', $viewData);
     }
 

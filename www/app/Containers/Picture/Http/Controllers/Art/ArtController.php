@@ -9,8 +9,6 @@ use App\Containers\Tag\Services\TagsService;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Http\Controllers\Controller;
 use App\Services\Route\RouteService;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Artesaos\SEOTools\Facades\SEOTools;
 
 class ArtController extends Controller
 {
@@ -52,10 +50,8 @@ class ArtController extends Controller
             'alternateLinks' => $alternateLinks,
         ];
         [$title, $description] = $this->seoService->formTitleAndDescriptionShowArt($artId);
-        SEOTools::setTitle($title);
-        SEOTools::setDescription($description);
-//        SEOTools::setCanonical($this->routeService->getRouteArt($artId));
-        SEOMeta::setRobots('noindex');
+        $this->setMeta($title, $description)
+            ->setRobots('noindex');
         $primaryImage = $art['images']['primary'];
         $this->setShareImage(getArtsFolder() . $primaryImage['path']);
         return response()->view('picture::art.index', $viewData);

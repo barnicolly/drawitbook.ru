@@ -196,7 +196,6 @@ return [
          * Vendor Service Providers
          * */
         DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
-        Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
         Waavi\Translation\TranslationServiceProvider::class,
         Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class
     ],
@@ -251,7 +250,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Modules' => App\Providers\ModulesServiceProvider::class,
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
-        'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::class,
         'Router' => \App\Facades\RouterFacade::class,
         'UriLocalizer'	=> Waavi\Translation\Facades\UriLocalizer::class,

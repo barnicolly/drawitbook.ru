@@ -11,10 +11,9 @@ use App\Containers\Tag\Services\TagsService;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Http\Controllers\Controller;
-use App\Http\Modules\Arts\Controllers\Exception;
+use Exception;
 use App\Services\Paginator\PaginatorService;
 use App\Services\Route\RouteService;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use Throwable;
 use Tightenco\Collect\Support\Collection as CollectionAlias;
@@ -60,10 +59,8 @@ class CellController extends Controller
             'breadcrumbs' => $this->breadcrumbs,
             'alternateLinks' => $alternateLinks,
         ];
-//        SEOTools::setCanonical($this->routeService->getRouteArtsCell());
-        SEOTools::setTitle($title);
+        $this->setMeta($title, $description);
         $this->setShareImage(formDefaultShareArtUrlPath(true));
-        SEOTools::setDescription($description);
         return response()->view('picture::cell.index', $viewData);
     }
 
@@ -114,9 +111,7 @@ class CellController extends Controller
             $countSearchResults,
             $tagInfo['name']
         );
-        SEOTools::setTitle($title);
-        SEOTools::setDescription($description);
-//        SEOTools::setCanonical($this->routeService->getRouteArtsCellTagged($tagInfo['seo']));
+        $this->setMeta($title, $description);
         $firstArt = getFirstItemFromArray($relativeArts);
         if ($firstArt) {
             $this->setShareImage(getArtsFolder() . $firstArt['images']['primary']['path']);

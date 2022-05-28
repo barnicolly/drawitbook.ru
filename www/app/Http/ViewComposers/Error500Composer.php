@@ -2,16 +2,18 @@
 
 namespace App\Http\ViewComposers;
 
-use Artesaos\SEOTools\Facades\SEOTools;
+use App\Containers\Seo\Traits\SeoTrait;
 use Illuminate\View\View;
 
 class Error500Composer
 {
+    use SeoTrait;
+
     public function compose(View $view)
     {
         $title = 'Произошла ошибка на стороне сервера';
         $viewData = [];
-        SEOTools::setTitle($title);
+        $this->setTitle($title);
         return $view->with($viewData);
     }
 }

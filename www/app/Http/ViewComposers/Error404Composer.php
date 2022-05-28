@@ -2,14 +2,15 @@
 
 namespace App\Http\ViewComposers;
 
+use App\Containers\Seo\Traits\SeoTrait;
 use App\Containers\Tag\Services\TagsService;
 use App\Services\Route\RouteService;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\View\View;
 
 class Error404Composer
 {
+    use SeoTrait;
+
     private $routeService;
     private $tagsService;
 
@@ -24,8 +25,8 @@ class Error404Composer
         $viewData = [];
         $title = 'Страница не найдена или была удалена';
         $viewData['incorrectUrl'] = url()->full();
-        SEOTools::setTitle($title);
-        SEOMeta::setRobots('noindex, follow');
+        $this->setTitle($title)
+            ->setRobots('noindex, follow');
         return $view->with($viewData);
     }
 }

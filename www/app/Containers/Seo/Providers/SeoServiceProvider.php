@@ -2,6 +2,7 @@
 
 namespace App\Containers\Seo\Providers;
 
+use Artesaos\SEOTools\Providers\SEOToolsServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class SeoServiceProvider extends ServiceProvider
@@ -36,6 +37,7 @@ class SeoServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register(SEOToolsServiceProvider::class);
     }
 
     /**
@@ -49,7 +51,8 @@ class SeoServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
         );
     }
 

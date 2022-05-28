@@ -12,8 +12,6 @@ use App\Containers\Translation\Services\TranslationService;
 use App\Http\Controllers\Controller;
 use App\Services\Paginator\PaginatorService;
 use App\Services\Route\RouteService;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
@@ -71,11 +69,10 @@ class SearchController extends Controller
             $countLeftArtsText = $this->translationService->getPluralForm($countLeftArts, LangEnum::fromValue($locale));
         }
         $viewData['leftArtsText'] = $countLeftArtsText ?? null;
-//        SEOTools::setCanonical($this->routeService->getRouteSearch());
         //TODO-misha добавить генерацию title;
         [$title] = $this->seoService->formTitleAndDescriptionSearch();
-        SEOTools::setTitle($title);
-        SEOMeta::setRobots('noindex, follow');
+        $this->setTitle($title)
+            ->setRobots('noindex, follow');
         return view('search::index', $viewData)->render();
     }
 
@@ -93,7 +90,7 @@ class SearchController extends Controller
         return $links;
     }
 
-//    todo-misha вынести в отдельный контроллер api;
+    //    todo-misha вынести в отдельный контроллер api;
     public function slice(Request $request)
     {
         //TODO-misha вынести и объединить с кодом из cell;
@@ -125,7 +122,10 @@ class SearchController extends Controller
             ];
             $locale = app()->getLocale();
             if (!$isLastSlice) {
-                $countLeftArtsText = $this->translationService->getPluralForm($countLeftArts, LangEnum::fromValue($locale));
+                $countLeftArtsText = $this->translationService->getPluralForm(
+                    $countLeftArts,
+                    LangEnum::fromValue($locale)
+                );
             }
             $result = [
                 'data' => [
