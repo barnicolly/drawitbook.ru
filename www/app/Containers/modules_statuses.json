@@ -9,5 +9,6 @@
     "Rate": true,
     "Admin": true,
     "Vk": true,
-    "Seo": true
+    "Seo": true,
+    "Authorization": true
 }

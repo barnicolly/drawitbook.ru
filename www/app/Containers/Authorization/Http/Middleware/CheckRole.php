@@ -1,6 +1,7 @@
 <?php
-namespace App\Http\Middleware;
+namespace App\Containers\Authorization\Http\Middleware;
 use Closure;
+
 class CheckRole
 {
     /**

@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Containers\Authorization\Listeners;
 
 use Illuminate\Auth\Events\Login;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Auth;
 
 class LogSuccessfulLogin
