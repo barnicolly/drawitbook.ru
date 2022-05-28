@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Modules\Admin\Controllers\Art;
+namespace App\Containers\Admin\Http\Controllers;
 
+use App\Containers\Admin\Http\Requests\Art\ArtSetVkPostingOffRequest;
+use App\Containers\Admin\Http\Requests\Art\ArtSetVkPostingOnRequest;
+use App\Containers\Admin\Http\Requests\Art\PostInVkAlbumRequest;
+use App\Containers\Admin\Http\Requests\Art\RemoveFromVkAlbumRequest;
 use App\Containers\Picture\Services\ArtsService;
 use App\Http\Controllers\Controller;
-use App\Http\Modules\Admin\Requests\Art\ArtSetVkPostingOffRequest;
-use App\Http\Modules\Admin\Requests\Art\ArtSetVkPostingOnRequest;
-use App\Http\Modules\Admin\Requests\Art\PostInVkAlbumRequest;
-use App\Http\Modules\Admin\Requests\Art\RemoveFromVkAlbumRequest;
 use App\Services\Album\AlbumService;
 use App\Services\Posting\VkAlbumService;
 
-class Art extends Controller
+class ArtController extends Controller
 {
 
     private $vkAlbumService;
@@ -61,7 +61,7 @@ class Art extends Controller
             $viewData['vkAlbums'] = $vkAlbums;
             $vkAlbumPictures = $this->albumService->getAlbumVkPictures($artId, $vkAlbumIds);
             $viewData['issetInVkAlbums'] = $this->albumService->extractVkAlbumIds($vkAlbumPictures);
-            $modal = view('Admin::art.modal', $viewData)->render();
+            $modal = view('admin::art.modal', $viewData)->render();
         } catch (\Throwable $e) {
             return response(['success' => false]);
         }

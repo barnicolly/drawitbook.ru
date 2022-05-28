@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Modules\Admin\Requests\Art;
+namespace App\Containers\Admin\Http\Requests\Art;
 
 use App\Http\Requests\BaseFormRequest;
 
-class PostInVkAlbumRequest extends BaseFormRequest
+class ArtSetVkPostingOnRequest extends BaseFormRequest
 {
     public function authorize()
     {
@@ -19,14 +19,14 @@ class PostInVkAlbumRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'album_id' => 'required|integer',
+            'id' => 'required|integer',
         ];
     }
 
     public function filters()
     {
         return [
-            'album_id' => 'cast:integer',
+            'id' => 'cast:integer',
         ];
     }
 }

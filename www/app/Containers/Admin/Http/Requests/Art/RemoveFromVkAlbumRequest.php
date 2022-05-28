@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Modules\Admin\Requests\Art;
+namespace App\Containers\Admin\Http\Requests\Art;
 
 use App\Http\Requests\BaseFormRequest;
 

@@ -6,5 +6,6 @@
     "Claim": true,
     "User": true,
     "Tag": true,
-    "Rate": true
+    "Rate": true,
+    "Admin": true
 }
