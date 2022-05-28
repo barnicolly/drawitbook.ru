@@ -3,7 +3,7 @@
 namespace App\Containers\Content\Http\Controllers;
 
 use App\Containers\Tag\Services\TagsService;
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Http\Controllers\Controller;
 use App\Services\Route\RouteService;
 use App\Services\Seo\SeoService;
@@ -40,12 +40,12 @@ class ContentController extends Controller
     {
         $links = [];
         $links[] = [
-            'lang' => Lang::RU,
-            'href' => $this->routeService->getRouteHome([], true, Lang::RU),
+            'lang' => LangEnum::RU,
+            'href' => $this->routeService->getRouteHome([], true, LangEnum::RU),
         ];
         $links[] = [
-            'lang' => Lang::EN,
-            'href' => $this->routeService->getRouteHome([], true, Lang::EN),
+            'lang' => LangEnum::EN,
+            'href' => $this->routeService->getRouteHome([], true, LangEnum::EN),
         ];
         return $links;
     }

@@ -5,7 +5,7 @@ namespace App\Containers\Picture\Http\Controllers\Art;
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Search\Services\SearchService;
 use App\Containers\Tag\Services\TagsService;
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Http\Controllers\Controller;
 use App\Services\Route\RouteService;
 use App\Services\Seo\SeoService;
@@ -65,12 +65,12 @@ class ArtController extends Controller
     {
         $links = [];
         $links[] = [
-            'lang' => Lang::RU,
-            'href' => $this->routeService->getRouteArt($id, true, Lang::RU),
+            'lang' => LangEnum::RU,
+            'href' => $this->routeService->getRouteArt($id, true, LangEnum::RU),
         ];
         $links[] = [
-            'lang' => Lang::EN,
-            'href' => $this->routeService->getRouteArt($id, true, Lang::EN),
+            'lang' => LangEnum::EN,
+            'href' => $this->routeService->getRouteArt($id, true, LangEnum::EN),
         ];
         return $links;
     }

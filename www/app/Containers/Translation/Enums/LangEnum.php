@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Containers\Translation\Enum;
+namespace App\Containers\Translation\Enums;
 
 use BenSampo\Enum\Enum;
 
-final class Lang extends Enum
+final class LangEnum extends Enum
 {
     const RU = 'ru';
     const EN = 'en';

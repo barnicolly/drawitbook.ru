@@ -2,7 +2,7 @@
 
 namespace App\Http\ViewComposers;
 
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Services\View\ViewService;
 use Illuminate\View\View;
 
@@ -29,14 +29,14 @@ class FooterComposer
     {
         return [
             [
-                'lang' => Lang::EN,
-                'selected' => Lang::EN === $selectedLocale,
+                'lang' => LangEnum::EN,
+                'selected' => LangEnum::EN === $selectedLocale,
                 'src' => 'en.png',
                 'title' => 'English'
             ],
             [
-                'lang' => Lang::RU,
-                'selected' => Lang::RU === $selectedLocale,
+                'lang' => LangEnum::RU,
+                'selected' => LangEnum::RU === $selectedLocale,
                 'src' => 'ru.png',
                 'title' => 'Русский'
             ],

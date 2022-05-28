@@ -3,7 +3,7 @@
 namespace App\Services\Seo;
 
 use App\Containers\Tag\Services\TagsService;
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 
 class SeoService
@@ -88,7 +88,7 @@ class SeoService
         $countPostfix = '';
         if ($countResults > 10) {
             $locale = app()->getLocale();
-            $countPostfix = (new TranslationService())->getPluralForm($countResults, Lang::fromValue($locale));
+            $countPostfix = (new TranslationService())->getPluralForm($countResults, LangEnum::fromValue($locale));
         }
         return $countPostfix;
     }

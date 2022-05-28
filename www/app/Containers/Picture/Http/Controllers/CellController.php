@@ -6,7 +6,7 @@ use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Search\Services\SearchService;
 use App\Containers\Tag\Services\TagsService;
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Arts\Controllers\Exception;
@@ -71,12 +71,12 @@ class CellController extends Controller
     {
         $links = [];
         $links[] = [
-            'lang' => Lang::RU,
-            'href' => $this->routeService->getRouteArtsCell([], true, Lang::RU),
+            'lang' => LangEnum::RU,
+            'href' => $this->routeService->getRouteArtsCell([], true, LangEnum::RU),
         ];
         $links[] = [
-            'lang' => Lang::EN,
-            'href' => $this->routeService->getRouteArtsCell([], true, Lang::EN),
+            'lang' => LangEnum::EN,
+            'href' => $this->routeService->getRouteArtsCell([], true, LangEnum::EN),
         ];
         return $links;
     }
@@ -101,7 +101,7 @@ class CellController extends Controller
         if (!$viewData['isLastSlice']) {
             $leftArtsText = $this->translationService->getPluralForm(
                 $viewData['countLeftArts'],
-                Lang::fromValue($locale)
+                LangEnum::fromValue($locale)
             );
         }
         $alternateLinks = $this->formTaggedAlternateLinks($locale, $tag, $tagInfo['id']);
@@ -134,8 +134,8 @@ class CellController extends Controller
             'tag' => $initSlug,
         ];
         $tagInfo = $this->tagsService->getById($tagId);
-        $alternativeLang = $locale === Lang::RU ? Lang::EN : Lang::RU;
-        $slug = $alternativeLang === Lang::RU
+        $alternativeLang = $locale === LangEnum::RU ? LangEnum::EN : LangEnum::RU;
+        $slug = $alternativeLang === LangEnum::RU
             ? $tagInfo['seo']
             : $tagInfo['slug_en'];
         if (!empty($slug)) {
@@ -152,15 +152,15 @@ class CellController extends Controller
 
     private function getRedirectSlug(string $locale, string $initSlug): ?string
     {
-        $alternativeLang = $locale === Lang::RU ? Lang::EN : Lang::RU;
-        if ($locale === Lang::RU) {
+        $alternativeLang = $locale === LangEnum::RU ? LangEnum::EN : LangEnum::RU;
+        if ($locale === LangEnum::RU) {
             $tagInfo = $this->tagsService->getByTagSeoName($initSlug, $alternativeLang);
-        } elseif ($locale === Lang::EN) {
+        } elseif ($locale === LangEnum::EN) {
             $tagInfo = $this->tagsService->getByTagSeoName($initSlug, $alternativeLang);
         }
         if (!empty($tagInfo)) {
             $tagInfo = $this->tagsService->getById($tagInfo['id']);
-            $slug = $locale === Lang::RU
+            $slug = $locale === LangEnum::RU
                 ? $tagInfo['seo']
                 : $tagInfo['slug_en'];
             if ($slug) {
@@ -207,7 +207,7 @@ class CellController extends Controller
             if (!$isLastSlice) {
                 $countLeftArtsText = $this->translationService->getPluralForm(
                     $viewData['countLeftArts'],
-                    Lang::fromValue($locale)
+                    LangEnum::fromValue($locale)
                 );
             }
             $result = [

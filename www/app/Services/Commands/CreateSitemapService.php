@@ -3,7 +3,7 @@
 namespace App\Services\Commands;
 
 use App\Containers\Picture\Models\PictureTagsModel;
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Services\Route\RouteService;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapIndex;
@@ -42,20 +42,20 @@ class CreateSitemapService
             foreach ($tags as $tag) {
                 $locales = [];
                 if ($tag['slug_en']) {
-                    $locales[] = Lang::EN;
+                    $locales[] = LangEnum::EN;
                 }
                 if ($tag['seo']) {
-                    $locales[] = Lang::RU;
+                    $locales[] = LangEnum::RU;
                 }
                 foreach ($locales as $locale) {
-                    $slug = $locale === Lang::RU
+                    $slug = $locale === LangEnum::RU
                         ? $tag['seo']
                         : $tag['slug_en'];
                     $url = Url::create($this->routeService->getRouteArtsCellTagged($slug, true, $locale))
                         ->setPriority(0.9);
                     if (count($locales) > 1) {
                         foreach ($locales as $alternateLocale) {
-                            $slug = $alternateLocale === Lang::RU
+                            $slug = $alternateLocale === LangEnum::RU
                                 ? $tag['seo']
                                 : $tag['slug_en'];
                             $url->addAlternate($this->routeService->getRouteArtsCellTagged($slug, true, $alternateLocale), $alternateLocale);

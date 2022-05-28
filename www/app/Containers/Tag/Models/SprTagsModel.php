@@ -2,7 +2,7 @@
 
 namespace App\Containers\Tag\Models;
 
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Models\CoreModel;
 
 class SprTagsModel extends CoreModel
@@ -22,7 +22,7 @@ class SprTagsModel extends CoreModel
 
     public static function getBySeoName(string $tagSeoName, string $locale): ?array
     {
-        if ($locale === Lang::EN) {
+        if ($locale === LangEnum::EN) {
             $select = [
                 'id',
                 'name_en as name',
@@ -39,10 +39,10 @@ class SprTagsModel extends CoreModel
             ->select($select)
             ->where(
                 function ($query) use ($tagSeoName, $locale) {
-                    if ($locale === Lang::EN) {
+                    if ($locale === LangEnum::EN) {
                         $query->where('slug_en', $tagSeoName);
                     }
-                    if ($locale === Lang::RU) {
+                    if ($locale === LangEnum::RU) {
                         $query->where('seo', $tagSeoName);
                     }
                 }

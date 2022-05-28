@@ -2,7 +2,7 @@
 
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Art;
 
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Services\Route\RouteService;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -59,7 +59,7 @@ class ArtTest extends TestCase
     public function testHasRedirects(string $postfix, array $params): void
     {
         $id = 144;
-        $locales = Lang::asArray();
+        $locales = LangEnum::asArray();
         foreach ($locales as $locale) {
             $this->app->setLocale($locale);
             $url = (new RouteService())->getRouteArt($id) . $postfix;
@@ -92,7 +92,7 @@ class ArtTest extends TestCase
      */
     public function testArtPageResponseCode200(int $id): void
     {
-        $locales = Lang::asArray();
+        $locales = LangEnum::asArray();
         foreach ($locales as $locale) {
             $this->app->setLocale($locale);
             $response = $this->get((new RouteService())->getRouteArt($id));

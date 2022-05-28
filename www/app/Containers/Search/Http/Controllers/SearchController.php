@@ -6,7 +6,7 @@ use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Search\Services\SearchService;
 use App\Containers\Tag\Services\TagsService;
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Http\Controllers\Controller;
 use App\Services\Paginator\PaginatorService;
@@ -68,7 +68,7 @@ class SearchController extends Controller
         $viewData['arts'] = $relativeArts;
         $locale = app()->getLocale();
         if (!$isLastSlice) {
-            $countLeftArtsText = $this->translationService->getPluralForm($countLeftArts, Lang::fromValue($locale));
+            $countLeftArtsText = $this->translationService->getPluralForm($countLeftArts, LangEnum::fromValue($locale));
         }
         $viewData['leftArtsText'] = $countLeftArtsText ?? null;
 //        SEOTools::setCanonical($this->routeService->getRouteSearch());
@@ -83,12 +83,12 @@ class SearchController extends Controller
     {
         $links = [];
         $links[] = [
-            'lang' => Lang::RU,
-            'href' => $this->routeService->getRouteSearch([], true, Lang::RU),
+            'lang' => LangEnum::RU,
+            'href' => $this->routeService->getRouteSearch([], true, LangEnum::RU),
         ];
         $links[] = [
-            'lang' => Lang::EN,
-            'href' => $this->routeService->getRouteSearch([], true, Lang::EN),
+            'lang' => LangEnum::EN,
+            'href' => $this->routeService->getRouteSearch([], true, LangEnum::EN),
         ];
         return $links;
     }
@@ -125,7 +125,7 @@ class SearchController extends Controller
             ];
             $locale = app()->getLocale();
             if (!$isLastSlice) {
-                $countLeftArtsText = $this->translationService->getPluralForm($countLeftArts, Lang::fromValue($locale));
+                $countLeftArtsText = $this->translationService->getPluralForm($countLeftArts, LangEnum::fromValue($locale));
             }
             $result = [
                 'data' => [

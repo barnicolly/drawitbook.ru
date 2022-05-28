@@ -4,6 +4,7 @@ namespace App\Containers\Picture\Services;
 
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Picture\Models\UserActivityModel;
+use App\Containers\Rate\Enums\RateEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
@@ -25,13 +26,13 @@ class RateService extends Controller
     public function like(bool $turnOn)
     {
         $this->_checkPictureExist();
-        $this->_rate($turnOn, LIKE);
+        $this->_rate($turnOn, RateEnum::LIKE);
     }
 
     public function dislike(bool $turnOn)
     {
         $this->_checkPictureExist();
-        $this->_rate($turnOn, DISLIKE);
+        $this->_rate($turnOn, RateEnum::DISLIKE);
     }
 
     private function _rate(bool $turnOn, int $rate)
@@ -53,7 +54,7 @@ class RateService extends Controller
 
     private function _getActivityIfExist()
     {
-        $activity = UserActivityModel::whereIn('activity', [LIKE, DISLIKE])
+        $activity = UserActivityModel::whereIn('activity', [RateEnum::LIKE, RateEnum::DISLIKE])
             ->where('picture_id', '=', $this->_pictureId);
         ($this->_userId)
             ? $activity->where('user_id', '=', $this->_userId)

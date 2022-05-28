@@ -2,7 +2,7 @@
 
 namespace App\Containers\Translation\Tests\Unit\Services;
 
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use Tests\TestCase;
 
@@ -13,42 +13,42 @@ class TranslationServiceTest extends TestCase
     {
         return [
             [
-                Lang::RU,
+                LangEnum::RU,
                 5,
                 'рисунков',
             ],
             [
-                Lang::RU,
+                LangEnum::RU,
                 11,
                 'рисунков',
             ],
             [
-                Lang::RU,
+                LangEnum::RU,
                 22,
                 'рисунка',
             ],
             [
-                Lang::RU,
+                LangEnum::RU,
                 1,
                 'рисунок',
             ],
             [
-                Lang::EN,
+                LangEnum::EN,
                 1,
                 'art',
             ],
             [
-                Lang::EN,
+                LangEnum::EN,
                 2,
                 'arts',
             ],
             [
-                Lang::EN,
+                LangEnum::EN,
                 5,
                 'arts',
             ],
             [
-                Lang::EN,
+                LangEnum::EN,
                 21,
                 'arts',
             ],
@@ -65,7 +65,7 @@ class TranslationServiceTest extends TestCase
     public function testGetPluralForm(string $locale, int $number, string $expectedPlural): void
     {
         $expected = implode(' ', [$number, $expectedPlural]);
-        $result = (new TranslationService())->getPluralForm($number, Lang::fromValue($locale));
+        $result = (new TranslationService())->getPluralForm($number, LangEnum::fromValue($locale));
         $this->assertTrue($expected === $result);
     }
 

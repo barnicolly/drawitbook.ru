@@ -2,7 +2,7 @@
 
 namespace App\Entities;
 
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Models\CoreModel;
 
 class MenuLevelsModel extends CoreModel
@@ -25,7 +25,7 @@ class MenuLevelsModel extends CoreModel
             'menu_levels.parent_level_id',
             'menu_levels.column',
         ];
-        if ($locale === Lang::EN) {
+        if ($locale === LangEnum::EN) {
             $select = array_merge(
                 $select,
                 [
@@ -48,10 +48,10 @@ class MenuLevelsModel extends CoreModel
             ->select($select)
             ->where(
                 function ($query) use ($locale) {
-                    if ($locale === Lang::EN) {
+                    if ($locale === LangEnum::EN) {
                         $query->where('menu_levels.show_en', 1);
                     }
-                    if ($locale === Lang::RU) {
+                    if ($locale === LangEnum::RU) {
                         $query->where('menu_levels.show_ru', 1);
                     }
                 }

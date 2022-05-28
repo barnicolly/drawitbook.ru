@@ -1,0 +1,13 @@
+{
+    "name": "Rate",
+    "alias": "rate",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Containers\\Rate\\Providers\\RateServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -3,7 +3,7 @@
 namespace App\Containers\Picture\Models;
 
 use App\Containers\Tag\Models\SprTagsModel;
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Models\CoreModel;
 use Illuminate\Support\Facades\DB;
 
@@ -33,7 +33,7 @@ class PictureTagsModel extends CoreModel
     public static function getTagsByArtIds(array $artIds, bool $withHidden, string $locale): array
     {
         $query = self::query();
-        if ($locale === Lang::EN) {
+        if ($locale === LangEnum::EN) {
             $select = [
                 'picture_tags.id',
                 'picture_tags.picture_id',
@@ -66,7 +66,7 @@ class PictureTagsModel extends CoreModel
             )
             ->where(
                 function ($query) use ($locale) {
-                    if ($locale === Lang::EN) {
+                    if ($locale === LangEnum::EN) {
                         $query->whereNotNull('spr_tags.slug_en');
                     }
                 }
@@ -81,7 +81,7 @@ class PictureTagsModel extends CoreModel
     {
         $locale = mb_strtolower($locale);
         $query = SprTagsModel::query();
-        if ($locale === Lang::EN) {
+        if ($locale === LangEnum::EN) {
             $select = [
                 'spr_tags.name_en as name',
                 'spr_tags.slug_en as seo',
@@ -98,7 +98,7 @@ class PictureTagsModel extends CoreModel
             ->select($select)
             ->where(
                 function ($query) use ($locale) {
-                    if ($locale === Lang::EN) {
+                    if ($locale === LangEnum::EN) {
                         $query->whereNotNull('spr_tags.slug_en');
                     }
                 }
@@ -118,7 +118,7 @@ class PictureTagsModel extends CoreModel
     {
         $locale = mb_strtolower($locale);
         $query = SprTagsModel::query();
-        if ($locale === Lang::EN) {
+        if ($locale === LangEnum::EN) {
             $select = [
                 'spr_tags.name_en as name',
                 'spr_tags.slug_en as seo',
@@ -133,7 +133,7 @@ class PictureTagsModel extends CoreModel
             ->select($select)
             ->where(
                 function ($query) use ($locale) {
-                    if ($locale === Lang::EN) {
+                    if ($locale === LangEnum::EN) {
                         $query->whereNotNull('spr_tags.slug_en');
                     }
                 }

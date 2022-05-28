@@ -2,7 +2,7 @@
 
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Cell;
 
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Services\Route\RouteService;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -13,7 +13,7 @@ class CellTestEn extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->app->setLocale(Lang::EN);
+        $this->app->setLocale(LangEnum::EN);
     }
 
     public function providerTestCellCategoryResponseCode200(): array

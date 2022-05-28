@@ -2,7 +2,7 @@
 
 namespace App\Containers\Translation\Tests\Providers;
 
-use App\Containers\Translation\Enum\Lang;
+use App\Containers\Translation\Enums\LangEnum;
 
 class CommonProvider
 {
@@ -11,10 +11,10 @@ class CommonProvider
     {
         return [
             [
-                Lang::RU,
+                LangEnum::RU,
             ],
             [
-                Lang::EN,
+                LangEnum::EN,
             ],
         ];
     }
