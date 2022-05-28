@@ -1,8 +1,8 @@
 <?php
 
-use App\User;
-use Illuminate\Support\Str;
+use App\Containers\User\Models\User;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------

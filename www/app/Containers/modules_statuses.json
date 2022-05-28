@@ -3,5 +3,6 @@
     "Search": true,
     "Picture": true,
     "Translation": true,
-    "Claim": true
+    "Claim": true,
+    "User": true
 }

@@ -5,8 +5,8 @@ namespace App\Containers\Picture\Http\Controllers\Art;
 use App\Containers\Claim\Service\ClaimService;
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Picture\Services\CreateClaimValidationService;
+use App\Containers\User\Services\UserService;
 use App\Http\Controllers\Controller;
-use App\Services\User\UserService;
 use Illuminate\Http\Request;
 
 class ClaimController extends Controller

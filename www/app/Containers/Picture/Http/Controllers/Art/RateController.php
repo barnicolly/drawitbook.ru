@@ -4,8 +4,8 @@ namespace App\Containers\Picture\Http\Controllers\Art;
 
 use App\Containers\Picture\Services\RateService;
 use App\Containers\Picture\Services\RateValidationService;
+use App\Containers\User\Services\UserService;
 use App\Http\Controllers\Controller;
-use App\Services\User\UserService;
 use Illuminate\Http\Request;
 
 class RateController extends Controller
