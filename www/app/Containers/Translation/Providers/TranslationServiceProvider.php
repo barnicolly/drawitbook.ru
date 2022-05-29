@@ -51,6 +51,13 @@ class TranslationServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
         );
+        $this->publishes([
+                             module_path($this->moduleName, 'Config/localization-js.php') => config_path('localization-js.php'),
+                         ], 'config');
+        $this->mergeConfigFrom(
+            module_path($this->moduleName, 'Config/localization-js.php'),
+            'localization-js'
+        );
     }
 
     /**

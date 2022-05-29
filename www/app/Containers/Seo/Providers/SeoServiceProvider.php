@@ -46,15 +46,19 @@ class SeoServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
-        ], 'config');
+                             module_path($this->moduleName, 'Config/config.php') => config_path(
+                                 $this->moduleNameLower . '.php'
+                             ),
+                         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Config/config.php'),
             $this->moduleNameLower
         );
 
         $this->publishes([
-                             module_path($this->moduleName, 'Config/breadcrumbs.php') => config_path('breadcrumbs.php'),
+                             module_path($this->moduleName, 'Config/breadcrumbs.php') => config_path(
+                                 'breadcrumbs.php'
+                             ),
                          ], 'config');
 
         $this->mergeConfigFrom(
@@ -84,8 +88,8 @@ class SeoServiceProvider extends ServiceProvider
         $sourcePath = module_path($this->moduleName, 'Http/Views');
 
         $this->publishes([
-            $sourcePath => $viewPath
-        ], ['views', $this->moduleNameLower . '-module-views']);
+                             $sourcePath => $viewPath,
+                         ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
     }
