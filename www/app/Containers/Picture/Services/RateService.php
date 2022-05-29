@@ -7,6 +7,7 @@ use App\Containers\Picture\Enums\UserActivityColumnsEnum;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Picture\Models\UserActivityModel;
 use App\Containers\Rate\Enums\RateEnum;
+use App\Ship\Enums\SoftDeleteStatusEnum;
 use App\Ship\Parents\Controllers\HttpController;
 use Illuminate\Support\Facades\DB;
 
@@ -47,7 +48,7 @@ class RateService extends HttpController
             $activity->user_id = $this->_userId;
         }
         if ($activity) {
-            $activity->is_del = $turnOn ? NON_DELETED_ROW : DELETED_ROW;
+            $activity->is_del = $turnOn ? SoftDeleteStatusEnum::FALSE : SoftDeleteStatusEnum::TRUE;
             $activity->activity = $rate;
             $activity->save();
         }
@@ -67,7 +68,7 @@ class RateService extends HttpController
     private function _checkPictureExist()
     {
 //        todo-misha вынести;
-        $picture = PictureModel::where(PictureColumnsEnum::IS_DEL, '=', NON_DELETED_ROW)
+        $picture = PictureModel::where(PictureColumnsEnum::IS_DEL, '=', SoftDeleteStatusEnum::FALSE)
             ->find($this->_pictureId);
         if (!$picture) {
             throw new \Exception('Запись с изображением не найдена или была удалена');

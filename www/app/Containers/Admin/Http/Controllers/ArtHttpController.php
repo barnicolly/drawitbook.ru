@@ -7,6 +7,7 @@ use App\Containers\Admin\Http\Requests\Art\ArtSetVkPostingOnRequest;
 use App\Containers\Admin\Http\Requests\Art\PostInVkAlbumRequest;
 use App\Containers\Admin\Http\Requests\Art\RemoveFromVkAlbumRequest;
 use App\Containers\Picture\Services\ArtsService;
+use App\Containers\Vk\Enums\VkPostingStatusEnum;
 use App\Containers\Vk\Services\AlbumService;
 use App\Containers\Vk\Services\Posting\VkAlbumService;
 use App\Ship\Parents\Controllers\HttpController;
@@ -32,7 +33,7 @@ class ArtHttpController extends HttpController
             if (!$this->artsService->isArtExist($data['id'])) {
                 return ['success' => false];
             }
-            $this->artsService->updateVkPosting($data['id'], OFF_VK_POSTING);
+            $this->artsService->updateVkPosting($data['id'], VkPostingStatusEnum::ON);
         } catch (\Exception $e) {
             return ['success' => false];
         }
@@ -46,7 +47,7 @@ class ArtHttpController extends HttpController
             if (!$this->artsService->isArtExist($data['id'])) {
                 return ['success' => false];
             }
-            $this->artsService->updateVkPosting($data['id'], OFF_VK_POSTING);
+            $this->artsService->updateVkPosting($data['id'], VkPostingStatusEnum::OFF);
         } catch (\Exception $e) {
             return ['success' => false];
         }

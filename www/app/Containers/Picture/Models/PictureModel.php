@@ -3,6 +3,7 @@
 namespace App\Containers\Picture\Models;
 
 use App\Containers\Picture\Enums\PictureColumnsEnum;
+use App\Containers\Picture\Enums\ShowOnMainPageStatusEnum;
 use App\Ship\Parents\Models\CoreModel;
 
 /**
@@ -24,7 +25,7 @@ class PictureModel extends CoreModel
             ->take($limit)
             ->where(PictureColumnsEnum::IS_DEL, 0)
             ->where(PictureColumnsEnum::ID, '!=', $excludeId)
-            ->where(PictureColumnsEnum::IN_COMMON, IN_MAIN_PAGE)
+            ->where(PictureColumnsEnum::IN_COMMON, ShowOnMainPageStatusEnum::ON)
             ->getQuery()
             ->get()
             ->toArray();

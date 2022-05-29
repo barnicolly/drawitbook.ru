@@ -16,7 +16,6 @@ class HelperServiceProvider extends ServiceProvider
         //
         require_once app_path('Ship/Helpers/Functions.php');
         require_once app_path('Ship/Helpers/Path_helper.php');
-        require_once base_path('bootstrap/constants.php');
     }
 
     /**

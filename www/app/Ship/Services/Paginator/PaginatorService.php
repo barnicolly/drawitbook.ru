@@ -5,11 +5,13 @@ namespace App\Ship\Services\Paginator;
 class PaginatorService
 {
 
+    private CONST DEFAULT_PER_PAGE = 25;
+
     //TODO-misha закрыть текстами определение последней страницы;
     public function formSlice(array $relativePictureIds, int $pageNum): array
     {
         if ($relativePictureIds) {
-            $perPage = DEFAULT_PER_PAGE;
+            $perPage = self::DEFAULT_PER_PAGE;
             $countSearchResults = count($relativePictureIds);
             $offset = $pageNum * $perPage;
             $isLastSlice = $offset >= $countSearchResults;

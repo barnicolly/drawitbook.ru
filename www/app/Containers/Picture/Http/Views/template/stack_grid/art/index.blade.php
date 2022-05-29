@@ -15,7 +15,7 @@
                         </button>
                     </div>
                     <div class="d-inline art-control-icons">
-                        @if ((int) $art['in_vk_posting'] === ON_VK_POSTING)
+                        @if ((int) $art['in_vk_posting'] === \App\Containers\Vk\Enums\VkPostingStatusEnum::ON)
                             <span class="vk-posting fa fa-vk " title="Учавствует в постинге VK"></span>
                         @endif
                     </div>
