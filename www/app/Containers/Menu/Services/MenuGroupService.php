@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Ship\Services\View;
+namespace App\Containers\Menu\Services;
 
-use App\Entities\MenuLevelsModel;
+use App\Containers\Menu\Models\MenuLevelsModel;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Facades\Cache;
 
-class ViewService
+class MenuGroupService
 {
 
     private $routeService;

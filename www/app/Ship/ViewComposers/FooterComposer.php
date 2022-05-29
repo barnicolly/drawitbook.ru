@@ -2,24 +2,24 @@
 
 namespace App\Ship\ViewComposers;
 
+use App\Containers\Menu\Services\MenuGroupService;
 use App\Containers\Translation\Enums\LangEnum;
-use App\Ship\Services\View\ViewService;
 use Illuminate\View\View;
 
 class FooterComposer
 {
-    private $viewService;
+    private $menuGroupService;
 
     public function __construct()
     {
-        $this->viewService = (new ViewService());
+        $this->menuGroupService = (new MenuGroupService());
     }
 
     public function compose(View $view): View
     {
         $locale = app()->getLocale();
         $viewData = [
-            'groups' => $this->viewService->formCategoriesGroups($locale),
+            'groups' => $this->menuGroupService->formCategoriesGroups($locale),
             'languages' => $this->getSelectLanguageOptions($locale),
         ];
         return $view->with($viewData);

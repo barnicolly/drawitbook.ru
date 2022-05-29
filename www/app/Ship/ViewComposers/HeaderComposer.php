@@ -2,24 +2,24 @@
 
 namespace App\Ship\ViewComposers;
 
-use App\Ship\Services\View\ViewService;
+use App\Containers\Menu\Services\MenuGroupService;
 use Illuminate\View\View;
 
 class HeaderComposer
 {
 
-    private $viewService;
+    private $menuGroupService;
 
     public function __construct()
     {
-        $this->viewService = (new ViewService());
+        $this->menuGroupService = (new MenuGroupService());
     }
 
     public function compose(View $view): View
     {
         $locale = app()->getLocale();
         $viewData = [
-            'groups' => $this->viewService->formCategoriesGroups($locale),
+            'groups' => $this->menuGroupService->formCategoriesGroups($locale),
         ];
         return $view->with($viewData);
     }
