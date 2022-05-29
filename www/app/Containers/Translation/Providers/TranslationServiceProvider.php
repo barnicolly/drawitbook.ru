@@ -3,6 +3,8 @@
 namespace App\Containers\Translation\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider;
+use Waavi\Translation\TranslationServiceProvider as WaaviTranslationServiceProvider;
 
 class TranslationServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,8 @@ class TranslationServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+        $this->app->register(WaaviTranslationServiceProvider::class);
+        $this->app->register(LaravelJsLocalizationServiceProvider::class);
     }
 
     /**
@@ -57,6 +61,13 @@ class TranslationServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Config/localization-js.php'),
             'localization-js'
+        );
+        $this->publishes([
+                             module_path($this->moduleName, 'Config/translator.php') => config_path('translator.php'),
+                         ], 'config');
+        $this->mergeConfigFrom(
+            module_path($this->moduleName, 'Config/translator.php'),
+            'translator'
         );
     }
 

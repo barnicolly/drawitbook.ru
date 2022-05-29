@@ -169,7 +169,7 @@ return [
         Illuminate\Redis\RedisServiceProvider::class,
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
-//        Illuminate\Translation\TranslationServiceProvider::class,
+        Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
@@ -178,23 +178,15 @@ return [
          */
 
         /*
-         * Application Service Providers...
+         * Ship Service Providers...
          */
         \App\Ship\Providers\AppServiceProvider::class,
         \App\Ship\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         \App\Ship\Providers\ConsoleServiceProvider::class,
-        /*
-         * Custom Service Providers
-         */
         \App\Ship\Providers\ComposerServiceProvider::class,
         \App\Ship\Providers\RouterServiceProvider::class,
         \App\Ship\Providers\HelperServiceProvider::class,
-        /*
-         * Vendor Service Providers
-         * */
-        Waavi\Translation\TranslationServiceProvider::class,
-        Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class
     ],
 
     /*

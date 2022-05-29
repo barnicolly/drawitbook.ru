@@ -3,7 +3,7 @@
     "alias": "translation",
     "description": "",
     "keywords": [],
-    "priority": 0,
+    "priority": -1,
     "providers": [
         "App\\Containers\\Translation\\Providers\\TranslationServiceProvider"
     ],

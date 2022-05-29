@@ -1,6 +1,7 @@
 {
     "require": {
-        "mariuzzo/laravel-js-localization": "^1.7"
+        "mariuzzo/laravel-js-localization": "^1.7",
+        "mik009/translation": "^2.7"
     },
     "require-dev": {}
 }
