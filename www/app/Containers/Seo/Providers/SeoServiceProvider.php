@@ -2,8 +2,6 @@
 
 namespace App\Containers\Seo\Providers;
 
-use Artesaos\SEOTools\Providers\SEOToolsServiceProvider;
-use DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class SeoServiceProvider extends ServiceProvider
@@ -29,7 +27,6 @@ class SeoServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
-        $this->app->register(BreadcrumbsServiceProvider::class);
     }
 
     /**
@@ -39,7 +36,6 @@ class SeoServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(SEOToolsServiceProvider::class);
     }
 
     /**
@@ -64,6 +60,15 @@ class SeoServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Config/breadcrumbs.php'),
             'breadcrumbs'
+        );
+
+        $this->publishes([
+                             module_path($this->moduleName, 'Config/seotools.php') => config_path('seotools.php'),
+                         ], 'config');
+
+        $this->mergeConfigFrom(
+            module_path($this->moduleName, 'Config/seotools.php'),
+            'seotools'
         );
     }
 

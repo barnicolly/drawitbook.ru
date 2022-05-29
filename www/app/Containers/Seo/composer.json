@@ -1,5 +1,6 @@
 {
     "require": {
+        "artesaos/seotools": "^0.22.0",
         "davejamesmiller/laravel-breadcrumbs": "5.x"
     },
     "require-dev": {}
