@@ -50,23 +50,23 @@ class TranslationServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
+            module_path($this->moduleName, 'Configs/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Configs/config.php'), $this->moduleNameLower
         );
         $this->publishes([
-                             module_path($this->moduleName, 'Config/localization-js.php') => config_path('localization-js.php'),
+                             module_path($this->moduleName, 'Configs/localization-js.php') => config_path('localization-js.php'),
                          ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/localization-js.php'),
+            module_path($this->moduleName, 'Configs/localization-js.php'),
             'localization-js'
         );
         $this->publishes([
-                             module_path($this->moduleName, 'Config/translator.php') => config_path('translator.php'),
+                             module_path($this->moduleName, 'Configs/translator.php') => config_path('translator.php'),
                          ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/translator.php'),
+            module_path($this->moduleName, 'Configs/translator.php'),
             'translator'
         );
     }

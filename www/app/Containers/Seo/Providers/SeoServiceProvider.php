@@ -46,32 +46,32 @@ class SeoServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-                             module_path($this->moduleName, 'Config/config.php') => config_path(
+                             module_path($this->moduleName, 'Configs/config.php') => config_path(
                                  $this->moduleNameLower . '.php'
                              ),
                          ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'),
+            module_path($this->moduleName, 'Configs/config.php'),
             $this->moduleNameLower
         );
 
         $this->publishes([
-                             module_path($this->moduleName, 'Config/breadcrumbs.php') => config_path(
+                             module_path($this->moduleName, 'Configs/breadcrumbs.php') => config_path(
                                  'breadcrumbs.php'
                              ),
                          ], 'config');
 
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/breadcrumbs.php'),
+            module_path($this->moduleName, 'Configs/breadcrumbs.php'),
             'breadcrumbs'
         );
 
         $this->publishes([
-                             module_path($this->moduleName, 'Config/seotools.php') => config_path('seotools.php'),
+                             module_path($this->moduleName, 'Configs/seotools.php') => config_path('seotools.php'),
                          ], 'config');
 
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/seotools.php'),
+            module_path($this->moduleName, 'Configs/seotools.php'),
             'seotools'
         );
     }

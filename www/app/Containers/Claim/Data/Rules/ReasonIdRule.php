@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Claim\Rules;
+namespace App\Containers\Claim\Data\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
