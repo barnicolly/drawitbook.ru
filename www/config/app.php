@@ -180,13 +180,7 @@ return [
         /*
          * Ship Service Providers...
          */
-        \App\Ship\Providers\AppServiceProvider::class,
-        \App\Ship\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        \App\Ship\Providers\ConsoleServiceProvider::class,
-        \App\Ship\Providers\ComposerServiceProvider::class,
-        \App\Ship\Providers\RouterServiceProvider::class,
-        \App\Ship\Providers\HelperServiceProvider::class,
+        \App\Ship\Providers\ShipServiceProvider::class,
     ],
 
     /*
@@ -239,7 +233,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
         'Router' => \App\Ship\Facades\RouterFacade::class,
-        'UriLocalizer'	=> Waavi\Translation\Facades\UriLocalizer::class,
     ],
 
     'debug_blacklist' => [
