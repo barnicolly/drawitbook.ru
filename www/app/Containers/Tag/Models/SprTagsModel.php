@@ -2,37 +2,43 @@
 
 namespace App\Containers\Tag\Models;
 
+use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Models\CoreModel;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $name_en
+ * @property int $hidden
+ * @property int $hidden_vk
+ * @property string $seo
+ * @property string $slug_en
+ * @property string $is_popular
+ */
 class SprTagsModel extends CoreModel
 {
-    protected $table = 'spr_tags';
+    protected $table = SprTagsColumnsEnum::TABlE;
 
     public $timestamps = false;
 
     protected $fillable = [
-        'name',
+        SprTagsColumnsEnum::NAME,
     ];
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-    }
 
     public static function getBySeoName(string $tagSeoName, string $locale): ?array
     {
         if ($locale === LangEnum::EN) {
             $select = [
-                'id',
-                'name_en as name',
-                'slug_en as seo',
+                SprTagsColumnsEnum::ID,
+                SprTagsColumnsEnum::NAME_EN . ' as name',
+                SprTagsColumnsEnum::SLUG_EN . ' as seo',
             ];
         } else {
             $select = [
-                'id',
-                'name',
-                'seo',
+                SprTagsColumnsEnum::ID,
+                SprTagsColumnsEnum::NAME,
+                SprTagsColumnsEnum::SEO,
             ];
         }
         $result = self::query()
@@ -40,10 +46,10 @@ class SprTagsModel extends CoreModel
             ->where(
                 function ($query) use ($tagSeoName, $locale) {
                     if ($locale === LangEnum::EN) {
-                        $query->where('slug_en', $tagSeoName);
+                        $query->where(SprTagsColumnsEnum::SLUG_EN, $tagSeoName);
                     }
                     if ($locale === LangEnum::RU) {
-                        $query->where('seo', $tagSeoName);
+                        $query->where(SprTagsColumnsEnum::SEO, $tagSeoName);
                     }
                 }
             )
@@ -58,7 +64,7 @@ class SprTagsModel extends CoreModel
     public static function getById(int $id): ?array
     {
         $result = self::query()
-            ->where('id', '=', $id)
+            ->where(SprTagsColumnsEnum::ID, '=', $id)
             ->getQuery()
             ->first();
         return $result

@@ -2,25 +2,27 @@
 
 namespace App\Containers\Vk\Models;
 
+use App\Containers\Vk\Enums\VkAlbumPictureColumnsEnum;
 use App\Models\CoreModel;
 
+/**
+ * @property int $id
+ * @property int $vk_album_id
+ * @property int $picture_id
+ * @property int $out_vk_image_id
+ */
 class VkAlbumPictureModel extends CoreModel
 {
-    protected $table = 'vk_album_picture';
+    protected $table = VkAlbumPictureColumnsEnum::TABlE;
 
     protected $fillable = [];
     public $timestamps = false;
 
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-    }
-
     public static function getRowByVkAlbumIdAndPictureId(int $vkAlbumId, int $artId): ?array
     {
         $result = self::query()
-            ->where('vk_album_id', '=', $vkAlbumId)
-            ->where('picture_id', '=', $artId)
+            ->where(VkAlbumPictureColumnsEnum::VK_ALBUM_ID, '=', $vkAlbumId)
+            ->where(VkAlbumPictureColumnsEnum::PICTURE_ID, '=', $artId)
             ->getQuery()
             ->first();
         return $result
@@ -31,8 +33,8 @@ class VkAlbumPictureModel extends CoreModel
     public static function getAlbumVkPictures(int $artId, array $vkAlbumIds): array
     {
         $result = self::query()
-            ->whereIn('vk_album_id', $vkAlbumIds)
-            ->where('picture_id', $artId)
+            ->whereIn(VkAlbumPictureColumnsEnum::VK_ALBUM_ID, $vkAlbumIds)
+            ->where(VkAlbumPictureColumnsEnum::PICTURE_ID, $artId)
             ->getQuery()
             ->get()
             ->toArray();

@@ -2,18 +2,20 @@
 
 namespace App\Containers\Vk\Models;
 
+use App\Containers\Vk\Enums\VkAlbumPictureColumnsEnum;
 use App\Models\CoreModel;
 
+/**
+ * @property int $id
+ * @property int $album_id
+ * @property string $description
+ * @property string $share
+ */
 class VkAlbumModel extends CoreModel
 {
-    protected $table = 'vk_album';
+    protected $table = VkAlbumPictureColumnsEnum::TABlE;
 
     protected $fillable = [];
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-    }
 
     public static function getById(int $vkAlbumId): ?array
     {

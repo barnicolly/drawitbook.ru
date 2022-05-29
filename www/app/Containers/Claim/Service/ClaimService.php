@@ -2,6 +2,7 @@
 
 namespace App\Containers\Claim\Service;
 
+use App\Containers\Claim\Enums\UserClaimColumnsEnum;
 use App\Containers\Claim\Models\UserClaimModel;
 use Illuminate\Support\Facades\DB;
 
@@ -24,9 +25,9 @@ class ClaimService
 
     public function findByIpAndReasonId(int $pictureId, string $ip, int $reasonId): ?UserClaimModel
     {
-        return UserClaimModel::where('reason_id', $reasonId)
-            ->whereRaw("ip = inet_aton($ip)")
-            ->where('picture_id', '=', $pictureId)
+        return UserClaimModel::where(UserClaimColumnsEnum::REASON_ID, $reasonId)
+            ->whereRaw(UserClaimColumnsEnum::IP . " = inet_aton($ip)")
+            ->where(UserClaimColumnsEnum::PICTURE_ID, '=', $pictureId)
             ->first();
     }
 

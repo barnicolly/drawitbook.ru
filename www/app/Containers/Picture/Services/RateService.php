@@ -2,6 +2,8 @@
 
 namespace App\Containers\Picture\Services;
 
+use App\Containers\Picture\Enums\PictureColumnsEnum;
+use App\Containers\Picture\Enums\UserActivityColumnsEnum;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Picture\Models\UserActivityModel;
 use App\Containers\Rate\Enums\RateEnum;
@@ -54,17 +56,18 @@ class RateService extends Controller
 
     private function _getActivityIfExist()
     {
-        $activity = UserActivityModel::whereIn('activity', [RateEnum::LIKE, RateEnum::DISLIKE])
-            ->where('picture_id', '=', $this->_pictureId);
+        $activity = UserActivityModel::whereIn(UserActivityColumnsEnum::ACTIVITY, [RateEnum::LIKE, RateEnum::DISLIKE])
+            ->where(UserActivityColumnsEnum::PICTURE_ID, '=', $this->_pictureId);
         ($this->_userId)
-            ? $activity->where('user_id', '=', $this->_userId)
-            : $activity->whereRaw("INET_NTOA(ip) = $this->_ip");
+            ? $activity->where(UserActivityColumnsEnum::USER_ID, '=', $this->_userId)
+            : $activity->whereRaw("INET_NTOA(" . UserActivityColumnsEnum::USER_ID . ") = $this->_ip");
         return $activity->first();
     }
 
     private function _checkPictureExist()
     {
-        $picture = PictureModel::where('is_del', '=', NON_DELETED_ROW)
+//        todo-misha вынести;
+        $picture = PictureModel::where(PictureColumnsEnum::IS_DEL, '=', NON_DELETED_ROW)
             ->find($this->_pictureId);
         if (!$picture) {
             throw new \Exception('Запись с изображением не найдена или была удалена');

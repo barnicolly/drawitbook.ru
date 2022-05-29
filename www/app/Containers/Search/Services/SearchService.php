@@ -100,6 +100,7 @@ class SearchService
             ->fetchAllAssoc();
     }
 
+//    todo-misha переместить в модель picture;
     public function searchByTagId(int $tagId): array
     {
         $results = DB::table('picture')

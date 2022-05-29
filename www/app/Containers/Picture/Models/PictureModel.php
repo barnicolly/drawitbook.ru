@@ -2,26 +2,29 @@
 
 namespace App\Containers\Picture\Models;
 
+use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Models\CoreModel;
 
+/**
+ * @property int $id
+ * @property string $description
+ * @property int $is_del
+ * @property int $in_common
+ * @property int $in_vk_posting
+ */
 class PictureModel extends CoreModel
 {
-    protected $table = 'picture';
+    protected $table = PictureColumnsEnum::TABlE;
 
     protected $fillable = [];
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-    }
 
     public static function getInterestingArts(int $excludeId, int $limit): array
     {
         $result = self::query()
             ->take($limit)
-            ->where('is_del', 0)
-            ->where('id', '!=', $excludeId)
-            ->where('in_common', IN_MAIN_PAGE)
+            ->where(PictureColumnsEnum::IS_DEL, 0)
+            ->where(PictureColumnsEnum::ID, '!=', $excludeId)
+            ->where(PictureColumnsEnum::IN_COMMON, IN_MAIN_PAGE)
             ->getQuery()
             ->get()
             ->toArray();
@@ -31,8 +34,8 @@ class PictureModel extends CoreModel
     public static function getById(int $id): ?array
     {
         $art = self::query()
-            ->where('id', $id)
-            ->where('is_del', 0)
+            ->where(PictureColumnsEnum::ID, $id)
+            ->where(PictureColumnsEnum::IS_DEL, 0)
             ->getQuery()
             ->first();
         if ($art) {
@@ -44,8 +47,8 @@ class PictureModel extends CoreModel
     public static function getByIds(array $ids): array
     {
         $result = self::query()
-            ->whereIn('id', $ids)
-            ->where('is_del', 0)
+            ->whereIn(PictureColumnsEnum::ID, $ids)
+            ->where(PictureColumnsEnum::IS_DEL, 0)
             ->getQuery()
             ->get()
             ->toArray();

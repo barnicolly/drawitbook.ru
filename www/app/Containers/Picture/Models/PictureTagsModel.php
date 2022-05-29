@@ -2,6 +2,9 @@
 
 namespace App\Containers\Picture\Models;
 
+use App\Containers\Picture\Enums\PictureColumnsEnum;
+use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
+use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Tag\Models\SprTagsModel;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Models\CoreModel;
@@ -9,24 +12,19 @@ use Illuminate\Support\Facades\DB;
 
 class PictureTagsModel extends CoreModel
 {
-    protected $table = 'picture_tags';
+    protected $table = PictureTagsColumnsEnum::TABlE;
 
     protected $fillable = [];
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-    }
 
     public static function getNamesWithoutHiddenVkByArtId(int $artId): array
     {
         $query = self::query();
-        return $query->where('picture_id', $artId)
-            ->where('spr_tags.hidden_vk', 0)
-            ->join('spr_tags', 'spr_tags.id', '=', 'picture_tags.tag_id')
+        return $query->where(PictureTagsColumnsEnum::PICTURE_ID, $artId)
+            ->where(SprTagsColumnsEnum::$tHIDDEN_VK, 0)
+            ->join(SprTagsColumnsEnum::TABlE, SprTagsColumnsEnum::$tId, '=', PictureTagsColumnsEnum::$tTAG_ID)
             ->getQuery()
             ->get()
-            ->pluck('name')
+            ->pluck(SprTagsColumnsEnum::$tNAME)
             ->toArray();
     }
 
@@ -35,39 +33,39 @@ class PictureTagsModel extends CoreModel
         $query = self::query();
         if ($locale === LangEnum::EN) {
             $select = [
-                'picture_tags.id',
-                'picture_tags.picture_id',
-                'picture_tags.tag_id',
-                'spr_tags.hidden',
-                'spr_tags.hidden_vk',
-                'spr_tags.name_en as name',
-                'spr_tags.slug_en as seo',
+                PictureTagsColumnsEnum::$tId,
+                PictureTagsColumnsEnum::$tPICTURE_ID,
+                PictureTagsColumnsEnum::$tTAG_ID,
+                SprTagsColumnsEnum::$tHIDDEN,
+                SprTagsColumnsEnum::$tHIDDEN_VK,
+                SprTagsColumnsEnum::$tNAME_EN . ' as name',
+                SprTagsColumnsEnum::$tSLUG_EN . ' as seo',
             ];
         } else {
             $select = [
-                'picture_tags.id',
-                'picture_tags.picture_id',
-                'picture_tags.tag_id',
-                'spr_tags.hidden',
-                'spr_tags.hidden_vk',
-                'spr_tags.name',
-                'spr_tags.seo',
+                PictureTagsColumnsEnum::$tId,
+                PictureTagsColumnsEnum::$tPICTURE_ID,
+                PictureTagsColumnsEnum::$tTAG_ID,
+                SprTagsColumnsEnum::$tHIDDEN,
+                SprTagsColumnsEnum::$tHIDDEN_VK,
+                SprTagsColumnsEnum::$tNAME,
+                SprTagsColumnsEnum::$tSEO,
             ];
         }
-        $result = $query->whereIn('picture_id', $artIds)
+        $result = $query->whereIn(PictureTagsColumnsEnum::PICTURE_ID, $artIds)
             ->select($select)
-            ->join('spr_tags', 'spr_tags.id', '=', 'picture_tags.tag_id')
+            ->join(SprTagsColumnsEnum::TABlE, SprTagsColumnsEnum::$tId, '=', PictureTagsColumnsEnum::$tTAG_ID)
             ->where(
                 function ($query) use ($withHidden) {
                     if (!$withHidden) {
-                        $query->where('spr_tags.hidden', '=', 0);
+                        $query->where(SprTagsColumnsEnum::$tHIDDEN, '=', 0);
                     }
                 }
             )
             ->where(
                 function ($query) use ($locale) {
                     if ($locale === LangEnum::EN) {
-                        $query->whereNotNull('spr_tags.slug_en');
+                        $query->whereNotNull(SprTagsColumnsEnum::$tSLUG_EN);
                     }
                 }
             )
@@ -83,15 +81,15 @@ class PictureTagsModel extends CoreModel
         $query = SprTagsModel::query();
         if ($locale === LangEnum::EN) {
             $select = [
-                'spr_tags.name_en as name',
-                'spr_tags.slug_en as seo',
-                DB::raw("count(\"picture_tags.id\") as count"),
+                SprTagsColumnsEnum::$tNAME_EN . ' as name',
+                SprTagsColumnsEnum::$tSLUG_EN . ' as seo',
+                DB::raw('count("' . PictureTagsColumnsEnum::$tId . '") as count'),
             ];
         } else {
             $select = [
-                'spr_tags.name',
-                'spr_tags.seo',
-                DB::raw("count(\"picture_tags.id\") as count"),
+                SprTagsColumnsEnum::$tNAME,
+                SprTagsColumnsEnum::$tSEO,
+                DB::raw('count("' . PictureTagsColumnsEnum::$tId . '") as count'),
             ];
         }
         $result = $query
@@ -99,13 +97,13 @@ class PictureTagsModel extends CoreModel
             ->where(
                 function ($query) use ($locale) {
                     if ($locale === LangEnum::EN) {
-                        $query->whereNotNull('spr_tags.slug_en');
+                        $query->whereNotNull(SprTagsColumnsEnum::$tSLUG_EN);
                     }
                 }
             )
-            ->where('spr_tags.hidden', 0)
-            ->join('picture_tags', 'picture_tags.tag_id', '=', 'spr_tags.id')
-            ->groupBy('spr_tags.id')
+            ->where(SprTagsColumnsEnum::$tHIDDEN, 0)
+            ->join(PictureTagsColumnsEnum::TABlE, PictureTagsColumnsEnum::$tTAG_ID, '=', SprTagsColumnsEnum::$tId)
+            ->groupBy(SprTagsColumnsEnum::$tId)
             ->orderBy('count', 'desc')
             ->take($limit)
             ->getQuery()
@@ -120,13 +118,13 @@ class PictureTagsModel extends CoreModel
         $query = SprTagsModel::query();
         if ($locale === LangEnum::EN) {
             $select = [
-                'spr_tags.name_en as name',
-                'spr_tags.slug_en as seo',
+                SprTagsColumnsEnum::$tNAME_EN . ' as name',
+                SprTagsColumnsEnum::$tSLUG_EN . ' as seo',
             ];
         } else {
             $select = [
-                'spr_tags.name',
-                'spr_tags.seo',
+                SprTagsColumnsEnum::$tNAME,
+                SprTagsColumnsEnum::$tSEO,
             ];
         }
         $result = $query
@@ -134,11 +132,11 @@ class PictureTagsModel extends CoreModel
             ->where(
                 function ($query) use ($locale) {
                     if ($locale === LangEnum::EN) {
-                        $query->whereNotNull('spr_tags.slug_en');
+                        $query->whereNotNull(SprTagsColumnsEnum::$tSLUG_EN);
                     }
                 }
             )
-            ->where('spr_tags.is_popular', 1)
+            ->where(SprTagsColumnsEnum::$tIS_POPULAR, 1)
             ->get()
             ->toArray();
         return self::mapToArray($result);
@@ -148,14 +146,14 @@ class PictureTagsModel extends CoreModel
     {
         $query = SprTagsModel::query();
         $select = [
-            'spr_tags.*',
+            SprTagsColumnsEnum::TABlE . '.*',
         ];
         $result = $query
             ->select($select)
-            ->join('picture_tags', 'picture_tags.tag_id', '=', 'spr_tags.id')
-            ->join('picture', 'picture.id', '=', 'picture_tags.picture_id')
-            ->where('picture.is_del', 0)
-            ->groupBy('spr_tags.id')
+            ->join(PictureTagsColumnsEnum::TABlE, PictureTagsColumnsEnum::$tTAG_ID, '=', SprTagsColumnsEnum::$tId)
+            ->join(PictureColumnsEnum::TABlE, PictureColumnsEnum::$tId, '=', PictureTagsColumnsEnum::$tPICTURE_ID)
+            ->where(PictureColumnsEnum::$tIS_DEL, 0)
+            ->groupBy(SprTagsColumnsEnum::$tId)
             ->getQuery()
             ->get()
             ->toArray();
