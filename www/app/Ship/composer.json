@@ -1,4 +1,6 @@
 {
-  "require": {},
+  "require": {
+      "nwidart/laravel-modules": "8.2"
+  },
   "require-dev": {}
 }

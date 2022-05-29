@@ -13,7 +13,7 @@ class ShipServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->registerConfig();
     }
 
     /**
@@ -30,5 +30,19 @@ class ShipServiceProvider extends ServiceProvider
         $this->app->register(ComposerServiceProvider::class);
         $this->app->register(RouterServiceProvider::class);
         $this->app->register(HelperServiceProvider::class);
+    }
+
+    private function registerConfig()
+    {
+        $this->publishes(
+            [
+                app_path('Ship/Configs/modules.php') => config_path('modules.php'),
+            ],
+            'config'
+        );
+        $this->mergeConfigFrom(
+            app_path('Ship/Configs/modules.php'),
+            'modules'
+        );
     }
 }
