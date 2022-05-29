@@ -23,7 +23,7 @@ return [
     |
     */
 
-    'view' => 'partials.breadcrumbs',
+    'view' => 'seo::breadcrumbs',
 
     /*
     |--------------------------------------------------------------------------
@@ -37,7 +37,7 @@ return [
     |
     */
 
-    'files' => base_path('routes/breadcrumbs.php'),
+    'files' => base_path('app/Containers/Seo/Http/Routes/breadcrumbs.php'),
 
     /*
     |--------------------------------------------------------------------------

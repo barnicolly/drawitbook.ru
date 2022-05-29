@@ -11,5 +11,6 @@
     "Vk": true,
     "Seo": true,
     "Authorization": true,
-    "Authentication": true
+    "Authentication": true,
+    "Menu": true
 }

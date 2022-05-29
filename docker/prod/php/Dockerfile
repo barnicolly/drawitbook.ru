@@ -16,7 +16,6 @@ COPY www/bootstrap /var/www/html/bootstrap
 COPY www/config /var/www/html/config
 COPY www/database /var/www/html/database
 COPY www/public /var/www/html/public
-COPY www/routes /var/www/html/routes
 COPY www/storage /var/www/html/storage
 COPY www/server.php /var/www/html/server.php
 COPY www/artisan /var/www/html/artisan

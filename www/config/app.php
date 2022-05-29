@@ -187,14 +187,12 @@ return [
         /*
          * Custom Service Providers
          */
-//        App\Providers\ModulesServiceProvider::class,
         \App\Ship\Providers\ComposerServiceProvider::class,
         \App\Ship\Providers\RouterServiceProvider::class,
         \App\Ship\Providers\HelperServiceProvider::class,
         /*
          * Vendor Service Providers
          * */
-        DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
         Waavi\Translation\TranslationServiceProvider::class,
         Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class
     ],
@@ -248,7 +246,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
-        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::class,
         'Router' => \App\Ship\Facades\RouterFacade::class,
         'UriLocalizer'	=> Waavi\Translation\Facades\UriLocalizer::class,
     ],

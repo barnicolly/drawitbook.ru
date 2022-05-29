@@ -19684,7 +19684,6 @@ namespace  {
             class URL extends \Illuminate\Support\Facades\URL {}
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
-            class Modules extends \App\Ship\Providers\ModulesServiceProvider {}
             class HTMLMin extends \HTMLMin\HTMLMin\Facades\HTMLMin {}
             class SEO extends \Artesaos\SEOTools\Facades\SEOTools {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}

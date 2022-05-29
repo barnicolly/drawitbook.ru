@@ -33,7 +33,7 @@ return [
             'views/index' => 'Http/Views/index.blade.php',
             //            'views/master' => 'Http/views/layouts/master.blade.php',
             'scaffold/config' => 'Config/config.php',
-            //            'composer' => 'composer.json',
+            'composer' => 'composer.json',
             //            'assets/js/app' => 'Resources/assets/js/app.js',
             //            'assets/sass/app' => 'Resources/assets/sass/app.scss',
             //            'webpack' => 'webpack.mix.js',
@@ -210,11 +210,7 @@ return [
     */
 
     'composer' => [
-        'vendor' => 'nwidart',
-        'author' => [
-            'name' => 'Nicolas Widart',
-            'email' => 'n.widart@gmail.com',
-        ],
+        'vendor' => 'containers',
     ],
 
     'composer-output' => false,
