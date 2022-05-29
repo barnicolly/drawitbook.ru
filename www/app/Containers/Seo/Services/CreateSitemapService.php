@@ -4,7 +4,7 @@ namespace App\Containers\Seo\Services;
 
 use App\Containers\Picture\Models\PictureTagsModel;
 use App\Containers\Translation\Enums\LangEnum;
-use App\Services\Route\RouteService;
+use App\Ship\Services\Route\RouteService;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapIndex;
 use Spatie\Sitemap\Tags\Url;

@@ -4,7 +4,7 @@ namespace App\Containers\Tag\Services;
 
 use App\Containers\Picture\Models\PictureTagsModel;
 use App\Containers\Tag\Models\SprTagsModel;
-use App\Services\Route\RouteService;
+use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Facades\Cache;
 
 class TagsService

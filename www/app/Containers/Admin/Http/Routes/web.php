@@ -1,6 +1,6 @@
 <?php
 
-use App\Containers\Admin\Http\Controllers\ArtController;
+use App\Containers\Admin\Http\Controllers\ArtHttpController;
 
 foreach (config('translator.available_locales') as $prefix) {
     Route::group(
@@ -13,11 +13,11 @@ foreach (config('translator.available_locales') as $prefix) {
                     'roles' => ['Admin'],
                 ],
                 function () {
-                    Route::post('/setVkPostingOn', [ArtController::class, 'setVkPostingOnRequest']);
-                    Route::post('/setVkPostingOff', [ArtController::class, 'setVkPostingOffRequest']);
-                    Route::get('/{id}/getSettingsModal', [ArtController::class, 'getSettingsModal']);
-                    Route::post('/{id}/postInVkAlbum', [ArtController::class, 'postInVkAlbum']);
-                    Route::post('/{id}/removeFromVkAlbum', [ArtController::class, 'removeFromVkAlbum']);
+                    Route::post('/setVkPostingOn', [ArtHttpController::class, 'setVkPostingOnRequest']);
+                    Route::post('/setVkPostingOff', [ArtHttpController::class, 'setVkPostingOffRequest']);
+                    Route::get('/{id}/getSettingsModal', [ArtHttpController::class, 'getSettingsModal']);
+                    Route::post('/{id}/postInVkAlbum', [ArtHttpController::class, 'postInVkAlbum']);
+                    Route::post('/{id}/removeFromVkAlbum', [ArtHttpController::class, 'removeFromVkAlbum']);
                 }
             );
         }

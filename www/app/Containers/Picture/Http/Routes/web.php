@@ -1,9 +1,9 @@
 <?php
 
-use App\Containers\Picture\Http\Controllers\Art\ArtController;
-use App\Containers\Picture\Http\Controllers\Art\ClaimController;
-use App\Containers\Picture\Http\Controllers\Art\RateController;
-use App\Containers\Picture\Http\Controllers\CellController;
+use App\Containers\Picture\Http\Controllers\Art\ArtHttpController;
+use App\Containers\Picture\Http\Controllers\Art\ClaimHttpController;
+use App\Containers\Picture\Http\Controllers\Art\RateHttpController;
+use App\Containers\Picture\Http\Controllers\CellHttpController;
 
 foreach (config('translator.available_locales') as $prefix) {
     Route::group(
@@ -20,15 +20,15 @@ foreach (config('translator.available_locales') as $prefix) {
                             'middleware' => ['lower_case', 'no_get'],
                         ],
                         function () use ($prefix) {
-                            Route::get('/', [CellController::class, 'index'])
+                            Route::get('/', [CellHttpController::class, 'index'])
                                 ->name($prefix . '_arts.cell');
 
-                            Route::get('/{tag}', [CellController::class, 'tagged'])
+                            Route::get('/{tag}', [CellHttpController::class, 'tagged'])
                                 ->name($prefix . '_arts.cell.tagged');
                         }
                     );
 
-                    Route::get('/{tag}/slice', [CellController::class, 'slice']);
+                    Route::get('/{tag}/slice', [CellHttpController::class, 'slice']);
                 }
             );
 
@@ -38,7 +38,7 @@ foreach (config('translator.available_locales') as $prefix) {
                     'middleware' => 'web',
                 ],
                 function () use ($prefix) {
-                    Route::get('/{id}', [ArtController::class, 'index'])
+                    Route::get('/{id}', [ArtHttpController::class, 'index'])
                         ->middleware(['lower_case', 'no_get'])
                         ->name($prefix . '_art');
 
@@ -47,9 +47,9 @@ foreach (config('translator.available_locales') as $prefix) {
                             'middleware' => ['ajax'],
                         ],
                         function () {
-                            Route::post('/{id}/like', [RateController::class, 'like']);
-                            Route::post('/{id}/dislike',[RateController::class, 'dislike']);
-                            Route::post('/{id}/claim', [ClaimController::class, 'register']);
+                            Route::post('/{id}/like', [RateHttpController::class, 'like']);
+                            Route::post('/{id}/dislike',[RateHttpController::class, 'dislike']);
+                            Route::post('/{id}/claim', [ClaimHttpController::class, 'register']);
                         }
                     );
                 }

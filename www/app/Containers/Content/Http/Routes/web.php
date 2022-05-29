@@ -1,6 +1,6 @@
 <?php
 
-use App\Containers\Content\Http\Controllers\ContentController;
+use App\Containers\Content\Http\Controllers\ContentHttpController;
 
 foreach (config('translator.available_locales') as $prefix) {
     Route::group(
@@ -11,11 +11,11 @@ foreach (config('translator.available_locales') as $prefix) {
                     'middleware' => 'web',
                 ],
                 function () use ($prefix) {
-                    Route::get('/', [ContentController::class, 'index'])
+                    Route::get('/', [ContentHttpController::class, 'index'])
                         ->middleware(['lower_case', 'no_get'])
                         ->name($prefix . '_home');
 
-                    Route::get('/tag/list', [ContentController::class, 'tagList'])
+                    Route::get('/tag/list', [ContentHttpController::class, 'tagList'])
                         ->middleware(['ajax']);
                 }
             );

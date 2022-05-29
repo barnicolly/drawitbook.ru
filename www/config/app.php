@@ -180,18 +180,17 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
+        \App\Ship\Providers\AppServiceProvider::class,
+        \App\Ship\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        App\Providers\ConsoleServiceProvider::class,
+        \App\Ship\Providers\ConsoleServiceProvider::class,
         /*
          * Custom Service Providers
          */
 //        App\Providers\ModulesServiceProvider::class,
-        App\Providers\ComposerServiceProvider::class,
-        App\Providers\RouterServiceProvider::class,
-        App\Providers\HelperServiceProvider::class,
+        \App\Ship\Providers\ComposerServiceProvider::class,
+        \App\Ship\Providers\RouterServiceProvider::class,
+        \App\Ship\Providers\HelperServiceProvider::class,
         /*
          * Vendor Service Providers
          * */
@@ -248,10 +247,10 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Modules' => App\Providers\ModulesServiceProvider::class,
+        'Modules' => \App\Ship\Providers\ModulesServiceProvider::class,
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::class,
-        'Router' => \App\Facades\RouterFacade::class,
+        'Router' => \App\Ship\Facades\RouterFacade::class,
         'UriLocalizer'	=> Waavi\Translation\Facades\UriLocalizer::class,
     ],
 

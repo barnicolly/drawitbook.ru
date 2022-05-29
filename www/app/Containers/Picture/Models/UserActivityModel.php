@@ -3,7 +3,7 @@
 namespace App\Containers\Picture\Models;
 
 use App\Containers\Picture\Enums\UserActivityColumnsEnum;
-use App\Models\CoreModel;
+use App\Ship\Parents\Models\CoreModel;
 
 /**
  * @property int $id

@@ -7,10 +7,10 @@ use App\Containers\Picture\Enums\UserActivityColumnsEnum;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Picture\Models\UserActivityModel;
 use App\Containers\Rate\Enums\RateEnum;
-use App\Http\Controllers\Controller;
+use App\Ship\Parents\Controllers\HttpController;
 use Illuminate\Support\Facades\DB;
 
-class RateService extends Controller
+class RateService extends HttpController
 {
 
     private $_pictureId;

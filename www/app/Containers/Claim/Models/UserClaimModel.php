@@ -3,7 +3,7 @@
 namespace App\Containers\Claim\Models;
 
 use App\Containers\Claim\Enums\UserClaimColumnsEnum;
-use App\Models\CoreModel;
+use App\Ship\Parents\Models\CoreModel;
 
 /**
  * @property int $id

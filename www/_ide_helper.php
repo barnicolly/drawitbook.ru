@@ -1397,7 +1397,7 @@
          */
         public static function handle($input, $output = null)
         {            //Method inherited from \Illuminate\Foundation\Console\Kernel
-                        /** @var \App\Console\Kernel $instance */
+                        /** @var \App\Ship\Kernels\ConsoleKernel $instance */
                         return $instance->handle($input, $output);
         }
                     /**
@@ -1410,7 +1410,7 @@
          */
         public static function terminate($input, $status)
         {            //Method inherited from \Illuminate\Foundation\Console\Kernel
-                        /** @var \App\Console\Kernel $instance */
+                        /** @var \App\Ship\Kernels\ConsoleKernel $instance */
                         $instance->terminate($input, $status);
         }
                     /**
@@ -1423,7 +1423,7 @@
          */
         public static function command($signature, $callback)
         {            //Method inherited from \Illuminate\Foundation\Console\Kernel
-                        /** @var \App\Console\Kernel $instance */
+                        /** @var \App\Ship\Kernels\ConsoleKernel $instance */
                         return $instance->command($signature, $callback);
         }
                     /**
@@ -1435,7 +1435,7 @@
          */
         public static function registerCommand($command)
         {            //Method inherited from \Illuminate\Foundation\Console\Kernel
-                        /** @var \App\Console\Kernel $instance */
+                        /** @var \App\Ship\Kernels\ConsoleKernel $instance */
                         $instance->registerCommand($command);
         }
                     /**
@@ -1450,7 +1450,7 @@
          */
         public static function call($command, $parameters = [], $outputBuffer = null)
         {            //Method inherited from \Illuminate\Foundation\Console\Kernel
-                        /** @var \App\Console\Kernel $instance */
+                        /** @var \App\Ship\Kernels\ConsoleKernel $instance */
                         return $instance->call($command, $parameters, $outputBuffer);
         }
                     /**
@@ -1463,7 +1463,7 @@
          */
         public static function queue($command, $parameters = [])
         {            //Method inherited from \Illuminate\Foundation\Console\Kernel
-                        /** @var \App\Console\Kernel $instance */
+                        /** @var \App\Ship\Kernels\ConsoleKernel $instance */
                         return $instance->queue($command, $parameters);
         }
                     /**
@@ -1474,7 +1474,7 @@
          */
         public static function all()
         {            //Method inherited from \Illuminate\Foundation\Console\Kernel
-                        /** @var \App\Console\Kernel $instance */
+                        /** @var \App\Ship\Kernels\ConsoleKernel $instance */
                         return $instance->all();
         }
                     /**
@@ -1485,7 +1485,7 @@
          */
         public static function output()
         {            //Method inherited from \Illuminate\Foundation\Console\Kernel
-                        /** @var \App\Console\Kernel $instance */
+                        /** @var \App\Ship\Kernels\ConsoleKernel $instance */
                         return $instance->output();
         }
                     /**
@@ -1496,7 +1496,7 @@
          */
         public static function bootstrap()
         {            //Method inherited from \Illuminate\Foundation\Console\Kernel
-                        /** @var \App\Console\Kernel $instance */
+                        /** @var \App\Ship\Kernels\ConsoleKernel $instance */
                         $instance->bootstrap();
         }
                     /**
@@ -1508,7 +1508,7 @@
          */
         public static function setArtisan($artisan)
         {            //Method inherited from \Illuminate\Foundation\Console\Kernel
-                        /** @var \App\Console\Kernel $instance */
+                        /** @var \App\Ship\Kernels\ConsoleKernel $instance */
                         $instance->setArtisan($artisan);
         }
 
@@ -15600,7 +15600,7 @@
          */
         public static function getRouteHome()
         {
-                        /** @var \App\Services\Route\RouteService $instance */
+                        /** @var \App\Ship\Services\Route\RouteService $instance */
                         return $instance->getRouteHome();
         }
                     /**
@@ -15610,7 +15610,7 @@
          */
         public static function getRouteSearch()
         {
-                        /** @var \App\Services\Route\RouteService $instance */
+                        /** @var \App\Ship\Services\Route\RouteService $instance */
                         return $instance->getRouteSearch();
         }
                     /**
@@ -15620,7 +15620,7 @@
          */
         public static function getRouteArt($id)
         {
-                        /** @var \App\Services\Route\RouteService $instance */
+                        /** @var \App\Ship\Services\Route\RouteService $instance */
                         return $instance->getRouteArt($id);
         }
                     /**
@@ -15630,7 +15630,7 @@
          */
         public static function getRouteArtsCell()
         {
-                        /** @var \App\Services\Route\RouteService $instance */
+                        /** @var \App\Ship\Services\Route\RouteService $instance */
                         return $instance->getRouteArtsCell();
         }
                     /**
@@ -15640,7 +15640,7 @@
          */
         public static function getRouteArtsCellTagged($tag)
         {
-                        /** @var \App\Services\Route\RouteService $instance */
+                        /** @var \App\Ship\Services\Route\RouteService $instance */
                         return $instance->getRouteArtsCellTagged($tag);
         }
                     /**
@@ -15650,7 +15650,7 @@
          */
         public static function route($name, $parameters = [], $absolute = true, $lang = null)
         {
-                        /** @var \App\Services\Route\RouteService $instance */
+                        /** @var \App\Ship\Services\Route\RouteService $instance */
                         return $instance->route($name, $parameters, $absolute, $lang);
         }
 
@@ -19684,11 +19684,11 @@ namespace  {
             class URL extends \Illuminate\Support\Facades\URL {}
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
-            class Modules extends \App\Providers\ModulesServiceProvider {}
+            class Modules extends \App\Ship\Providers\ModulesServiceProvider {}
             class HTMLMin extends \HTMLMin\HTMLMin\Facades\HTMLMin {}
             class SEO extends \Artesaos\SEOTools\Facades\SEOTools {}
             class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs {}
-            class Router extends \App\Facades\RouterFacade {}
+            class Router extends \App\Ship\Facades\RouterFacade {}
             class UriLocalizer extends \Waavi\Translation\Facades\UriLocalizer {}
             class SEOMeta extends \Artesaos\SEOTools\Facades\SEOMeta {}
             class OpenGraph extends \Artesaos\SEOTools\Facades\OpenGraph {}

@@ -2,7 +2,7 @@
 
 namespace App\Containers\Search\Tests\Feature\Http\Controllers;
 
-use App\Services\Route\RouteService;
+use App\Ship\Services\Route\RouteService;
 use Tests\TestCase;
 
 class SearchControllerTest extends TestCase

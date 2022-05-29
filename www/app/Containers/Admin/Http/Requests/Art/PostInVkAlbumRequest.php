@@ -2,7 +2,7 @@
 
 namespace App\Containers\Admin\Http\Requests\Art;
 
-use App\Http\Requests\BaseFormRequest;
+use App\Ship\Parents\Requests\BaseFormRequest;
 
 class PostInVkAlbumRequest extends BaseFormRequest
 {

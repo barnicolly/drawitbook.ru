@@ -3,7 +3,7 @@
 namespace App\Containers\Vk\Models;
 
 use App\Containers\Vk\Enums\VkHistoryPostingColumnsEnum;
-use App\Models\CoreModel;
+use App\Ship\Parents\Models\CoreModel;
 
 /**
  * @property int $id

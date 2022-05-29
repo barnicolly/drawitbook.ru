@@ -3,7 +3,7 @@
 namespace App\Entities;
 
 use App\Containers\Translation\Enums\LangEnum;
-use App\Models\CoreModel;
+use App\Ship\Parents\Models\CoreModel;
 
 class MenuLevelsModel extends CoreModel
 {

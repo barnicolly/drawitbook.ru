@@ -2,12 +2,10 @@
 
 namespace App\Containers\User\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use App\Ship\Parents\Models\UserModel;
 
-class User extends Authenticatable
+class User extends UserModel
 {
-    use Notifiable;
 
     /**
      * The attributes that are mass assignable.

@@ -2,7 +2,7 @@
 
 namespace App\Containers\Authentication\Http\Controllers;
 
-use App\Http\Controllers\Auth\RegisterController as parentRegisterController;
+use App\Ship\Parents\Controllers\Auth\RegisterHttpController as parentRegisterController;
 
 class RegisterController extends parentRegisterController
 {

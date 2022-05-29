@@ -2,7 +2,7 @@
 
 namespace App\Containers\Content\Tests\Feature\Http;
 
-use App\Services\Route\RouteService;
+use App\Ship\Services\Route\RouteService;
 use Tests\TestCase;
 
 class ContentControllerTest extends TestCase

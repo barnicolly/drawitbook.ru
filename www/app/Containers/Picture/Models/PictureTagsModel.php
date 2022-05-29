@@ -7,7 +7,7 @@ use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
 use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Tag\Models\SprTagsModel;
 use App\Containers\Translation\Enums\LangEnum;
-use App\Models\CoreModel;
+use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Support\Facades\DB;
 
 class PictureTagsModel extends CoreModel

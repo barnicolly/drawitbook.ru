@@ -4,7 +4,7 @@ namespace App\Containers\Tag\Models;
 
 use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Translation\Enums\LangEnum;
-use App\Models\CoreModel;
+use App\Ship\Parents\Models\CoreModel;
 
 /**
  * @property int $id

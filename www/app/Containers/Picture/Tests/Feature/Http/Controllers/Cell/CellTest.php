@@ -3,7 +3,7 @@
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Cell;
 
 use App\Containers\Translation\Enums\LangEnum;
-use App\Services\Route\RouteService;
+use App\Ship\Services\Route\RouteService;
 use Tests\TestCase;
 
 class CellTest extends TestCase
