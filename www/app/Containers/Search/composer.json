@@ -1,0 +1,6 @@
+{
+    "require": {
+        "foolz/sphinxql-query-builder": "^3"
+    },
+    "require-dev": {}
+}
