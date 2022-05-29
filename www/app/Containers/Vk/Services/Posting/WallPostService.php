@@ -3,6 +3,7 @@
 namespace App\Containers\Vk\Services\Posting;
 
 use App\Containers\Picture\Services\ArtsService;
+use App\Containers\Picture\Tasks\GetPictureIdForPostingTask;
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Vk\Services\Posting\Strategy\Wall\VkWallPostingStrategy;
 
@@ -11,15 +12,18 @@ class WallPostService
     private $artsService;
     private $tagsService;
 
+    private GetPictureIdForPostingTask $getPictureIdForPostingTask;
+
     public function __construct()
     {
         $this->artsService = (new ArtsService());
         $this->tagsService = (new TagsService());
+        $this->getPictureIdForPostingTask = app(GetPictureIdForPostingTask::class);
     }
 
     public function broadcast()
     {
-        $artIdForPosting = $this->artsService->getIdForPost();
+        $artIdForPosting = $this->getPictureIdForPostingTask->run();
         if (!$artIdForPosting) {
             throw new \Exception('Не найден id изображения для постинга');
         }

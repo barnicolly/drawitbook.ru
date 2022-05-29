@@ -31,6 +31,7 @@ class RateHttpController extends HttpController
 
     public function dislike($id, Request $request)
     {
+//        todo-misha проверить существование изображения заранее;
         return $this->activity($id, $request->input('off'), false);
     }
 
@@ -42,6 +43,7 @@ class RateHttpController extends HttpController
             $this->validateInput($data);
             $ip = (new UserService())->getIp();
             $userId = 0;
+//            todo-misha переписать сервис на отдельные команды;
             $ratePicture = new RateService($artId, $ip, $userId);
             $like
                 ? $ratePicture->like($turnOn)
