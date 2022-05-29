@@ -1,0 +1,6 @@
+{
+    "require": {
+        "atehnix/vk-client": "^1.4"
+    },
+    "require-dev": {}
+}

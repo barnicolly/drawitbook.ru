@@ -9,7 +9,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "atehnix/vk-client": "^1.4",
         "bensampo/laravel-enum": "^5",
         "foolz/sphinxql-query-builder": "^3",
         "htmlmin/htmlmin": "^9.0",
