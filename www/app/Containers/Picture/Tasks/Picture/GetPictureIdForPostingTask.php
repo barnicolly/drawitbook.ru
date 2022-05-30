@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Picture\Tasks;
+namespace App\Containers\Picture\Tasks\Picture;
 
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Facades\DB;

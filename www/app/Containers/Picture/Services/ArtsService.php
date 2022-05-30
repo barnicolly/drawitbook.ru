@@ -2,16 +2,15 @@
 
 namespace App\Containers\Picture\Services;
 
-use App\Containers\Picture\Models\PictureExtensionsModel;
-use App\Containers\Picture\Models\PictureModel;
-use App\Containers\Picture\Tasks\GetInterestingPicturesTask;
-use App\Containers\Picture\Tasks\GetPictureByIdTask;
-use App\Containers\Picture\Tasks\GetPicturesByIdsTask;
-use App\Containers\Picture\Tasks\UpdatePictureVkPostingStatusTask;
+use App\Containers\Picture\Enums\PictureExtensionsColumnsEnum;
+use App\Containers\Picture\Tasks\Picture\GetInterestingPicturesTask;
+use App\Containers\Picture\Tasks\Picture\GetPictureByIdTask;
+use App\Containers\Picture\Tasks\Picture\GetPicturesByIdsTask;
+use App\Containers\Picture\Tasks\Picture\UpdatePictureVkPostingStatusTask;
+use App\Containers\Picture\Tasks\PictureExtension\GetPictureExtensionsByPictureIdsTask;
 use App\Containers\Seo\Services\SeoService;
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Vk\Models\VkAlbumPictureModel;
-use Illuminate\Support\Facades\DB;
 
 class ArtsService
 {
@@ -70,7 +69,8 @@ class ArtsService
 
     private function getFilesByArtIds(array $artIds): array
     {
-        return PictureExtensionsModel::getByPictureIds($artIds);
+        $result = app(GetPictureExtensionsByPictureIdsTask::class)->run($artIds);
+        return groupArray($result, PictureExtensionsColumnsEnum::PICTURE_ID);
     }
 
     private function prepareArts(array $arts): array

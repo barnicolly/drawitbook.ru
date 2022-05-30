@@ -20,16 +20,4 @@ class PictureExtensionsModel extends CoreModel
 
     protected $fillable = [];
 
-    public static function getByPictureIds(array $pictureIds): array
-    {
-        $result = self::query()
-            ->whereIn(PictureExtensionsColumnsEnum::PICTURE_ID, $pictureIds)
-            ->where(PictureExtensionsColumnsEnum::IS_DEL, 0)
-            ->getQuery()
-            ->get()
-            ->toArray();
-        $result = self::mapToArray($result);
-        return groupArray($result, PictureExtensionsColumnsEnum::PICTURE_ID);
-    }
-
 }

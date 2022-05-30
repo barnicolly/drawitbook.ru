@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Picture\Tasks;
+namespace App\Containers\Picture\Tasks\Picture;
 
 use App\Containers\Picture\Data\Repositories\PictureRepository;
 use App\Containers\Picture\Enums\PictureColumnsEnum;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Picture\Tasks;
+namespace App\Containers\Picture\Tasks\Picture;
 
-use App\Containers\Picture\Data\Criteria\WherePictureNotDeletedCriteria;
+use App\Containers\Picture\Data\Criteria\Picture\WherePictureNotDeletedCriteria;
 use App\Containers\Picture\Data\Repositories\PictureRepository;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Picture\Data\Criteria;
+namespace App\Containers\Picture\Data\Criteria\Picture;
 
 use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Ship\Parents\Criterias\Criteria;

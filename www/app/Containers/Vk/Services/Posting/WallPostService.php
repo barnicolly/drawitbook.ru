@@ -3,7 +3,7 @@
 namespace App\Containers\Vk\Services\Posting;
 
 use App\Containers\Picture\Services\ArtsService;
-use App\Containers\Picture\Tasks\GetPictureIdForPostingTask;
+use App\Containers\Picture\Tasks\Picture\GetPictureIdForPostingTask;
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Vk\Services\Posting\Strategy\Wall\VkWallPostingStrategy;
 
