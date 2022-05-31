@@ -119,6 +119,8 @@ return [
             'filter' => ['path' => 'Http/Middleware', 'generate' => true],
             'request' => ['path' => 'Http/Requests', 'generate' => true],
             'views' => ['path' => 'Http/Views', 'generate' => true],
+            'actions' => ['path' => 'Actions', 'generate' => true],
+            'tasks' => ['path' => 'Tasks', 'generate' => true],
         ],
     ],
 

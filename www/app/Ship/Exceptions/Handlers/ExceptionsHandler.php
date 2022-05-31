@@ -51,6 +51,7 @@ class ExceptionsHandler extends LaravelExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+//            todo-misha убрать обработку exception в контроллер;
             $url = $request->url();
             if (mb_stripos($url, '/en/risunki-po-kletochkam') !== false) {
                 $redirectTo = str_ireplace('en/risunki-po-kletochkam', 'en/pixel-arts', $url);

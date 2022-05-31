@@ -8,6 +8,7 @@ class PaginatorService
     private CONST DEFAULT_PER_PAGE = 25;
 
     //TODO-misha закрыть текстами определение последней страницы;
+//    todo-misha формировать dto;
     public function formSlice(array $relativePictureIds, int $pageNum): array
     {
         if ($relativePictureIds) {
