@@ -2,14 +2,13 @@
 
 namespace App\Containers\Picture\Http\Controllers;
 
+use App\Containers\Picture\Actions\Cell\GetCellPicturesIndexAction;
 use App\Containers\Picture\Actions\Cell\GetTaggedCellPicturesAction;
 use App\Containers\Picture\Exceptions\NotFoundCellArtsTagException;
 use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
-use App\Containers\Picture\Services\ArtsService;
+use App\Containers\Picture\Http\Requests\Cell\CellArtsIndexRequest;
+use App\Containers\Picture\Http\Requests\Cell\CellTaggedArtsRequest;
 use App\Containers\Picture\Tasks\Picture\Cell\GetPaginatedCellArtsByTagTask;
-use App\Containers\Search\Services\SearchService;
-use App\Containers\Seo\Services\SeoService;
-use App\Containers\Seo\Traits\BreadcrumbsTrait;
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Tag\Tasks\FindRedirectTagSlugByLocaleTask;
 use App\Containers\Translation\Enums\LangEnum;
@@ -26,65 +25,33 @@ use Validator;
 class CellHttpController extends HttpController
 {
 
-    use BreadcrumbsTrait;
-
     private RouteService $routeService;
-    private ArtsService $artsService;
     private TagsService $tagsService;
-    private SeoService $seoService;
-    private SearchService $searchService;
     private TranslationService $translationService;
 
     public function __construct(
         RouteService $routeService,
-        ArtsService $artsService,
-        SeoService $seoService,
         TranslationService $translationService,
         TagsService $tagsService
     ) {
-        //        todo-misha перенести инициализацию в trait;
-        //        $this->breadcrumbs = new CollectionAlias();
         $this->routeService = $routeService;
-        $this->seoService = $seoService;
-        $this->artsService = $artsService;
         $this->tagsService = $tagsService;
         $this->translationService = $translationService;
     }
 
-    public function index()
+    public function index(GetCellPicturesIndexAction $action, CellArtsIndexRequest $request): Response
     {
-        $arts = $this->artsService->getInterestingArts(0, 25);
-        [$title, $description] = $this->seoService->formTitleAndDescriptionCellIndex();
-        $this->addBreadcrumb(__('breadcrumbs.pixel_arts'));
-        $alternateLinks = $this->getAlternateLinks();
-        $viewData = [
-            'arts' => $arts,
-            'breadcrumbs' => $this->breadcrumbs,
-            'alternateLinks' => $alternateLinks,
-        ];
-        $this->setMeta($title, $description);
-        $this->setShareImage(formDefaultShareArtUrlPath(true));
+        [$viewData, $pageMetaDto] = $action->run();
+        $this->setMeta($pageMetaDto->title, $pageMetaDto->description);
+        $this->setShareImage($pageMetaDto->shareImage);
         return response()->view('picture::cell.index', $viewData);
-    }
-
-    private function getAlternateLinks(): array
-    {
-        $links = [];
-        $links[] = [
-            'lang' => LangEnum::RU,
-            'href' => $this->routeService->getRouteArtsCell([], true, LangEnum::RU),
-        ];
-        $links[] = [
-            'lang' => LangEnum::EN,
-            'href' => $this->routeService->getRouteArtsCell([], true, LangEnum::EN),
-        ];
-        return $links;
     }
 
     public function tagged(
         string $tag,
         GetTaggedCellPicturesAction $action,
-        FindRedirectTagSlugByLocaleTask $findRedirectTagSlugByLocaleTask
+        FindRedirectTagSlugByLocaleTask $findRedirectTagSlugByLocaleTask,
+        CellTaggedArtsRequest $request
     ): Response|RedirectResponse {
         try {
             [$viewData, $pageMetaDto] = $action->run($tag);
@@ -103,12 +70,12 @@ class CellHttpController extends HttpController
         } catch (NotFoundRelativeArts $e) {
             return abort(404);
         } catch (Throwable $e) {
-//            todo-misha логирование ошибок;
+            //            todo-misha логирование ошибок;
             abort(500);
         }
     }
 
-//    todo-misha вынести в отдельный контроллер;
+    //    todo-misha вынести в отдельный контроллер;
     public function slice(string $tag, Request $request, GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask)
     {
         $rules = [
