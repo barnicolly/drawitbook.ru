@@ -3,7 +3,8 @@
 use App\Containers\Picture\Http\Controllers\Art\ArtHttpController;
 use App\Containers\Picture\Http\Controllers\Art\ClaimHttpController;
 use App\Containers\Picture\Http\Controllers\Art\RateHttpController;
-use App\Containers\Picture\Http\Controllers\CellHttpController;
+use App\Containers\Picture\Http\Controllers\Cell\CellAjaxController;
+use App\Containers\Picture\Http\Controllers\Cell\CellHttpController;
 
 foreach (config('translator.available_locales') as $prefix) {
     Route::group(
@@ -28,7 +29,7 @@ foreach (config('translator.available_locales') as $prefix) {
                         }
                     );
 
-                    Route::get('/{tag}/slice', [CellHttpController::class, 'slice']);
+                    Route::get('/{tag}/slice', [CellAjaxController::class, 'slice']);
                 }
             );
 
@@ -47,6 +48,7 @@ foreach (config('translator.available_locales') as $prefix) {
                             'middleware' => ['ajax'],
                         ],
                         function () {
+//                            todo-misha вынести в ajax контроллеры и создать трансформеры;
                             Route::post('/{id}/like', [RateHttpController::class, 'like']);
                             Route::post('/{id}/dislike',[RateHttpController::class, 'dislike']);
                             Route::post('/{id}/claim', [ClaimHttpController::class, 'register']);

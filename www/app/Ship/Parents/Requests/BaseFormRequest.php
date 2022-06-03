@@ -30,4 +30,10 @@ abstract class BaseFormRequest extends FormRequest
      * @return bool
      */
     abstract public function authorize();
+
+    public function withValidator($validator): void
+    {
+        $locale = app()->getLocale();
+        $validator->getTranslator()->setLocale($locale);
+    }
 }

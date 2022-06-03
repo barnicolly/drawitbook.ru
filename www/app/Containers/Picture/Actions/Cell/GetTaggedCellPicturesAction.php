@@ -2,12 +2,12 @@
 
 namespace App\Containers\Picture\Actions\Cell;
 
-use App\Containers\Picture\Exceptions\NotFoundCellArtsTagException;
 use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Picture\Tasks\Picture\Cell\FormCellPageAlternativeLocaleLinksTask;
 use App\Containers\Picture\Tasks\Picture\Cell\GetPaginatedCellArtsByTagTask;
 use App\Containers\Seo\Dto\BreadcrumbDto;
 use App\Containers\Seo\Services\SeoService;
+use App\Containers\Tag\Exceptions\NotFoundTagException;
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
@@ -48,7 +48,7 @@ class GetTaggedCellPicturesAction extends Task
     /**
      * @param string $tag
      * @return array<array, PageMetaDto>
-     * @throws NotFoundCellArtsTagException
+     * @throws NotFoundTagException
      * @throws NotFoundRelativeArts
      * @throws UnknownProperties
      */
@@ -58,7 +58,7 @@ class GetTaggedCellPicturesAction extends Task
         $pageNum = 1;
         $tagInfo = $this->tagsService->getByTagSeoName($tag, $locale);
         if (!$tagInfo) {
-            throw new NotFoundCellArtsTagException();
+            throw new NotFoundTagException();
         }
         $viewData = $this->getPaginatedCellArtsByTagTask->run($tagInfo['id'], $pageNum);
         if (!$viewData['isLastSlice']) {

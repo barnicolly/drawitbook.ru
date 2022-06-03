@@ -3,7 +3,7 @@ import {initStackGridAds} from '@js/loaders/ads.loader';
 import {initStackGrid} from '@js/components/stack_grid';
 import throttle from 'lodash/throttle';
 import {sendRequest} from "@js/helpers/utils";
-import { loadFancybox } from '@js/loaders/fancybox.loader';
+import {loadFancybox} from '@js/loaders/fancybox.loader';
 
 export function loadStackGrid() {
     const screenWidth = getScreenWidth();
@@ -44,7 +44,7 @@ export function loadStackGrid() {
                 const url = searchParams
                     ? `${relativeUrlPath}/slice${searchParams}&page=${sliceNumber}`
                     : `${relativeUrlPath}/slice?page=${sliceNumber}`;
-                sendRequest('get',  url, {}, function (res) {
+                sendRequest('get', url, {}, function (res) {
                     let scrollPosition = $(window).scrollTop();
                     if (typeof res.data !== 'undefined' && typeof res.data.html !== 'undefined') {
                         $stackGrid.append(res.data.html);
@@ -57,14 +57,15 @@ export function loadStackGrid() {
                             $(window).scrollTop(scrollPosition);
                             initStackGridAds($stackGrid, sliceNumber);
                         }
-                        const $newImages = $stackGrid.find(`.art-container[data-page="${res.data.page}"]`).find('.fullscreen-image__link');
+                        const paginationData = res.meta.pagination;
+                        const $newImages = $stackGrid.find(`.art-container[data-page="${paginationData.page}"]`).find('.fullscreen-image__link');
                         loadFancybox($newImages);
-                        $stackGrid.attr('data-page', res.data.page);
+                        $stackGrid.attr('data-page', paginationData.page);
                         $downloadBtn.find('.left-arts-cnt').text(res.data.countLeftArtsText);
-                        if (res.data.isLastSlice) {
+                        if (paginationData.isLastPage) {
                             $downloadBtn.remove();
                         }
-                        const $rateContainers = $stackGrid.find(`.art-container[data-page="${res.data.page}"]`).find('.rate-control');
+                        const $rateContainers = $stackGrid.find(`.art-container[data-page="${paginationData.page}"]`).find('.rate-control');
                         if ($rateContainers.length) {
                             $rateContainers.each(function () {
                                 $(this).customRate('init');

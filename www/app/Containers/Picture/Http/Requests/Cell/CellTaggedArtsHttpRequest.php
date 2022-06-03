@@ -4,7 +4,7 @@ namespace App\Containers\Picture\Http\Requests\Cell;
 
 use App\Ship\Parents\Requests\BaseFormRequest;
 
-class CellTaggedArtsRequest extends BaseFormRequest
+class CellTaggedArtsHttpRequest extends BaseFormRequest
 {
     public function authorize()
     {
