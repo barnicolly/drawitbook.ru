@@ -2,9 +2,9 @@
 
 namespace App\Ship\Dto;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use App\Ship\Parents\Dto\Dto;
 
-class PageMetaDto extends DataTransferObject
+class PageMetaDto extends Dto
 {
     public string $title;
 

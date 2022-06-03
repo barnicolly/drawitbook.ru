@@ -7,7 +7,6 @@ use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Arr;
 use Tests\TestCase;
 
-//todo-misha создать отдельный testCase для api
 class CellAjaxControllerTest extends TestCase
 {
 

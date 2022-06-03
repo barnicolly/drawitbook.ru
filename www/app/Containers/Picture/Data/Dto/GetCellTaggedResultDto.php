@@ -2,9 +2,9 @@
 
 namespace App\Containers\Picture\Data\Dto;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use App\Ship\Parents\Dto\Dto;
 
-class GetCellTaggedResultDto extends DataTransferObject
+class GetCellTaggedResultDto extends Dto
 {
 
     public string $html;

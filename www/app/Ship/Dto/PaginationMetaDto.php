@@ -2,9 +2,9 @@
 
 namespace App\Ship\Dto;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use App\Ship\Parents\Dto\Dto;
 
-class PaginationMetaDto extends DataTransferObject
+class PaginationMetaDto extends Dto
 {
 
     public int $page;

@@ -2,9 +2,9 @@
 
 namespace App\Containers\Seo\Dto;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use App\Ship\Parents\Dto\Dto;
 
-class BreadcrumbDto extends DataTransferObject
+class BreadcrumbDto extends Dto
 {
     public string $title;
 
