@@ -9,6 +9,7 @@ use App\Containers\Seo\Dto\BreadcrumbDto;
 use App\Containers\Seo\Services\SeoService;
 use App\Containers\Tag\Exceptions\NotFoundTagException;
 use App\Containers\Tag\Services\TagsService;
+use App\Containers\Tag\Tasks\GetTagBySeoNameTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Dto\PageMetaDto;
@@ -24,10 +25,10 @@ class GetTaggedCellPicturesAction extends Task
 
     private TranslationService $translationService;
     private RouteService $routeService;
-    private TagsService $tagsService;
     private SeoService $seoService;
     private FormCellPageAlternativeLocaleLinksTask $formCellPageAlternativeLocaleLinksTask;
     private GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask;
+    private GetTagBySeoNameTask $getTagBySeoNameTask;
 
     public function __construct(
         TranslationService $translationService,
@@ -35,14 +36,15 @@ class GetTaggedCellPicturesAction extends Task
         TagsService $tagsService,
         SeoService $seoService,
         FormCellPageAlternativeLocaleLinksTask $formCellPageAlternativeLocaleLinksTask,
-        GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask
+        GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask,
+        GetTagBySeoNameTask $getTagBySeoNameTask
     ) {
         $this->translationService = $translationService;
         $this->routeService = $routeService;
-        $this->tagsService = $tagsService;
         $this->seoService = $seoService;
         $this->formCellPageAlternativeLocaleLinksTask = $formCellPageAlternativeLocaleLinksTask;
         $this->getPaginatedCellArtsByTagTask = $getPaginatedCellArtsByTagTask;
+        $this->getTagBySeoNameTask = $getTagBySeoNameTask;
     }
 
     /**
@@ -56,7 +58,7 @@ class GetTaggedCellPicturesAction extends Task
     {
         $locale = app()->getLocale();
         $pageNum = 1;
-        $tagInfo = $this->tagsService->getByTagSeoName($tag, $locale);
+        $tagInfo = $this->getTagBySeoNameTask->run($tag, $locale);
         if (!$tagInfo) {
             throw new NotFoundTagException();
         }

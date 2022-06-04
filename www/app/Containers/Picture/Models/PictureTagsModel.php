@@ -16,6 +16,7 @@ class PictureTagsModel extends CoreModel
 
     protected $fillable = [];
 
+//    todo-misha разгрузить ответственность;
     public static function getNamesWithoutHiddenVkByArtId(int $artId): array
     {
         $query = self::query();

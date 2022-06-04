@@ -3,7 +3,6 @@
 namespace App\Containers\Tag\Services;
 
 use App\Containers\Picture\Models\PictureTagsModel;
-use App\Containers\Tag\Models\SprTagsModel;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Facades\Cache;
 
@@ -11,11 +10,11 @@ class TagsService
 {
     //    todo-misha вынести в модуль picture все что связано с ними, оставить только получение справочных данных;
 
-    private $routeService;
+    private RouteService $routeService;
 
     public function __construct()
     {
-        $this->routeService = (new RouteService());
+        $this->routeService = app(RouteService::class);
     }
 
     public function getNamesWithoutHiddenVkByArtId(int $artId): array
@@ -100,16 +99,6 @@ class TagsService
     public function getPopular(string $locale): array
     {
         return PictureTagsModel::getPopularTags($locale);
-    }
-
-    public function getByTagSeoName(string $tagSeoName, string $locale): ?array
-    {
-        return SprTagsModel::getBySeoName($tagSeoName, $locale);
-    }
-
-    public function getById(int $id): ?array
-    {
-        return SprTagsModel::getById($id);
     }
 
 }

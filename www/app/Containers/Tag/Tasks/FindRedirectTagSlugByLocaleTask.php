@@ -2,30 +2,26 @@
 
 namespace App\Containers\Tag\Tasks;
 
-use App\Containers\Tag\Services\TagsService;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
 
 class FindRedirectTagSlugByLocaleTask extends Task
 {
+    private GetTagBySeoNameTask $getTagBySeoNameTask;
+    private FindTagByIdTask $findTagByIdTask;
 
-    private TagsService $tagsService;
-
-    public function __construct(TagsService $tagsService)
+    public function __construct(GetTagBySeoNameTask $getTagBySeoNameTask, FindTagByIdTask $findTagByIdTask)
     {
-        $this->tagsService = $tagsService;
+        $this->getTagBySeoNameTask = $getTagBySeoNameTask;
+        $this->findTagByIdTask = $findTagByIdTask;
     }
 
-    public function run(string $locale, string $initSlug): ?string
+    public function run(string $locale, string $tagSlug): ?string
     {
         $alternativeLang = $locale === LangEnum::RU ? LangEnum::EN : LangEnum::RU;
-        if ($locale === LangEnum::RU) {
-            $tagInfo = $this->tagsService->getByTagSeoName($initSlug, $alternativeLang);
-        } elseif ($locale === LangEnum::EN) {
-            $tagInfo = $this->tagsService->getByTagSeoName($initSlug, $alternativeLang);
-        }
+        $tagInfo = $this->getTagBySeoNameTask->run($tagSlug, $alternativeLang);
         if (!empty($tagInfo)) {
-            $tagInfo = $this->tagsService->getById($tagInfo['id']);
+            $tagInfo = $this->findTagByIdTask->run($tagInfo['id']);
             $slug = $locale === LangEnum::RU
                 ? $tagInfo['seo']
                 : $tagInfo['slug_en'];

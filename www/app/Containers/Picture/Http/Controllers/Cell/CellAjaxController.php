@@ -7,7 +7,7 @@ use App\Containers\Picture\Http\Requests\Cell\CellTaggedArtsSliceAjaxRequest;
 use App\Containers\Picture\Http\Transformers\Cell\GetCellTaggedArtsSliceTransformer;
 use App\Containers\Picture\Tasks\Picture\Cell\GetPaginatedCellArtsByTagTask;
 use App\Containers\Tag\Exceptions\NotFoundTagException;
-use App\Containers\Tag\Services\TagsService;
+use App\Containers\Tag\Tasks\GetTagBySeoNameTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Dto\PaginationMetaDto;
@@ -19,26 +19,24 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class CellAjaxController extends AjaxController
 {
 
-    private TagsService $tagsService;
     private TranslationService $translationService;
 
     public function __construct(
         TranslationService $translationService,
-        TagsService $tagsService
     ) {
-        $this->tagsService = $tagsService;
         $this->translationService = $translationService;
     }
 
     public function slice(
         string $tag,
         CellTaggedArtsSliceAjaxRequest $request,
-        GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask
+        GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask,
+        GetTagBySeoNameTask $getTagBySeoNameTask
     ): JsonResponse {
         $pageNum = (int) $request->input('page');
         try {
             $locale = app()->getLocale();
-            $tagInfo = $this->tagsService->getByTagSeoName($tag, $locale);
+            $tagInfo = $getTagBySeoNameTask->run($tag, $locale);
             if (!$tagInfo) {
                 throw new NotFoundTagException();
             }

@@ -2,7 +2,7 @@
 
 namespace App\Containers\Picture\Tasks\Picture\Cell;
 
-use App\Containers\Tag\Services\TagsService;
+use App\Containers\Tag\Tasks\FindTagByIdTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
 use App\Ship\Services\Route\RouteService;
@@ -10,13 +10,13 @@ use App\Ship\Services\Route\RouteService;
 class FormCellPageAlternativeLocaleLinksTask extends Task
 {
 
-    private TagsService $tagsService;
     private RouteService $routeService;
+    private FindTagByIdTask $findTagByIdTask;
 
-    public function __construct(TagsService $tagsService, RouteService $routeService)
+    public function __construct(RouteService $routeService, FindTagByIdTask $findTagByIdTask)
     {
-        $this->tagsService = $tagsService;
         $this->routeService = $routeService;
+        $this->findTagByIdTask = $findTagByIdTask;
     }
 
     public function run(string $locale, string $initSlug, int $tagId): array
@@ -25,7 +25,7 @@ class FormCellPageAlternativeLocaleLinksTask extends Task
             'lang' => $locale,
             'tag' => $initSlug,
         ];
-        $tagInfo = $this->tagsService->getById($tagId);
+        $tagInfo = $this->findTagByIdTask->run($tagId);
         $alternativeLang = $locale === LangEnum::RU ? LangEnum::EN : LangEnum::RU;
         $slug = $alternativeLang === LangEnum::RU
             ? $tagInfo['seo']
