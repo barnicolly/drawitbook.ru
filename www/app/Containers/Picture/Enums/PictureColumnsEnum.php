@@ -14,9 +14,9 @@ final class PictureColumnsEnum extends Enum
     public const IN_COMMON = 'in_common';
     public const IN_VK_POSTING = 'in_vk_posting';
 
-    public static $tId = self::TABlE . '.' . self::ID;
-    public static $tDESCRIPTION = self::TABlE . '.' . self::DESCRIPTION;
-    public static $tIS_DEL = self::TABlE . '.' . self::IS_DEL;
-    public static $tIN_COMMON = self::TABlE . '.' . self::IN_COMMON;
-    public static $tIN_VK_POSTING = self::TABlE . '.' . self::IN_VK_POSTING;
+    public static string $tId = self::TABlE . '.' . self::ID;
+    public static string $tDESCRIPTION = self::TABlE . '.' . self::DESCRIPTION;
+    public static string $tIS_DEL = self::TABlE . '.' . self::IS_DEL;
+    public static string $tIN_COMMON = self::TABlE . '.' . self::IN_COMMON;
+    public static string $tIN_VK_POSTING = self::TABlE . '.' . self::IN_VK_POSTING;
 }

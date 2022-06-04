@@ -17,12 +17,12 @@ final class MenuLevelsColumnsEnum extends Enum
     public const SHOW_EN = 'show_en';
     public const COLUMN = 'column';
 
-    public static $tId = self::TABlE . '.' . self::ID;
-    public static $tSPR_TAG_ID = self::TABlE . '.' . self::SPR_TAG_ID;
-    public static $tPARENT_LEVEL_ID = self::TABlE . '.' . self::PARENT_LEVEL_ID;
-    public static $tCUSTOM_NAME_RU = self::TABlE . '.' . self::CUSTOM_NAME_RU;
-    public static $tCUSTOM_NAME_EN = self::TABlE . '.' . self::CUSTOM_NAME_EN;
-    public static $tSHOW_RU = self::TABlE . '.' . self::SHOW_RU;
-    public static $tSHOW_EN = self::TABlE . '.' . self::SHOW_EN;
-    public static $tCOLUMN = self::TABlE . '.' . self::COLUMN;
+    public static string $tId = self::TABlE . '.' . self::ID;
+    public static string $tSPR_TAG_ID = self::TABlE . '.' . self::SPR_TAG_ID;
+    public static string $tPARENT_LEVEL_ID = self::TABlE . '.' . self::PARENT_LEVEL_ID;
+    public static string $tCUSTOM_NAME_RU = self::TABlE . '.' . self::CUSTOM_NAME_RU;
+    public static string $tCUSTOM_NAME_EN = self::TABlE . '.' . self::CUSTOM_NAME_EN;
+    public static string $tSHOW_RU = self::TABlE . '.' . self::SHOW_RU;
+    public static string $tSHOW_EN = self::TABlE . '.' . self::SHOW_EN;
+    public static string $tCOLUMN = self::TABlE . '.' . self::COLUMN;
 }

@@ -13,8 +13,8 @@ final class VkAlbumPictureColumnsEnum extends Enum
     public const PICTURE_ID = 'picture_id';
     public const OUT_VK_IMAGE_ID = 'out_vk_image_id';
 
-    public static $tId = self::TABlE . '.' . self::ID;
-    public static $tVK_ALBUM_ID = self::TABlE . '.' . self::VK_ALBUM_ID;
-    public static $tPICTURE_ID = self::TABlE . '.' . self::PICTURE_ID;
-    public static $tOUT_VK_IMAGE_ID = self::TABlE . '.' . self::OUT_VK_IMAGE_ID;
+    public static string $tId = self::TABlE . '.' . self::ID;
+    public static string $tVK_ALBUM_ID = self::TABlE . '.' . self::VK_ALBUM_ID;
+    public static string $tPICTURE_ID = self::TABlE . '.' . self::PICTURE_ID;
+    public static string $tOUT_VK_IMAGE_ID = self::TABlE . '.' . self::OUT_VK_IMAGE_ID;
 }

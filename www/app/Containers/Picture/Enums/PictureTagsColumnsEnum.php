@@ -12,7 +12,7 @@ final class PictureTagsColumnsEnum extends Enum
     public const PICTURE_ID = 'picture_id';
     public const TAG_ID = 'tag_id';
 
-    public static $tId = self::TABlE . '.' . self::ID;
-    public static $tPICTURE_ID = self::TABlE . '.' . self::PICTURE_ID;
-    public static $tTAG_ID = self::TABlE . '.' . self::TAG_ID;
+    public static string $tId = self::TABlE . '.' . self::ID;
+    public static string $tPICTURE_ID = self::TABlE . '.' . self::PICTURE_ID;
+    public static string $tTAG_ID = self::TABlE . '.' . self::TAG_ID;
 }

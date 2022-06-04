@@ -11,6 +11,6 @@ final class VkHistoryPostingColumnsEnum extends Enum
     public const ID = 'id';
     public const PICTURE_ID = 'picture_id';
 
-    public static $tId = self::TABlE . '.' . self::ID;
-    public static $tPICTURE_ID = self::TABlE . '.' . self::PICTURE_ID;
+    public static string $tId = self::TABlE . '.' . self::ID;
+    public static string $tPICTURE_ID = self::TABlE . '.' . self::PICTURE_ID;
 }
