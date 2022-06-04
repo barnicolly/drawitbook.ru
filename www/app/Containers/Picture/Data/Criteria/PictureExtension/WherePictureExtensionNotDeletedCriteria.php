@@ -12,6 +12,6 @@ class WherePictureExtensionNotDeletedCriteria extends Criteria
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->where(PictureExtensionsColumnsEnum::IS_DEL, SoftDeleteStatusEnum::FALSE);
+        return $model->where(PictureExtensionsColumnsEnum::$tIS_DEL, SoftDeleteStatusEnum::FALSE);
     }
 }

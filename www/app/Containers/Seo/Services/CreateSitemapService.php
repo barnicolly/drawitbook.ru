@@ -2,7 +2,10 @@
 
 namespace App\Containers\Seo\Services;
 
-use App\Containers\Picture\Models\PictureTagsModel;
+use App\Containers\Picture\Enums\PictureColumnsEnum;
+use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
+use App\Containers\Tag\Enums\SprTagsColumnsEnum;
+use App\Containers\Tag\Models\SprTagsModel;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Services\Route\RouteService;
 use Spatie\Sitemap\Sitemap;
@@ -12,11 +15,11 @@ use Spatie\Sitemap\Tags\Url;
 class CreateSitemapService
 {
 
-    private $routeService;
+    private RouteService $routeService;
 
     public function __construct()
     {
-        $this->routeService = (new RouteService());
+        $this->routeService = app(RouteService::class);
     }
 
     public function create()
@@ -37,7 +40,7 @@ class CreateSitemapService
             }
             $sitemap->add($url);
         }
-        $tags = PictureTagsModel::getTagsForSitemap();
+        $tags = $this->getTagsForSitemap();
         if (!empty($tags)) {
             foreach ($tags as $tag) {
                 $locales = [];
@@ -70,5 +73,23 @@ class CreateSitemapService
         SitemapIndex::create()
             ->add(asset('sitemaps/sitemap.xml'))
             ->writeToFile(public_path('sitemap-index.xml'));
+    }
+
+    private function getTagsForSitemap(): array
+    {
+        $query = SprTagsModel::query();
+        $select = [
+            SprTagsColumnsEnum::TABlE . '.*',
+        ];
+        $result = $query
+            ->select($select)
+            ->join(PictureTagsColumnsEnum::TABlE, PictureTagsColumnsEnum::$tTAG_ID, '=', SprTagsColumnsEnum::$tId)
+            ->join(PictureColumnsEnum::TABlE, PictureColumnsEnum::$tId, '=', PictureTagsColumnsEnum::$tPICTURE_ID)
+            ->where(PictureColumnsEnum::$tIS_DEL, 0)
+            ->groupBy(SprTagsColumnsEnum::$tId)
+            ->getQuery()
+            ->get()
+            ->toArray();
+        return SprTagsModel::mapToArray($result);
     }
 }

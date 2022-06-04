@@ -6,7 +6,7 @@ use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Search\Services\SearchService;
 use App\Containers\Seo\Services\SeoService;
-use App\Containers\Tag\Services\TagsService;
+use App\Containers\Tag\Actions\GetPopularTagsAction;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Parents\Controllers\HttpController;
@@ -22,7 +22,6 @@ class SearchHttpController extends HttpController
     private $seoService;
     private $routeService;
     private $artsService;
-    private $tagsService;
     private $translationService;
 
     public function __construct(
@@ -31,17 +30,15 @@ class SearchHttpController extends HttpController
         RouteService $routeService,
         ArtsService $artsService,
         TranslationService $translationService,
-        TagsService $tagsService
     ) {
         $this->searchService = $searchService;
         $this->seoService = $seoService;
         $this->routeService = $routeService;
         $this->artsService = $artsService;
-        $this->tagsService = $tagsService;
         $this->translationService = $translationService;
     }
 
-    public function index(Request $request)
+    public function index(Request $request, GetPopularTagsAction $getPopularTagsAction)
     {
         $filters = $request->input();
         try {
@@ -54,7 +51,7 @@ class SearchHttpController extends HttpController
         }
         if (!$relativeArts) {
             $viewData['popularArts'] = (new ArtsService())->getInterestingArts(0, 10);
-            $viewData['popularTags'] = $this->getPopularTags();
+            $viewData['popularTags'] = $getPopularTagsAction->run();
         }
         $alternateLinks = $this->getAlternateLinks();
         $viewData['alternateLinks'] = $alternateLinks;
@@ -168,13 +165,6 @@ class SearchHttpController extends HttpController
         $isLastSlice = $isLastSlice ?? false;
         $countLeftArts = $countLeftArts ?? 0;
         return [$relativeArts, $countSearchResults, $isLastSlice, $countLeftArts];
-    }
-
-    private function getPopularTags(): array
-    {
-        $locale = app()->getLocale();
-        $popularTags = $this->tagsService->getPopular($locale);
-        return $this->tagsService->setLinkOnTags($popularTags);
     }
 
     private function formSlice(array $relativeArtIds, int $pageNum): array

@@ -17,12 +17,12 @@ final class SprTagsColumnsEnum extends Enum
     public const SLUG_EN = 'slug_en';
     public const IS_POPULAR = 'is_popular';
 
-    public static $tId = self::TABlE . '.' . self::ID;
-    public static $tNAME = self::TABlE . '.' . self::NAME;
-    public static $tNAME_EN = self::TABlE . '.' . self::NAME_EN;
-    public static $tHIDDEN = self::TABlE . '.' . self::HIDDEN;
-    public static $tHIDDEN_VK = self::TABlE . '.' . self::HIDDEN_VK;
-    public static $tSEO = self::TABlE . '.' . self::SEO;
-    public static $tSLUG_EN = self::TABlE . '.' . self::SLUG_EN;
-    public static $tIS_POPULAR = self::TABlE . '.' . self::IS_POPULAR;
+    public static string $tId = self::TABlE . '.' . self::ID;
+    public static string $tNAME = self::TABlE . '.' . self::NAME;
+    public static string $tNAME_EN = self::TABlE . '.' . self::NAME_EN;
+    public static string $tHIDDEN = self::TABlE . '.' . self::HIDDEN;
+    public static string $tHIDDEN_VK = self::TABlE . '.' . self::HIDDEN_VK;
+    public static string $tSEO = self::TABlE . '.' . self::SEO;
+    public static string $tSLUG_EN = self::TABlE . '.' . self::SLUG_EN;
+    public static string $tIS_POPULAR = self::TABlE . '.' . self::IS_POPULAR;
 }

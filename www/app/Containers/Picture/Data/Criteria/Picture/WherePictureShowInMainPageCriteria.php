@@ -12,6 +12,6 @@ class WherePictureShowInMainPageCriteria extends Criteria
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->where(PictureColumnsEnum::IN_COMMON, ShowOnMainPageStatusEnum::ON);
+        return $model->where(PictureColumnsEnum::$tIN_COMMON, ShowOnMainPageStatusEnum::ON);
     }
 }

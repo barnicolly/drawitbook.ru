@@ -6,17 +6,11 @@ use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Ship\Parents\Criterias\Criteria;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
-class WhereTagSlugRuCriteria extends Criteria
+class WhereTagSlugEnIsNotNullCriteria extends Criteria
 {
-    private string $tagSeoName;
-
-    public function __construct(string $tagSeoName)
-    {
-        $this->tagSeoName = $tagSeoName;
-    }
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->where(SprTagsColumnsEnum::$tSEO, '=', $this->tagSeoName);
+        return $model->whereNotNull(SprTagsColumnsEnum::$tSLUG_EN);
     }
 }

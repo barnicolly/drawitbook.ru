@@ -3,6 +3,7 @@
 namespace App\Containers\Tag\Services;
 
 use App\Containers\Picture\Models\PictureTagsModel;
+use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsNamesWithoutHiddenVkByPictureIdTask;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Facades\Cache;
 
@@ -19,7 +20,7 @@ class TagsService
 
     public function getNamesWithoutHiddenVkByArtId(int $artId): array
     {
-        return PictureTagsModel::getNamesWithoutHiddenVkByArtId($artId);
+        return app(GetPictureTagsNamesWithoutHiddenVkByPictureIdTask::class)->run($artId);
     }
 
     public function getTagsByArtIds(array $artIds, bool $withHidden): array
@@ -94,11 +95,6 @@ class TagsService
             );
         }
         return $results;
-    }
-
-    public function getPopular(string $locale): array
-    {
-        return PictureTagsModel::getPopularTags($locale);
     }
 
 }

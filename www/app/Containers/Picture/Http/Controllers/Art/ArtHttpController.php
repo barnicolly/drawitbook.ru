@@ -5,6 +5,7 @@ namespace App\Containers\Picture\Http\Controllers\Art;
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Search\Services\SearchService;
 use App\Containers\Seo\Services\SeoService;
+use App\Containers\Tag\Actions\GetPopularTagsAction;
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Controllers\HttpController;
@@ -33,7 +34,8 @@ class ArtHttpController extends HttpController
     }
 
     public function index(
-        int $artId
+        int $artId,
+        GetPopularTagsAction $getPopularTagsAction
     ) {
         $art = $this->artsService->getById($artId);
         if (!$art) {
@@ -46,7 +48,7 @@ class ArtHttpController extends HttpController
         $viewData = [
             'art' => $art,
             'arts' => $this->formRelativeArts($artTags, $artId),
-            'popularTags' => $this->getPopularTags(),
+            'popularTags' => $getPopularTagsAction->run(),
             'alternateLinks' => $alternateLinks,
         ];
         [$title, $description] = $this->seoService->formTitleAndDescriptionShowArt($artId);
@@ -91,13 +93,6 @@ class ArtHttpController extends HttpController
     {
         $artTags = $this->tagsService->extractNotHiddenTagsFromArt($artTags);
         return $this->tagsService->setLinkOnTags($artTags);
-    }
-
-    private function getPopularTags(): array
-    {
-        $locale = app()->getLocale();
-        $popularTags = $this->tagsService->getPopular($locale);
-        return $this->tagsService->setLinkOnTags($popularTags);
     }
 
 }
