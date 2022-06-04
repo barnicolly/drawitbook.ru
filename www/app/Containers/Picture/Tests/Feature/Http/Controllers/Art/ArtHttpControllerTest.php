@@ -7,7 +7,10 @@ use App\Ship\Services\Route\RouteService;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class ArtTest extends TestCase
+/**
+ * @see \App\Containers\Picture\Http\Controllers\Art\ArtHttpController::index()
+ */
+class ArtHttpControllerTest extends TestCase
 {
 
     /**
@@ -118,7 +121,7 @@ class ArtTest extends TestCase
      *
      * @param string $locale
      */
-    public function testHasAlternate(string $locale)
+    public function testHasAlternate(string $locale): void
     {
         $this->app->setLocale($locale);
         $id = 144;

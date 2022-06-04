@@ -38,6 +38,9 @@ class SearchHttpController extends HttpController
         $this->translationService = $translationService;
     }
 
+    /**
+     * @see \App\Containers\Search\Tests\Feature\Http\Controllers\SearchHttpControllerTest
+     */
     public function index(Request $request, GetPopularTagsAction $getPopularTagsAction)
     {
         $filters = $request->input();
@@ -87,7 +90,7 @@ class SearchHttpController extends HttpController
         return $links;
     }
 
-    //    todo-misha вынести в отдельный контроллер api;
+    //    todo-misha вынести в отдельный контроллер ajax;
     public function slice(Request $request)
     {
         //TODO-misha вынести и объединить с кодом из cell;

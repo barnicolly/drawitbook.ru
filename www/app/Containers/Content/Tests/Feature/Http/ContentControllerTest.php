@@ -2,9 +2,13 @@
 
 namespace App\Containers\Content\Tests\Feature\Http;
 
+use App\Containers\Content\Http\Controllers\ContentHttpController;
 use App\Ship\Services\Route\RouteService;
 use Tests\TestCase;
 
+/**
+ * @see ContentHttpController::index()
+ */
 class ContentControllerTest extends TestCase
 {
 
@@ -25,7 +29,7 @@ class ContentControllerTest extends TestCase
      *
      * @param string $locale
      */
-    public function testHasAlternate(string $locale)
+    public function testHasAlternate(string $locale): void
     {
         $this->app->setLocale($locale);
         $response = $this->get((new RouteService())->getRouteHome());

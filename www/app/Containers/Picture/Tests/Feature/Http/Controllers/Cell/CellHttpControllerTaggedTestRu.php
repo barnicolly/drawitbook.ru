@@ -2,12 +2,16 @@
 
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Cell;
 
+use App\Containers\Picture\Http\Controllers\Cell\CellHttpController;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Services\Route\RouteService;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class CellTestRu extends TestCase
+/**
+ * @see CellHttpController::tagged()
+ */
+class CellHttpControllerTaggedTestRu extends TestCase
 {
 
     public function setUp(): void
@@ -112,25 +116,25 @@ class CellTestRu extends TestCase
         $response->assertRedirect($assetRedirect);
     }
 
-    public function testHasAlternate()
+    public function testHasAlternate(): void
     {
         $response = $this->get((new RouteService())->getRouteArtsCellTagged('cvety'));
         $response->assertSee('<link rel="alternate" href="', false);
     }
 
-    public function testHasNotAlternate()
+    public function testHasNotAlternate(): void
     {
         $response = $this->get((new RouteService())->getRouteArtsCellTagged('imena'));
         $response->assertDontSee('<link rel="alternate" href="', false);
     }
 
-    public function testHasTranslatedTitle()
+    public function testHasTranslatedTitle(): void
     {
         $response = $this->get((new RouteService())->getRouteArtsCellTagged('cvety'));
         $response->assertSee('<title>Рисунки по клеточкам «Цветы» ☆ 84 рисунка</title>', false);
     }
 
-    public function testHasTranslatedDescription()
+    public function testHasTranslatedDescription(): void
     {
         $response = $this->get((new RouteService())->getRouteArtsCellTagged('cvety'));
         $response->assertSee('<meta name="description" content="Рисунки по клеточкам ✎ Цветы ➣ 84 рисунка ➣ Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.">', false);

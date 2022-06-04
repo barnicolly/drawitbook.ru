@@ -2,11 +2,15 @@
 
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Cell;
 
+use App\Containers\Picture\Http\Controllers\Cell\CellHttpController;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Services\Route\RouteService;
 use Tests\TestCase;
 
-class CellTest extends TestCase
+/**
+ * @see CellHttpController::index()
+ */
+class CellHttpControllerIndexTest extends TestCase
 {
 
     /**
@@ -21,28 +25,28 @@ class CellTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testHasEnTranslatedTitle()
+    public function testHasEnTranslatedTitle(): void
     {
         $this->app->setLocale(LangEnum::EN);
         $response = $this->get((new RouteService())->getRouteArtsCell());
         $response->assertSee('<title>Pixel arts | Drawitbook.com</title>', false);
     }
 
-    public function testHasEnTranslatedDescription()
+    public function testHasEnTranslatedDescription(): void
     {
         $this->app->setLocale(LangEnum::EN);
         $response = $this->get((new RouteService())->getRouteArtsCell());
         $response->assertSee('<meta name="description" content="Pixel arts. Black/white and colored schemes of pixel arts from light and simple to complex.">', false);
     }
 
-    public function testHasRuTranslatedTitle()
+    public function testHasRuTranslatedTitle(): void
     {
         $this->app->setLocale(LangEnum::RU);
         $response = $this->get((new RouteService())->getRouteArtsCell());
         $response->assertSee('<title>Рисунки по клеточкам | Drawitbook.com</title>', false);
     }
 
-    public function testHasRuTranslatedDescription()
+    public function testHasRuTranslatedDescription(): void
     {
         $this->app->setLocale(LangEnum::RU);
         $response = $this->get((new RouteService())->getRouteArtsCell());

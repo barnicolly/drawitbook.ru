@@ -19,6 +19,9 @@ class ContentHttpController extends HttpController
     }
 
 //    todo-misha вынести в action + request;
+    /**
+     * @see \App\Containers\Content\Tests\Feature\Http\ContentControllerTest
+     */
     public function index()
     {
         $alternateLinks = $this->getAlternateLinks();

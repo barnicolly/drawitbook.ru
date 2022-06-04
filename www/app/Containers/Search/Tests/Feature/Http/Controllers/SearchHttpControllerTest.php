@@ -2,10 +2,14 @@
 
 namespace App\Containers\Search\Tests\Feature\Http\Controllers;
 
+use App\Containers\Search\Http\Controllers\SearchHttpController;
 use App\Ship\Services\Route\RouteService;
 use Tests\TestCase;
 
-class SearchControllerTest extends TestCase
+/**
+ * @see SearchHttpController::index()
+ */
+class SearchHttpControllerTest extends TestCase
 {
 
     /**
@@ -37,7 +41,7 @@ class SearchControllerTest extends TestCase
      *
      * @param string $locale
      */
-    public function testHasAlternate(string $locale)
+    public function testHasAlternate(string $locale): void
     {
         $this->app->setLocale($locale);
         $response = $this->get((new RouteService())->getRouteSearch());

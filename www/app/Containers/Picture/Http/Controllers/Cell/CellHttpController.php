@@ -26,6 +26,14 @@ class CellHttpController extends HttpController
         $this->routeService = $routeService;
     }
 
+    /**
+     * @param GetCellPicturesIndexAction $action
+     * @param CellArtsIndexHttpRequest $request
+     * @return Response
+     * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
+     *
+     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellHttpControllerIndexTest
+     */
     public function index(GetCellPicturesIndexAction $action, CellArtsIndexHttpRequest $request): Response
     {
         [$viewData, $pageMetaDto] = $action->run();
@@ -34,6 +42,17 @@ class CellHttpController extends HttpController
         return response()->view('picture::cell.index', $viewData);
     }
 
+    /**
+     * @param string $tag
+     * @param GetTaggedCellPicturesAction $action
+     * @param FindRedirectTagSlugByLocaleTask $findRedirectTagSlugByLocaleTask
+     * @param CellTaggedArtsHttpRequest $request
+     * @return Response|RedirectResponse
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     *
+     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellHttpControllerTaggedTestEn
+     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellHttpControllerTaggedTestRu
+     */
     public function tagged(
         string $tag,
         GetTaggedCellPicturesAction $action,

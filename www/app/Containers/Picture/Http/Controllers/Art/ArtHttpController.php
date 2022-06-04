@@ -33,6 +33,9 @@ class ArtHttpController extends HttpController
         $this->routeService = $routeService;
     }
 
+    /**
+     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\ArtHttpControllerTest
+     */
     public function index(
         int $artId,
         GetPopularTagsAction $getPopularTagsAction

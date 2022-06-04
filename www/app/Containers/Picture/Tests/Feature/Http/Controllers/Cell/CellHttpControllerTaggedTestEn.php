@@ -2,12 +2,16 @@
 
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Cell;
 
+use App\Containers\Picture\Http\Controllers\Cell\CellHttpController;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Services\Route\RouteService;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class CellTestEn extends TestCase
+/**
+ * @see CellHttpController::tagged()
+ */
+class CellHttpControllerTaggedTestEn extends TestCase
 {
 
     public function setUp(): void
@@ -112,25 +116,25 @@ class CellTestEn extends TestCase
         $response->assertRedirect($assetRedirect);
     }
 
-    public function testHasNotRedirect()
+    public function testHasNotRedirect(): void
     {
         $response = $this->get((new RouteService())->getRouteArtsCellTagged('imena'));
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
-    public function testHasAlternate()
+    public function testHasAlternate(): void
     {
         $response = $this->get((new RouteService())->getRouteArtsCellTagged('flowers'));
         $response->assertSee('<link rel="alternate" href="', false);
     }
 
-    public function testHasTranslatedTitle()
+    public function testHasTranslatedTitle(): void
     {
         $response = $this->get((new RouteService())->getRouteArtsCellTagged('flowers'));
         $response->assertSee('<title>Pixel arts «Flowers» ☆ 84 arts</title>', false);
     }
 
-    public function testHasTranslatedDescription()
+    public function testHasTranslatedDescription(): void
     {
         $response = $this->get((new RouteService())->getRouteArtsCellTagged('flowers'));
         $response->assertSee('<meta name="description" content="Pixel arts ✎ Flowers ➣ 84 arts ➣ Black/white and colored schemes of pixel arts from light and simple to complex.">', false);
