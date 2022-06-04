@@ -48,6 +48,9 @@ class ContentHttpController extends HttpController
     }
 
 //    todo-misha вынести в контейнер tags;
+//    todo-misha вынести в ajax контейнер;
+//    todo-misha закрыть тестом;
+//    todo-misha создать трансформер;
     public function tagList()
     {
         try {

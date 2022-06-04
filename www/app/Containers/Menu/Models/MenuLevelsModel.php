@@ -25,7 +25,6 @@ class MenuLevelsModel extends CoreModel
 
     public static function getAll(string $locale): array
     {
-        $locale = mb_strtolower($locale);
         $query = self::query();
         $select = [
             MenuLevelsColumnsEnum::$tId,

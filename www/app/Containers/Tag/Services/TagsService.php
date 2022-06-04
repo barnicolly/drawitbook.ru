@@ -2,8 +2,9 @@
 
 namespace App\Containers\Tag\Services;
 
-use App\Containers\Picture\Models\PictureTagsModel;
+use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsByPictureIdsTask;
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsNamesWithoutHiddenVkByPictureIdTask;
+use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsWithCountArtTask;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Facades\Cache;
 
@@ -26,9 +27,10 @@ class TagsService
     public function getTagsByArtIds(array $artIds, bool $withHidden): array
     {
         $locale = app()->getLocale();
-        return PictureTagsModel::getTagsByArtIds($artIds, $withHidden, $locale);
+        return app(GetPictureTagsByPictureIdsTask::class)->run($artIds, $withHidden, $locale);
     }
 
+//    todo-misha добавить кэширующий прокси;
     public function getTagsByArtId(int $artId, bool $withHidden): array
     {
         return $this->getTagsByArtIds([$artId], $withHidden);
@@ -90,7 +92,7 @@ class TagsService
                 $cacheName,
                 config('cache.expiration'),
                 function () use ($limit, $locale) {
-                    return PictureTagsModel::getTagsWithCountArts($limit, $locale);
+                    return app(GetPictureTagsWithCountArtTask::class)->run($limit, $locale);
                 }
             );
         }
