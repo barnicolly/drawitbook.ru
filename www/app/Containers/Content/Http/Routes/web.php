@@ -14,9 +14,6 @@ foreach (config('translator.available_locales') as $prefix) {
                     Route::get('/', [ContentHttpController::class, 'index'])
                         ->middleware(['lower_case', 'no_get'])
                         ->name($prefix . '_home');
-
-                    Route::get('/tag/list', [ContentHttpController::class, 'tagList'])
-                        ->middleware(['ajax']);
                 }
             );
         });

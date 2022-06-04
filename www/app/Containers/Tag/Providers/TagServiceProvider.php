@@ -36,6 +36,7 @@ class TagServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register(RouteServiceProvider::class);
     }
 
     /**

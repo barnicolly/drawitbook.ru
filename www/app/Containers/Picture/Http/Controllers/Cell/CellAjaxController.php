@@ -13,8 +13,8 @@ use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Dto\PaginationMetaDto;
 use App\Ship\Parents\Controllers\AjaxController;
 use Illuminate\Http\JsonResponse;
-use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 
 class CellAjaxController extends AjaxController
 {
@@ -27,6 +27,9 @@ class CellAjaxController extends AjaxController
         $this->translationService = $translationService;
     }
 
+    /**
+     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellAjaxControllerTest
+     */
     public function slice(
         string $tag,
         CellTaggedArtsSliceAjaxRequest $request,
@@ -63,7 +66,7 @@ class CellAjaxController extends AjaxController
             return response()->json($result);
         } catch (NotFoundTagException $e) {
             throw new NotFoundHttpException();
-        } catch (UnknownProperties $e) {
+        } catch (Throwable $e) {
             abort(500);
         }
     }

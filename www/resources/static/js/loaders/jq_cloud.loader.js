@@ -9,8 +9,8 @@ export function loadJQcloud() {
         import (/* webpackChunkName: "jqcloud" */'@plugins/cloud/jqcloud.css');
         import (/* webpackChunkName: "jqcloud" */'@plugins/cloud/jqcloud-1.0.4.min').then(_ => {
             sendRequest('get', getApplyedLocaleLink('/tag/list'), {}, function (res) {
-                if (res.success) {
-                    var cloudTags = res.cloud_items;
+                if (typeof res.data !== 'undefined' && typeof res.data.cloudItems !== 'undefined') {
+                    const cloudTags = res.data.cloudItems;
                     reinitJQcloud(cloudTags);
 
                     function reinitJQcloud(tags) {

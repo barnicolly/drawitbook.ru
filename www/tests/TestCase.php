@@ -3,11 +3,31 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Assert;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
+
+    /**
+     * Make ajax POST request
+     * @param $uri
+     * @param array $data
+     * @return TestResponse
+     */
+    protected function ajaxPost($uri, array $data = []): TestResponse
+    {
+        return $this->post($uri, $data, ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
+    }
+
+    /**
+     * Make ajax GET request
+     */
+    protected function ajaxGet($uri): TestResponse
+    {
+        return $this->get($uri, ['HTTP_X-Requested-With' => 'XMLHttpRequest', 'Accept' => 'application/json']);
+    }
 
     public function assertRouteUsesMiddleware(string $routeName, array $middlewares, bool $exact = false)
     {

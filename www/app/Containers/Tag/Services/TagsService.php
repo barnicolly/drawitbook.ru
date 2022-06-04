@@ -4,9 +4,7 @@ namespace App\Containers\Tag\Services;
 
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsByPictureIdsTask;
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsNamesWithoutHiddenVkByPictureIdTask;
-use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsWithCountArtTask;
 use App\Ship\Services\Route\RouteService;
-use Illuminate\Support\Facades\Cache;
 
 class TagsService
 {
@@ -81,22 +79,6 @@ class TagsService
             }
         }
         return $tags;
-    }
-
-    public function getMostPopular(int $limit, string $locale): array
-    {
-        $cacheName = $locale . '.spr.tag_cloud';
-        $results = Cache::get($cacheName);
-        if (!$results) {
-            $results = Cache::remember(
-                $cacheName,
-                config('cache.expiration'),
-                function () use ($limit, $locale) {
-                    return app(GetPictureTagsWithCountArtTask::class)->run($limit, $locale);
-                }
-            );
-        }
-        return $results;
     }
 
 }
