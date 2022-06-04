@@ -33,7 +33,6 @@ class GetTaggedCellPicturesAction extends Task
     public function __construct(
         TranslationService $translationService,
         RouteService $routeService,
-        TagsService $tagsService,
         SeoService $seoService,
         FormCellPageAlternativeLocaleLinksTask $formCellPageAlternativeLocaleLinksTask,
         GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask,

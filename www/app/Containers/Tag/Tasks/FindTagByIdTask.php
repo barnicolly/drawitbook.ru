@@ -16,6 +16,10 @@ class FindTagByIdTask extends Task
         $this->repository = $repository;
     }
 
+    /**
+     * @param int $id
+     * @return array|null
+     */
     public function run(int $id): ?array
     {
         try {

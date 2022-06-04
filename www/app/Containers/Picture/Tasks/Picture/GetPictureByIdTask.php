@@ -17,6 +17,11 @@ class GetPictureByIdTask extends Task
         $this->repository = $repository;
     }
 
+    /**
+     * @param int $id
+     * @return array|null
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     */
     public function run(int $id): ?array
     {
         try {

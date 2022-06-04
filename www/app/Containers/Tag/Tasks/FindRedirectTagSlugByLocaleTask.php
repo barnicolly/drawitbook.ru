@@ -16,6 +16,12 @@ class FindRedirectTagSlugByLocaleTask extends Task
         $this->findTagByIdTask = $findTagByIdTask;
     }
 
+    /**
+     * @param string $locale
+     * @param string $tagSlug
+     * @return string|null
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     */
     public function run(string $locale, string $tagSlug): ?string
     {
         $alternativeLang = $locale === LangEnum::RU ? LangEnum::EN : LangEnum::RU;

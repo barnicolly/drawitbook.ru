@@ -17,6 +17,11 @@ class GetPictureExtensionsByPictureIdsTask extends Task
         $this->repository = $repository;
     }
 
+    /**
+     * @param array $ids
+     * @return array
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     */
     public function run(array $ids): array
     {
         $this->repository->pushCriteria(new WherePictureExtensionNotDeletedCriteria());

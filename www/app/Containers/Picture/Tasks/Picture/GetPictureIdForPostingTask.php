@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 class GetPictureIdForPostingTask extends Task
 {
 
+    /**
+     * @return int|null
+     */
     public function run(): ?int
     {
         //TODO-misha переписать на query;

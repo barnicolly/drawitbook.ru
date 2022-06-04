@@ -18,6 +18,12 @@ class GetInterestingPicturesTask extends Task
         $this->repository = $repository;
     }
 
+    /**
+     * @param int $excludeId
+     * @param int $limit
+     * @return array
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     */
     public function run(int $excludeId, int $limit): array
     {
         $this->repository->pushCriteria(new WherePictureExcludeIdCriteria($excludeId))

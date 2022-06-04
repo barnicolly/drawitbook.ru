@@ -18,6 +18,10 @@ class GetPopularTagsAction extends Task
         $this->getPopularTagsTask = $getPopularTagsTask;
     }
 
+    /**
+     * @return array
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     */
     public function run(): array
     {
         $locale = app()->getLocale();

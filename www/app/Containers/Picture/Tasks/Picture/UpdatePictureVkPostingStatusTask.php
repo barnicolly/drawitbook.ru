@@ -17,6 +17,12 @@ class UpdatePictureVkPostingStatusTask extends Task
         $this->repository = $repository;
     }
 
+    /**
+     * @param int $id
+     * @param int $status
+     * @return PictureModel
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
     public function run(int $id, int $status): PictureModel
     {
         $attributes = [

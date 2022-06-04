@@ -20,6 +20,12 @@ class GetTagBySeoNameTask extends Task
         $this->repository = $repository;
     }
 
+    /**
+     * @param string $tagSeoName
+     * @param string $locale
+     * @return array|null
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     */
     public function run(string $tagSeoName, string $locale): ?array
     {
         $columns = new Collection();
