@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Picture\Models;
+namespace App\Containers\Rate\Models;
 
-use App\Containers\Picture\Enums\UserActivityColumnsEnum;
+use App\Containers\Rate\Enums\UserActivityColumnsEnum;
 use App\Ship\Parents\Models\CoreModel;
 
 /**
@@ -17,7 +17,9 @@ use App\Ship\Parents\Models\CoreModel;
 class UserActivityModel extends CoreModel
 {
     protected $table = UserActivityColumnsEnum::TABlE;
+
     public $timestamps = true;
+
     protected $fillable = [
         UserActivityColumnsEnum::ACTIVITY,
     ];

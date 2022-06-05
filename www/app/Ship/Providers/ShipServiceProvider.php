@@ -30,6 +30,11 @@ class ShipServiceProvider extends ServiceProvider
         $this->app->register(ComposerServiceProvider::class);
         $this->app->register(RouterServiceProvider::class);
         $this->app->register(HelperServiceProvider::class);
+        /**
+         * @see \Nwidart\Modules\Commands\MigrationMakeCommand::getTemplateContents()
+         * @see \Nwidart\Modules\Support\Migrations\NameParser::getPattern()
+         */
+        $this->loadMigrationsFrom(app_path('Ship/Migrations'));
     }
 
     private function registerConfig()

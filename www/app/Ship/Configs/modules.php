@@ -91,7 +91,7 @@ return [
         |
         */
 
-        'migration' => base_path('database/migrations'),
+        'migration' => base_path('data/migrations'),
         /*
         |--------------------------------------------------------------------------
         | Generator path

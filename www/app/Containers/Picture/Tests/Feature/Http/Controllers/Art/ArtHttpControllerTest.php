@@ -23,7 +23,8 @@ class ArtHttpControllerTest extends TestCase
         $this->app->setLocale($locale);
         $id = 144;
         $response = $this->get((new RouteService())->getRouteArt($id));
-        $response->assertSee('<meta name="robots" content="noindex">', false);
+        $response->assertOk()
+            ->assertSee('<meta name="robots" content="noindex">', false);
     }
 
     public function providerTestHasRedirects(): array
@@ -126,6 +127,7 @@ class ArtHttpControllerTest extends TestCase
         $this->app->setLocale($locale);
         $id = 144;
         $response = $this->get((new RouteService())->getRouteArt($id));
-        $response->assertSee('<link rel="alternate" href="', false);
+        $response->assertOk()
+            ->assertSee('<link rel="alternate" href="', false);
     }
 }

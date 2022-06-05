@@ -3,10 +3,10 @@
 namespace App\Containers\Picture\Services;
 
 use App\Containers\Picture\Enums\PictureColumnsEnum;
-use App\Containers\Picture\Enums\UserActivityColumnsEnum;
 use App\Containers\Picture\Models\PictureModel;
-use App\Containers\Picture\Models\UserActivityModel;
 use App\Containers\Rate\Enums\RateEnum;
+use App\Containers\Rate\Enums\UserActivityColumnsEnum;
+use App\Containers\Rate\Models\UserActivityModel;
 use App\Ship\Enums\SoftDeleteStatusEnum;
 use App\Ship\Parents\Controllers\HttpController;
 use Illuminate\Support\Facades\DB;
