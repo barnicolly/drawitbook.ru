@@ -13,6 +13,7 @@ use App\Ship\Parents\Controllers\HttpController;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class CellHttpController extends HttpController
@@ -50,7 +51,7 @@ class CellHttpController extends HttpController
      * @return Response|RedirectResponse
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
-     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellHttpControllerTaggedTestEn
+     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellHttpControllerTaggedTest
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellHttpControllerTaggedTestRu
      */
     public function tagged(
@@ -76,7 +77,7 @@ class CellHttpController extends HttpController
         } catch (NotFoundRelativeArts $e) {
             return abort(404);
         } catch (Throwable $e) {
-            //            todo-misha логирование ошибок;
+            Log::error($e->getMessage());
             abort(500);
         }
     }
