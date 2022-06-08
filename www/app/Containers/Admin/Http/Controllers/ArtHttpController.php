@@ -33,7 +33,7 @@ class ArtHttpController extends HttpController
             if (!$this->artsService->isArtExist($data['id'])) {
                 return ['success' => false];
             }
-            $this->artsService->updateVkPosting($data['id'], VkPostingStatusEnum::ON);
+            $this->artsService->updateVkPosting($data['id'], VkPostingStatusEnum::TRUE);
         } catch (\Exception $e) {
             return ['success' => false];
         }
@@ -47,7 +47,7 @@ class ArtHttpController extends HttpController
             if (!$this->artsService->isArtExist($data['id'])) {
                 return ['success' => false];
             }
-            $this->artsService->updateVkPosting($data['id'], VkPostingStatusEnum::OFF);
+            $this->artsService->updateVkPosting($data['id'], VkPostingStatusEnum::FALSE);
         } catch (\Exception $e) {
             return ['success' => false];
         }

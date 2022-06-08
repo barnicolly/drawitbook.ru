@@ -3,6 +3,7 @@
 namespace App\Containers\Picture\Http\Controllers\Cell;
 
 use App\Containers\Picture\Data\Dto\GetCellTaggedResultDto;
+use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Picture\Http\Requests\Cell\CellTaggedArtsSliceAjaxRequest;
 use App\Containers\Picture\Http\Transformers\Cell\GetCellTaggedArtsSliceTransformer;
 use App\Containers\Picture\Tasks\Picture\Cell\GetPaginatedCellArtsByTagTask;
@@ -64,7 +65,7 @@ class CellAjaxController extends AjaxController
             $result = fractal()->item($getCellTaggedResultDto, new GetCellTaggedArtsSliceTransformer())
                 ->addMeta(['pagination' => $paginationMetaDto]);
             return response()->json($result);
-        } catch (NotFoundTagException $e) {
+        } catch (NotFoundTagException|NotFoundRelativeArts $e) {
             throw new NotFoundHttpException();
         } catch (Throwable $e) {
             abort(500);

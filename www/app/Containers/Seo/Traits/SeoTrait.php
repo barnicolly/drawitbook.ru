@@ -24,14 +24,16 @@ trait SeoTrait
         return $this;
     }
 
+//    todo-misha переделать на прием ДТО;
     public function setShareImage(string $relativeShareImgPath): self
     {
-        if (file_exists(public_path($relativeShareImgPath))) {
-            [$width, $height] = getimagesize(public_path($relativeShareImgPath));
-            OpenGraph::addImage(asset($relativeShareImgPath), ['width' => $width, 'height' => $height]);
-            TwitterCard::setImage(asset($relativeShareImgPath));
-            TwitterCard::addValue('card', 'summary_large_image');
-        }
+//        if (file_exists(public_path($relativeShareImgPath))) {
+//            [$width, $height] = getimagesize(public_path($relativeShareImgPath));
+//            OpenGraph::addImage(asset($relativeShareImgPath), ['width' => $width, 'height' => $height]);
+//            TwitterCard::setImage(asset($relativeShareImgPath));
+//            TwitterCard::addValue('card', 'summary_large_image');
+//        }
+//        todo-misha перенести установку url;
         $url = urldecode(URL::current());
         OpenGraph::setUrl($url);
         TwitterCard::setUrl($url);

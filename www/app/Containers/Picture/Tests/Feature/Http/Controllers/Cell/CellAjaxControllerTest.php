@@ -3,35 +3,38 @@
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Cell;
 
 use App\Containers\Picture\Http\Controllers\Cell\CellAjaxController;
+use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
+use App\Containers\Tag\Tests\Traits\CreateTagTrait;
 use App\Containers\Translation\Enums\LangEnum;
-use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Arr;
-use Tests\TestCase;
+use App\Ship\Parents\Tests\TestCase;
 
 /**
  * @see CellAjaxController::slice()
  */
 class CellAjaxControllerTest extends TestCase
 {
-
-    private string $url;
+    use CreateTagTrait, CreatePictureWithRelationsTrait;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->app->setLocale(LangEnum::RU);
-        $tag = 'medved';
-        $url = (new RouteService())->getRouteArtsCellTagged($tag);
-        $this->url = $url . '/slice';
     }
 
     public function testGetCellTaggedArtsSliceOk(): void
     {
-        $page = 2;
+        $this->app->setLocale(LangEnum::RU);
+        $tag = $this->createTag();
+        $url = $this->routeService->getRouteArtsCellTagged($tag->seo);
+        $page = 1;
         $params = ['page' => $page];
-        $this->url .= '?' . http_build_query($params);
+        $url .= '/slice?' . http_build_query($params);
+        for ($index = 1; $index < 30; $index++) {
+            [$picture] = $this->createPictureWithFile();
+            $this->createPictureTag($picture, $tag);
+        }
 
-        $response = $this->ajaxGet($this->url);
+        $response = $this->ajaxGet($url);
 
         $response->assertOk()
             ->assertJsonStructure(
@@ -53,9 +56,30 @@ class CellAjaxControllerTest extends TestCase
         self::assertFalse(Arr::get($result, 'meta.pagination.isLastPage'));
     }
 
+    public function testGetCellTaggedArtsSliceNotFound(): void
+    {
+        $this->app->setLocale(LangEnum::RU);
+        $tag = $this->createTag();
+        $url = $this->routeService->getRouteArtsCellTagged($tag->seo);
+        $page = 2;
+        $params = ['page' => $page];
+        $url .= '/slice?' . http_build_query($params);
+            [$picture] = $this->createPictureWithFile();
+            $this->createPictureTag($picture, $tag);
+
+        $response = $this->ajaxGet($url);
+
+        $response->assertNotFound();
+    }
+
     public function testGetCellTaggedArtsSliceWithoutRequiredParam(): void
     {
-        $response = $this->ajaxGet($this->url);
+        $this->app->setLocale(LangEnum::RU);
+        $tag = $this->createTag();
+        $url = $this->routeService->getRouteArtsCellTagged($tag->seo);
+        $url .= '/slice';
+
+        $response = $this->ajaxGet($url);
 
         $response->assertUnprocessable()
             ->assertJsonValidationErrorFor('page');
