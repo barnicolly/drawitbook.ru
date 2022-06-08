@@ -4,7 +4,7 @@ namespace App\Containers\Search\Tests\Feature\Http\Controllers;
 
 use App\Containers\Search\Http\Controllers\SearchHttpController;
 use App\Ship\Services\Route\RouteService;
-use Tests\TestCase;
+use App\Ship\Parents\Tests\TestCase;
 
 /**
  * @see SearchHttpController::index()

@@ -3,7 +3,7 @@
 namespace App\Containers\Tag\Tests\Feature\Http\Controllers;
 
 use App\Containers\Tag\Http\Controllers\TagAjaxController;
-use Tests\TestCase;
+use App\Ship\Parents\Tests\TestCase;
 
 /**
  * @see TagAjaxController::getListPopularTagsWithCountArts()

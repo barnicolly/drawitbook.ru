@@ -4,7 +4,7 @@ namespace App\Containers\Translation\Tests\Unit\Services;
 
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
-use Tests\TestCase;
+use App\Ship\Parents\Tests\TestCase;
 
 class TranslationServiceTest extends TestCase
 {

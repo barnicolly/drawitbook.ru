@@ -4,7 +4,7 @@ namespace App\Containers\Content\Tests\Feature\Http;
 
 use App\Containers\Content\Http\Controllers\ContentHttpController;
 use App\Ship\Services\Route\RouteService;
-use Tests\TestCase;
+use App\Ship\Parents\Tests\TestCase;
 
 /**
  * @see ContentHttpController::index()
