@@ -13,6 +13,8 @@ final class PictureColumnsEnum extends Enum
     public const IS_DEL = 'is_del';
     public const IN_COMMON = 'in_common';
     public const IN_VK_POSTING = 'in_vk_posting';
+    public const CREATED_AT = 'created_at';
+    public const UPDATED_AT = 'updated_at';
 
     public static string $tId = self::TABlE . '.' . self::ID;
     public static string $tDESCRIPTION = self::TABlE . '.' . self::DESCRIPTION;

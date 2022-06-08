@@ -6,6 +6,6 @@ use BenSampo\Enum\Enum;
 
 final class VkPostingStatusEnum extends Enum
 {
-    public const OFF = 0;
-    public const ON = 1;
+    public const FALSE = 0;
+    public const TRUE = 1;
 }
