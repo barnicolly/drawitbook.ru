@@ -14,6 +14,7 @@ class RouteHasMiddlewareTest extends TestCase
         foreach (LangEnum::asArray() as $prefix) {
             $routes[] = $prefix . '_arts.cell';
             $routes[] = $prefix . '_arts.cell.tagged';
+            $routes[] = $prefix . '_art';
         }
         foreach ($routes as $routeName) {
             $this->assertRouteUsesMiddleware($routeName, ['lower_case', 'no_get']);

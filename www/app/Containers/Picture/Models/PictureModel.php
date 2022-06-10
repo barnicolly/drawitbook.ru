@@ -4,6 +4,7 @@ namespace App\Containers\Picture\Models;
 
 use App\Containers\Picture\Data\Factories\PictureModelFactory;
 use App\Containers\Picture\Enums\PictureColumnsEnum;
+use App\Containers\Picture\Enums\PictureExtensionsColumnsEnum;
 use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,7 +29,11 @@ class PictureModel extends CoreModel
 
     public function extensions(): HasMany
     {
-        return $this->hasMany(PictureExtensionsModel::class, 'picture_id', 'id');
+        return $this->hasMany(
+            PictureExtensionsModel::class,
+            PictureExtensionsColumnsEnum::PICTURE_ID,
+            PictureColumnsEnum::ID
+        );
     }
 
     protected static function newFactory(): PictureModelFactory

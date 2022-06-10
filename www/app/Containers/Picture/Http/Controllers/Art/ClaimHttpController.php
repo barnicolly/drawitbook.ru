@@ -8,10 +8,11 @@ use App\Containers\Picture\Services\CreateClaimValidationService;
 use App\Containers\User\Services\UserService;
 use App\Ship\Parents\Controllers\HttpController;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ClaimHttpController extends HttpController
 {
-    private $artsService;
+    private ArtsService $artsService;
 
     public function __construct(ArtsService $artsService)
     {
@@ -22,12 +23,14 @@ class ClaimHttpController extends HttpController
     {
         $data = ['id' => $id, 'reason' => $request->input('reason')];
         $result['success'] = false;
+//        todo-misha вынести валидацию;
         if (!(new CreateClaimValidationService())->validate($data)) {
-            return response($result);
+            return response($result, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+//        todo-misha проверить в request;
         $art = $this->artsService->isArtExist($id);
-        if ($art === null) {
-            return response($result);
+        if (!$art) {
+            return response($result, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         $this->createClaim($id, $data['reason']);
         $result['success'] = true;

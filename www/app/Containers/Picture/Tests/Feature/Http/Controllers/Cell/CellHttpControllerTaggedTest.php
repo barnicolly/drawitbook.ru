@@ -98,6 +98,29 @@ class CellHttpControllerTaggedTest extends TestCase
         $response->assertRedirect($assetRedirect);
     }
 
+    /**
+     * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
+     *
+     * @param string $locale
+     */
+    public function testHasAlternativeLink(string $locale): void
+    {
+        $this->app->setLocale($locale);
+        $tag = $this->createTag();
+            [$picture] = $this->createPictureWithFile();
+            $this->createPictureTag($picture, $tag);
+
+        $url = $this->routeService->getRouteArtsCellTagged($tag->seo_lang->current->slug);
+        $response = $this->get($url);
+
+        $alternativeLang = $tag->seo_lang->alternative->locale;
+        $alternativeUrl = $this->routeService->getRouteArtsCellTagged($tag->seo_lang->alternative->slug, true, $alternativeLang);
+        $response->assertSee(
+            "<link rel=\"alternate\" href=\"$alternativeUrl\" hreflang=\"{$alternativeLang}\">",
+            false
+        );
+    }
+
     //  ------------------------  Specific tests for En locale ------------------------
 
     public function testEnNoRedirect(): void
@@ -126,12 +149,6 @@ class CellHttpControllerTaggedTest extends TestCase
         $response->assertSee("<title>Pixel arts «{$tag->name_en}» ☆ $countPictures arts</title>", false);
         $response->assertSee(
             "<meta name=\"description\" content=\"Pixel arts ✎ {$tag->name_en} ➣ $countPictures arts ➣ Black/white and colored schemes of pixel arts from light and simple to complex.\">",
-            false
-        );
-        $alternativeLang = LangEnum::RU;
-        $alternativeUrl = $this->routeService->getRouteArtsCellTagged($tag->seo, true, $alternativeLang);
-        $response->assertSee(
-            "<link rel=\"alternate\" href=\"$alternativeUrl\" hreflang=\"{$alternativeLang}\">",
             false
         );
     }
@@ -167,12 +184,6 @@ class CellHttpControllerTaggedTest extends TestCase
         $response->assertSee("<title>Рисунки по клеточкам «{$tag->name}» ☆ {$countPictures} рисунка</title>", false);
         $response->assertSee(
             "<meta name=\"description\" content=\"Рисунки по клеточкам ✎ {$tag->name} ➣ {$countPictures} рисунка ➣ Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.\">",
-            false
-        );
-        $alternativeLang = LangEnum::EN;
-        $alternativeUrl = $this->routeService->getRouteArtsCellTagged($tag->slug_en, true, $alternativeLang);
-        $response->assertSee(
-            "<link rel=\"alternate\" href=\"$alternativeUrl\" hreflang=\"{$alternativeLang}\">",
             false
         );
     }

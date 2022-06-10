@@ -49,7 +49,7 @@ foreach (config('translator.available_locales') as $prefix) {
                             'middleware' => ['ajax'],
                         ],
                         function () {
-                            //                            todo-misha вынести в ajax контроллеры и создать трансформеры;
+                            // todo-misha вынести в ajax контроллеры и создать трансформеры;
                             Route::post('/{id}/like', [RateHttpController::class, 'like']);
                             Route::post('/{id}/dislike', [RateHttpController::class, 'dislike']);
                             Route::post('/{id}/claim', [ClaimHttpController::class, 'register']);
