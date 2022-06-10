@@ -32,7 +32,13 @@ abstract class TestCase extends BaseTestCase
      */
     protected function ajaxPost($uri, array $data = []): TestResponse
     {
-        return $this->post($uri, $data, ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
+        \Session::start();
+        $data = array_merge($data, [
+            "_token" => csrf_token(),
+        ]);
+        return $this->post($uri, $data, [
+            'HTTP_X-Requested-With' => 'XMLHttpRequest',
+        ]);
     }
 
     /**
@@ -40,7 +46,13 @@ abstract class TestCase extends BaseTestCase
      */
     protected function ajaxGet($uri): TestResponse
     {
-        return $this->get($uri, ['HTTP_X-Requested-With' => 'XMLHttpRequest', 'Accept' => 'application/json']);
+        return $this->get(
+            $uri,
+            [
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
+                'Accept' => 'application/json',
+            ]
+        );
     }
 
     public function assertRouteUsesMiddleware(string $routeName, array $middlewares, bool $exact = false): void
