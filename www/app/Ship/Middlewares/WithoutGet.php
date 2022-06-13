@@ -2,16 +2,20 @@
 
 namespace App\Ship\Middlewares;
 
-class WithoutGet
+use App\Ship\Parents\Contracts\MiddlewareContract;
+use Closure;
+use Illuminate\Http\Request;
+
+class WithoutGet implements MiddlewareContract
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
-    public function handle($request, \Closure $next)
+    public function handle($request, Closure $next): mixed
     {
         $data = $request->input();
         $redirectUrl = urldecode($request->getPathInfo());

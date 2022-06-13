@@ -2,10 +2,11 @@
 
 namespace App\Ship\Middlewares;
 
+use App\Ship\Parents\Contracts\MiddlewareContract;
 use Closure;
 use Illuminate\Http\Request;
 
-class InLowerCase
+class InLowerCase implements MiddlewareContract
 {
     /**
      * Handle an incoming request.
@@ -14,7 +15,7 @@ class InLowerCase
      * @param  Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         $url = urldecode($request->getPathInfo());
         $assert = trim(mb_strtolower(urldecode($request->getPathInfo())));

@@ -2,16 +2,21 @@
 
 namespace App\Ship\Middlewares;
 
-class OnlyAjax
+use App\Ship\Parents\Contracts\MiddlewareContract;
+use Closure;
+use Illuminate\Http\Request;
+
+class OnlyAjax implements MiddlewareContract
 {
+//    todo-misha закрыть тестом;
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param  Request $request
+     * @param  Closure $next
      * @return mixed
      */
-    public function handle($request, \Closure $next)
+    public function handle($request, Closure $next): mixed
     {
         if (!$request->ajax())
             return response('Forbidden.', 403);
