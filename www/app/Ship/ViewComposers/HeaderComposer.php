@@ -8,11 +8,11 @@ use Illuminate\View\View;
 class HeaderComposer
 {
 
-    private $menuGroupService;
+    private MenuGroupService $menuGroupService;
 
-    public function __construct()
+    public function __construct(MenuGroupService $menuGroupService)
     {
-        $this->menuGroupService = (new MenuGroupService());
+        $this->menuGroupService = $menuGroupService;
     }
 
     public function compose(View $view): View

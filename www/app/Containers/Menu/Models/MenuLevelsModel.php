@@ -36,7 +36,7 @@ class MenuLevelsModel extends CoreModel
                 $select,
                 [
                     SprTagsColumnsEnum::$tNAME_EN . ' as name',
-                    SprTagsColumnsEnum::$tSLUG_EN . ' as slug',
+                    SprTagsColumnsEnum::$tSLUG_EN . ' as seo',
                     MenuLevelsColumnsEnum::$tCUSTOM_NAME_EN . ' as customName',
                 ]
             );

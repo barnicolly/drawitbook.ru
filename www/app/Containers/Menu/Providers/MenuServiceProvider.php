@@ -2,6 +2,7 @@
 
 namespace App\Containers\Menu\Providers;
 
+use App\Containers\Menu\Services\MenuGroupService;
 use Illuminate\Support\ServiceProvider;
 
 class MenuServiceProvider extends ServiceProvider
@@ -36,6 +37,9 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(MenuGroupService::class, function ($app) {
+            return new MenuGroupService();
+        });
     }
 
     /**

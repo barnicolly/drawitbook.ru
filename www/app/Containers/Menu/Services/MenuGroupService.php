@@ -32,6 +32,7 @@ class MenuGroupService
         return $results;
     }
 
+//    todo-misha вынести в таск и закрыть тестом;
     private function getData(string $locale): array
     {
         $items = MenuLevelsModel::getAll($locale);
@@ -43,13 +44,13 @@ class MenuGroupService
             $columnId = $parentLevelId
                 ? $relationItemIdWithColumn[$parentLevelId]
                 : $relationItemIdWithColumn[$levelId];
-            $slug = $item['slug'] ?? '';
+            $slug = $item['seo'];
             $title = $item['customName'] ?? $item['name'] ?? '';
             if ($columnId && empty($result[$columnId])) {
                 $result[$columnId] = [];
             }
             $info = [
-                'link' => $slug ? $this->routeService->getRouteArtsCellTagged($slug) : '',
+                'link' => $slug ? $this->routeService->getRouteArtsCellTagged($slug): '',
                 'title' => $title,
                 'id' => $levelId,
             ];

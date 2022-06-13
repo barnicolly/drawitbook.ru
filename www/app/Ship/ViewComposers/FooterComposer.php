@@ -8,11 +8,11 @@ use Illuminate\View\View;
 
 class FooterComposer
 {
-    private $menuGroupService;
+    private MenuGroupService $menuGroupService;
 
-    public function __construct()
+    public function __construct(MenuGroupService $menuGroupService)
     {
-        $this->menuGroupService = (new MenuGroupService());
+        $this->menuGroupService = $menuGroupService;
     }
 
     public function compose(View $view): View
@@ -32,13 +32,13 @@ class FooterComposer
                 'lang' => LangEnum::EN,
                 'selected' => LangEnum::EN === $selectedLocale,
                 'src' => 'en.png',
-                'title' => 'English'
+                'title' => 'English',
             ],
             [
                 'lang' => LangEnum::RU,
                 'selected' => LangEnum::RU === $selectedLocale,
                 'src' => 'ru.png',
-                'title' => 'Русский'
+                'title' => 'Русский',
             ],
         ];
     }
