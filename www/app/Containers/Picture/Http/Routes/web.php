@@ -44,14 +44,22 @@ foreach (config('translator.available_locales') as $prefix) {
                         ->middleware(['lower_case', 'no_get'])
                         ->name($prefix . '_art');
 
+                    // todo-misha вынести в ajax контроллеры и создать трансформеры;
                     Route::group(
                         [
                             'middleware' => ['ajax'],
                         ],
                         function () {
-                            // todo-misha вынести в ajax контроллеры и создать трансформеры;
                             Route::post('/{id}/like', [RateHttpController::class, 'like']);
                             Route::post('/{id}/dislike', [RateHttpController::class, 'dislike']);
+                        }
+                    );
+
+                    Route::group(
+                        [
+                            'middleware' => ['ajax'],
+                        ],
+                        function () {
                             Route::post('/{id}/claim', [ClaimHttpController::class, 'register']);
                         }
                     );

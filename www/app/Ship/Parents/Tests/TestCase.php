@@ -112,10 +112,12 @@ abstract class TestCase extends BaseTestCase
         if (!empty($tableNames)) {
             $tableNamesForTruncate = array_diff($tableNames, $excludeTables);
             if (!empty($tableNamesForTruncate)) {
-                Schema::disableForeignKeyConstraints();
+                $queries = [];
                 foreach ($tableNamesForTruncate as $tableName) {
-                    DB::table($tableName)->truncate();
+                    $queries[] ='TRUNCATE TABLE ' . $tableName . ';';
                 }
+                Schema::disableForeignKeyConstraints();
+                DB::unprepared(implode(' ', $queries));
                 Schema::enableForeignKeyConstraints();
             }
         }

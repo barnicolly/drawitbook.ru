@@ -19,6 +19,9 @@ class ClaimHttpController extends HttpController
         $this->artsService = $artsService;
     }
 
+    /**
+     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\ClaimHttpControllerTest
+     */
     public function register($id, Request $request)
     {
         $data = ['id' => $id, 'reason' => $request->input('reason')];

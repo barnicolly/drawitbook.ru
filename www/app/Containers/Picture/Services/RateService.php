@@ -9,6 +9,7 @@ use App\Containers\Rate\Enums\UserActivityColumnsEnum;
 use App\Containers\Rate\Models\UserActivityModel;
 use App\Ship\Enums\SoftDeleteStatusEnum;
 use App\Ship\Parents\Controllers\HttpController;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class RateService extends HttpController
@@ -61,17 +62,21 @@ class RateService extends HttpController
             ->where(UserActivityColumnsEnum::PICTURE_ID, '=', $this->_pictureId);
         ($this->_userId)
             ? $activity->where(UserActivityColumnsEnum::USER_ID, '=', $this->_userId)
-            : $activity->whereRaw("INET_NTOA(" . UserActivityColumnsEnum::USER_ID . ") = $this->_ip");
+            : $activity->whereRaw("INET_NTOA(" . UserActivityColumnsEnum::IP . ") = $this->_ip");
         return $activity->first();
     }
 
-    private function _checkPictureExist()
+    /**
+     * @return void
+     * @throws Exception
+     */
+    private function _checkPictureExist(): void
     {
 //        todo-misha вынести;
         $picture = PictureModel::where(PictureColumnsEnum::IS_DEL, '=', SoftDeleteStatusEnum::FALSE)
             ->find($this->_pictureId);
         if (!$picture) {
-            throw new \Exception('Запись с изображением не найдена или была удалена');
+            throw new Exception('Запись с изображением не найдена или была удалена');
         }
     }
 

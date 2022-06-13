@@ -24,11 +24,25 @@ class RateHttpController extends HttpController
         ];
     }
 
+    /**
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     *
+     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\RateHttpControllerLikeTest
+     */
     public function like($id, Request $request)
     {
         return $this->activity($id, $request->input('off'), true);
     }
 
+    /**
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     *
+     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\RateHttpControllerDislikeTest
+     */
     public function dislike($id, Request $request)
     {
 //        todo-misha проверить существование изображения заранее;
