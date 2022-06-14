@@ -5,6 +5,7 @@ properties([disableConcurrentBuilds()]) // отключить одновреме
 def sshCredId = 'ssh_manager'
 def sshUser = 'root'
 def sshServer = ''
+def workerSshServer = ''
 
 def registry = 'dockerhub.ratnikovmikhail.ru'
 def registryUrl = "https://${registry}"
@@ -33,6 +34,11 @@ pipeline {
               script {
                   withCredentials([string(credentialsId: 'ssh_manager_server', variable: 'SSH_MANAGER_SERVER')]) {
                       sshServer = SSH_MANAGER_SERVER
+                  }
+              }
+              script {
+                  withCredentials([string(credentialsId: 'ssh_worker_server', variable: 'SSH_WORKER_SERVER')]) {
+                      workerSshServer = SSH_WORKER_SERVER
                   }
               }
           }
@@ -138,7 +144,7 @@ pipeline {
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker login ${registry} -u ${USERNAME} -p ${PASSWORD}"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${phpImageName} ${projectName}_fpm --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${webServerImageName} ${projectName}_webserver --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
-                            def phpDockerId = sh (script: "docker ps | grep ${projectName}/php -m1 | awk '{print \$1}'", returnStdout: true)
+                            def phpDockerId = sh (script: "ssh -o StrictHostKeyChecking=no ${sshUser}@${workerSshServer} docker ps | grep ${projectName}/php -m1 | awk '{print \$1}'", returnStdout: true)
                             println phpDockerId
 
                             // sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker exec \$() php artisan migrate"
