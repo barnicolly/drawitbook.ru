@@ -139,7 +139,7 @@ pipeline {
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${phpImageName} ${projectName}_fpm --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${webServerImageName} ${projectName}_webserver --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
                             def phpDockerId = sh (script: "docker ps | grep ${projectName}/php -m1 | awk '{print \$1}'", returnStdout: true)
-                            sh "echo ${phpDockerId}"
+                            println phpDockerId
 
                             // sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker exec \$() php artisan migrate"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${schedulerImageName} ${projectName}_scheduler --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
