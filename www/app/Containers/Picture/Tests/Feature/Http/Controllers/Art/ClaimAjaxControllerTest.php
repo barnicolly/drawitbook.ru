@@ -8,10 +8,11 @@ use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Ship\Parents\Tests\TestCase;
 
 /**
- * @see \App\Containers\Picture\Http\Controllers\Art\ClaimHttpController::register()
+ * @see \App\Containers\Picture\Http\Controllers\Art\ClaimAjaxController::register()
  */
-class ClaimHttpControllerTest extends TestCase
+class ClaimAjaxControllerTest extends TestCase
 {
+//    todo-misha добавить кейс если несколько раз жалоба с одной причиной;
     use CreatePictureWithRelationsTrait, CreateClaimTrait;
 
     protected function setUp(): void

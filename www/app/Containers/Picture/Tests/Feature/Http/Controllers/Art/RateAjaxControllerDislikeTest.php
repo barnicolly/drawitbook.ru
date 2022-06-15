@@ -10,9 +10,9 @@ use App\Containers\Rate\Tests\Traits\CreateUserActivityTrait;
 use App\Ship\Parents\Tests\TestCase;
 
 /**
- * @see \App\Containers\Picture\Http\Controllers\Art\RateHttpController::dislike()
+ * @see \App\Containers\Picture\Http\Controllers\Art\RateAjaxController::dislike()
  */
-class RateHttpControllerDislikeTest extends TestCase
+class RateAjaxControllerDislikeTest extends TestCase
 {
     use CreatePictureWithRelationsTrait, CreateUserActivityTrait;
 
@@ -37,7 +37,8 @@ class RateHttpControllerDislikeTest extends TestCase
         ];
         $response = $this->ajaxPost($url, $requestData);
 
-        $response->assertOk();
+        $response->assertOk()
+            ->assertJsonStructure([]);
         /** @var UserActivityModel $userActivity */
         $userActivity = UserActivityModel::first();
         self::assertSame(RateEnum::DISLIKE, $userActivity->activity);

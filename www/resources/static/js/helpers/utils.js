@@ -13,6 +13,9 @@ export function sendRequest(type, url, data, callback) {
         },
         success: function (response, textStatus, jqXHR) {
             if (callback) {
+                if (typeof response.success === 'undefined') {
+                    response.success = true;
+                }
                 callback.call(self, response);
             }
         },

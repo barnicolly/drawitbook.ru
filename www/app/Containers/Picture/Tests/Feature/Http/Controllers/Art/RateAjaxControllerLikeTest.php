@@ -10,9 +10,9 @@ use App\Containers\Rate\Tests\Traits\CreateUserActivityTrait;
 use App\Ship\Parents\Tests\TestCase;
 
 /**
- * @see \App\Containers\Picture\Http\Controllers\Art\RateHttpController::like
+ * @see \App\Containers\Picture\Http\Controllers\Art\RateAjaxController::like
  */
-class RateHttpControllerLikeTest extends TestCase
+class RateAjaxControllerLikeTest extends TestCase
 {
     use CreatePictureWithRelationsTrait, CreateUserActivityTrait;
 
@@ -37,7 +37,8 @@ class RateHttpControllerLikeTest extends TestCase
         ];
         $response = $this->ajaxPost($url, $requestData);
 
-        $response->assertOk();
+        $response->assertOk()
+            ->assertJsonStructure([]);
         /** @var UserActivityModel $userActivity */
         $userActivity = UserActivityModel::first();
         self::assertSame(RateEnum::LIKE, $userActivity->activity);

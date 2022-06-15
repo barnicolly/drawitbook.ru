@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $picture_id
  * @property int $activity
  *
- *  @method static UserActivityModelFactory factory()
+ * @method static UserActivityModelFactory factory()
  */
 class UserActivityModel extends CoreModel
 {

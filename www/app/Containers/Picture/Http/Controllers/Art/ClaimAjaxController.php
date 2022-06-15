@@ -10,7 +10,7 @@ use App\Ship\Parents\Controllers\HttpController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class ClaimHttpController extends HttpController
+class ClaimAjaxController extends HttpController
 {
     private ArtsService $artsService;
 
@@ -20,7 +20,7 @@ class ClaimHttpController extends HttpController
     }
 
     /**
-     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\ClaimHttpControllerTest
+     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\ClaimAjaxControllerTest
      */
     public function register($id, Request $request)
     {

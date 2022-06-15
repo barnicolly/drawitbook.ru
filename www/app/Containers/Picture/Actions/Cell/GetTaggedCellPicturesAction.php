@@ -8,19 +8,18 @@ use App\Containers\Picture\Tasks\Picture\Cell\GetPaginatedCellArtsByTagTask;
 use App\Containers\Seo\Dto\BreadcrumbDto;
 use App\Containers\Seo\Services\SeoService;
 use App\Containers\Tag\Exceptions\NotFoundTagException;
-use App\Containers\Tag\Services\TagsService;
 use App\Containers\Tag\Tasks\GetTagBySeoNameTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Dto\PageMetaDto;
-use App\Ship\Parents\Tasks\Task;
+use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class GetTaggedCellPicturesAction extends Task
+class GetTaggedCellPicturesAction extends Action
 {
 
     private TranslationService $translationService;

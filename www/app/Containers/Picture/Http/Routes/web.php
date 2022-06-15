@@ -1,8 +1,8 @@
 <?php
 
 use App\Containers\Picture\Http\Controllers\Art\ArtHttpController;
-use App\Containers\Picture\Http\Controllers\Art\ClaimHttpController;
-use App\Containers\Picture\Http\Controllers\Art\RateHttpController;
+use App\Containers\Picture\Http\Controllers\Art\ClaimAjaxController;
+use App\Containers\Picture\Http\Controllers\Art\RateAjaxController;
 use App\Containers\Picture\Http\Controllers\Cell\CellAjaxController;
 use App\Containers\Picture\Http\Controllers\Cell\CellHttpController;
 
@@ -50,8 +50,8 @@ foreach (config('translator.available_locales') as $prefix) {
                             'middleware' => ['ajax'],
                         ],
                         function () {
-                            Route::post('/{id}/like', [RateHttpController::class, 'like']);
-                            Route::post('/{id}/dislike', [RateHttpController::class, 'dislike']);
+                            Route::post('/{id}/like', [RateAjaxController::class, 'like']);
+                            Route::post('/{id}/dislike', [RateAjaxController::class, 'dislike']);
                         }
                     );
 
@@ -60,7 +60,7 @@ foreach (config('translator.available_locales') as $prefix) {
                             'middleware' => ['ajax'],
                         ],
                         function () {
-                            Route::post('/{id}/claim', [ClaimHttpController::class, 'register']);
+                            Route::post('/{id}/claim', [ClaimAjaxController::class, 'register']);
                         }
                     );
                 }

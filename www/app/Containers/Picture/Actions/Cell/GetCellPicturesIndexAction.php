@@ -7,12 +7,12 @@ use App\Containers\Seo\Dto\BreadcrumbDto;
 use App\Containers\Seo\Services\SeoService;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Dto\PageMetaDto;
-use App\Ship\Parents\Tasks\Task;
+use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Collection;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class GetCellPicturesIndexAction extends Task
+class GetCellPicturesIndexAction extends Action
 {
     private SeoService $seoService;
     private ArtsService $artsService;

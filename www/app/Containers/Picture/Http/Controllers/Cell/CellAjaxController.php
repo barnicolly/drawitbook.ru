@@ -29,6 +29,11 @@ class CellAjaxController extends AjaxController
     }
 
     /**
+     * @param string $tag
+     * @param CellTaggedArtsSliceAjaxRequest $request
+     * @param GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask
+     * @param GetTagBySeoNameTask $getTagBySeoNameTask
+     * @return JsonResponse
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellAjaxControllerTest
      */
     public function slice(
