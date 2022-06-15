@@ -2,7 +2,6 @@
 
 namespace App\Containers\Picture\Tasks\Picture;
 
-use App\Containers\Picture\Data\Criteria\Picture\WherePictureNotDeletedCriteria;
 use App\Containers\Picture\Data\Repositories\PictureRepository;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -25,7 +24,6 @@ class GetPictureByIdTask extends Task
     public function run(int $id): ?array
     {
         try {
-            $this->repository->pushCriteria(new WherePictureNotDeletedCriteria());
             return $this->repository->find($id)->toArray();
         } catch (ModelNotFoundException $exception) {
             return null;

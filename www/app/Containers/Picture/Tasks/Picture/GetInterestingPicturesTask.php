@@ -3,7 +3,6 @@
 namespace App\Containers\Picture\Tasks\Picture;
 
 use App\Containers\Picture\Data\Criteria\Picture\WherePictureExcludeIdCriteria;
-use App\Containers\Picture\Data\Criteria\Picture\WherePictureNotDeletedCriteria;
 use App\Containers\Picture\Data\Criteria\Picture\WherePictureShowInMainPageCriteria;
 use App\Containers\Picture\Data\Repositories\PictureRepository;
 use App\Ship\Parents\Tasks\Task;
@@ -27,8 +26,7 @@ class GetInterestingPicturesTask extends Task
     public function run(int $excludeId, int $limit): array
     {
         $this->repository->pushCriteria(new WherePictureExcludeIdCriteria($excludeId))
-            ->pushCriteria(new WherePictureShowInMainPageCriteria())
-            ->pushCriteria(new WherePictureNotDeletedCriteria());
+            ->pushCriteria(new WherePictureShowInMainPageCriteria());
         return $this->repository->take($limit)->get()->toArray();
     }
 }

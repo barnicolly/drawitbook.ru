@@ -73,8 +73,7 @@ class RateService extends HttpController
     private function _checkPictureExist(): void
     {
 //        todo-misha вынести;
-        $picture = PictureModel::where(PictureColumnsEnum::IS_DEL, '=', SoftDeleteStatusEnum::FALSE)
-            ->find($this->_pictureId);
+        $picture = PictureModel::find($this->_pictureId);
         if (!$picture) {
             throw new Exception('Запись с изображением не найдена или была удалена');
         }

@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property string $description
- * @property int $is_del
  * @property int $in_common
  * @property int $in_vk_posting
  *

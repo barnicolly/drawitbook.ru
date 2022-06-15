@@ -108,7 +108,6 @@ class SearchService
             ->select('picture.id')
             ->join('picture_tags', 'picture_tags.picture_id', '=', 'picture.id')
             ->whereRaw('picture_tags.tag_id = ?', [$tagId])
-            ->where('picture.is_del', '=', SoftDeleteStatusEnum::FALSE)
             ->limit($this->limit)
             ->get();
         $results = collect($results)->map(

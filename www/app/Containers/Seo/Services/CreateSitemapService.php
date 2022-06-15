@@ -85,7 +85,6 @@ class CreateSitemapService
             ->select($select)
             ->join(PictureTagsColumnsEnum::TABlE, PictureTagsColumnsEnum::$tTAG_ID, '=', SprTagsColumnsEnum::$tId)
             ->join(PictureColumnsEnum::TABlE, PictureColumnsEnum::$tId, '=', PictureTagsColumnsEnum::$tPICTURE_ID)
-            ->where(PictureColumnsEnum::$tIS_DEL, 0)
             ->groupBy(SprTagsColumnsEnum::$tId)
             ->getQuery()
             ->get()

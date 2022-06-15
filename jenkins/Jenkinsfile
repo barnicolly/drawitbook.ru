@@ -143,11 +143,11 @@ pipeline {
                             def sshLogin = "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer}"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker login ${registry} -u ${USERNAME} -p ${PASSWORD}"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${phpImageName} ${projectName}_fpm --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
-                            sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${webServerImageName} ${projectName}_webserver --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
                             def phpDockerId = sh (script: "ssh -o StrictHostKeyChecking=no ${sshUser}@${workerSshServer} docker ps | grep ${projectName}/php -m1 | awk '{print \$1}'", returnStdout: true)
                             phpDockerId = phpDockerId.replaceAll("[\n\r]", "");
                             println phpDockerId
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${workerSshServer} 'docker exec ${phpDockerId} php artisan migrate'"
+                            sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${webServerImageName} ${projectName}_webserver --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
                             sh "ssh -o StrictHostKeyChecking=no ${sshUser}@${sshServer} docker service update --image ${schedulerImageName} ${projectName}_scheduler --with-registry-auth --update-order start-first --update-parallelism 0 --update-delay 1s"
                         }
                     }
