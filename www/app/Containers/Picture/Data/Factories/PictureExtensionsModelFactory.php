@@ -28,7 +28,6 @@ class PictureExtensionsModelFactory extends Factory
         PictureExtensionsColumnsEnum::WIDTH => "int",
         PictureExtensionsColumnsEnum::HEIGHT => "int",
         PictureExtensionsColumnsEnum::EXT => "string",
-        PictureExtensionsColumnsEnum::IS_DEL => "int"
     ])]
     public function definition(): array
     {
@@ -40,7 +39,6 @@ class PictureExtensionsModelFactory extends Factory
             PictureExtensionsColumnsEnum::WIDTH => 300,
             PictureExtensionsColumnsEnum::HEIGHT => 600,
             PictureExtensionsColumnsEnum::EXT => $ext,
-            PictureExtensionsColumnsEnum::IS_DEL => SoftDeleteStatusEnum::FALSE,
         ];
     }
 }
