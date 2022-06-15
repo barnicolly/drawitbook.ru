@@ -2,10 +2,9 @@
 
 namespace App\Containers\Claim\Data\Factories;
 
+use App\Containers\Claim\Enums\UserClaimColumnsEnum;
 use App\Containers\Claim\Models\UserClaimModel;
-use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class UserClaimModelFactory extends Factory
 {
@@ -23,16 +22,11 @@ class UserClaimModelFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->text(15) . '_' . uniqid('', true);
-        $nameEn = $name . '_en';
+        //            todo-misha сделать user_id nullable в таблицах user_claim и user_activity и провести миграцию;
         return [
-            SprTagsColumnsEnum::NAME => $name,
-            SprTagsColumnsEnum::NAME_EN => $nameEn,
-            SprTagsColumnsEnum::HIDDEN => 0,
-            SprTagsColumnsEnum::HIDDEN_VK => 0,
-            SprTagsColumnsEnum::SEO => Str::slug($name),
-            SprTagsColumnsEnum::SLUG_EN => Str::slug($nameEn),
-            SprTagsColumnsEnum::IS_POPULAR => 0,
+            UserClaimColumnsEnum::USER_ID => null,
+            UserClaimColumnsEnum::PICTURE_ID => $this->faker->randomDigitNotNull,
+            UserClaimColumnsEnum::REASON_ID => $this->faker->randomDigitNotNull,
         ];
     }
 }

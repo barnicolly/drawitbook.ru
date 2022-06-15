@@ -50,6 +50,25 @@ class RateAjaxControllerLikeTest extends TestCase
      *
      * @param string $locale
      */
+    public function testLikeNotExistPictureOk(string $locale): void
+    {
+        $this->app->setLocale($locale);
+        $pictureId = 111111;
+
+        $url = $this->routeService->getRouteArt($pictureId) . '/like';
+        $requestData = [
+            'off' => 'false',
+        ];
+        $response = $this->ajaxPost($url, $requestData);
+
+        $response->assertUnprocessable();
+    }
+
+    /**
+     * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
+     *
+     * @param string $locale
+     */
     public function testLikeWithUserActivityRecordNoChangeActivity(string $locale): void
     {
         $this->app->setLocale($locale);
@@ -120,6 +139,26 @@ class RateAjaxControllerLikeTest extends TestCase
 
         $response->assertOk();
         self::assertEmpty(UserActivityModel::all());
+    }
+
+    /**
+     * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
+     *
+     * @param string $locale
+     */
+    public function testUndefinedOffStatus(string $locale): void
+    {
+        $this->app->setLocale($locale);
+        [$picture] = $this->createPictureWithFile();
+
+        $url = $this->routeService->getRouteArt($picture->id) . '/like';
+        $requestData = [
+            'off' => '1111',
+        ];
+        $response = $this->ajaxPost($url, $requestData);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrorFor('off');
     }
 
 }

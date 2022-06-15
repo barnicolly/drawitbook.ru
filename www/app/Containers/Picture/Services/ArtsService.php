@@ -24,6 +24,7 @@ class ArtsService
         $this->seoService = (new SeoService());
     }
 
+//    todo-misha проверить использование;
     public function isArtExist(int $id): bool
     {
         return !empty($this->getById($id));

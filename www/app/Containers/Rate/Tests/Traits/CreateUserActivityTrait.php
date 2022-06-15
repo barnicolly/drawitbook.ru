@@ -16,7 +16,7 @@ trait CreateUserActivityTrait
         $ip = app(UserService::class)->getIp();
         $data = array_merge($data, [
             UserActivityColumnsEnum::PICTURE_ID => $picture->id,
-            UserActivityColumnsEnum::IP =>DB::raw("inet_aton($ip)")
+            UserActivityColumnsEnum::IP => DB::raw("inet_aton($ip)"),
         ]);
         return UserActivityModel::factory()->create($data);
     }

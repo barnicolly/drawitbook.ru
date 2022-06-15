@@ -44,7 +44,6 @@ foreach (config('translator.available_locales') as $prefix) {
                         ->middleware(['lower_case', 'no_get'])
                         ->name($prefix . '_art');
 
-                    // todo-misha вынести в ajax контроллеры и создать трансформеры;
                     Route::group(
                         [
                             'middleware' => ['ajax'],

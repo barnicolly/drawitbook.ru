@@ -12,7 +12,6 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class ClaimAjaxControllerTest extends TestCase
 {
-//    todo-misha добавить кейс если несколько раз жалоба с одной причиной;
     use CreatePictureWithRelationsTrait, CreateClaimTrait;
 
     protected function setUp(): void
@@ -37,9 +36,35 @@ class ClaimAjaxControllerTest extends TestCase
         ];
         $response = $this->ajaxPost($url, $requestData);
 
-        $response->assertOk();
+        $response->assertOk()
+            ->assertJsonStructure([]);
         /** @var UserClaimModel $userClaim */
         $userClaim = UserClaimModel::first();
+        self::assertSame($userClaim->reason_id, $sprClaimReason->id);
+        self::assertSame($userClaim->picture_id, $picture->id);
+    }
+
+    /**
+     * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
+     *
+     * @param string $locale
+     */
+    public function testResponseCodeIfExistSameClaim200(string $locale): void
+    {
+        $this->app->setLocale($locale);
+        [$picture] = $this->createPictureWithFile();
+        $sprClaimReason = $this->createSprClaimReason();
+        $userClaim = $this->createUserClaim($picture, $sprClaimReason);
+
+        $url = $this->routeService->getRouteArt($picture->id) . '/claim';
+        $requestData = [
+            'reason' => $sprClaimReason->id,
+        ];
+        $response = $this->ajaxPost($url, $requestData);
+
+        $response->assertOk();
+        self::assertSame(1, UserClaimModel::count());
+        $userClaim->refresh();
         self::assertSame($userClaim->reason_id, $sprClaimReason->id);
         self::assertSame($userClaim->picture_id, $picture->id);
     }
@@ -61,7 +86,8 @@ class ClaimAjaxControllerTest extends TestCase
         ];
         $response = $this->ajaxPost($url, $requestData);
 
-        $response->assertUnprocessable();
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrorFor('id');
     }
 
     /**
@@ -80,7 +106,8 @@ class ClaimAjaxControllerTest extends TestCase
         ];
         $response = $this->ajaxPost($url, $requestData);
 
-        $response->assertUnprocessable();
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrorFor('reason');
     }
 
 }
