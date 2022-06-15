@@ -7,7 +7,6 @@ use App\Containers\Rate\Enums\RateEnum;
 use App\Containers\Rate\Enums\UserActivityColumnsEnum;
 use App\Containers\Rate\Models\UserActivityModel;
 use App\Containers\Rate\Tests\Traits\CreateUserActivityTrait;
-use App\Ship\Enums\SoftDeleteStatusEnum;
 use App\Ship\Parents\Tests\TestCase;
 
 /**
@@ -43,7 +42,6 @@ class RateHttpControllerDislikeTest extends TestCase
         $userActivity = UserActivityModel::first();
         self::assertSame(RateEnum::DISLIKE, $userActivity->activity);
         self::assertSame($picture->id, $userActivity->picture_id);
-        self::assertSame(SoftDeleteStatusEnum::FALSE, $userActivity->is_del);
     }
 
     /**
@@ -51,7 +49,7 @@ class RateHttpControllerDislikeTest extends TestCase
      *
      * @param string $locale
      */
-    public function testWithUserActivityRecordNoChangeActivityAndSoftDelete(string $locale): void
+    public function testWithUserActivityRecordNoChangeActivity(string $locale): void
     {
         $this->app->setLocale($locale);
         [$picture] = $this->createPictureWithFile();
@@ -67,7 +65,6 @@ class RateHttpControllerDislikeTest extends TestCase
         $userActivity->refresh();
         self::assertSame(RateEnum::DISLIKE, $userActivity->activity);
         self::assertSame($picture->id, $userActivity->picture_id);
-        self::assertSame(SoftDeleteStatusEnum::FALSE, $userActivity->is_del);
     }
 
     /**
@@ -75,7 +72,7 @@ class RateHttpControllerDislikeTest extends TestCase
      *
      * @param string $locale
      */
-    public function testWithUserActivityRecordChangeActivityAndSoftDelete(string $locale): void
+    public function testWithUserActivityRecordChangeActivity(string $locale): void
     {
         $this->app->setLocale($locale);
         [$picture] = $this->createPictureWithFile();
@@ -83,7 +80,6 @@ class RateHttpControllerDislikeTest extends TestCase
             $picture,
             [
                 UserActivityColumnsEnum::ACTIVITY => RateEnum::LIKE,
-                UserActivityColumnsEnum::IS_DEL => SoftDeleteStatusEnum::TRUE,
             ]
         );
 
@@ -97,7 +93,6 @@ class RateHttpControllerDislikeTest extends TestCase
         $userActivity->refresh();
         self::assertSame(RateEnum::DISLIKE, $userActivity->activity);
         self::assertSame($picture->id, $userActivity->picture_id);
-        self::assertSame(SoftDeleteStatusEnum::FALSE, $userActivity->is_del);
     }
 
     /**
@@ -105,15 +100,14 @@ class RateHttpControllerDislikeTest extends TestCase
      *
      * @param string $locale
      */
-    public function testOffLikeWithUserLikeActivityRecordSoftDelete(string $locale): void
+    public function testOffLikeWithUserLikeActivityRecord(string $locale): void
     {
         $this->app->setLocale($locale);
         [$picture] = $this->createPictureWithFile();
-        $userActivity = $this->createUserActivity(
+        $this->createUserActivity(
             $picture,
             [
                 UserActivityColumnsEnum::ACTIVITY => RateEnum::DISLIKE,
-                UserActivityColumnsEnum::IS_DEL => SoftDeleteStatusEnum::FALSE,
             ]
         );
 
@@ -124,10 +118,7 @@ class RateHttpControllerDislikeTest extends TestCase
         $response = $this->ajaxPost($url, $requestData);
 
         $response->assertOk();
-        $userActivity->refresh();
-        self::assertSame(RateEnum::DISLIKE, $userActivity->activity);
-        self::assertSame($picture->id, $userActivity->picture_id);
-        self::assertSame(SoftDeleteStatusEnum::TRUE, $userActivity->is_del);
+        self::assertEmpty(UserActivityModel::all());
     }
 
 }

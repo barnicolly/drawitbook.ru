@@ -2,7 +2,6 @@
 
 namespace App\Containers\Search\Services;
 
-use App\Ship\Enums\SoftDeleteStatusEnum;
 use Foolz\SphinxQL\Drivers\Mysqli\Connection;
 use Foolz\SphinxQL\SphinxQL;
 use Illuminate\Support\Facades\DB;

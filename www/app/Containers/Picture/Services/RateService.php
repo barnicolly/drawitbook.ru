@@ -2,12 +2,10 @@
 
 namespace App\Containers\Picture\Services;
 
-use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Rate\Enums\RateEnum;
 use App\Containers\Rate\Enums\UserActivityColumnsEnum;
 use App\Containers\Rate\Models\UserActivityModel;
-use App\Ship\Enums\SoftDeleteStatusEnum;
 use App\Ship\Parents\Controllers\HttpController;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -42,16 +40,22 @@ class RateService extends HttpController
     private function _rate(bool $turnOn, int $rate)
     {
         $activity = $this->_getActivityIfExist();
-        if (!$activity && $turnOn) {
-            $activity = new UserActivityModel();
-            $activity->picture_id = $this->_pictureId;
-            $activity->ip = DB::raw("inet_aton($this->_ip)");
-            $activity->user_id = $this->_userId;
-        }
-        if ($activity) {
-            $activity->is_del = $turnOn ? SoftDeleteStatusEnum::FALSE : SoftDeleteStatusEnum::TRUE;
-            $activity->activity = $rate;
-            $activity->save();
+        if (!$activity) {
+            if ($turnOn) {
+                $activity = new UserActivityModel();
+                $activity->picture_id = $this->_pictureId;
+                $activity->ip = DB::raw("inet_aton($this->_ip)");
+                $activity->user_id = $this->_userId;
+                $activity->activity = $rate;
+                $activity->save();
+            }
+        } else {
+            if ($turnOn) {
+                $activity->activity = $rate;
+                $activity->save();
+            } else {
+                $activity->delete();
+            }
         }
         return true;
     }

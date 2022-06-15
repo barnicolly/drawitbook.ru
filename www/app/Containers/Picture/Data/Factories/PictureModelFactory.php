@@ -6,7 +6,6 @@ use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Containers\Picture\Enums\ShowOnMainPageStatusEnum;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Vk\Enums\VkPostingStatusEnum;
-use App\Ship\Enums\SoftDeleteStatusEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use JetBrains\PhpStorm\ArrayShape;
 

@@ -7,9 +7,7 @@ use App\Containers\Rate\Enums\UserActivityColumnsEnum;
 use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-//todo-misha убрать user_id;
 //todo-misha убрать status;
-//todo-misha убрать soft delete;
 /**
  * @property int $id
  * @property int $ip
@@ -17,7 +15,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $picture_id
  * @property int $activity
  * @property int $status
- * @property int $is_del
  *
  *  @method static UserActivityModelFactory factory()
  */

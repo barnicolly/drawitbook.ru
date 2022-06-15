@@ -4,7 +4,6 @@ namespace App\Containers\Picture\Data\Factories;
 
 use App\Containers\Picture\Enums\PictureExtensionsColumnsEnum;
 use App\Containers\Picture\Models\PictureExtensionsModel;
-use App\Ship\Enums\SoftDeleteStatusEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use JetBrains\PhpStorm\ArrayShape;
 
