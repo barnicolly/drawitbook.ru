@@ -13,6 +13,7 @@ use App\Ship\Services\Route\RouteService;
 
 class ArtHttpController extends HttpController
 {
+//    todo-misha привести в порядок;
     private $searchService;
     private $seoService;
     private $tagsService;

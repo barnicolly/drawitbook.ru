@@ -6,6 +6,7 @@ use App\Containers\Picture\Actions\Rate\SetLikePictureAction;
 use App\Containers\Picture\Http\Requests\Art\RateAjaxRequest;
 use App\Ship\Parents\Controllers\HttpController;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class RateAjaxController extends HttpController
@@ -24,6 +25,7 @@ class RateAjaxController extends HttpController
             $turnOn = $request->off !== 'true';
             $action->run($request->id, $turnOn);
         } catch (Throwable $e) {
+            Log::error($e->getMessage());
             abort(500);
         }
         return response()->json();

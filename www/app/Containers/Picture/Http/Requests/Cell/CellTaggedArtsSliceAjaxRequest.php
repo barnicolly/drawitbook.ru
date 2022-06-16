@@ -4,8 +4,12 @@ namespace App\Containers\Picture\Http\Requests\Cell;
 
 use App\Ship\Parents\Requests\BaseFormRequest;
 
+/**
+ * @property int $page
+ */
 class CellTaggedArtsSliceAjaxRequest extends BaseFormRequest
 {
+
     public function authorize()
     {
         return true;
