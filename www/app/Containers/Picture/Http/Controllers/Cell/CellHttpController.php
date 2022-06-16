@@ -5,8 +5,6 @@ namespace App\Containers\Picture\Http\Controllers\Cell;
 use App\Containers\Picture\Actions\Cell\GetCellPicturesIndexAction;
 use App\Containers\Picture\Actions\Cell\GetTaggedCellPicturesAction;
 use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
-use App\Containers\Picture\Http\Requests\Cell\CellArtsIndexHttpRequest;
-use App\Containers\Picture\Http\Requests\Cell\CellTaggedArtsHttpRequest;
 use App\Containers\Tag\Exceptions\NotFoundTagException;
 use App\Containers\Tag\Tasks\FindRedirectTagSlugByLocaleTask;
 use App\Ship\Parents\Controllers\HttpController;
@@ -29,25 +27,28 @@ class CellHttpController extends HttpController
 
     /**
      * @param GetCellPicturesIndexAction $action
-     * @param CellArtsIndexHttpRequest $request
      * @return Response
      * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
      *
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellHttpControllerIndexTest
      */
-    public function index(GetCellPicturesIndexAction $action, CellArtsIndexHttpRequest $request): Response
+    public function index(GetCellPicturesIndexAction $action): Response
     {
-        [$viewData, $pageMetaDto] = $action->run();
-        $this->setMeta($pageMetaDto->title, $pageMetaDto->description);
-        $this->setShareImage($pageMetaDto->shareImage);
-        return response()->view('picture::cell.index', $viewData);
+        try {
+            [$viewData, $pageMetaDto] = $action->run();
+            $this->setMeta($pageMetaDto->title, $pageMetaDto->description)
+                ->setShareImage($pageMetaDto->shareImage);
+            return response()->view('picture::cell.index', $viewData);
+        } catch (Throwable $e) {
+            Log::error($e->getMessage());
+            abort(500);
+        }
     }
 
     /**
      * @param string $tag
      * @param GetTaggedCellPicturesAction $action
      * @param FindRedirectTagSlugByLocaleTask $findRedirectTagSlugByLocaleTask
-     * @param CellTaggedArtsHttpRequest $request
      * @return Response|RedirectResponse
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
@@ -57,8 +58,7 @@ class CellHttpController extends HttpController
     public function tagged(
         string $tag,
         GetTaggedCellPicturesAction $action,
-        FindRedirectTagSlugByLocaleTask $findRedirectTagSlugByLocaleTask,
-        CellTaggedArtsHttpRequest $request
+        FindRedirectTagSlugByLocaleTask $findRedirectTagSlugByLocaleTask
     ): Response|RedirectResponse {
         try {
             [$viewData, $pageMetaDto] = $action->run($tag);

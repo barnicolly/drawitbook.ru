@@ -59,7 +59,7 @@ class ArtHttpControllerTest extends TestCase
         $response = $this->followingRedirects()
             ->get('/art');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
 }

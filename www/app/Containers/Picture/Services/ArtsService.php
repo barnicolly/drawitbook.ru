@@ -15,13 +15,13 @@ use App\Containers\Vk\Models\VkAlbumPictureModel;
 class ArtsService
 {
 
-    private $tagsService;
-    private $seoService;
+    private TagsService $tagsService;
+    private SeoService $seoService;
 
     public function __construct()
     {
-        $this->tagsService = (new TagsService());
-        $this->seoService = (new SeoService());
+        $this->tagsService = app(TagsService::class);
+        $this->seoService = app(SeoService::class);
     }
 
 //    todo-misha проверить использование;

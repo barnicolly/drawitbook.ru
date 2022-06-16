@@ -28,12 +28,6 @@ class TagsService
         return app(GetPictureTagsByPictureIdsTask::class)->run($artIds, $withHidden, $locale);
     }
 
-//    todo-misha добавить кэширующий прокси;
-    public function getTagsByArtId(int $artId, bool $withHidden): array
-    {
-        return $this->getTagsByArtIds([$artId], $withHidden);
-    }
-
     public function setLinkOnTags(array $tags): array
     {
         foreach ($tags as $key => $tag) {
