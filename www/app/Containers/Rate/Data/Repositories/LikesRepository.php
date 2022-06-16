@@ -2,14 +2,14 @@
 
 namespace App\Containers\Rate\Data\Repositories;
 
-use App\Containers\Rate\Models\UserActivityModel;
+use App\Containers\Rate\Models\LikesModel;
 use App\Ship\Parents\Repositories\Repository;
 
-class UserActivityRepository extends Repository
+class LikesRepository extends Repository
 {
 
     public function model(): string
     {
-        return UserActivityModel::class;
+        return LikesModel::class;
     }
 }

@@ -44,6 +44,7 @@ class CellAjaxController extends AjaxController
     ): JsonResponse {
         $pageNum = (int) $request->input('page');
         try {
+//            todo-misha вынести в action;
             $locale = app()->getLocale();
             $tagInfo = $getTagBySeoNameTask->run($tag, $locale);
             if (!$tagInfo) {

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration {
@@ -10,8 +12,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        DB::table('user_activity')->where('activity', 2)
-            ->delete();
+        if (Schema::hasColumn('likes', 'activity')) {
+            Schema::table('likes', function (Blueprint $table) {
+                $table->dropColumn('activity');
+            });
+        }
     }
 
     /**

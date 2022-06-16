@@ -2,11 +2,11 @@
 
 namespace App\Containers\Rate\Data\Criteria;
 
-use App\Containers\Rate\Enums\UserActivityColumnsEnum;
+use App\Containers\Rate\Enums\LikesColumnsEnum;
 use App\Ship\Parents\Criterias\Criteria;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
-class WhereUserActivityUserIdCriteria extends Criteria
+class WhereLikesUserIdCriteria extends Criteria
 {
 
     private int $userId;
@@ -18,6 +18,6 @@ class WhereUserActivityUserIdCriteria extends Criteria
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->where(UserActivityColumnsEnum::USER_ID, '=', $this->userId);
+        return $model->where(LikesColumnsEnum::USER_ID, '=', $this->userId);
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-use App\Containers\Rate\Enums\UserActivityColumnsEnum;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -14,9 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (Schema::hasColumn(UserActivityColumnsEnum::TABlE, 'is_del'))
+        if (Schema::hasColumn('user_activity', 'is_del'))
         {
-            Schema::table(UserActivityColumnsEnum::TABlE, function (Blueprint $table)
+            Schema::table('user_activity', function (Blueprint $table)
             {
                 $table->dropColumn('is_del');
             });

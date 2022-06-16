@@ -2,11 +2,11 @@
 
 namespace App\Containers\Rate\Data\Criteria;
 
-use App\Containers\Rate\Enums\UserActivityColumnsEnum;
+use App\Containers\Rate\Enums\LikesColumnsEnum;
 use App\Ship\Parents\Criterias\Criteria;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
-class WhereUserActivityIpCriteria extends Criteria
+class WhereLikesIpCriteria extends Criteria
 {
 
     private string $ip;
@@ -18,6 +18,6 @@ class WhereUserActivityIpCriteria extends Criteria
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->whereRaw("INET_NTOA(" . UserActivityColumnsEnum::IP . ") = $this->ip");
+        return $model->whereRaw("INET_NTOA(" . LikesColumnsEnum::IP . ") = $this->ip");
     }
 }

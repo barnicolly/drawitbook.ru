@@ -3,10 +3,8 @@
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Art;
 
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
-use App\Containers\Rate\Enums\RateEnum;
-use App\Containers\Rate\Enums\UserActivityColumnsEnum;
-use App\Containers\Rate\Models\UserActivityModel;
-use App\Containers\Rate\Tests\Traits\CreateUserActivityTrait;
+use App\Containers\Rate\Models\LikesModel;
+use App\Containers\Rate\Tests\Traits\CreateLikesTrait;
 use App\Ship\Parents\Tests\TestCase;
 
 /**
@@ -14,7 +12,7 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class RateAjaxControllerLikeTest extends TestCase
 {
-    use CreatePictureWithRelationsTrait, CreateUserActivityTrait;
+    use CreatePictureWithRelationsTrait, CreateLikesTrait;
 
     protected function setUp(): void
     {
@@ -26,7 +24,7 @@ class RateAjaxControllerLikeTest extends TestCase
      *
      * @param string $locale
      */
-    public function testLikeWithoutUserActivityRecordResponseOk(string $locale): void
+    public function testLikeWithoutExistLikeRecordResponseOk(string $locale): void
     {
         $this->app->setLocale($locale);
         [$picture] = $this->createPictureWithFile();
@@ -39,10 +37,9 @@ class RateAjaxControllerLikeTest extends TestCase
 
         $response->assertOk()
             ->assertJsonStructure([]);
-        /** @var UserActivityModel $userActivity */
-        $userActivity = UserActivityModel::first();
-        self::assertSame(RateEnum::LIKE, $userActivity->activity);
-        self::assertSame($picture->id, $userActivity->picture_id);
+        /** @var LikesModel $like */
+        $like = LikesModel::first();
+        self::assertSame($picture->id, $like->picture_id);
     }
 
     /**
@@ -69,39 +66,11 @@ class RateAjaxControllerLikeTest extends TestCase
      *
      * @param string $locale
      */
-    public function testLikeWithUserActivityRecordNoChangeActivity(string $locale): void
+    public function testOffLikeWithExistLikeRecord(string $locale): void
     {
         $this->app->setLocale($locale);
         [$picture] = $this->createPictureWithFile();
-        $userActivity = $this->createUserActivity($picture, [UserActivityColumnsEnum::ACTIVITY => RateEnum::LIKE]);
-
-        $url = $this->routeService->getRouteArt($picture->id) . '/like';
-        $requestData = [
-            'off' => 'false',
-        ];
-        $response = $this->ajaxPost($url, $requestData);
-
-        $response->assertOk();
-        $userActivity->refresh();
-        self::assertSame(RateEnum::LIKE, $userActivity->activity);
-        self::assertSame($picture->id, $userActivity->picture_id);
-    }
-
-    /**
-     * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
-     */
-    public function testOffLikeWithUserLikeActivityRecord(string $locale): void
-    {
-        $this->app->setLocale($locale);
-        [$picture] = $this->createPictureWithFile();
-        $this->createUserActivity(
-            $picture,
-            [
-                UserActivityColumnsEnum::ACTIVITY => RateEnum::LIKE,
-            ]
-        );
+        $this->createLike($picture);
 
         $url = $this->routeService->getRouteArt($picture->id) . '/like';
         $requestData = [
@@ -110,7 +79,7 @@ class RateAjaxControllerLikeTest extends TestCase
         $response = $this->ajaxPost($url, $requestData);
 
         $response->assertOk();
-        self::assertEmpty(UserActivityModel::all());
+        self::assertEmpty(LikesModel::all());
     }
 
     /**

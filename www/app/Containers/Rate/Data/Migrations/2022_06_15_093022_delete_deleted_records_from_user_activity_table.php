@@ -1,7 +1,7 @@
 <?php
 
-use App\Containers\Rate\Models\UserActivityModel;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-       UserActivityModel::where('is_del', 1)
+        DB::table('user_activity')->where('is_del', 1)
            ->delete();
     }
 

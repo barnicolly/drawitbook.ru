@@ -22,7 +22,7 @@ class UserClaimModelFactory extends Factory
      */
     public function definition(): array
     {
-        //            todo-misha сделать user_id nullable в таблицах user_claim и user_activity и провести миграцию;
+        //            todo-misha сделать user_id nullable в таблицах user_claim и likes и провести миграцию;
         return [
             UserClaimColumnsEnum::USER_ID => null,
             UserClaimColumnsEnum::PICTURE_ID => $this->faker->randomDigitNotNull,
