@@ -3,13 +3,12 @@ import { getApplyedLocaleLink } from '@js/helpers/navigation';
 
 (function ($) {
     $.rateContainer = $.rateContainer || [];
-    var routes = {
+    const routes = {
         like: getApplyedLocaleLink('/arts/{id}/like'),
-        dislike: getApplyedLocaleLink('/arts/{id}/dislike'),
     };
 
     function rateContainer() {
-        var self = this;
+        let self = this;
         self.container = null;
         self.artId = null;
 
@@ -28,9 +27,6 @@ import { getApplyedLocaleLink } from '@js/helpers/navigation';
                 .on('click', '.rate-control__btn', lockRateButtons)
                 .on('click', '.like', function () {
                     like($(this));
-                })
-                .on('click', '.dislike', function () {
-                    dislike($(this));
                 });
         }
 
@@ -45,12 +41,7 @@ import { getApplyedLocaleLink } from '@js/helpers/navigation';
         }
 
         function like(button) {
-            var route = routes.like.replace('{id}', self.artId);
-            fetch(button, route);
-        }
-
-        function dislike(button) {
-            var route = routes.dislike.replace('{id}', self.artId);
+            let route = routes.like.replace('{id}', self.artId);
             fetch(button, route);
         }
 
@@ -70,15 +61,16 @@ import { getApplyedLocaleLink } from '@js/helpers/navigation';
         }
     }
 
-    var methods = {
+    const methods = {
         init: function (params = {}) {
-            var rateContainerId;
+            let rateContainerId;
             if (this.attr('id')) {
                 rateContainerId = this.attr('id');
             } else {
+                let randomId, isset;
                 do {
-                    var randomId = getRandomInt(1000000, 9999999);
-                    var isset = typeof $.rateContainer[randomId] !== 'undefined';
+                    randomId = getRandomInt(1000000, 9999999);
+                    isset = typeof $.rateContainer[randomId] !== 'undefined';
                 } while (isset);
                 $(this).attr('id', randomId);
                 rateContainerId = randomId;

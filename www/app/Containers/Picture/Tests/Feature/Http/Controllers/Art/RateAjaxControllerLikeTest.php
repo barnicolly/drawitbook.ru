@@ -92,34 +92,6 @@ class RateAjaxControllerLikeTest extends TestCase
      *
      * @param string $locale
      */
-    public function testLikeWithUserActivityRecordChangeActivity(string $locale): void
-    {
-        $this->app->setLocale($locale);
-        [$picture] = $this->createPictureWithFile();
-        $userActivity = $this->createUserActivity(
-            $picture,
-            [
-                UserActivityColumnsEnum::ACTIVITY => RateEnum::DISLIKE,
-            ]
-        );
-
-        $url = $this->routeService->getRouteArt($picture->id) . '/like';
-        $requestData = [
-            'off' => 'false',
-        ];
-        $response = $this->ajaxPost($url, $requestData);
-
-        $response->assertOk();
-        $userActivity->refresh();
-        self::assertSame(RateEnum::LIKE, $userActivity->activity);
-        self::assertSame($picture->id, $userActivity->picture_id);
-    }
-
-    /**
-     * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
-     */
     public function testOffLikeWithUserLikeActivityRecord(string $locale): void
     {
         $this->app->setLocale($locale);

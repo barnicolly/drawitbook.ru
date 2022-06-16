@@ -2,7 +2,6 @@
 
 namespace App\Containers\Picture\Http\Controllers\Art;
 
-use App\Containers\Picture\Actions\Rate\SetDislikePictureAction;
 use App\Containers\Picture\Actions\Rate\SetLikePictureAction;
 use App\Containers\Picture\Http\Requests\Art\RateAjaxRequest;
 use App\Ship\Parents\Controllers\HttpController;
@@ -20,24 +19,6 @@ class RateAjaxController extends HttpController
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\RateAjaxControllerLikeTest
      */
     public function like(RateAjaxRequest $request, SetLikePictureAction $action): JsonResponse
-    {
-        try {
-            $turnOn = $request->off !== 'true';
-            $action->run($request->id, $turnOn);
-        } catch (Throwable $e) {
-            abort(500);
-        }
-        return response()->json();
-    }
-
-    /**
-     * @param RateAjaxRequest $request
-     * @param SetDislikePictureAction $action
-     * @return JsonResponse
-     *
-     * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\RateAjaxControllerDislikeTest
-     */
-    public function dislike(RateAjaxRequest $request, SetDislikePictureAction $action): JsonResponse
     {
         try {
             $turnOn = $request->off !== 'true';

@@ -50,7 +50,6 @@ foreach (config('translator.available_locales') as $prefix) {
                         ],
                         function () {
                             Route::post('/{id}/like', [RateAjaxController::class, 'like']);
-                            Route::post('/{id}/dislike', [RateAjaxController::class, 'dislike']);
                         }
                     );
 

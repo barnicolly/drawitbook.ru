@@ -12,6 +12,6 @@ class WhereUserActivityIsRateCriteria extends Criteria
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->whereIn(UserActivityColumnsEnum::ACTIVITY, [RateEnum::LIKE, RateEnum::DISLIKE]);
+        return $model->whereIn(UserActivityColumnsEnum::ACTIVITY, [RateEnum::LIKE]);
     }
 }
