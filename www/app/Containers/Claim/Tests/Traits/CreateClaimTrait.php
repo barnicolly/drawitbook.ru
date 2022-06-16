@@ -6,7 +6,7 @@ use App\Containers\Claim\Enums\UserClaimColumnsEnum;
 use App\Containers\Claim\Models\SprClaimReasonModel;
 use App\Containers\Claim\Models\UserClaimModel;
 use App\Containers\Picture\Models\PictureModel;
-use App\Containers\User\Services\UserService;
+use App\Containers\User\Tasks\GetUserIpFromRequestTask;
 use Illuminate\Support\Facades\DB;
 
 trait CreateClaimTrait
@@ -17,7 +17,7 @@ trait CreateClaimTrait
         SprClaimReasonModel $reason,
         array $data = []
     ): UserClaimModel {
-        $ip = app(UserService::class)->getIp();
+        $ip = app(GetUserIpFromRequestTask::class)->run();
         $data = array_merge($data, [
             UserClaimColumnsEnum::PICTURE_ID => $picture->id,
             UserClaimColumnsEnum::REASON_ID => $reason->id,
