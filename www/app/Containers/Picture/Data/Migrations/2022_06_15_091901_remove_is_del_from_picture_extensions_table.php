@@ -1,6 +1,5 @@
 <?php
 
-use App\Containers\Picture\Enums\PictureExtensionsColumnsEnum;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -14,9 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (Schema::hasColumn(PictureExtensionsColumnsEnum::TABlE, 'is_del'))
+        if (Schema::hasColumn('picture', 'is_del'))
         {
-            Schema::table(PictureExtensionsColumnsEnum::TABlE, function (Blueprint $table)
+            Schema::table('picture', function (Blueprint $table)
             {
                 $table->dropColumn('is_del');
             });

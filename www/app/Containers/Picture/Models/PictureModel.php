@@ -11,13 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
- * @property string $description
  * @property int $in_common
  * @property int $in_vk_posting
  *
  * @method static PictureModelFactory factory()->create()
  */
-//todo-misha убрать description, не используется;
+//todo-misha перенести in_vk_posting в отдельную таблицу
 class PictureModel extends CoreModel
 {
     use HasFactory;

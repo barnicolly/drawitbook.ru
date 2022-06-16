@@ -24,7 +24,6 @@ class PictureModelFactory extends Factory
      * @return array
      */
     #[ArrayShape([
-        PictureColumnsEnum::DESCRIPTION => "string",
         PictureColumnsEnum::IN_COMMON => "int",
         PictureColumnsEnum::IN_VK_POSTING => "int",
         PictureColumnsEnum::CREATED_AT => "string",
@@ -34,7 +33,6 @@ class PictureModelFactory extends Factory
     {
         $dateTime = (new \DateTimeImmutable())->format('Y-m-d H:i:s');
         return [
-            PictureColumnsEnum::DESCRIPTION => $this->faker->text(100),
             PictureColumnsEnum::IN_COMMON => ShowOnMainPageStatusEnum::FALSE,
             PictureColumnsEnum::IN_VK_POSTING => VkPostingStatusEnum::FALSE,
             PictureColumnsEnum::CREATED_AT => $dateTime,
