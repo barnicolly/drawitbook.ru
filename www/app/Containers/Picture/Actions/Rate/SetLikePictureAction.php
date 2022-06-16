@@ -34,7 +34,7 @@ class SetLikePictureAction extends Action
      */
     public function run(int $pictureId, bool $turnOn): void
     {
-        $userDto = new UserDto(ip: $this->getUserIpFromRequestTask->run(), id: 0);
+        $userDto = new UserDto(ip: $this->getUserIpFromRequestTask->run());
         $this->likePictureAction->run($pictureId, $turnOn, $userDto);
     }
 

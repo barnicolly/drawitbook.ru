@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Cache;
 class MenuGroupService
 {
 
-    private $routeService;
+    private RouteService $routeService;
 
     public function __construct()
     {
-        $this->routeService = (new RouteService());
+        $this->routeService = app(RouteService::class);
     }
 
     public function formCategoriesGroups(string $locale): array

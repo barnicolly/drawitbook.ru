@@ -23,13 +23,13 @@ class LikesModelFactory extends Factory
      */
     #[ArrayShape([
         LikesColumnsEnum::PICTURE_ID => "int",
-        LikesColumnsEnum::USER_ID => "int",
+        LikesColumnsEnum::USER_ID => "null|int",
     ])]
     public function definition(): array
     {
         return [
             LikesColumnsEnum::PICTURE_ID => $this->faker->randomDigitNotNull,
-            LikesColumnsEnum::USER_ID => 0,
+            LikesColumnsEnum::USER_ID => null,
         ];
     }
 }
