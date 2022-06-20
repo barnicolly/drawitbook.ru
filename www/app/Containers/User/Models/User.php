@@ -2,11 +2,21 @@
 
 namespace App\Containers\User\Models;
 
+use App\Containers\User\Data\Factories\UserModelFactory;
 use App\Ship\Parents\Models\UserModel;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ *
+ * @method static UserModelFactory factory
+ */
 class User extends UserModel
 {
 
+    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *
@@ -33,6 +43,11 @@ class User extends UserModel
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function newFactory(): UserModelFactory
+    {
+        return UserModelFactory::new();
+    }
 
     public function roles()
     {

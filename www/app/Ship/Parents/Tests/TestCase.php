@@ -2,7 +2,10 @@
 
 namespace App\Ship\Parents\Tests;
 
+use App\Containers\Authorization\Enums\RoleEnum;
+use App\Containers\Authorization\Models\Role;
 use App\Containers\Translation\Data\Seeders\TranslatorLanguagesSeeder;
+use App\Containers\User\Models\User;
 use App\Ship\Parents\Seeders\DatabaseSeeder;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Facades\DB;
@@ -98,6 +101,22 @@ abstract class TestCase extends BaseTestCase
         }
     }
 
+    protected function actingAsAdmin(): User
+    {
+        $user = User::factory()->create();
+        $adminRole = Role::factory()->create(['name' => RoleEnum::ADMIN]);
+        $user->roles()->attach($adminRole);
+        $this->actingAs($user);
+        return $user;
+    }
+
+    protected function actingAsUser(): User
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        return $user;
+    }
+
     private function seedTranslatorLanguages(): void
     {
         app(DatabaseSeeder::class)->call(TranslatorLanguagesSeeder::class);
@@ -114,7 +133,7 @@ abstract class TestCase extends BaseTestCase
             if (!empty($tableNamesForTruncate)) {
                 $queries = [];
                 foreach ($tableNamesForTruncate as $tableName) {
-                    $queries[] ='TRUNCATE TABLE ' . $tableName . ';';
+                    $queries[] = 'TRUNCATE TABLE ' . $tableName . ';';
                 }
                 Schema::disableForeignKeyConstraints();
                 DB::unprepared(implode(' ', $queries));
