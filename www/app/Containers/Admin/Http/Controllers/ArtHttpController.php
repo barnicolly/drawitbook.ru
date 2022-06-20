@@ -7,6 +7,7 @@ use App\Containers\Admin\Http\Requests\Art\ArtSetVkPostingOnRequest;
 use App\Containers\Admin\Http\Requests\Art\PostInVkAlbumRequest;
 use App\Containers\Admin\Http\Requests\Art\RemoveFromVkAlbumRequest;
 use App\Containers\Picture\Services\ArtsService;
+use App\Containers\Picture\Tasks\Picture\UpdatePictureVkPostingStatusTask;
 use App\Containers\Vk\Enums\VkPostingStatusEnum;
 use App\Containers\Vk\Services\AlbumService;
 use App\Containers\Vk\Services\Posting\VkAlbumService;
@@ -15,9 +16,9 @@ use App\Ship\Parents\Controllers\HttpController;
 class ArtHttpController extends HttpController
 {
 
-    private $vkAlbumService;
-    private $albumService;
-    private $artsService;
+    private VkAlbumService $vkAlbumService;
+    private AlbumService $albumService;
+    private ArtsService $artsService;
 
     public function __construct(VkAlbumService $vkAlbumService, AlbumService $albumService, ArtsService $artsService)
     {
@@ -33,7 +34,7 @@ class ArtHttpController extends HttpController
             if (!$this->artsService->isArtExist($data['id'])) {
                 return ['success' => false];
             }
-            $this->artsService->updateVkPosting($data['id'], VkPostingStatusEnum::TRUE);
+            app(UpdatePictureVkPostingStatusTask::class)->run($data['id'], VkPostingStatusEnum::TRUE);
         } catch (\Exception $e) {
             return ['success' => false];
         }
@@ -47,7 +48,7 @@ class ArtHttpController extends HttpController
             if (!$this->artsService->isArtExist($data['id'])) {
                 return ['success' => false];
             }
-            $this->artsService->updateVkPosting($data['id'], VkPostingStatusEnum::FALSE);
+            app(UpdatePictureVkPostingStatusTask::class)->run($data['id'], VkPostingStatusEnum::FALSE);
         } catch (\Exception $e) {
             return ['success' => false];
         }

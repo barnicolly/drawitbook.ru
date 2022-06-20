@@ -23,7 +23,8 @@ class GetPictureExtensionsByPictureIdsTask extends Task
      */
     public function run(array $ids): array
     {
-        return $this->repository->findWhereIn(PictureExtensionsColumnsEnum::PICTURE_ID, $ids)->toArray();
+        $result = $this->repository->findWhereIn(PictureExtensionsColumnsEnum::PICTURE_ID, $ids)->toArray();
+        return groupArray($result, PictureExtensionsColumnsEnum::PICTURE_ID);
     }
 }
 
