@@ -2,57 +2,69 @@
 
 namespace App\Containers\Admin\Http\Controllers;
 
-use App\Containers\Admin\Http\Requests\Art\ArtSetVkPostingOffRequest;
-use App\Containers\Admin\Http\Requests\Art\ArtSetVkPostingOnRequest;
 use App\Containers\Admin\Http\Requests\Art\PostInVkAlbumRequest;
 use App\Containers\Admin\Http\Requests\Art\RemoveFromVkAlbumRequest;
+use App\Containers\Admin\Http\Requests\VkPosting\ArtSetVkPostingRequest;
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Picture\Tasks\Picture\UpdatePictureVkPostingStatusTask;
 use App\Containers\Vk\Enums\VkPostingStatusEnum;
 use App\Containers\Vk\Services\AlbumService;
 use App\Containers\Vk\Services\Posting\VkAlbumService;
 use App\Ship\Parents\Controllers\HttpController;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
-class ArtHttpController extends HttpController
+class ArtController extends HttpController
 {
 
     private VkAlbumService $vkAlbumService;
     private AlbumService $albumService;
-    private ArtsService $artsService;
 
     public function __construct(VkAlbumService $vkAlbumService, AlbumService $albumService, ArtsService $artsService)
     {
         $this->vkAlbumService = $vkAlbumService;
         $this->albumService = $albumService;
-        $this->artsService = $artsService;
     }
 
-    public function setVkPostingOnRequest(ArtSetVkPostingOnRequest $request)
-    {
+    /**
+     * @param ArtSetVkPostingRequest $request
+     * @param UpdatePictureVkPostingStatusTask $task
+     * @return JsonResponse
+     *
+     * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\SetVkPostingOnTest
+     */
+    public function setVkPostingOn(
+        ArtSetVkPostingRequest $request,
+        UpdatePictureVkPostingStatusTask $task
+    ): JsonResponse {
         try {
-            $data = $request->validated();
-            if (!$this->artsService->isArtExist($data['id'])) {
-                return ['success' => false];
-            }
-            app(UpdatePictureVkPostingStatusTask::class)->run($data['id'], VkPostingStatusEnum::TRUE);
-        } catch (\Exception $e) {
-            return ['success' => false];
+            $task->run($request->id, VkPostingStatusEnum::TRUE);
+        } catch (Throwable $e) {
+            Log::error($e->getMessage());
+            abort(500);
         }
-        return response(['success' => true]);
+        return response()->json();
     }
 
-    public function setVkPostingOffRequest(ArtSetVkPostingOffRequest $request)
-    {
+    /**
+     * @param ArtSetVkPostingRequest $request
+     * @param UpdatePictureVkPostingStatusTask $task
+     * @return JsonResponse
+     *
+     * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\SetVkPostingOffTest
+     */
+    public function setVkPostingOff(
+        ArtSetVkPostingRequest $request,
+        UpdatePictureVkPostingStatusTask $task
+    ): JsonResponse {
         try {
-            $data = $request->validated();
-            if (!$this->artsService->isArtExist($data['id'])) {
-                return ['success' => false];
-            }
-            app(UpdatePictureVkPostingStatusTask::class)->run($data['id'], VkPostingStatusEnum::FALSE);
-        } catch (\Exception $e) {
-            return ['success' => false];
+            $task->run($request->id, VkPostingStatusEnum::FALSE);
+        } catch (Throwable $e) {
+            Log::error($e->getMessage());
+            abort(500);
         }
-        return response(['success' => true]);
+        return response()->json();
     }
 
     public function getSettingsModal($artId)
@@ -64,7 +76,7 @@ class ArtHttpController extends HttpController
             $vkAlbumPictures = $this->albumService->getAlbumVkPictures($artId, $vkAlbumIds);
             $viewData['issetInVkAlbums'] = $this->albumService->extractVkAlbumIds($vkAlbumPictures);
             $modal = view('admin::art.modal', $viewData)->render();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return response(['success' => false]);
         }
         return ['success' => true, 'data' => $modal];
@@ -76,7 +88,7 @@ class ArtHttpController extends HttpController
             $data = $request->validated();
             $albumId = $data['album_id'];
             $this->vkAlbumService->attachArtOnAlbum($artId, $albumId);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return response(['success' => false]);
         }
         return ['success' => true];
@@ -88,7 +100,7 @@ class ArtHttpController extends HttpController
             $data = $request->validated();
             $albumId = $data['album_id'];
             $this->vkAlbumService->detachArtFromAlbum($artId, $albumId);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return response(['success' => false]);
         }
         return ['success' => true];

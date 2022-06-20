@@ -10,7 +10,8 @@ Route::group(
         'prefix' => '/',
     ],
     function () {
-        Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+        Route::get('/ru/login', [LoginController::class, 'showLoginForm'])->name('loginPage');
+        Route::post('/ru/login', [LoginController::class, 'login'])->name('login');
         Route::get('/register', [LoginController::class, 'dump']);
         Route::post('/register', [LoginController::class, 'dump']);
         Route::get('/password/reset', [LoginController::class, 'dump']);

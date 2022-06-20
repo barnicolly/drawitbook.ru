@@ -21,12 +21,6 @@ class ArtsService
         $this->seoService = app(SeoService::class);
     }
 
-//    todo-misha проверить использование;
-    public function isArtExist(int $id): bool
-    {
-        return !empty($this->getById($id));
-    }
-
     public function getInterestingArts(int $excludeId, int $limit): array
     {
         $arts = app(GetInterestingPicturesTask::class)->run($excludeId, $limit);

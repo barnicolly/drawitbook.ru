@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $in_common
  * @property int $in_vk_posting
  *
- * @method static PictureModelFactory factory()->create()
+ * @method static PictureModelFactory factory
  */
 //todo-misha перенести in_vk_posting в отдельную таблицу
 class PictureModel extends CoreModel
@@ -23,7 +23,10 @@ class PictureModel extends CoreModel
 
     protected $table = PictureColumnsEnum::TABlE;
 
-    protected $fillable = [];
+    protected $fillable = [
+        PictureColumnsEnum::IN_VK_POSTING,
+        PictureColumnsEnum::IN_COMMON,
+    ];
 
     public function extensions(): HasMany
     {

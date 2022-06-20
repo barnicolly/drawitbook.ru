@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Containers\Admin\Http\Requests\Art;
+namespace App\Containers\Admin\Http\Requests\VkPosting;
 
+use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Ship\Parents\Requests\BaseFormRequest;
 
-class ArtSetVkPostingOnRequest extends BaseFormRequest
+/**
+ * @property int $id
+ */
+class ArtSetVkPostingRequest extends BaseFormRequest
 {
     public function authorize()
     {
@@ -18,8 +22,9 @@ class ArtSetVkPostingOnRequest extends BaseFormRequest
      */
     public function rules()
     {
+        $pictureTable = PictureColumnsEnum::TABlE;
         return [
-            'id' => 'required|integer',
+            'id' => "required|integer|exists:{$pictureTable},id",
         ];
     }
 
