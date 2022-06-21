@@ -7,6 +7,8 @@ use App\Containers\Vk\Models\VkAlbumPictureModel;
 
 class AlbumService
 {
+//    todo-misha разбить на таски;
+
     public function getAlbumVkPictures(int $artId, array $vkAlbumIds): array
     {
         return VkAlbumPictureModel::getAlbumVkPictures($artId, $vkAlbumIds);

@@ -2,7 +2,7 @@
 
 namespace App\Containers\Vk\Models;
 
-use App\Containers\Vk\Enums\VkAlbumPictureColumnsEnum;
+use App\Containers\Vk\Enums\VkAlbumColumnsEnum;
 use App\Ship\Parents\Models\CoreModel;
 
 /**
@@ -13,7 +13,7 @@ use App\Ship\Parents\Models\CoreModel;
  */
 class VkAlbumModel extends CoreModel
 {
-    protected $table = VkAlbumPictureColumnsEnum::TABlE;
+    protected $table = VkAlbumColumnsEnum::TABlE;
 
     protected $fillable = [];
 

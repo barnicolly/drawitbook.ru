@@ -6,24 +6,19 @@ use App\Ship\Parents\Requests\BaseFormRequest;
 
 class RemoveFromVkAlbumRequest extends BaseFormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             'album_id' => 'required|integer',
         ];
     }
 
-    public function filters()
+    public function filters(): array
     {
         return [
             'album_id' => 'cast:integer',

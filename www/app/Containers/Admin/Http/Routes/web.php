@@ -12,7 +12,7 @@ Route::group(
     function () {
         Route::post('/setVkPostingOn', [ArtController::class, 'setVkPostingOn'])->name('admin.posting.vk.on');
         Route::post('/setVkPostingOff', [ArtController::class, 'setVkPostingOff'])->name('admin.posting.vk.off');
-        Route::get('/{id}/getSettingsModal', [ArtController::class, 'getSettingsModal']);
+        Route::get('/{id}/getSettingsModal', [ArtController::class, 'getSettingsModal'])->name('admin.picture.settings');
         Route::post('/{id}/postInVkAlbum', [ArtController::class, 'postInVkAlbum']);
         Route::post('/{id}/removeFromVkAlbum', [ArtController::class, 'removeFromVkAlbum']);
     }

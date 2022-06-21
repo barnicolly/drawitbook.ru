@@ -9,27 +9,16 @@
                 <div class="col-12 form-group">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="main-tab"
-                               data-toggle="tab" href="#main" role="tab" aria-controls="main"
-                               aria-selected="true">Основная информация
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="integrate-vk-tab" data-toggle="tab" href="#integrate-vk" role="tab"
+                            <a class="nav-link active" id="integrate-vk-tab" data-toggle="tab" href="#integrate-vk" role="tab"
                                aria-controls="integrate-vk"
-                               aria-selected="false">Интеграция ВК
+                               aria-selected="true">Интеграция ВК
                             </a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-12">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
-                            <div class="col-12">
-                                123
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="integrate-vk" role="tabpanel" aria-labelledby="integrate-vk-tab">
+                        <div class="tab-pane show active" id="integrate-vk" role="tabpanel" aria-labelledby="integrate-vk-tab">
                             <div class="col-12">
                                 <table class="table">
                                     <thead>

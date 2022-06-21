@@ -13,10 +13,13 @@ class CustomTranslationMiddleware extends TranslationMiddleware
         if ($request->method() !== 'GET') {
             return $next($request);
         }
+//        todo-misha закрыть тестами;
         $ignoreSegments = [
             '_debugbar',
+            'admin',
         ];
-        if (in_array($request->segment(1), $ignoreSegments, true)) {
+        $test = $request->segment(1);
+        if (in_array($test, $ignoreSegments, true)) {
             return $next($request);
         }
 

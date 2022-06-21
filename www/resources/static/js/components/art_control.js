@@ -68,12 +68,12 @@ import { getRandomInt, NewModal, sendRequest, showInfo } from '@js/helpers/utils
             $(self.container).on('click', '.picture-settings', function () {
                 sendRequest('get', '/admin/art/' + self.artId + '/getSettingsModal', {}, function (res) {
                     if (res.success) {
-                        var modal = new NewModal(res.data);
-                        var modalHTML = modal.showModal();
+                        const modal = new NewModal(res.data.html);
+                        const modalHTML = modal.showModal();
                         modalHTML
                             .on('click', '.add-to-vk-album', function () {
-                                var button = $(this);
-                                var data = {
+                                const button = $(this);
+                                const data = {
                                    'album_id': $(this).closest('tr').data('vk-album-id'),
                                 };
                                 sendRequest('post', '/admin/art/' + self.artId + '/postInVkAlbum', data, function (res) {

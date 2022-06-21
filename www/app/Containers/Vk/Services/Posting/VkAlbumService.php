@@ -11,7 +11,6 @@ use App\Containers\Vk\Services\Api\VkApi;
 class VkAlbumService
 {
 
-    private $apiInstance;
     private $apiPhotoService;
     private $apiPostingService;
     private $artsService;
@@ -21,7 +20,6 @@ class VkAlbumService
     public function __construct()
     {
         $apiInstance = (new VkApi());
-        $this->apiInstance = $apiInstance;
         $this->apiPhotoService = (new PhotoService($apiInstance));
         $this->apiPostingService = (new PostingService());
         $this->artsService = (new ArtsService());

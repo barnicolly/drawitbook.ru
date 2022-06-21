@@ -2,8 +2,6 @@
 
 use App\Containers\Authentication\Http\Controllers\LoginController;
 
-//\Illuminate\Support\Facades\Auth::routes();
-
 Route::group(
     [
         'middleware' => 'web',

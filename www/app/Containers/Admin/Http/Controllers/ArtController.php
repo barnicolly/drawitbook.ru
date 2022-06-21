@@ -2,13 +2,14 @@
 
 namespace App\Containers\Admin\Http\Controllers;
 
+use App\Containers\Admin\Actions\GetSettingsModalAction;
 use App\Containers\Admin\Http\Requests\Art\PostInVkAlbumRequest;
 use App\Containers\Admin\Http\Requests\Art\RemoveFromVkAlbumRequest;
+use App\Containers\Admin\Http\Requests\Settings\GetSettingsModalRequest;
 use App\Containers\Admin\Http\Requests\VkPosting\ArtSetVkPostingRequest;
-use App\Containers\Picture\Services\ArtsService;
+use App\Containers\Admin\Http\Transformers\GetSettingsModalTransformer;
 use App\Containers\Picture\Tasks\Picture\UpdatePictureVkPostingStatusTask;
 use App\Containers\Vk\Enums\VkPostingStatusEnum;
-use App\Containers\Vk\Services\AlbumService;
 use App\Containers\Vk\Services\Posting\VkAlbumService;
 use App\Ship\Parents\Controllers\HttpController;
 use Illuminate\Http\JsonResponse;
@@ -19,12 +20,10 @@ class ArtController extends HttpController
 {
 
     private VkAlbumService $vkAlbumService;
-    private AlbumService $albumService;
 
-    public function __construct(VkAlbumService $vkAlbumService, AlbumService $albumService, ArtsService $artsService)
+    public function __construct(VkAlbumService $vkAlbumService)
     {
         $this->vkAlbumService = $vkAlbumService;
-        $this->albumService = $albumService;
     }
 
     /**
@@ -67,19 +66,23 @@ class ArtController extends HttpController
         return response()->json();
     }
 
-    public function getSettingsModal($artId)
+    /**
+     * @param GetSettingsModalRequest $request
+     * @param GetSettingsModalAction $action
+     * @return JsonResponse
+     *
+     * @see  \App\Containers\Admin\Tests\Feature\Http\Controllers\GetSettingsModalTest
+     */
+    public function getSettingsModal(GetSettingsModalRequest $request, GetSettingsModalAction $action): JsonResponse
     {
         try {
-            $vkAlbums = $this->albumService->getVkAlbums();
-            $vkAlbumIds = array_column($vkAlbums, 'id');
-            $viewData['vkAlbums'] = $vkAlbums;
-            $vkAlbumPictures = $this->albumService->getAlbumVkPictures($artId, $vkAlbumIds);
-            $viewData['issetInVkAlbums'] = $this->albumService->extractVkAlbumIds($vkAlbumPictures);
-            $modal = view('admin::art.modal', $viewData)->render();
+            $resultDto = $action->run($request->id);
+            $result = fractal()->item($resultDto, new GetSettingsModalTransformer());
+            return response()->json($result);
         } catch (Throwable $e) {
-            return response(['success' => false]);
+            Log::error($e->getMessage());
+            abort(500);
         }
-        return ['success' => true, 'data' => $modal];
     }
 
     public function postInVkAlbum($artId, PostInVkAlbumRequest $request)
