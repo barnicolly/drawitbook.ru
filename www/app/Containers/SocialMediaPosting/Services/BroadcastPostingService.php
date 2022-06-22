@@ -8,6 +8,9 @@ use App\Containers\SocialMediaPosting\Tasks\CreateSocialMediaPostingItemTask;
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Vk\Services\VkWallPostingStrategy;
 
+/**
+ * @see \App\Containers\SocialMediaPosting\Tests\Feature\Services\BroadcastPostingServiceTest
+ */
 class BroadcastPostingService
 {
 
@@ -36,13 +39,13 @@ class BroadcastPostingService
      */
     public function broadcast(): void
     {
-        $artIdForPosting = $this->getPictureIdForPostingTask->run();
-        $art = $this->artsService->getById($artIdForPosting);
-        $tags = $this->tagsService->getNamesWithoutHiddenVkByArtId($artIdForPosting);
-        $artFsPath = $art['images']['primary']['fs_path'];
-        $postingStrategy = new VkWallPostingStrategy($tags, $artFsPath);
+        $pictureIdForPosting = $this->getPictureIdForPostingTask->run();
+        $picture = $this->artsService->getById($pictureIdForPosting);
+        $tags = $this->tagsService->getNamesWithoutHiddenVkByArtId($pictureIdForPosting);
+        $pictureFsPath = $picture['images']['primary']['fs_path'];
+        $postingStrategy = app()->make(VkWallPostingStrategy::class, ['tags' => $tags, 'artFsPath' => $pictureFsPath]);
         $postingStrategy->post();
-        $this->createSocialMediaPostingItemTask->run($artIdForPosting);
+        $this->createSocialMediaPostingItemTask->run($pictureIdForPosting);
     }
 
 }
