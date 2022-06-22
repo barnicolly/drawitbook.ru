@@ -3,7 +3,6 @@
 namespace App\Containers\Admin\Actions;
 
 use App\Containers\Vk\Services\Api\PhotoService;
-use App\Containers\Vk\Services\Api\VkApi;
 use App\Containers\Vk\Tasks\VkAlbum\GetVkAlbumByIdTask;
 use App\Containers\Vk\Tasks\VkAlbumPicture\DeleteVkAlbumPictureByIdTask;
 use App\Containers\Vk\Tasks\VkAlbumPicture\GetVkAlbumPictureByVkAlbumIdAndPictureIdTask;
@@ -17,19 +16,18 @@ class DetachPictureFromAlbumAction extends Action
     private DeleteVkAlbumPictureByIdTask $deleteVkAlbumPictureByIdTask;
 
     /**
+     * @param PhotoService $apiPhotoService
      * @param GetVkAlbumByIdTask $getVkAlbumByIdTask
      * @param GetVkAlbumPictureByVkAlbumIdAndPictureIdTask $getVkAlbumPictureByVkAlbumIdAndPictureIdTask
      * @param DeleteVkAlbumPictureByIdTask $deleteVkAlbumPictureByIdTask
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function __construct(
+        PhotoService $apiPhotoService,
         GetVkAlbumByIdTask $getVkAlbumByIdTask,
         GetVkAlbumPictureByVkAlbumIdAndPictureIdTask $getVkAlbumPictureByVkAlbumIdAndPictureIdTask,
         DeleteVkAlbumPictureByIdTask $deleteVkAlbumPictureByIdTask
     ) {
-        //        todo-misha реализовать через контейнер;
-        $apiInstance = app(VkApi::class);
-        $this->apiPhotoService = app()->make(PhotoService::class, ['api' => $apiInstance]);
+        $this->apiPhotoService = $apiPhotoService;
         $this->getVkAlbumByIdTask = $getVkAlbumByIdTask;
         $this->getVkAlbumPictureByVkAlbumIdAndPictureIdTask = $getVkAlbumPictureByVkAlbumIdAndPictureIdTask;
         $this->deleteVkAlbumPictureByIdTask = $deleteVkAlbumPictureByIdTask;

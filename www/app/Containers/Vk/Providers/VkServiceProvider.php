@@ -2,6 +2,8 @@
 
 namespace App\Containers\Vk\Providers;
 
+use App\Containers\Vk\Services\Api\PhotoService;
+use App\Containers\Vk\Services\Api\VkApi;
 use Illuminate\Support\ServiceProvider;
 
 class VkServiceProvider extends ServiceProvider
@@ -36,6 +38,10 @@ class VkServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(PhotoService::class, function ($app) {
+            $apiInstance = $app->make(VkApi::class);
+            return $app->make(PhotoService::class, ['api' => $apiInstance]);
+        });
     }
 
     /**

@@ -5,7 +5,6 @@ namespace App\Containers\Admin\Actions;
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Vk\Services\Api\PhotoService;
-use App\Containers\Vk\Services\Api\VkApi;
 use App\Containers\Vk\Services\Posting\PostingService;
 use App\Containers\Vk\Tasks\VkAlbum\GetVkAlbumByIdTask;
 use App\Containers\Vk\Tasks\VkAlbumPicture\CreateVkAlbumPictureTask;
@@ -21,23 +20,22 @@ class AttachPictureOnAlbumAction extends Action
     private CreateVkAlbumPictureTask $createVkAlbumPictureTask;
 
     /**
+     * @param PhotoService $apiPhotoService
      * @param PostingService $apiPostingService
      * @param ArtsService $artsService
      * @param TagsService $tagsService
      * @param GetVkAlbumByIdTask $getVkAlbumByIdTask
      * @param CreateVkAlbumPictureTask $createVkAlbumPictureTask
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function __construct(
+        PhotoService $apiPhotoService,
         PostingService $apiPostingService,
         ArtsService $artsService,
         TagsService $tagsService,
         GetVkAlbumByIdTask $getVkAlbumByIdTask,
         CreateVkAlbumPictureTask $createVkAlbumPictureTask
     ) {
-        //        todo-misha реализовать через контейнер;
-        $apiInstance = app(VkApi::class);
-        $this->apiPhotoService = app()->make(PhotoService::class, ['api' => $apiInstance]);
+        $this->apiPhotoService = $apiPhotoService;
         $this->apiPostingService = $apiPostingService;
         $this->artsService = $artsService;
         $this->tagsService = $tagsService;

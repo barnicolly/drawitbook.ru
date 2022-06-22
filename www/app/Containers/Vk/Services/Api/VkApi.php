@@ -7,8 +7,8 @@ use ATehnix\VkClient\Client;
 class VkApi
 {
 
-    public $groupId;
-    public $api;
+    public string $groupId;
+    public Client $api;
 
     public function __construct()
     {
