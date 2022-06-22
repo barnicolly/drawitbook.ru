@@ -4,10 +4,10 @@ namespace App\Containers\Admin\Actions;
 
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Tag\Services\TagsService;
-use App\Containers\Vk\Services\AlbumService;
 use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Services\Api\VkApi;
 use App\Containers\Vk\Services\Posting\PostingService;
+use App\Containers\Vk\Tasks\VkAlbum\GetVkAlbumByIdTask;
 use App\Ship\Parents\Actions\Action;
 
 class AttachPictureOnAlbumAction extends Action
@@ -16,24 +16,28 @@ class AttachPictureOnAlbumAction extends Action
     private PostingService $apiPostingService;
     private ArtsService $artsService;
     private TagsService $tagsService;
-    private AlbumService $albumService;
+    private GetVkAlbumByIdTask $getVkAlbumByIdTask;
 
     /**
      * @param PostingService $apiPostingService
      * @param ArtsService $artsService
      * @param TagsService $tagsService
-     * @param AlbumService $albumService
+     * @param GetVkAlbumByIdTask $getVkAlbumByIdTask
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function __construct(PostingService $apiPostingService, ArtsService $artsService, TagsService $tagsService, AlbumService $albumService)
-    {
-//        todo-misha реализовать через контейнер;
+    public function __construct(
+        PostingService $apiPostingService,
+        ArtsService $artsService,
+        TagsService $tagsService,
+        GetVkAlbumByIdTask $getVkAlbumByIdTask
+    ) {
+        //        todo-misha реализовать через контейнер;
         $apiInstance = app(VkApi::class);
         $this->apiPhotoService = app()->make(PhotoService::class, ['api' => $apiInstance]);
         $this->apiPostingService = $apiPostingService;
         $this->artsService = $artsService;
         $this->tagsService = $tagsService;
-        $this->albumService = $albumService;
+        $this->getVkAlbumByIdTask = $getVkAlbumByIdTask;
     }
 
     /**
@@ -45,12 +49,7 @@ class AttachPictureOnAlbumAction extends Action
      */
     public function run(int $artId, int $vkAlbumId): void
     {
-        //        todo-misha вынести в таск проверки;
-        $vkAlbum = $this->albumService->getById($vkAlbumId);
-        //        todo-misha добавить exceptions;
-        if (!$vkAlbum) {
-            throw new \Exception('Не найден альбом');
-        }
+        $vkAlbum = $this->getVkAlbumByIdTask->run($vkAlbumId);
         //        todo-misha вынести в таск проверки;
         $art = $this->artsService->getById($artId);
         if (!$art) {
@@ -58,8 +57,8 @@ class AttachPictureOnAlbumAction extends Action
         }
         $artFsPath = $art['images']['primary']['fs_path'];
         $tags = $this->tagsService->getNamesWithoutHiddenVkByArtId($artId);
-        $photoId = $this->postPhotoInAlbum($vkAlbum['album_id'], $vkAlbum['share'], $artFsPath, $tags);
-        $this->artsService->attachArtToVkAlbum($artId, $vkAlbum['id'], $photoId);
+        $photoId = $this->postPhotoInAlbum($vkAlbum->album_id, $vkAlbum->share, $artFsPath, $tags);
+        $this->artsService->attachArtToVkAlbum($artId, $vkAlbum->id, $photoId);
     }
 
     private function postPhotoInAlbum(int $albumId, ?string $albumShareLink, string $path, array $tags): ?int

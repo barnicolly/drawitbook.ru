@@ -2,26 +2,37 @@
 
 namespace App\Containers\Admin\Actions;
 
-use App\Containers\Vk\Services\AlbumService;
 use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Services\Api\VkApi;
+use App\Containers\Vk\Tasks\VkAlbum\GetVkAlbumByIdTask;
+use App\Containers\Vk\Tasks\VkAlbumPicture\DeleteVkAlbumPictureByIdTask;
+use App\Containers\Vk\Tasks\VkAlbumPicture\GetVkAlbumPictureByVkAlbumIdAndPictureIdTask;
 use App\Ship\Parents\Actions\Action;
 
 class DetachPictureFromAlbumAction extends Action
 {
     private PhotoService $apiPhotoService;
-    private AlbumService $albumService;
+    private GetVkAlbumByIdTask $getVkAlbumByIdTask;
+    private GetVkAlbumPictureByVkAlbumIdAndPictureIdTask $getVkAlbumPictureByVkAlbumIdAndPictureIdTask;
+    private DeleteVkAlbumPictureByIdTask $deleteVkAlbumPictureByIdTask;
 
     /**
-     * @param AlbumService $albumService
+     * @param GetVkAlbumByIdTask $getVkAlbumByIdTask
+     * @param GetVkAlbumPictureByVkAlbumIdAndPictureIdTask $getVkAlbumPictureByVkAlbumIdAndPictureIdTask
+     * @param DeleteVkAlbumPictureByIdTask $deleteVkAlbumPictureByIdTask
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function __construct(AlbumService $albumService)
-    {
-//        todo-misha реализовать через контейнер;
+    public function __construct(
+        GetVkAlbumByIdTask $getVkAlbumByIdTask,
+        GetVkAlbumPictureByVkAlbumIdAndPictureIdTask $getVkAlbumPictureByVkAlbumIdAndPictureIdTask,
+        DeleteVkAlbumPictureByIdTask $deleteVkAlbumPictureByIdTask
+    ) {
+        //        todo-misha реализовать через контейнер;
         $apiInstance = app(VkApi::class);
         $this->apiPhotoService = app()->make(PhotoService::class, ['api' => $apiInstance]);
-        $this->albumService = $albumService;
+        $this->getVkAlbumByIdTask = $getVkAlbumByIdTask;
+        $this->getVkAlbumPictureByVkAlbumIdAndPictureIdTask = $getVkAlbumPictureByVkAlbumIdAndPictureIdTask;
+        $this->deleteVkAlbumPictureByIdTask = $deleteVkAlbumPictureByIdTask;
     }
 
     /**
@@ -33,19 +44,10 @@ class DetachPictureFromAlbumAction extends Action
      */
     public function run(int $artId, int $vkAlbumId): void
     {
-//        todo-misha вынести в таск проверки;
-        $vkAlbum = $this->albumService->getById($vkAlbumId);
-        if (!$vkAlbum) {
-            throw new \Exception('Не найден альбом');
-        }
-        //        todo-misha вынести в таск проверки;
-        $vkAlbumPicture = $this->albumService->getRowByVkAlbumIdAndPictureId($vkAlbum['id'], $artId);
-        if (!$vkAlbumPicture) {
-            throw new \Exception('Не найдена запись связи изображения и альбома ВК');
-        }
-        $photoId = $vkAlbumPicture['out_vk_image_id'];
-        $this->apiPhotoService->delete($photoId);
-        $this->albumService->deleteVkAlbumPictureById($vkAlbumPicture['id']);
+        $vkAlbum = $this->getVkAlbumByIdTask->run($vkAlbumId);
+        $vkAlbumPicture = $this->getVkAlbumPictureByVkAlbumIdAndPictureIdTask->run($vkAlbum->id, $artId);
+        $this->apiPhotoService->delete($vkAlbumPicture->out_vk_image_id);
+        $this->deleteVkAlbumPictureByIdTask->run($vkAlbumPicture->id);
     }
 
 }

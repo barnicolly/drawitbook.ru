@@ -24,35 +24,6 @@ class VkAlbumPictureModel extends CoreModel
     protected $fillable = [];
     public $timestamps = false;
 
-    public static function getRowByVkAlbumIdAndPictureId(int $vkAlbumId, int $artId): ?array
-    {
-        $result = self::query()
-            ->where(VkAlbumPictureColumnsEnum::VK_ALBUM_ID, '=', $vkAlbumId)
-            ->where(VkAlbumPictureColumnsEnum::PICTURE_ID, '=', $artId)
-            ->getQuery()
-            ->first();
-        return $result
-            ? (array) $result
-            : null;
-    }
-
-    public static function getAlbumVkPictures(int $artId, array $vkAlbumIds): array
-    {
-        $result = self::query()
-            ->whereIn(VkAlbumPictureColumnsEnum::VK_ALBUM_ID, $vkAlbumIds)
-            ->where(VkAlbumPictureColumnsEnum::PICTURE_ID, $artId)
-            ->getQuery()
-            ->get()
-            ->toArray();
-        $result = array_map(
-            function ($item) {
-                return (array) $item;
-            },
-            $result
-        );
-        return $result;
-    }
-
     protected static function newFactory(): VkAlbumPictureModelFactory
     {
         return VkAlbumPictureModelFactory::new();

@@ -25,25 +25,6 @@ class VkAlbumModel extends CoreModel
 
     protected $fillable = [];
 
-//    todo-misha переделать под repository;
-    public static function getById(int $vkAlbumId): ?array
-    {
-        $album = self::query()
-            ->find($vkAlbumId);
-        return $album
-            ? $album->toArray()
-            : null;
-    }
-
-    public static function getAll(): array
-    {
-        $result = self::query()
-            ->getQuery()
-            ->get()
-            ->toArray();
-        return self::mapToArray($result);
-    }
-
     public function pictures(): HasMany
     {
         return $this->hasMany(

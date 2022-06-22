@@ -4,10 +4,13 @@ namespace App\Containers\Admin\Tests\Feature\Http\Controllers;
 
 use App\Containers\Admin\Http\Controllers\ArtController;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
+use App\Containers\Vk\Enums\VkAlbumPictureColumnsEnum;
+use App\Containers\Vk\Models\VkAlbumPictureModel;
 use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Services\Api\VkApi;
 use App\Containers\Vk\Tests\Traits\CreateVkAlbumTrait;
 use App\Ship\Parents\Tests\TestCase;
+use Illuminate\Support\Collection;
 
 /**
  * @see ArtController::detachPictureFromAlbum()
@@ -34,7 +37,9 @@ class DetachPictureFromAlbumTest extends TestCase
     {
         $this->actingAsAdmin();
         $vkAlbum = $this->createVkAlbum();
-        $vkAlbumPicture = $this->createVkAlbumPicture($vkAlbum);
+        $vkAlbumPictures = new Collection();
+        $vkAlbumPictures->push($this->createVkAlbumPicture($vkAlbum));
+        $vkAlbumPictures->push($this->createVkAlbumPicture($vkAlbum));
 
         $mock = $this->createMock(PhotoService::class);
         $mock->method('delete');
@@ -42,17 +47,23 @@ class DetachPictureFromAlbumTest extends TestCase
             return $mock;
         });
 
+        /** @var VkAlbumPictureModel $vkAlbumPictureForDelete */
+        $vkAlbumPictureForDelete = $vkAlbumPictures->shift();
         $data = [
-            'id' => $vkAlbumPicture->picture_id,
+            'id' => $vkAlbumPictureForDelete->picture_id,
             'album_id' => $vkAlbum->id,
         ];
-        $response = $this->ajaxPost($this->formUrl($vkAlbumPicture->picture_id), $data);
+        $response = $this->ajaxPost($this->formUrl($vkAlbumPictureForDelete->picture_id), $data);
 
         $response->assertOk()
             ->assertJsonStructure([]);
 
         $vkAlbumPictures = $vkAlbum->pictures();
-        self::assertSame(0, $vkAlbumPictures->count());
+        self::assertSame(1, $vkAlbumPictures->count());
+        /** @var VkAlbumPictureModel $firstVkAlbumPicture */
+        $firstVkAlbumPicture = $vkAlbumPictures->first();
+        $expectedPictureId = $vkAlbumPictures->first()->{VkAlbumPictureColumnsEnum::PICTURE_ID};
+        self::assertSame($expectedPictureId, $firstVkAlbumPicture->picture_id);
     }
 
     public function testPageNotFoundPicture(): void
