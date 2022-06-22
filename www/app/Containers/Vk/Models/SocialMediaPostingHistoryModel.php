@@ -2,18 +2,17 @@
 
 namespace App\Containers\Vk\Models;
 
-use App\Containers\Vk\Enums\VkHistoryPostingColumnsEnum;
+use App\Containers\Vk\Enums\SocialMediaPostingHistoryColumnsEnum;
 use App\Ship\Parents\Models\CoreModel;
 
 /**
  * @property int $id
  * @property int $picture_id
  */
-class HistoryPostingModel extends CoreModel
+class SocialMediaPostingHistoryModel extends CoreModel
 {
-    //    todo-misha префикс таблицы vk спереди;
     public $timestamps = false;
     protected $dates = ['created_at'];
-    protected $table = VkHistoryPostingColumnsEnum::TABlE;
+    protected $table = SocialMediaPostingHistoryColumnsEnum::TABlE;
     protected $fillable = [];
 }

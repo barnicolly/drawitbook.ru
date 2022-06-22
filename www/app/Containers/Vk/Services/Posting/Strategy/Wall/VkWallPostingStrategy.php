@@ -2,7 +2,7 @@
 
 namespace App\Containers\Vk\Services\Posting\Strategy\Wall;
 
-use App\Containers\Vk\Models\HistoryPostingModel;
+use App\Containers\Vk\Models\SocialMediaPostingHistoryModel;
 use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Services\Api\VkApi;
 use App\Containers\Vk\Services\Api\WallService;
@@ -43,7 +43,7 @@ class VkWallPostingStrategy
     private function addHistoryVkPosting()
     {
         //TODO-misha вынести;
-        $historyVkPostingRecord = new HistoryPostingModel();
+        $historyVkPostingRecord = new SocialMediaPostingHistoryModel();
         $historyVkPostingRecord->picture_id = $this->artId;
         $historyVkPostingRecord->save();
     }

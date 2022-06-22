@@ -18,12 +18,12 @@ class GetPictureIdForPostingTask extends Task
             DB::raw(
                 'select picture.id,
   IF(lastPostingDate.dayDiff IS NULL,
-     IF((select DATEDIFF(NOW(), MAX(history_vk_posting.created_at)) as dayDiff
-         from history_vk_posting
+     IF((select DATEDIFF(NOW(), MAX(social_media_posting_history.created_at)) as dayDiff
+         from social_media_posting_history
          group by picture_id
          order by dayDiff DESC
-         limit 1) <= 10, 10 + 1, (select DATEDIFF(NOW(), MAX(history_vk_posting.created_at)) as dayDiff
-                                  from history_vk_posting
+         limit 1) <= 10, 10 + 1, (select DATEDIFF(NOW(), MAX(social_media_posting_history.created_at)) as dayDiff
+                                  from social_media_posting_history
                                   group by picture_id
                                   order by dayDiff DESC
                                   limit 1) + 1),
@@ -31,11 +31,11 @@ class GetPictureIdForPostingTask extends Task
   ) as dayDiff
 from picture
   left join (select picture_id,
-               MAX(history_vk_posting.created_at) as dateTime,
-               COUNT(history_vk_posting.id),
+               MAX(social_media_posting_history.created_at) as dateTime,
+               COUNT(social_media_posting_history.id),
                NOW(),
-               DATEDIFF(NOW(), MAX(history_vk_posting.created_at)) as dayDiff
-             from history_vk_posting
+               DATEDIFF(NOW(), MAX(social_media_posting_history.created_at)) as dayDiff
+             from social_media_posting_history
              group by picture_id) as lastPostingDate on picture.id = lastPostingDate.picture_id
 where picture.in_vk_posting = 1
       and (lastPostingDate.dayDiff > 10 or lastPostingDate.dayDiff is null)

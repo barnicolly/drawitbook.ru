@@ -4,9 +4,9 @@ namespace App\Containers\Vk\Enums;
 
 use BenSampo\Enum\Enum;
 
-final class VkHistoryPostingColumnsEnum extends Enum
+final class SocialMediaPostingHistoryColumnsEnum extends Enum
 {
-    public const TABlE = 'history_vk_posting';
+    public const TABlE = 'social_media_posting_history';
 
     public const ID = 'id';
     public const PICTURE_ID = 'picture_id';

@@ -12,6 +12,7 @@ final class SprTagsColumnsEnum extends Enum
     public const NAME = 'name';
     public const NAME_EN = 'name_en';
     public const HIDDEN = 'hidden';
+//    todo-misha переименовать в hidden_for_posting и вынести в отдельную таблицу;
     public const HIDDEN_VK = 'hidden_vk';
     public const SEO = 'seo';
     public const SLUG_EN = 'slug_en';
