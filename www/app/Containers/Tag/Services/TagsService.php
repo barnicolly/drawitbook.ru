@@ -64,16 +64,5 @@ class TagsService
         return [$shown, $hidden];
     }
 
-    public function extractNotHiddenTagsFromArt(array $artTags): array
-    {
-        $tags = [];
-        foreach ($artTags as $tag) {
-            if ($tag['hidden'] === 0) {
-                $tags[] = $tag;
-            }
-        }
-        return $tags;
-    }
-
 }
 

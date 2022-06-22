@@ -61,9 +61,6 @@ class GetArtAction extends Action
     public function run(int $artId): array
     {
         $art = $this->artsService->getById($artId);
-        if (!$art) {
-            throw new NotFoundPicture();
-        }
         $locale = app()->getLocale();
         $artTags = $this->getPictureTagsByPictureIdsTask->run([$artId], false, $locale);
         $art['tags'] = $this->prepareArtTags($artTags);

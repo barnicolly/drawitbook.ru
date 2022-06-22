@@ -27,15 +27,18 @@ class ArtsService
         return $this->prepareArts($arts);
     }
 
+    /**
+     * @param int $id
+     * @return array|null
+     * @throws \App\Containers\Picture\Exceptions\NotFoundPicture
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     */
     public function getById(int $id): ?array
     {
         $art = app(GetPictureByIdTask::class)->run($id);
-        if (!empty($art)) {
-            $files = app(GetPictureExtensionsByPictureIdsTask::class)->run([$id]);
-            $arts = app(SetPictureExtensionsOnPicturesTask::class)->run([$art], $files);
-            $art = getFirstItemFromArray($arts);
-        }
-        return $art;
+        $files = app(GetPictureExtensionsByPictureIdsTask::class)->run([$id]);
+        $arts = app(SetPictureExtensionsOnPicturesTask::class)->run([$art], $files);
+        return getFirstItemFromArray($arts);
     }
 
     public function getByIdsWithTags(array $ids): array

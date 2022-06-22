@@ -50,11 +50,7 @@ class AttachPictureOnAlbumAction extends Action
     public function run(int $artId, int $vkAlbumId): void
     {
         $vkAlbum = $this->getVkAlbumByIdTask->run($vkAlbumId);
-        //        todo-misha вынести в таск проверки;
         $art = $this->artsService->getById($artId);
-        if (!$art) {
-            throw new \Exception('Не найдено изображения');
-        }
         $artFsPath = $art['images']['primary']['fs_path'];
         $tags = $this->tagsService->getNamesWithoutHiddenVkByArtId($artId);
         $photoId = $this->postPhotoInAlbum($vkAlbum->album_id, $vkAlbum->share, $artFsPath, $tags);

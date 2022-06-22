@@ -72,7 +72,6 @@ export function loadStackGrid() {
                             });
                         }
                     } else {
-                        //TODO-misha сообщение об ошибке;
                     }
                 })
             })
