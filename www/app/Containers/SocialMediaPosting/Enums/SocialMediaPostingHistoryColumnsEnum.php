@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Vk\Enums;
+namespace App\Containers\SocialMediaPosting\Enums;
 
 use BenSampo\Enum\Enum;
 

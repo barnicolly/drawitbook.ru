@@ -1,13 +1,9 @@
 <?php
 
-namespace App\Containers\Vk\Services\Posting;
+namespace App\Containers\Vk\Services;
 
-class PostingService
+class VkWallPostingService
 {
-
-    public function __construct()
-    {
-    }
 
     public function formHashTags(array $tags): string
     {

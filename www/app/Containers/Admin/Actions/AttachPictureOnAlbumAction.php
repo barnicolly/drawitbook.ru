@@ -5,7 +5,7 @@ namespace App\Containers\Admin\Actions;
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Vk\Services\Api\PhotoService;
-use App\Containers\Vk\Services\Posting\PostingService;
+use App\Containers\Vk\Services\VkWallPostingService;
 use App\Containers\Vk\Tasks\VkAlbum\GetVkAlbumByIdTask;
 use App\Containers\Vk\Tasks\VkAlbumPicture\CreateVkAlbumPictureTask;
 use App\Ship\Parents\Actions\Action;
@@ -13,7 +13,7 @@ use App\Ship\Parents\Actions\Action;
 class AttachPictureOnAlbumAction extends Action
 {
     private PhotoService $apiPhotoService;
-    private PostingService $apiPostingService;
+    private VkWallPostingService $apiPostingService;
     private ArtsService $artsService;
     private TagsService $tagsService;
     private GetVkAlbumByIdTask $getVkAlbumByIdTask;
@@ -21,7 +21,7 @@ class AttachPictureOnAlbumAction extends Action
 
     /**
      * @param PhotoService $apiPhotoService
-     * @param PostingService $apiPostingService
+     * @param VkWallPostingService $apiPostingService
      * @param ArtsService $artsService
      * @param TagsService $tagsService
      * @param GetVkAlbumByIdTask $getVkAlbumByIdTask
@@ -29,7 +29,7 @@ class AttachPictureOnAlbumAction extends Action
      */
     public function __construct(
         PhotoService $apiPhotoService,
-        PostingService $apiPostingService,
+        VkWallPostingService $apiPostingService,
         ArtsService $artsService,
         TagsService $tagsService,
         GetVkAlbumByIdTask $getVkAlbumByIdTask,

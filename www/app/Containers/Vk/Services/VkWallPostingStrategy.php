@@ -1,56 +1,44 @@
 <?php
 
-namespace App\Containers\Vk\Services\Posting\Strategy\Wall;
+namespace App\Containers\Vk\Services;
 
-use App\Containers\Vk\Models\SocialMediaPostingHistoryModel;
+use App\Containers\SocialMediaPosting\Contracts\SocialMediaPostingContract;
 use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Services\Api\VkApi;
 use App\Containers\Vk\Services\Api\WallService;
-use App\Containers\Vk\Services\Posting\PostingService;
 
-class VkWallPostingStrategy
+class VkWallPostingStrategy implements SocialMediaPostingContract
 {
-    private $tags;
-    private $artId;
-    private $artPath;
+    private array $tags;
+    private string $artPath;
 
-    private $apiInstance;
+    private VkApi $apiInstance;
 
-    private $photoService;
-    private $wallService;
-    private $postingService;
+    private PhotoService $photoService;
+    private WallService $wallService;
+    private VkWallPostingService $vkWallPostingService;
 
-    private $url = 'https://drawitbook.com/ru';
+    private string $url = 'https://drawitbook.com/ru';
 
-    public function __construct(int $artId, array $tags, string $artPath)
+    public function __construct(array $tags, string $artPath)
     {
-        $this->artId = $artId;
         $this->tags = $tags;
         $this->artPath = $artPath;
         $apiInstance = (new VkApi());
         $this->apiInstance = $apiInstance;
         $this->photoService = (new PhotoService($apiInstance));
         $this->wallService = (new WallService($apiInstance));
-        $this->postingService = (new PostingService());
+        $this->vkWallPostingService = (new VkWallPostingService());
     }
 
-    public function post()
+    public function post(): void
     {
         $this->create();
-        $this->addHistoryVkPosting();
     }
 
-    private function addHistoryVkPosting()
+    private function create(): void
     {
-        //TODO-misha вынести;
-        $historyVkPostingRecord = new SocialMediaPostingHistoryModel();
-        $historyVkPostingRecord->picture_id = $this->artId;
-        $historyVkPostingRecord->save();
-    }
-
-    private function create()
-    {
-        $hashTags = $this->postingService->formHashTags($this->tags);
+        $hashTags = $this->vkWallPostingService->formHashTags($this->tags);
         $uploadedPhoto = $this->photoService->saveWallPhoto($this->artPath);
         $postId = $this->createPost($uploadedPhoto['owner_id'], $uploadedPhoto['id'], $hashTags);
         if (empty($postId)) {

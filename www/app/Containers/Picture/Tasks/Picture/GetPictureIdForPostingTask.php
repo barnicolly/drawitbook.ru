@@ -2,6 +2,7 @@
 
 namespace App\Containers\Picture\Tasks\Picture;
 
+use App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Facades\DB;
 
@@ -9,9 +10,10 @@ class GetPictureIdForPostingTask extends Task
 {
 
     /**
-     * @return int|null
+     * @return int
+     * @throws NotFoundPictureIdForPostingException
      */
-    public function run(): ?int
+    public function run(): int
     {
         //TODO-misha переписать на query;
         $results = DB::select(
@@ -47,7 +49,7 @@ limit 1'
         if ($results) {
             return $results[0]->id;
         }
-        return null;
+        throw new NotFoundPictureIdForPostingException();
     }
 }
 

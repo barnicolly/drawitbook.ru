@@ -1,0 +1,13 @@
+{
+    "name": "SocialMediaPosting",
+    "alias": "social_media_posting",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Containers\\SocialMediaPosting\\Providers\\SocialMediaPostingServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
