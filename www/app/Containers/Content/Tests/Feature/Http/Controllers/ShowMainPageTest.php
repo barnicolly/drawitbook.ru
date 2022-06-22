@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Containers\Content\Tests\Feature\Http;
+namespace App\Containers\Content\Tests\Feature\Http\Controllers;
 
 use App\Containers\Content\Http\Controllers\ContentHttpController;
-use App\Ship\Services\Route\RouteService;
 use App\Ship\Parents\Tests\TestCase;
+use App\Ship\Services\Route\RouteService;
 
 /**
- * @see ContentHttpController::index()
+ * @see ContentHttpController::showMainPage()
  */
-class ContentControllerTest extends TestCase
+class ShowMainPageTest extends TestCase
 {
 
     /**

@@ -2,50 +2,26 @@
 
 namespace App\Containers\Content\Http\Controllers;
 
-use App\Containers\Seo\Services\SeoService;
-use App\Containers\Translation\Enums\LangEnum;
+use App\Containers\Content\Actions\MainPageAction;
 use App\Ship\Parents\Controllers\HttpController;
-use App\Ship\Services\Route\RouteService;
+use Illuminate\Http\Response;
 
 class ContentHttpController extends HttpController
 {
-    private SeoService $seoService;
-    private RouteService $routeService;
 
-    public function __construct(SeoService $seoService, RouteService $routeService)
-    {
-        $this->seoService = $seoService;
-        $this->routeService = $routeService;
-    }
-
-//    todo-misha вынести в action + request;
     /**
-     * @see \App\Containers\Content\Tests\Feature\Http\ContentControllerTest
+     * @param MainPageAction $action
+     * @return Response
+     * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
+     *
+     * @see \App\Containers\Content\Tests\Feature\Http\Controllers\ShowMainPageTest
      */
-    public function index()
+    public function showMainPage(MainPageAction $action): Response
     {
-        $alternateLinks = $this->getAlternateLinks();
-        $viewData = [
-            'alternateLinks' => $alternateLinks,
-        ];
-        [$title, $description] = $this->seoService->formTitleAndDescriptionHome();
-        $this->setMeta($title, $description);
-        $this->setShareImage(formDefaultShareArtUrlPath(true));
+        [$viewData, $pageMetaDto] = $action->run();
+        $this->setMeta($pageMetaDto->title, $pageMetaDto->description)
+            ->setShareImage($pageMetaDto->shareImage);
         return response()->view('content::mainPage.index', $viewData);
-    }
-
-    private function getAlternateLinks(): array
-    {
-        $links = [];
-        $links[] = [
-            'lang' => LangEnum::RU,
-            'href' => $this->routeService->getRouteHome([], true, LangEnum::RU),
-        ];
-        $links[] = [
-            'lang' => LangEnum::EN,
-            'href' => $this->routeService->getRouteHome([], true, LangEnum::EN),
-        ];
-        return $links;
     }
 
 }

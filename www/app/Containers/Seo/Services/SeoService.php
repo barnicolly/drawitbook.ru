@@ -39,13 +39,6 @@ class SeoService
         return [$title, $description];
     }
 
-    public function formTitleAndDescriptionHome(): array
-    {
-        $title = 'Drawitbook.com - ' . __('seo.home.title');
-        $description = __('seo.home.description');
-        return [$title, $description];
-    }
-
     private function createCategoryTitle(string $category, string $subcategory, int $countResults): string
     {
         $countPostfix = $this->formCategoryCountPostfix($countResults);
