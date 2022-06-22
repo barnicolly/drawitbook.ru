@@ -3,11 +3,11 @@
 namespace App\Containers\Tag\Actions;
 
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsWithCountArtTask;
-use App\Ship\Parents\Tasks\Task;
+use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Facades\Cache;
 
-class GetListPopularTagsWithCountArtsAction extends Task
+class GetListPopularTagsWithCountArtsAction extends Action
 {
 
     private RouteService $routeService;

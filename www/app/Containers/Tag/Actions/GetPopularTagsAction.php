@@ -4,9 +4,9 @@ namespace App\Containers\Tag\Actions;
 
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Tag\Tasks\GetPopularTagsTask;
-use App\Ship\Parents\Tasks\Task;
+use App\Ship\Parents\Actions\Action;
 
-class GetPopularTagsAction extends Task
+class GetPopularTagsAction extends Action
 {
 
     private TagsService $tagsService;
