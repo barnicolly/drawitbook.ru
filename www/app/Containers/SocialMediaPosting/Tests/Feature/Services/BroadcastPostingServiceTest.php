@@ -51,7 +51,7 @@ class BroadcastPostingServiceTest extends TestCase
         $firstResultHistoryItem = $resultHistoryItems->first();
         self::assertSame($picture->id, $firstResultHistoryItem->picture_id);
         self::assertSame([], $strategyParams['tags']);
-        self::assertSame(formArtFsPath($pictureFile->path), $strategyParams['artFsPath']);
+        self::assertSame(formArtFsPath($pictureFile->path), $strategyParams['artPath']);
     }
 
 }

@@ -22,7 +22,7 @@ trait CreatePictureWithRelationsTrait
         return [$picture, $file];
     }
 
-    public function createPicture(array $data): PictureModel
+    public function createPicture(array $data = []): PictureModel
     {
         return PictureModel::factory()->create($data);
     }

@@ -43,7 +43,7 @@ class BroadcastPostingService
         $picture = $this->artsService->getById($pictureIdForPosting);
         $tags = $this->tagsService->getNamesWithoutHiddenVkByArtId($pictureIdForPosting);
         $pictureFsPath = $picture['images']['primary']['fs_path'];
-        $postingStrategy = app()->make(VkWallPostingStrategy::class, ['tags' => $tags, 'artFsPath' => $pictureFsPath]);
+        $postingStrategy = app()->make(VkWallPostingStrategy::class, ['tags' => $tags, 'artPath' => $pictureFsPath]);
         $postingStrategy->post();
         $this->createSocialMediaPostingItemTask->run($pictureIdForPosting);
     }
