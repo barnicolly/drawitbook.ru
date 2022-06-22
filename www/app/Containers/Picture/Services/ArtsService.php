@@ -44,14 +44,15 @@ class ArtsService
         return $this->prepareArts($arts);
     }
 
-    public function attachArtToVkAlbum(int $artId, int $albumId, int $vkAlbumId): void
+//    todo-misha перенести в таск;
+    public function attachArtToVkAlbum(int $artId, int $vkAlbumId, int $outVkAlbumId): VkAlbumPictureModel
     {
-        $data = [
-            'vk_album_id' => $albumId,
-            'out_vk_image_id' => $vkAlbumId,
-            'picture_id' => $artId,
-        ];
-        VkAlbumPictureModel::create($data);
+        $model = new VkAlbumPictureModel();
+        $model->vk_album_id = $vkAlbumId;
+        $model->out_vk_image_id = $outVkAlbumId;
+        $model->picture_id = $artId;
+        $model->save();
+        return $model;
     }
 
     private function prepareArts(array $arts): array

@@ -32,6 +32,11 @@ class PhotoService
         }
     }
 
+    public function timeout(): void
+    {
+        sleep(1);
+    }
+
     public function edit(int $photoId, array $data): void
     {
         $data = array_merge(

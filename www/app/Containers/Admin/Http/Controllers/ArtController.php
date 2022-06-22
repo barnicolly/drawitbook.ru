@@ -2,15 +2,16 @@
 
 namespace App\Containers\Admin\Http\Controllers;
 
+use App\Containers\Admin\Actions\AttachPictureOnAlbumAction;
+use App\Containers\Admin\Actions\DetachPictureFromAlbumAction;
 use App\Containers\Admin\Actions\GetSettingsModalAction;
-use App\Containers\Admin\Http\Requests\Art\PostInVkAlbumRequest;
-use App\Containers\Admin\Http\Requests\Art\RemoveFromVkAlbumRequest;
+use App\Containers\Admin\Http\Requests\Art\AttachPictureOnAlbumRequest;
+use App\Containers\Admin\Http\Requests\Art\DetachPictureFromAlbumRequest;
 use App\Containers\Admin\Http\Requests\Settings\GetSettingsModalRequest;
 use App\Containers\Admin\Http\Requests\VkPosting\ArtSetVkPostingRequest;
 use App\Containers\Admin\Http\Transformers\GetSettingsModalTransformer;
 use App\Containers\Picture\Tasks\Picture\UpdatePictureVkPostingStatusTask;
 use App\Containers\Vk\Enums\VkPostingStatusEnum;
-use App\Containers\Vk\Services\Posting\VkAlbumService;
 use App\Ship\Parents\Controllers\HttpController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
@@ -18,13 +19,6 @@ use Throwable;
 
 class ArtController extends HttpController
 {
-
-    private VkAlbumService $vkAlbumService;
-
-    public function __construct(VkAlbumService $vkAlbumService)
-    {
-        $this->vkAlbumService = $vkAlbumService;
-    }
 
     /**
      * @param ArtSetVkPostingRequest $request
@@ -85,27 +79,39 @@ class ArtController extends HttpController
         }
     }
 
-    public function postInVkAlbum($artId, PostInVkAlbumRequest $request)
+    /**
+     * @param AttachPictureOnAlbumRequest $request
+     * @param AttachPictureOnAlbumAction $action
+     * @return JsonResponse
+     *
+     * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\AttachPictureOnAlbumTest
+     */
+    public function attachPictureOnAlbum(AttachPictureOnAlbumRequest $request, AttachPictureOnAlbumAction $action): JsonResponse
     {
         try {
-            $data = $request->validated();
-            $albumId = $data['album_id'];
-            $this->vkAlbumService->attachArtOnAlbum($artId, $albumId);
+            $action->run($request->id, $request->album_id);
         } catch (Throwable $e) {
-            return response(['success' => false]);
+            Log::error($e->getMessage());
+            abort(500);
         }
-        return ['success' => true];
+        return response()->json();
     }
 
-    public function removeFromVkAlbum($artId, RemoveFromVkAlbumRequest $request)
+    /**
+     * @param DetachPictureFromAlbumRequest $request
+     * @param DetachPictureFromAlbumAction $action
+     * @return JsonResponse
+     *
+     * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\AttachPictureOnAlbumTest
+     */
+    public function detachPictureFromAlbum(DetachPictureFromAlbumRequest $request, DetachPictureFromAlbumAction $action): JsonResponse
     {
         try {
-            $data = $request->validated();
-            $albumId = $data['album_id'];
-            $this->vkAlbumService->detachArtFromAlbum($artId, $albumId);
+            $action->run($request->id, $request->album_id);
         } catch (Throwable $e) {
-            return response(['success' => false]);
+            Log::error($e->getMessage());
+            abort(500);
         }
-        return ['success' => true];
+        return response()->json();
     }
 }
