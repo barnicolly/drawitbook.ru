@@ -8,6 +8,7 @@ use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Services\Api\VkApi;
 use App\Containers\Vk\Services\Posting\PostingService;
 use App\Containers\Vk\Tasks\VkAlbum\GetVkAlbumByIdTask;
+use App\Containers\Vk\Tasks\VkAlbumPicture\CreateVkAlbumPictureTask;
 use App\Ship\Parents\Actions\Action;
 
 class AttachPictureOnAlbumAction extends Action
@@ -17,19 +18,22 @@ class AttachPictureOnAlbumAction extends Action
     private ArtsService $artsService;
     private TagsService $tagsService;
     private GetVkAlbumByIdTask $getVkAlbumByIdTask;
+    private CreateVkAlbumPictureTask $createVkAlbumPictureTask;
 
     /**
      * @param PostingService $apiPostingService
      * @param ArtsService $artsService
      * @param TagsService $tagsService
      * @param GetVkAlbumByIdTask $getVkAlbumByIdTask
+     * @param CreateVkAlbumPictureTask $createVkAlbumPictureTask
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function __construct(
         PostingService $apiPostingService,
         ArtsService $artsService,
         TagsService $tagsService,
-        GetVkAlbumByIdTask $getVkAlbumByIdTask
+        GetVkAlbumByIdTask $getVkAlbumByIdTask,
+        CreateVkAlbumPictureTask $createVkAlbumPictureTask
     ) {
         //        todo-misha реализовать через контейнер;
         $apiInstance = app(VkApi::class);
@@ -38,6 +42,7 @@ class AttachPictureOnAlbumAction extends Action
         $this->artsService = $artsService;
         $this->tagsService = $tagsService;
         $this->getVkAlbumByIdTask = $getVkAlbumByIdTask;
+        $this->createVkAlbumPictureTask = $createVkAlbumPictureTask;
     }
 
     /**
@@ -54,7 +59,7 @@ class AttachPictureOnAlbumAction extends Action
         $artFsPath = $art['images']['primary']['fs_path'];
         $tags = $this->tagsService->getNamesWithoutHiddenVkByArtId($artId);
         $photoId = $this->postPhotoInAlbum($vkAlbum->album_id, $vkAlbum->share, $artFsPath, $tags);
-        $this->artsService->attachArtToVkAlbum($artId, $vkAlbum->id, $photoId);
+        $this->createVkAlbumPictureTask->run($artId, $vkAlbum->id, $photoId);
     }
 
     private function postPhotoInAlbum(int $albumId, ?string $albumShareLink, string $path, array $tags): ?int

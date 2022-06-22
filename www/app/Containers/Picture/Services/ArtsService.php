@@ -9,7 +9,6 @@ use App\Containers\Picture\Tasks\PictureExtension\GetPictureExtensionsByPictureI
 use App\Containers\Picture\Tasks\PictureExtension\SetPictureExtensionsOnPicturesTask;
 use App\Containers\Picture\Tasks\PictureTag\SetPictureTagsOnPicturesTask;
 use App\Containers\Seo\Services\SeoService;
-use App\Containers\Vk\Models\VkAlbumPictureModel;
 
 class ArtsService
 {
@@ -45,17 +44,6 @@ class ArtsService
     {
         $arts = app(GetPicturesByIdsTask::class)->run($ids);
         return $this->prepareArts($arts);
-    }
-
-//    todo-misha перенести в таск;
-    public function attachArtToVkAlbum(int $artId, int $vkAlbumId, int $outVkAlbumId): VkAlbumPictureModel
-    {
-        $model = new VkAlbumPictureModel();
-        $model->vk_album_id = $vkAlbumId;
-        $model->out_vk_image_id = $outVkAlbumId;
-        $model->picture_id = $artId;
-        $model->save();
-        return $model;
     }
 
     private function prepareArts(array $arts): array
