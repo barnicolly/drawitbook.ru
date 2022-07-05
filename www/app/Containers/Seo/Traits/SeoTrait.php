@@ -11,10 +11,12 @@ use Illuminate\Support\Facades\URL;
 trait SeoTrait
 {
 
-    public function setMeta(string $title, string $description, ?string $keywords = null, ?string $robots = null): self
+    public function setMeta(string $title, ?string $description = null, ?string $keywords = null, ?string $robots = null): self
     {
-        $meta = $this->setTitle($title)
-            ->setDescription($description);
+        $meta = $this->setTitle($title);
+        if ($description) {
+            $this->setDescription($description);
+        }
         if ($keywords) {
             $this->setKeywords($keywords);
         }

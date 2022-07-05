@@ -10,11 +10,6 @@ class SeoService
 {
 
 //    todo-misha вынести в контроллеры;
-    public function formTitleAndDescriptionSearch(): array
-    {
-        $title = __('seo.search.title');
-        return [$title];
-    }
 
     public function formTitleAndDescriptionShowArt(int $artId): array
     {

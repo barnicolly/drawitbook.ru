@@ -59,10 +59,8 @@ class GetTaggedCellPicturesSliceAction extends Action
             );
         }
         $getCellTaggedResultDto = new GetCellTaggedResultDto(
-            [
-                'html' => view('picture::template.stack_grid.elements', $viewData)->render(),
-                'countLeftArtsText' => $countLeftArtsText ?? null,
-            ]
+            html:              view('picture::template.stack_grid.elements', $viewData)->render(),
+            countLeftArtsText: $countLeftArtsText ?? null,
         );
         return [$getCellTaggedResultDto, $isLastSlice];
     }

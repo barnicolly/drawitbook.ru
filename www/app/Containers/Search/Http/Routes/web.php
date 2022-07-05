@@ -1,6 +1,6 @@
 <?php
 
-use App\Containers\Search\Http\Controllers\SearchHttpController;
+use App\Containers\Search\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +23,15 @@ foreach (config('translator.available_locales') as $prefix) {
                           'middleware' => 'web',
                       ],
                       function () use ($prefix) {
-                          Route::get('/search', [SearchHttpController::class, 'index'])->name($prefix . '_search');
+                          Route::get('/search', [SearchController::class, 'index'])->name($prefix . '_search');
 
-                          Route::get('/search/slice', [SearchHttpController::class, 'slice'])->name($prefix . '_search.slice');
+                          Route::group(
+                              [
+                                  'middleware' => ['ajax'],
+                              ],
+                              function () use ($prefix) {
+                                  Route::get('/search/slice', [SearchController::class, 'slice'])->name($prefix . '_search.slice');
+                              });
                       }
                   );
 

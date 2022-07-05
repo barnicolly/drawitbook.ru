@@ -2,9 +2,9 @@
 
 namespace App\Containers\Search\Services;
 
+use App\Containers\Picture\Tasks\Picture\GetPicturesIdsByTagIdTask;
 use Foolz\SphinxQL\Drivers\Mysqli\Connection;
 use Foolz\SphinxQL\SphinxQL;
-use Illuminate\Support\Facades\DB;
 
 class SearchService
 {
@@ -30,7 +30,7 @@ class SearchService
             $filters = [
                 'query' => $query,
             ];
-            $result = $this->searchByString($filters, 0, 20);
+            $result = $this->searchByString($filters);
             if (!empty($result)) {
                 return array_column($result, 'id');
             }
@@ -75,7 +75,7 @@ class SearchService
         }
     }
 
-    private function searchByString(array $filters, int $excludeQuestionId = 0)
+    private function searchByString(array $filters): array
     {
         $result = (new SphinxQL($this->connection))
             ->select('id', 'query', 'weight() AS weight')
@@ -93,31 +93,13 @@ class SearchService
             );
             $result->match('query', implode('||', $exploded), true);
         }
-        if ($excludeQuestionId) {
-            $result->where('id', 'NOT IN', [$excludeQuestionId]);
-        }
         return $result->execute()
             ->fetchAllAssoc();
     }
 
-//    todo-misha переместить в модель picture;
     public function searchByTagId(int $tagId): array
     {
-        $results = DB::table('picture')
-            ->select('picture.id')
-            ->join('picture_tags', 'picture_tags.picture_id', '=', 'picture.id')
-            ->whereRaw('picture_tags.tag_id = ?', [$tagId])
-            ->limit($this->limit)
-            ->get();
-        $results = collect($results)->map(
-            function ($x) {
-                return (array) $x;
-            }
-        )->toArray();
-        if ($results) {
-            return array_column($results, 'id');
-        }
-        return [];
+        return app(GetPicturesIdsByTagIdTask::class)->run($tagId, $this->limit);
     }
 
 }

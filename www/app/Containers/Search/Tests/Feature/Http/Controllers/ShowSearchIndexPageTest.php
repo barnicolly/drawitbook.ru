@@ -2,14 +2,13 @@
 
 namespace App\Containers\Search\Tests\Feature\Http\Controllers;
 
-use App\Containers\Search\Http\Controllers\SearchHttpController;
-use App\Ship\Services\Route\RouteService;
+use App\Containers\Search\Http\Controllers\SearchController;
 use App\Ship\Parents\Tests\TestCase;
 
 /**
- * @see SearchHttpController::index()
+ * @see SearchController::index()
  */
-class SearchHttpControllerTest extends TestCase
+class ShowSearchIndexPageTest extends TestCase
 {
 
     /**
@@ -20,7 +19,7 @@ class SearchHttpControllerTest extends TestCase
     public function testSearchPageResponseCode200(string $locale): void
     {
         $this->app->setLocale($locale);
-        $response = $this->get((new RouteService())->getRouteSearch());
+        $response = $this->get($this->routeService->getRouteSearch());
         $response->assertStatus(200);
     }
 
@@ -32,7 +31,7 @@ class SearchHttpControllerTest extends TestCase
     public function testPageHasRobotsNoindex(string $locale): void
     {
         $this->app->setLocale($locale);
-        $response = $this->get((new RouteService())->getRouteSearch());
+        $response = $this->get($this->routeService->getRouteSearch());
         $response->assertSee('<meta name="robots" content="noindex, follow">', false);
     }
 
@@ -44,7 +43,7 @@ class SearchHttpControllerTest extends TestCase
     public function testHasAlternate(string $locale): void
     {
         $this->app->setLocale($locale);
-        $response = $this->get((new RouteService())->getRouteSearch());
+        $response = $this->get($this->routeService->getRouteSearch());
         $response->assertSee('<link rel="alternate" href="', false);
     }
 }
