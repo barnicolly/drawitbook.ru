@@ -37,7 +37,7 @@ class GetTaggedCellPicturesSliceAction extends Action
     /**
      * @param string $tag
      * @param int $pageNum
-     * @return array<GetCellTaggedResultDto, bool>
+     * @return array{GetCellTaggedResultDto, bool}
      * @throws NotFoundRelativeArts
      * @throws NotFoundTagException
      * @throws UnknownProperties

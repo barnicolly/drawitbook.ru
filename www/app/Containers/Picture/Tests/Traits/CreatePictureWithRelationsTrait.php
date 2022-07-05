@@ -13,7 +13,7 @@ trait CreatePictureWithRelationsTrait
 {
 
     /**
-     * @return array<PictureModel, PictureExtensionsModel>
+     * @return array{PictureModel, PictureExtensionsModel}
      */
     public function createPictureWithFile(): array
     {

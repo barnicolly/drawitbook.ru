@@ -26,7 +26,7 @@ class GetCellPicturesIndexAction extends Action
     }
 
     /**
-     * @return array<array, PageMetaDto>
+     * @return array{array, PageMetaDto}
      * @throws UnknownProperties
      */
     public function run(): array

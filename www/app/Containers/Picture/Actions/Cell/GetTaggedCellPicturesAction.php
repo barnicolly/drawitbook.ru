@@ -47,7 +47,7 @@ class GetTaggedCellPicturesAction extends Action
 
     /**
      * @param string $tag
-     * @return array<array, PageMetaDto>
+     * @return array{array, PageMetaDto}
      * @throws NotFoundTagException
      * @throws NotFoundRelativeArts
      * @throws UnknownProperties
