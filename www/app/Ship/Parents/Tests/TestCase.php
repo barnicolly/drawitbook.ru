@@ -8,6 +8,7 @@ use App\Containers\Translation\Data\Seeders\TranslatorLanguagesSeeder;
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Seeders\DatabaseSeeder;
 use App\Ship\Services\Route\RouteService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Testing\TestResponse;
@@ -25,6 +26,7 @@ abstract class TestCase extends BaseTestCase
         $this->artisan('migrate');
         $this->truncateTables();
         $this->seedTranslatorLanguages();
+        Cache::clear();
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Containers\Seo\Traits;
 
+use App\Containers\Seo\Dto\ShareImageDto;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -11,8 +12,12 @@ use Illuminate\Support\Facades\URL;
 trait SeoTrait
 {
 
-    public function setMeta(string $title, ?string $description = null, ?string $keywords = null, ?string $robots = null): self
-    {
+    public function setMeta(
+        string $title,
+        ?string $description = null,
+        ?string $keywords = null,
+        ?string $robots = null
+    ): self {
         $meta = $this->setTitle($title);
         if ($description) {
             $this->setDescription($description);
@@ -27,13 +32,12 @@ trait SeoTrait
         return $this;
     }
 
-//    todo-misha переделать на прием ДТО;
-    public function setShareImage(string $relativeShareImgPath): self
+    public function setShareImage(?ShareImageDto $shareImageDto): self
     {
-        if (file_exists(public_path($relativeShareImgPath))) {
-            [$width, $height] = getimagesize(public_path($relativeShareImgPath));
-            OpenGraph::addImage(asset($relativeShareImgPath), ['width' => $width, 'height' => $height]);
-            TwitterCard::setImage(asset($relativeShareImgPath));
+        if ($shareImageDto) {
+            $absolutePath = asset($shareImageDto->relativePath);
+            OpenGraph::addImage($absolutePath, ['width' => $shareImageDto->width, 'height' => $shareImageDto->height]);
+            TwitterCard::setImage($absolutePath);
             TwitterCard::addValue('card', 'summary_large_image');
         }
         return $this;

@@ -3,10 +3,12 @@
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Cell;
 
 use App\Containers\Picture\Http\Controllers\Cell\CellHttpController;
+use App\Containers\Picture\Models\PictureExtensionsModel;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Tag\Tests\Traits\CreateTagTrait;
 use App\Containers\Translation\Enums\LangEnum;
+use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
 use App\Ship\Parents\Tests\TestCase;
 
@@ -32,14 +34,23 @@ class CellHttpControllerTaggedTest extends TestCase
     {
         $this->app->setLocale($locale);
         $tag = $this->createTag();
+        $pictures = new Collection();
         for ($index = 1; $index < 30; $index++) {
             [$picture] = $this->createPictureWithFile();
+            $pictures->push($picture);
             $this->createPictureTag($picture, $tag);
         }
 
         $response = $this->get($this->routeService->getRouteArtsCellTagged($tag->seo_lang->current->slug));
 
         $response->assertOk();
+        /** @var PictureExtensionsModel $firstExtension */
+        $firstExtension = $pictures->first()->extensions()->first();
+        $path = asset(getArtsFolder() . $firstExtension->path);
+        $response->assertSee(
+            "<meta property=\"og:image\" content=\"$path\" />",
+            false
+        );
     }
 
     /**
@@ -107,14 +118,18 @@ class CellHttpControllerTaggedTest extends TestCase
     {
         $this->app->setLocale($locale);
         $tag = $this->createTag();
-            [$picture] = $this->createPictureWithFile();
-            $this->createPictureTag($picture, $tag);
+        [$picture] = $this->createPictureWithFile();
+        $this->createPictureTag($picture, $tag);
 
         $url = $this->routeService->getRouteArtsCellTagged($tag->seo_lang->current->slug);
         $response = $this->get($url);
 
         $alternativeLang = $tag->seo_lang->alternative->locale;
-        $alternativeUrl = $this->routeService->getRouteArtsCellTagged($tag->seo_lang->alternative->slug, true, $alternativeLang);
+        $alternativeUrl = $this->routeService->getRouteArtsCellTagged(
+            $tag->seo_lang->alternative->slug,
+            true,
+            $alternativeLang
+        );
         $response->assertSee(
             "<link rel=\"alternate\" href=\"$alternativeUrl\" hreflang=\"{$alternativeLang}\">",
             false

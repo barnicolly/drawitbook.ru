@@ -45,6 +45,11 @@ class ArtHttpControllerTest extends TestCase
             "<link rel=\"alternate\" href=\"$alternativeUrl\" hreflang=\"{$alternativeLang}\">",
             false
         );
+        $path = asset(getArtsFolder() . $file->path);
+        $response->assertSee(
+            "<meta property=\"og:image\" content=\"$path\" />",
+            false
+        );
     }
 
     /**

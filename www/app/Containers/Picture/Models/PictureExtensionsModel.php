@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $width
  * @property int $height
  * @property string $ext
+ * @property string $mimeType
  *
  * @method static PictureExtensionsModelFactory factory()
  */

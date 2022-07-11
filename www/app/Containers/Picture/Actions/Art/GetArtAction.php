@@ -5,6 +5,7 @@ namespace App\Containers\Picture\Actions\Art;
 use App\Containers\Picture\Exceptions\NotFoundPicture;
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsByPictureIdsTask;
+use App\Containers\Seo\Dto\ShareImageDto;
 use App\Containers\Seo\Services\SeoService;
 use App\Containers\Tag\Actions\GetPopularTagsAction;
 use App\Containers\Tag\Services\TagsService;
@@ -73,10 +74,16 @@ class GetArtAction extends Action
             'alternateLinks' => $alternateLinks,
         ];
         [$title, $description] = $this->seoService->formTitleAndDescriptionShowArt($artId);
+        $image = $art['images']['primary'];
+        $shareImage = new ShareImageDto(
+            relativePath: getArtsFolder() . $image['path'],
+            width:        $image['width'],
+            height:       $image['height']
+        );
         $pageMetaDto = new PageMetaDto(
             title: $title,
             description: $description,
-            shareImage: getArtsFolder() . $art['images']['primary']['path']
+            shareImage: $shareImage
         );
         return [$viewData, $pageMetaDto];
     }

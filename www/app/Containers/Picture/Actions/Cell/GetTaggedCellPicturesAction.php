@@ -6,6 +6,7 @@ use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Picture\Tasks\Picture\Cell\FormCellPageAlternativeLocaleLinksTask;
 use App\Containers\Picture\Tasks\Picture\Cell\GetPaginatedCellArtsByTagTask;
 use App\Containers\Seo\Dto\BreadcrumbDto;
+use App\Containers\Seo\Dto\ShareImageDto;
 use App\Containers\Seo\Services\SeoService;
 use App\Containers\Tag\Exceptions\NotFoundTagException;
 use App\Containers\Tag\Tasks\GetTagBySeoNameTask;
@@ -78,7 +79,13 @@ class GetTaggedCellPicturesAction extends Action
         $pageMetaDto = new PageMetaDto(title: $title, description: $description);
         $firstArt = Arr::first($viewData['arts']);
         if ($firstArt) {
-            $pageMetaDto->shareImage = getArtsFolder() . $firstArt['images']['primary']['path'];
+            $image = $firstArt['images']['primary'];
+            $shareImage = new ShareImageDto(
+                relativePath: getArtsFolder() . $image['path'],
+                width:        $image['width'],
+                height:       $image['height']
+            );
+            $pageMetaDto->shareImage = $shareImage;
         }
         $breadCrumbs = new Collection();
         $breadCrumbs->push(

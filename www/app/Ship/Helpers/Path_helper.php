@@ -29,27 +29,10 @@ if (!function_exists('formArtUrlPath')) {
     }
 }
 
-if (!function_exists('checkExistArt')) {
-    function checkExistArt(string $artRelativePath): bool
-    {
-        return file_exists(formArtFsPath($artRelativePath));
-    }
-}
-
 if (!function_exists('formArtFsPath')) {
     function formArtFsPath(string $artRelativePath): string
     {
         $artFolder = getArtsFolder();
         return public_path("{$artFolder}{$artRelativePath}");
-    }
-}
-
-if (!function_exists('formDefaultShareArtUrlPath')) {
-    function formDefaultShareArtUrlPath(bool $relative = false): string
-    {
-        $artFolder = getArtsFolder();
-        return $relative
-            ? "{$artFolder}d4/11/d4113a118447cb7650a7a7d84b45b153.jpeg"
-            : asset("{$artFolder}d4/11/d4113a118447cb7650a7a7d84b45b153.jpeg");
     }
 }

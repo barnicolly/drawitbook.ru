@@ -2,6 +2,7 @@
 
 namespace App\Containers\Content\Actions;
 
+use App\Containers\Seo\Tasks\GetDefaultShareImageTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Dto\PageMetaDto;
 use App\Ship\Parents\Actions\Action;
@@ -11,10 +12,12 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 class MainPageAction extends Action
 {
     private RouteService $routeService;
+    private GetDefaultShareImageTask $getDefaultShareImageTask;
 
-    public function __construct(RouteService $routeService)
+    public function __construct(RouteService $routeService, GetDefaultShareImageTask $getDefaultShareImageTask)
     {
         $this->routeService = $routeService;
+        $this->getDefaultShareImageTask = $getDefaultShareImageTask;
     }
 
     /**
@@ -27,7 +30,7 @@ class MainPageAction extends Action
         $pageMetaDto = new PageMetaDto(
             title:       $title,
             description: $description,
-            shareImage:  formDefaultShareArtUrlPath(true)
+            shareImage:  $this->getDefaultShareImageTask->run()
         );
         $alternateLinks = $this->getAlternateLinks();
         $viewData = [

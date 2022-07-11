@@ -34,6 +34,7 @@ class ArtsService
      */
     public function getById(int $id): ?array
     {
+//        todo-misha преобразовать в dto;
         $art = app(GetPictureByIdTask::class)->run($id);
         $files = app(GetPictureExtensionsByPictureIdsTask::class)->run([$id]);
         $arts = app(SetPictureExtensionsOnPicturesTask::class)->run([$art], $files);

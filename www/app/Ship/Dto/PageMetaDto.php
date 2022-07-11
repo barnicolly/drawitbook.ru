@@ -2,6 +2,7 @@
 
 namespace App\Ship\Dto;
 
+use App\Containers\Seo\Dto\ShareImageDto;
 use App\Ship\Parents\Dto\Dto;
 
 class PageMetaDto extends Dto
@@ -10,5 +11,5 @@ class PageMetaDto extends Dto
 
     public ?string $description;
 
-    public ?string $shareImage;
+    public ?ShareImageDto $shareImage;
 }

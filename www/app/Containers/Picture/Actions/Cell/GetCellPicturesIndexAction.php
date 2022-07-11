@@ -5,6 +5,7 @@ namespace App\Containers\Picture\Actions\Cell;
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Seo\Dto\BreadcrumbDto;
 use App\Containers\Seo\Services\SeoService;
+use App\Containers\Seo\Tasks\GetDefaultShareImageTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Dto\PageMetaDto;
 use App\Ship\Parents\Actions\Action;
@@ -17,12 +18,18 @@ class GetCellPicturesIndexAction extends Action
     private SeoService $seoService;
     private ArtsService $artsService;
     private RouteService $routeService;
+    private GetDefaultShareImageTask $getDefaultShareImageTask;
 
-    public function __construct(SeoService $seoService, ArtsService $artsService, RouteService $routeService)
-    {
+    public function __construct(
+        SeoService $seoService,
+        ArtsService $artsService,
+        RouteService $routeService,
+        GetDefaultShareImageTask $getDefaultShareImageTask
+    ) {
         $this->seoService = $seoService;
         $this->artsService = $artsService;
         $this->routeService = $routeService;
+        $this->getDefaultShareImageTask = $getDefaultShareImageTask;
     }
 
     /**
@@ -34,9 +41,9 @@ class GetCellPicturesIndexAction extends Action
         $arts = $this->artsService->getInterestingArts(0, 25);
         [$title, $description] = $this->seoService->formTitleAndDescriptionCellIndex();
         $pageMetaDto = new PageMetaDto(
-            title:       $title,
+            title: $title,
             description: $description,
-            shareImage:  formDefaultShareArtUrlPath(true)
+            shareImage: $this->getDefaultShareImageTask->run()
         );
         $breadCrumbs = new Collection();
         $breadCrumbs->push(
