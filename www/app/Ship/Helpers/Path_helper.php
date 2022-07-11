@@ -53,33 +53,3 @@ if (!function_exists('formDefaultShareArtUrlPath')) {
             : asset("{$artFolder}d4/11/d4113a118447cb7650a7a7d84b45b153.jpeg");
     }
 }
-
-if (!function_exists('getMimeType')) {
-    function getMimeType(string $filename): string
-    {
-        $mimeTypes = [
-            // images
-            'png' => 'image/png',
-            'jpe' => 'image/jpeg',
-            'jpeg' => 'image/jpeg',
-            'jpg' => 'image/jpeg',
-            'gif' => 'image/gif',
-            'bmp' => 'image/bmp',
-            'ico' => 'image/vnd.microsoft.icon',
-            'tiff' => 'image/tiff',
-            'tif' => 'image/tiff',
-            'svg' => 'image/svg+xml',
-            'svgz' => 'image/svg+xml',
-            'webp' => 'image/webp',
-        ];
-
-        $array = explode('.', $filename);
-        $ext = strtolower(array_pop($array));
-        if (array_key_exists($ext, $mimeTypes)) {
-            return $mimeTypes[$ext];
-        } else {
-            \Illuminate\Support\Facades\Log::error('Неизвестный mime/type', ['filename' => $filename]);
-            return 'application/octet-stream';
-        }
-    }
-}

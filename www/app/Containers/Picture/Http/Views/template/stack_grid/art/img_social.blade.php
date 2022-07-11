@@ -14,7 +14,7 @@
                         <?php $optimizedImagePath = formArtUrlPath($optimizedImage['path']) ?>
                         <source type="image/webp" data-srcset="{{ $optimizedImagePath }}"/>
                     @endif
-                    <source type="{{ getMimeType($primaryImage['path']) }}"
+                    <source type="{{ $primaryImage['mime_type'] }}"
                             data-srcset="{{ $artUrlPath }}"/>
                     <img width="{{ $primaryImage['width'] }}"
                          height="{{ $primaryImage['height'] }}"
