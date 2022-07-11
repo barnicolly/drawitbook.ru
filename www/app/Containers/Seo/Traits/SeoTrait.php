@@ -23,6 +23,7 @@ trait SeoTrait
         if ($robots) {
             $meta->setRobots($robots);
         }
+        $this->setUrl();
         return $this;
     }
 
@@ -35,7 +36,11 @@ trait SeoTrait
             TwitterCard::setImage(asset($relativeShareImgPath));
             TwitterCard::addValue('card', 'summary_large_image');
         }
-//        todo-misha перенести установку url;
+        return $this;
+    }
+
+    public function setUrl(): self
+    {
         $url = urldecode(URL::current());
         OpenGraph::setUrl($url);
         TwitterCard::setUrl($url);
