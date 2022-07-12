@@ -4,6 +4,7 @@ namespace App\Containers\Search\Actions;
 
 use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Picture\Services\ArtsService;
+use App\Containers\Search\Data\Dto\SearchDto;
 use App\Containers\Search\Services\SearchService;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Paginator\PaginatorService;
@@ -25,23 +26,23 @@ class SearchPicturesAction extends Action
     }
 
     /**
-     * @param array $filters
+     * @param SearchDto $searchDto
      * @param int $pageNum
      * @return array{array, int, bool, int}
      */
-    public function run(array $filters, int $pageNum): array
+    public function run(SearchDto $searchDto, int $pageNum): array
     {
-        //        todo-misha обработать заранее;
-        $query = !empty($filters['query']) ? strip_tags($filters['query']) : '';
-        $relativeArtIds = [];
         try {
-            if ($query) {
-                $relativeArtIds = $this->searchService
-                    ->setLimit(1000)
-                    ->searchByQuery($query);
-            }
+            $relativeArtIds = $this->searchService
+                ->setLimit(1000)
+                ->searchByQuery($searchDto->query);
             if ($relativeArtIds) {
-                [$relativeArtIds, $countSearchResults, $isLastSlice, $countLeftArts] = $this->paginatorService->formSlice(
+                [
+                    $relativeArtIds,
+                    $countSearchResults,
+                    $isLastSlice,
+                    $countLeftArts,
+                ] = $this->paginatorService->formSlice(
                     $relativeArtIds,
                     $pageNum
                 );

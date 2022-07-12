@@ -4,6 +4,7 @@ namespace App\Containers\Search\Actions;
 
 use App\Containers\Picture\Data\Dto\GetCellTaggedResultDto;
 use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
+use App\Containers\Search\Data\Dto\SearchDto;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Parents\Actions\Action;
@@ -24,16 +25,16 @@ class SearchPageSliceAction extends Action
 
     /**
      * @param int $pageNum
-     * @param array $filters
+     * @param SearchDto $searchDto
      * @return array{GetCellTaggedResultDto, bool}
      * @throws NotFoundRelativeArts
      * @throws UnknownProperties
      */
-    public function run(int $pageNum, array $filters): array
+    public function run(int $pageNum, SearchDto $searchDto): array
     {
         $locale = app()->getLocale();
         [$relativeArts, $countSearchResults, $isLastSlice, $countLeftArts] = $this->searchPicturesAction->run(
-            $filters,
+            $searchDto,
             $pageNum
         );
         if (!$relativeArts) {

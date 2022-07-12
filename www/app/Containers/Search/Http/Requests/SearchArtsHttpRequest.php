@@ -3,12 +3,13 @@
 namespace App\Containers\Search\Http\Requests;
 
 use App\Ship\Parents\Requests\BaseFormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @property int $page
  * @property string $query
  */
-class SearchArtsSliceAjaxRequest extends BaseFormRequest
+class SearchArtsHttpRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {
@@ -22,10 +23,6 @@ class SearchArtsSliceAjaxRequest extends BaseFormRequest
                 'required',
                 'string',
             ],
-            'page' => [
-                'required',
-                'integer',
-            ],
         ];
     }
 
@@ -34,6 +31,11 @@ class SearchArtsSliceAjaxRequest extends BaseFormRequest
         return [
             'query' => 'trim',
         ];
+    }
+
+    protected function failedValidation(Validator $validator): void
+    {
+        abort(Response::HTTP_NOT_FOUND);
     }
 
 }

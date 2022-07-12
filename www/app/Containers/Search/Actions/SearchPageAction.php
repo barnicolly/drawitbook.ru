@@ -3,6 +3,7 @@
 namespace App\Containers\Search\Actions;
 
 use App\Containers\Picture\Services\ArtsService;
+use App\Containers\Search\Data\Dto\SearchDto;
 use App\Containers\Seo\Tasks\GetDefaultShareImageTask;
 use App\Containers\Tag\Actions\GetPopularTagsAction;
 use App\Containers\Translation\Enums\LangEnum;
@@ -38,15 +39,15 @@ class SearchPageAction extends Action
     }
 
     /**
-     * @param array $filters
+     * @param SearchDto $searchDto
      * @return array{array, PageMetaDto}
      * @throws UnknownProperties
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
-    public function run(array $filters): array
+    public function run(SearchDto $searchDto): array
     {
         [$relativeArts, $countSearchResults, $isLastSlice, $countLeftArts] = $this->searchPicturesAction->run(
-            $filters,
+            $searchDto,
             1
         );
         if (!$relativeArts) {
@@ -54,8 +55,8 @@ class SearchPageAction extends Action
             $viewData['popularTags'] = $this->getPopularTagsAction->run();
         }
         $viewData['alternateLinks'] = $this->getAlternateLinks();
-        $viewData['searchQuery'] = !empty($filters['query']) && is_string($filters['query']) ? $filters['query'] : '';
-        $viewData['filters'] = $filters;
+        $viewData['searchQuery'] = $searchDto->query;
+        $viewData['filters'] = $searchDto->toArray();
         $viewData['isLastSlice'] = $isLastSlice;
         $viewData['countLeftArts'] = $countLeftArts;
         $viewData['countRelatedArts'] = $countSearchResults;

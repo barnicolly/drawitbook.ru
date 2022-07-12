@@ -83,4 +83,21 @@ class GetSearchPageSliceTest extends TestCase
 
         $response->assertNotFound();
     }
+
+    public function testSearchSliceEmptyQuery(): void
+    {
+        $this->app->setLocale(LangEnum::RU);
+        $tag = $this->createTag();
+        $url = $this->routeService->getRouteSearch();
+        $page = 1;
+        $params = ['page' => $page, 'query' => ''];
+        $url .= '/slice?' . http_build_query($params);
+        [$picture] = $this->createPictureWithFile();
+        $this->createPictureTag($picture, $tag);
+
+        $response = $this->ajaxGet($url);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrorFor('query');
+    }
 }

@@ -6,11 +6,12 @@ use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Picture\Http\Transformers\Cell\GetCellTaggedArtsSliceTransformer;
 use App\Containers\Search\Actions\SearchPageAction;
 use App\Containers\Search\Actions\SearchPageSliceAction;
+use App\Containers\Search\Data\Dto\SearchDto;
+use App\Containers\Search\Http\Requests\SearchArtsHttpRequest;
 use App\Containers\Search\Http\Requests\SearchArtsSliceAjaxRequest;
 use App\Ship\Dto\PaginationMetaDto;
 use App\Ship\Parents\Controllers\HttpController;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,17 +21,17 @@ class SearchController extends HttpController
 {
 
     /**
-     * @param Request $request
+     * @param SearchArtsHttpRequest $request
      * @param SearchPageAction $action
      * @return Response
      *
      * @see \App\Containers\Search\Tests\Feature\Http\Controllers\ShowSearchIndexPageTest
      */
-    public function index(Request $request, SearchPageAction $action): Response
+    public function index(SearchArtsHttpRequest $request, SearchPageAction $action): Response
     {
         try {
-//            todo-misha обработать данные в request и положить в dto;
-            [$viewData, $pageMetaDto] = $action->run($request->input());
+            $searchDto = new SearchDto($request->input());
+            [$viewData, $pageMetaDto] = $action->run($searchDto);
             $this->setMeta($pageMetaDto->title)
                 ->setRobots('noindex, follow');
             return response()->view('search::index', $viewData);
@@ -49,11 +50,11 @@ class SearchController extends HttpController
      */
     public function slice(SearchArtsSliceAjaxRequest $request, SearchPageSliceAction $action): JsonResponse
     {
-        //            todo-misha обработать данные в request и положить в dto;
         //TODO-misha вынести и объединить с кодом из cell;
         try {
             $pageNum = $request->page;
-            [$getCellTaggedResultDto, $isLastSlice] = $action->run($pageNum, $request->input());
+            $searchDto = new SearchDto($request->input());
+            [$getCellTaggedResultDto, $isLastSlice] = $action->run($pageNum, $searchDto);
             $paginationMetaDto = new PaginationMetaDto(
                 [
                     'page' => $pageNum,
