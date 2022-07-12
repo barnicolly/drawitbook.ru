@@ -4,7 +4,7 @@ namespace App\Containers\Seo\Tasks;
 
 use App\Containers\Picture\Exceptions\NotFoundPicture;
 use App\Containers\Picture\Services\ArtsService;
-use App\Containers\Seo\Dto\ShareImageDto;
+use App\Containers\Seo\Data\Dto\ShareImageDto;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Facades\Cache;
 

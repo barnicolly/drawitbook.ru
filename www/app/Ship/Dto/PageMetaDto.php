@@ -2,7 +2,7 @@
 
 namespace App\Ship\Dto;
 
-use App\Containers\Seo\Dto\ShareImageDto;
+use App\Containers\Seo\Data\Dto\ShareImageDto;
 use App\Ship\Parents\Dto\Dto;
 
 class PageMetaDto extends Dto

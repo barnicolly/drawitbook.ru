@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Seo\Dto;
+namespace App\Containers\Seo\Data\Dto;
 
 use App\Ship\Parents\Dto\Dto;
 

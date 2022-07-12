@@ -2,7 +2,7 @@
 
 namespace App\Containers\Seo\Traits;
 
-use App\Containers\Seo\Dto\ShareImageDto;
+use App\Containers\Seo\Data\Dto\ShareImageDto;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;

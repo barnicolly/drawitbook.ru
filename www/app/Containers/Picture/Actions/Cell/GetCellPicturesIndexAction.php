@@ -3,7 +3,7 @@
 namespace App\Containers\Picture\Actions\Cell;
 
 use App\Containers\Picture\Services\ArtsService;
-use App\Containers\Seo\Dto\BreadcrumbDto;
+use App\Containers\Seo\Data\Dto\BreadcrumbDto;
 use App\Containers\Seo\Services\SeoService;
 use App\Containers\Seo\Tasks\GetDefaultShareImageTask;
 use App\Containers\Translation\Enums\LangEnum;
