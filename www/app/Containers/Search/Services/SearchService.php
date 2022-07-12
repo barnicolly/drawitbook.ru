@@ -3,14 +3,14 @@
 namespace App\Containers\Search\Services;
 
 use App\Containers\Picture\Tasks\Picture\GetPicturesIdsByTagIdTask;
+use App\Containers\Translation\Enums\LangEnum;
 use Foolz\SphinxQL\Drivers\Mysqli\Connection;
 use Foolz\SphinxQL\SphinxQL;
 
 class SearchService
 {
-    private $connection = null;
-    private $index = 'drawitbookByQuery';
-    private $limit = 15;
+    private Connection $connection;
+    private int $limit = 15;
 
     public function __construct()
     {
@@ -27,10 +27,12 @@ class SearchService
     public function searchByQuery(string $query): array
     {
         try {
+            $locale = app()->getLocale();
             $filters = [
                 'query' => $query,
             ];
-            $result = $this->searchByString($filters);
+            $index = $locale === LangEnum::RU ? 'drawitbookByQuery': 'drawitbookByQueryEn';
+            $result = $this->searchByString($filters, $index);
             if (!empty($result)) {
                 return array_column($result, 'id');
             }
@@ -43,7 +45,6 @@ class SearchService
     public function searchRelatedPicturesIds(array $shown, array $hidden = [], int $excludeQuestionId = 0): array
     {
         try {
-            $this->index = 'drawItBookSearchByTag';
             $result = (new SphinxQL($this->connection))
                 ->select('id', 'weight() AS weight')
                 ->option(
@@ -53,7 +54,7 @@ class SearchService
                         'tag' => 8,
                     ]
                 )
-                ->from($this->index)
+                ->from('drawItBookSearchByTag')
                 ->limit($this->limit);
             if (!empty($shown)) {
                 $result->where('tag', 'IN', $shown);
@@ -75,11 +76,11 @@ class SearchService
         }
     }
 
-    private function searchByString(array $filters): array
+    private function searchByString(array $filters, string $index): array
     {
         $result = (new SphinxQL($this->connection))
             ->select('id', 'query', 'weight() AS weight')
-            ->from($this->index)
+            ->from($index)
             ->limit($this->limit);
 
         $query = $filters['query'] ?? '';
