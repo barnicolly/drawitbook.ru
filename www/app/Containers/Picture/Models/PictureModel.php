@@ -8,6 +8,7 @@ use App\Containers\Picture\Enums\PictureExtensionsColumnsEnum;
 use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\ModelFlags\Models\Concerns\HasFlags;
 
 /**
  * @property int $id
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class PictureModel extends CoreModel
 {
     use HasFactory;
+    use HasFlags;
 
     protected $table = PictureColumnsEnum::TABlE;
 
