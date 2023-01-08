@@ -29,6 +29,7 @@ class TranslationServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Data/Migrations'));
         $this->app->register(LaravelJsLocalizationServiceProvider::class);
+        $this->app->register(\Waavi\Translation\TranslationServiceProvider::class);
     }
 
     /**
