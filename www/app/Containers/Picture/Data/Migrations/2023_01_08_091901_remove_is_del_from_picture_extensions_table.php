@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (Schema::hasColumn('picture', 'is_del'))
+        if (Schema::hasColumn('picture_extensions', 'is_del'))
         {
-            Schema::table('picture', function (Blueprint $table)
+            Schema::table('picture_extensions', function (Blueprint $table)
             {
                 $table->dropColumn('is_del');
             });
