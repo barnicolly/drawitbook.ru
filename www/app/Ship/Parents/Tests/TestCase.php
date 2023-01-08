@@ -7,26 +7,63 @@ use App\Containers\Authorization\Models\Role;
 use App\Containers\Translation\Data\Seeders\TranslatorLanguagesSeeder;
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Seeders\DatabaseSeeder;
+use App\Ship\Parents\Tests\Optimization\ClearTestPropertiesAfterTestTrait;
+use App\Ship\Parents\Tests\Optimization\PrepareDbBeforeTestTrait;
 use App\Ship\Services\Route\RouteService;
+use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Assert;
 use Tests\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
+    use RefreshDatabase;
+    use ClearTestPropertiesAfterTestTrait;
+    use PrepareDbBeforeTestTrait;
+
     protected RouteService $routeService;
+    protected bool $useTransactionsForTruncateTables;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->routeService = app(RouteService::class);
-        $this->artisan('migrate');
-        $this->truncateTables();
+        if ($this->useTransactionsForTruncateTables) {
+            $this->beginDatabaseTransaction();
+        } else {
+            $this->truncateTables();
+        }
         $this->seedTranslatorLanguages();
         Cache::clear();
+    }
+
+    public function tearDown(): void
+    {
+        if ($this->useTransactionsForTruncateTables) {
+            DB::rollBack();
+        }
+        parent::tearDown();
+        $this->clearProperties();
+    }
+
+    public function refreshTestDatabase(): void
+    {
+        if (!RefreshDatabaseState::$migrated) {
+            $this->artisan('migrate');
+            RefreshDatabaseState::$migrated = true;
+        }
+
+        $this->useTransactionsForTruncateTables = config('testing.use_transactions_for_truncate_tables');
+        if (!TruncateDatabaseState::$truncated && $this->useTransactionsForTruncateTables) {
+            $this->truncateTables();
+            TruncateDatabaseState::$truncated = true;
+        }
+
+        $this->app[Kernel::class]->setArtisan(null);
     }
 
     /**
@@ -124,31 +161,4 @@ abstract class TestCase extends BaseTestCase
         app(DatabaseSeeder::class)->call(TranslatorLanguagesSeeder::class);
     }
 
-    private function truncateTables(): void
-    {
-        $excludeTables = [
-            'migrations',
-        ];
-        $nonEmptyTables = collect(
-            DB::select(
-                DB::raw(
-                    "SHOW TABLE STATUS WHERE Rows > 0;"
-                )
-            )
-        )
-            ->pluck('Name')
-            ->toArray();
-        if (!empty($nonEmptyTables)) {
-            $tableNamesForTruncate = array_diff($nonEmptyTables, $excludeTables);
-            if (!empty($tableNamesForTruncate)) {
-                $queries = [];
-                foreach ($tableNamesForTruncate as $tableName) {
-                    $queries[] = 'TRUNCATE TABLE ' . $tableName . ';';
-                }
-                Schema::disableForeignKeyConstraints();
-                DB::unprepared(implode(' ', $queries));
-                Schema::enableForeignKeyConstraints();
-            }
-        }
-    }
 }
