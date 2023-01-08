@@ -129,9 +129,17 @@ abstract class TestCase extends BaseTestCase
         $excludeTables = [
             'migrations',
         ];
-        $tableNames = Schema::getConnection()->getDoctrineSchemaManager()->listTableNames();
-        if (!empty($tableNames)) {
-            $tableNamesForTruncate = array_diff($tableNames, $excludeTables);
+        $nonEmptyTables = collect(
+            DB::select(
+                DB::raw(
+                    "SHOW TABLE STATUS WHERE Rows > 0;"
+                )
+            )
+        )
+            ->pluck('Name')
+            ->toArray();
+        if (!empty($nonEmptyTables)) {
+            $tableNamesForTruncate = array_diff($nonEmptyTables, $excludeTables);
             if (!empty($tableNamesForTruncate)) {
                 $queries = [];
                 foreach ($tableNamesForTruncate as $tableName) {
