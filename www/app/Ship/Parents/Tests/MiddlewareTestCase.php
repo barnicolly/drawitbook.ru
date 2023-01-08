@@ -10,11 +10,6 @@ use Tests\TestCase as BaseTestCase;
 abstract class MiddlewareTestCase extends BaseTestCase
 {
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     /**
      * @param string $url
      * @param array $middlewares

@@ -13,11 +13,6 @@ class GetSettingsModalTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     private function formUrl(int $pictureId): string
     {
         return route('admin.picture.settings', ['id' => $pictureId]);

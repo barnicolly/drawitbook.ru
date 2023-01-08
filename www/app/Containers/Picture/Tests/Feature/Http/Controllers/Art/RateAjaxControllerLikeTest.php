@@ -14,11 +14,6 @@ class RateAjaxControllerLikeTest extends TestCase
 {
     use CreatePictureWithRelationsTrait, CreateLikesTrait;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      *
