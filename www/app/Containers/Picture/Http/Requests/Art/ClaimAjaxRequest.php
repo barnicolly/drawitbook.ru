@@ -2,7 +2,7 @@
 
 namespace App\Containers\Picture\Http\Requests\Art;
 
-use App\Containers\Claim\Data\Rules\ReasonIdRule;
+use App\Containers\Claim\Enums\SprClaimReasonColumnsEnum;
 use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Ship\Parents\Requests\BaseFormRequest;
 
@@ -25,11 +25,12 @@ class ClaimAjaxRequest extends BaseFormRequest
     public function rules(): array
     {
         $pictureTable = PictureColumnsEnum::TABlE;
+        $sprClaimReasonTable = SprClaimReasonColumnsEnum::TABlE;
         return [
             'id' => "required|integer|exists:{$pictureTable},id",
             'reason' => [
                 'required',
-                new ReasonIdRule(),
+                "exists:{$sprClaimReasonTable},id",
             ],
         ];
     }
