@@ -3,7 +3,6 @@
 namespace App\Containers\Picture\Data\Factories;
 
 use App\Containers\Picture\Enums\PictureColumnsEnum;
-use App\Containers\Picture\Enums\ShowOnMainPageStatusEnum;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Vk\Enums\VkPostingStatusEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -24,7 +23,6 @@ class PictureModelFactory extends Factory
      * @return array
      */
     #[ArrayShape([
-        PictureColumnsEnum::IN_COMMON => "int",
         PictureColumnsEnum::IN_VK_POSTING => "int",
         PictureColumnsEnum::CREATED_AT => "string",
         PictureColumnsEnum::UPDATED_AT => "string"
@@ -33,7 +31,6 @@ class PictureModelFactory extends Factory
     {
         $dateTime = (new \DateTimeImmutable())->format('Y-m-d H:i:s');
         return [
-            PictureColumnsEnum::IN_COMMON => ShowOnMainPageStatusEnum::FALSE,
             PictureColumnsEnum::IN_VK_POSTING => VkPostingStatusEnum::FALSE,
             PictureColumnsEnum::CREATED_AT => $dateTime,
             PictureColumnsEnum::UPDATED_AT => $dateTime,

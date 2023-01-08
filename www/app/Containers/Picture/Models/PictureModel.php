@@ -27,7 +27,6 @@ class PictureModel extends CoreModel
 
     protected $fillable = [
         PictureColumnsEnum::IN_VK_POSTING,
-        PictureColumnsEnum::IN_COMMON,
     ];
 
     public function extensions(): HasMany
