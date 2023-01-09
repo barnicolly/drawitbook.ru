@@ -16,7 +16,6 @@ final class SprTagsColumnsEnum extends Enum
     public const HIDDEN_VK = 'hidden_vk';
     public const SEO = 'seo';
     public const SLUG_EN = 'slug_en';
-    public const IS_POPULAR = 'is_popular';
 
     public static string $tId = self::TABlE . '.' . self::ID;
     public static string $tNAME = self::TABlE . '.' . self::NAME;
@@ -25,5 +24,4 @@ final class SprTagsColumnsEnum extends Enum
     public static string $tHIDDEN_VK = self::TABlE . '.' . self::HIDDEN_VK;
     public static string $tSEO = self::TABlE . '.' . self::SEO;
     public static string $tSLUG_EN = self::TABlE . '.' . self::SLUG_EN;
-    public static string $tIS_POPULAR = self::TABlE . '.' . self::IS_POPULAR;
 }

@@ -29,7 +29,6 @@ class SprTagsModelFactory extends Factory
         SprTagsColumnsEnum::HIDDEN_VK => "int",
         SprTagsColumnsEnum::SEO => "string",
         SprTagsColumnsEnum::SLUG_EN => "string",
-        SprTagsColumnsEnum::IS_POPULAR => "int"
     ])]
     public function definition(): array
     {
@@ -42,7 +41,6 @@ class SprTagsModelFactory extends Factory
             SprTagsColumnsEnum::HIDDEN_VK => 0,
             SprTagsColumnsEnum::SEO => Str::slug($name),
             SprTagsColumnsEnum::SLUG_EN => Str::slug($nameEn),
-            SprTagsColumnsEnum::IS_POPULAR => 0,
         ];
     }
 }

@@ -19,7 +19,6 @@ use Spatie\ModelFlags\Models\Concerns\HasFlags;
  * @property int $hidden_vk
  * @property string $seo
  * @property string $slug_en
- * @property string $is_popular
  *
  * @property TagSeoLangDto $seo_lang
  *
