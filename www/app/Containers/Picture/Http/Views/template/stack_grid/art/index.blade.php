@@ -1,3 +1,5 @@
+@php use App\Containers\Picture\Enums\PictureFlagsEnum; @endphp
+
 <div class="art-container" data-page="{{ $page ?? 1 }}">
     <div class="art-wrapper">
         @include('picture::template.stack_grid.art.img_social', ['art' => $art])
@@ -15,8 +17,8 @@
                         </button>
                     </div>
                     <div class="d-inline art-control-icons">
-                        @if ((int) $art['in_vk_posting'] === \App\Containers\Vk\Enums\VkPostingStatusEnum::TRUE)
-                            <span class="vk-posting fa fa-vk " title="Учавствует в постинге VK"></span>
+                        @if (!empty($art['flags']) && in_array(PictureFlagsEnum::IN_VK_POSTING, $art['flags'], true))
+                            <span class="vk-posting fa fa-vk " title="Участвует в постинге VK"></span>
                         @endif
                     </div>
                 </i>

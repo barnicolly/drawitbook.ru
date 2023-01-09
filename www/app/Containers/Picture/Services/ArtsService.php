@@ -53,6 +53,11 @@ class ArtsService
         $files = app(GetPictureExtensionsByPictureIdsTask::class)->run($artIds);
         $arts = app(SetPictureExtensionsOnPicturesTask::class)->run($arts, $files);
         $arts = app(SetPictureTagsOnPicturesTask::class)->run($arts);
+        foreach ($arts as $index => $art) {
+            if (!empty($art['flags'])) {
+                $arts[$index]['flags'] = array_column($art['flags'], 'name');
+            }
+        }
         return $this->seoService->setArtsAlt($arts);
     }
 }

@@ -3,11 +3,11 @@
 namespace App\Containers\Picture\Tasks\Picture;
 
 use App\Containers\Picture\Data\Repositories\PictureRepository;
-use App\Containers\Picture\Enums\PictureColumnsEnum;
+use App\Containers\Picture\Enums\PictureFlagsEnum;
 use App\Containers\Picture\Models\PictureModel;
 use App\Ship\Parents\Tasks\Task;
 
-class UpdatePictureVkPostingStatusTask extends Task
+class PictureSetVkPostingFlagTask extends Task
 {
 
     protected PictureRepository $repository;
@@ -19,16 +19,16 @@ class UpdatePictureVkPostingStatusTask extends Task
 
     /**
      * @param int $id
-     * @param int $status
      * @return PictureModel
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function run(int $id, int $status): PictureModel
+    public function run(int $id): PictureModel
     {
-        $attributes = [
-            PictureColumnsEnum::IN_VK_POSTING => $status,
-        ];
-        return $this->repository->update($attributes, $id);
+        /** @var PictureModel $model */
+        $model = $this->repository->getModel()
+            ->findOrFail($id);
+        $model->flag(PictureFlagsEnum::IN_VK_POSTING);
+        return $model;
     }
 }
 

@@ -12,22 +12,15 @@ use Spatie\ModelFlags\Models\Concerns\HasFlags;
 
 /**
  * @property int $id
- * @property int $in_common
- * @property int $in_vk_posting
  *
  * @method static PictureModelFactory factory
  */
-//todo-misha перенести in_vk_posting в отдельную таблицу
 class PictureModel extends CoreModel
 {
     use HasFactory;
     use HasFlags;
 
     protected $table = PictureColumnsEnum::TABlE;
-
-    protected $fillable = [
-        PictureColumnsEnum::IN_VK_POSTING,
-    ];
 
     public function extensions(): HasMany
     {

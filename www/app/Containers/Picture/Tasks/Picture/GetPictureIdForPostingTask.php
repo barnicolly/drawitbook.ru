@@ -2,6 +2,9 @@
 
 namespace App\Containers\Picture\Tasks\Picture;
 
+use App\Containers\Picture\Enums\PictureColumnsEnum;
+use App\Containers\Picture\Enums\PictureFlagsEnum;
+use App\Containers\Picture\Models\PictureModel;
 use App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Facades\DB;
@@ -15,10 +18,13 @@ class GetPictureIdForPostingTask extends Task
      */
     public function run(): int
     {
-        //TODO-misha переписать на query;
-        $results = DB::select(
-            DB::raw(
-                'select picture.id,
+        $pictureIds = PictureModel::flagged(PictureFlagsEnum::IN_VK_POSTING)->select([PictureColumnsEnum::$tId])->get()->pluck(PictureColumnsEnum::ID)->toArray();
+        if (!blank($pictureIds)) {
+            $pictureIdsString = implode(',', $pictureIds);
+            //TODO-misha переписать на query;
+            $results = DB::select(
+                DB::raw(
+                    "select picture.id,
   IF(lastPostingDate.dayDiff IS NULL,
      IF((select DATEDIFF(NOW(), MAX(social_media_posting_history.created_at)) as dayDiff
          from social_media_posting_history
@@ -39,15 +45,16 @@ from picture
                DATEDIFF(NOW(), MAX(social_media_posting_history.created_at)) as dayDiff
              from social_media_posting_history
              group by picture_id) as lastPostingDate on picture.id = lastPostingDate.picture_id
-where picture.in_vk_posting = 1
+where picture.id in ($pictureIdsString)
       and (lastPostingDate.dayDiff > 10 or lastPostingDate.dayDiff is null)
 group by picture.id
 order by dayDiff DESC
-limit 1'
-            )
-        );
-        if ($results) {
-            return $results[0]->id;
+limit 1"
+                )
+            );
+            if ($results) {
+                return $results[0]->id;
+            }
         }
         throw new NotFoundPictureIdForPostingException();
     }

@@ -2,13 +2,12 @@
 
 namespace App\Containers\SocialMediaPosting\Tests\Feature\Services;
 
-use App\Containers\Picture\Enums\PictureColumnsEnum;
+use App\Containers\Picture\Enums\PictureFlagsEnum;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException;
 use App\Containers\SocialMediaPosting\Models\SocialMediaPostingHistoryModel;
 use App\Containers\SocialMediaPosting\Services\BroadcastPostingService;
 use App\Containers\SocialMediaPosting\Tests\Traits\CreateSocialMediaPostingHistoryTrait;
-use App\Containers\Vk\Enums\VkPostingStatusEnum;
 use App\Containers\Vk\Services\VkWallPostingStrategy;
 use App\Ship\Parents\Tests\TestCase;
 
@@ -33,7 +32,8 @@ class BroadcastPostingServiceTest extends TestCase
 
     public function testOk(): void
     {
-        $picture = $this->createPicture([PictureColumnsEnum::IN_VK_POSTING => VkPostingStatusEnum::TRUE]);
+        $picture = $this->createPicture();
+        $picture->flag(PictureFlagsEnum::IN_VK_POSTING);
         $pictureFile = $this->createPictureFile($picture);
         $mock = $this->createMock(VkWallPostingStrategy::class);
         $strategyParams = [];

@@ -110,13 +110,6 @@ import { getRandomInt, NewModal, sendRequest, showInfo } from '@js/helpers/utils
         }
 
         function addDropdowns() {
-            // <button type="button"
-            // class="art-control-vk-posting btn btn-link dropdown-item"
-            //     data-vk-posted="<?= $picture->in_vk_posting === IN_VK_POSTING ?>">
-            //         Добавить в постинг в ВК
-            //     </button>
-
-            // if ()
             var vkPostingButton = $('<button>',
                 {
                     type: 'button',

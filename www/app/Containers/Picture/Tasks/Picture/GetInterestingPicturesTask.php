@@ -26,7 +26,7 @@ class GetInterestingPicturesTask extends Task
     public function run(int $excludeId, int $limit): array
     {
         $this->repository->pushCriteria(new WherePictureExcludeIdCriteria($excludeId));
-        return $this->repository->take($limit)->flagged(PictureFlagsEnum::IN_COMMON)->get()->toArray();
+        return $this->repository->take($limit)->with('flags')->flagged(PictureFlagsEnum::IN_COMMON)->get()->toArray();
     }
 }
 

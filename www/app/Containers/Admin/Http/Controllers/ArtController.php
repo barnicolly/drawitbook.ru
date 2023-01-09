@@ -10,8 +10,8 @@ use App\Containers\Admin\Http\Requests\Art\DetachPictureFromAlbumRequest;
 use App\Containers\Admin\Http\Requests\Settings\GetSettingsModalRequest;
 use App\Containers\Admin\Http\Requests\VkPosting\ArtSetVkPostingRequest;
 use App\Containers\Admin\Http\Transformers\GetSettingsModalTransformer;
-use App\Containers\Picture\Tasks\Picture\UpdatePictureVkPostingStatusTask;
-use App\Containers\Vk\Enums\VkPostingStatusEnum;
+use App\Containers\Picture\Tasks\Picture\PictureSetVkPostingFlagTask;
+use App\Containers\Picture\Tasks\Picture\PictureUnsetVkPostingFlagTask;
 use App\Ship\Parents\Controllers\HttpController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
@@ -22,17 +22,17 @@ class ArtController extends HttpController
 
     /**
      * @param ArtSetVkPostingRequest $request
-     * @param UpdatePictureVkPostingStatusTask $task
+     * @param PictureSetVkPostingFlagTask $task
      * @return JsonResponse
      *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\SetVkPostingOnTest
      */
     public function setVkPostingOn(
         ArtSetVkPostingRequest $request,
-        UpdatePictureVkPostingStatusTask $task
+        PictureSetVkPostingFlagTask $task
     ): JsonResponse {
         try {
-            $task->run($request->id, VkPostingStatusEnum::TRUE);
+            $task->run($request->id);
         } catch (Throwable $e) {
             Log::error($e->getMessage());
             abort(500);
@@ -42,17 +42,17 @@ class ArtController extends HttpController
 
     /**
      * @param ArtSetVkPostingRequest $request
-     * @param UpdatePictureVkPostingStatusTask $task
+     * @param PictureUnsetVkPostingFlagTask $task
      * @return JsonResponse
      *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\SetVkPostingOffTest
      */
     public function setVkPostingOff(
         ArtSetVkPostingRequest $request,
-        UpdatePictureVkPostingStatusTask $task
+        PictureUnsetVkPostingFlagTask $task
     ): JsonResponse {
         try {
-            $task->run($request->id, VkPostingStatusEnum::FALSE);
+            $task->run($request->id);
         } catch (Throwable $e) {
             Log::error($e->getMessage());
             abort(500);
