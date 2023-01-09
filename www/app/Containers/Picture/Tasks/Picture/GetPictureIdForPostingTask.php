@@ -3,9 +3,9 @@
 namespace App\Containers\Picture\Tasks\Picture;
 
 use App\Containers\Picture\Enums\PictureColumnsEnum;
-use App\Containers\Picture\Enums\PictureFlagsEnum;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException;
+use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +18,7 @@ class GetPictureIdForPostingTask extends Task
      */
     public function run(): int
     {
-        $pictureIds = PictureModel::flagged(PictureFlagsEnum::IN_VK_POSTING)->select([PictureColumnsEnum::$tId])->get()->pluck(PictureColumnsEnum::ID)->toArray();
+        $pictureIds = PictureModel::flagged(FlagsEnum::PICTURE_IN_VK_POSTING)->select([PictureColumnsEnum::$tId])->get()->pluck(PictureColumnsEnum::ID)->toArray();
         if (!blank($pictureIds)) {
             $pictureIdsString = implode(',', $pictureIds);
             //TODO-misha переписать на query;

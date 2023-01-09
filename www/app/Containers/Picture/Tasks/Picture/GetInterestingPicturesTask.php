@@ -4,7 +4,7 @@ namespace App\Containers\Picture\Tasks\Picture;
 
 use App\Containers\Picture\Data\Criteria\Picture\WherePictureExcludeIdCriteria;
 use App\Containers\Picture\Data\Repositories\PictureRepository;
-use App\Containers\Picture\Enums\PictureFlagsEnum;
+use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tasks\Task;
 
 class GetInterestingPicturesTask extends Task
@@ -26,7 +26,7 @@ class GetInterestingPicturesTask extends Task
     public function run(int $excludeId, int $limit): array
     {
         $this->repository->pushCriteria(new WherePictureExcludeIdCriteria($excludeId));
-        return $this->repository->take($limit)->with('flags')->flagged(PictureFlagsEnum::IN_COMMON)->get()->toArray();
+        return $this->repository->take($limit)->with('flags')->flagged(FlagsEnum::PICTURE_COMMON)->get()->toArray();
     }
 }
 

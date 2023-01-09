@@ -1,4 +1,4 @@
-@php use App\Containers\Picture\Enums\PictureFlagsEnum; @endphp
+@php use App\Ship\Enums\FlagsEnum; @endphp
 
 <div class="art-container" data-page="{{ $page ?? 1 }}">
     <div class="art-wrapper">
@@ -17,7 +17,7 @@
                         </button>
                     </div>
                     <div class="d-inline art-control-icons">
-                        @if (!empty($art['flags']) && in_array(PictureFlagsEnum::IN_VK_POSTING, $art['flags'], true))
+                        @if (!empty($art['flags']) && in_array(FlagsEnum::PICTURE_IN_VK_POSTING, $art['flags'], true))
                             <span class="vk-posting fa fa-vk " title="Участвует в постинге VK"></span>
                         @endif
                     </div>

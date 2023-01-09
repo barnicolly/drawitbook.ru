@@ -1,7 +1,7 @@
 <?php
 
-use App\Containers\Picture\Enums\PictureFlagsEnum;
 use App\Containers\Picture\Models\PictureModel;
+use App\Ship\Enums\FlagsEnum;
 use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
@@ -16,7 +16,7 @@ return new class extends Migration
        $pictures = PictureModel::where('in_vk_posting', 1)->get();
        if (!blank($pictures)) {
             $pictures->each(function (PictureModel $picture) {
-                $picture->flag(PictureFlagsEnum::IN_VK_POSTING);
+                $picture->flag(FlagsEnum::PICTURE_IN_VK_POSTING);
             });
        }
     }

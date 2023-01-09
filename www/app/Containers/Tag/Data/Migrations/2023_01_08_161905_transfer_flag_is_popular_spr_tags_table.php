@@ -1,7 +1,7 @@
 <?php
 
-use App\Containers\Tag\Enums\SprTagsFlagsEnum;
 use App\Containers\Tag\Models\SprTagsModel;
+use App\Ship\Enums\FlagsEnum;
 use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
@@ -16,7 +16,7 @@ return new class extends Migration
        $tags = SprTagsModel::where('is_popular', 1)->get();
        if (!blank($tags)) {
            $tags->each(function (SprTagsModel $tag) {
-               $tag->flag(SprTagsFlagsEnum::IS_POPULAR);
+               $tag->flag(FlagsEnum::TAG_IS_POPULAR);
             });
        }
     }

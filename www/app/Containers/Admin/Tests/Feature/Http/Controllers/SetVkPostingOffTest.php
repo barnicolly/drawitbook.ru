@@ -3,8 +3,8 @@
 namespace App\Containers\Admin\Tests\Feature\Http\Controllers;
 
 use App\Containers\Admin\Http\Controllers\ArtController;
-use App\Containers\Picture\Enums\PictureFlagsEnum;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
+use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tests\TestCase;
 
 /**
@@ -26,7 +26,7 @@ class SetVkPostingOffTest extends TestCase
     {
         $this->actingAsAdmin();
         $picture = $this->createPicture();
-        $picture->flag(PictureFlagsEnum::IN_VK_POSTING);
+        $picture->flag(FlagsEnum::PICTURE_IN_VK_POSTING);
 
         $data = [
             'id' => $picture->id,
@@ -36,7 +36,7 @@ class SetVkPostingOffTest extends TestCase
         $response->assertOk()
             ->assertJsonStructure([]);
 
-        self::assertFalse($picture->hasFlag(PictureFlagsEnum::IN_VK_POSTING));
+        self::assertFalse($picture->hasFlag(FlagsEnum::PICTURE_IN_VK_POSTING));
     }
 
     public function testArtPageNotFoundPicture(): void
