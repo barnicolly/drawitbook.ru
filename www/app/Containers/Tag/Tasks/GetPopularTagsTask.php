@@ -2,10 +2,10 @@
 
 namespace App\Containers\Tag\Tasks;
 
-use App\Containers\Tag\Data\Criteria\WhereTagIsPopularCriteria;
 use App\Containers\Tag\Data\Criteria\WhereTagSlugEnIsNotNullCriteria;
 use App\Containers\Tag\Data\Repositories\TagRepository;
 use App\Containers\Tag\Enums\SprTagsColumnsEnum;
+use App\Containers\Tag\Enums\SprTagsFlagsEnum;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
@@ -38,8 +38,7 @@ class GetPopularTagsTask extends Task
         if ($locale === LangEnum::EN) {
             $this->repository->pushCriteria(new WhereTagSlugEnIsNotNullCriteria());
         }
-        $this->repository->pushCriteria(new WhereTagIsPopularCriteria());
-        return $this->repository->get($columns->toArray())->toArray();
+        return $this->repository->flagged(SprTagsFlagsEnum::IS_POPULAR)->get($columns->toArray())->toArray();
     }
 }
 

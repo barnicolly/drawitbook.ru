@@ -9,6 +9,7 @@ use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\ModelFlags\Models\Concerns\HasFlags;
 
 /**
  * @property int $id
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class SprTagsModel extends CoreModel
 {
     use HasFactory;
+    use HasFlags;
 
     protected $table = SprTagsColumnsEnum::TABlE;
 
