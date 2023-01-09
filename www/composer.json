@@ -71,11 +71,11 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/mik009/translation.git"
+            "url": "https://github.com/barnicolly/translation.git"
         },
         {
             "type": "vcs",
-            "url": "https://github.com/mik009/sanitizer.git"
+            "url": "https://github.com/barnicolly/sanitizer.git"
         }
     ],
     "scripts": {
