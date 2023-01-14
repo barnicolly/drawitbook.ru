@@ -26,7 +26,6 @@ class SprTagsModelFactory extends Factory
         SprTagsColumnsEnum::NAME => "string",
         SprTagsColumnsEnum::NAME_EN => "string",
         SprTagsColumnsEnum::HIDDEN => "int",
-        SprTagsColumnsEnum::HIDDEN_VK => "int",
         SprTagsColumnsEnum::SEO => "string",
         SprTagsColumnsEnum::SLUG_EN => "string",
     ])]
@@ -38,7 +37,6 @@ class SprTagsModelFactory extends Factory
             SprTagsColumnsEnum::NAME => $name,
             SprTagsColumnsEnum::NAME_EN => $nameEn,
             SprTagsColumnsEnum::HIDDEN => 0,
-            SprTagsColumnsEnum::HIDDEN_VK => 0,
             SprTagsColumnsEnum::SEO => Str::slug($name),
             SprTagsColumnsEnum::SLUG_EN => Str::slug($nameEn),
         ];

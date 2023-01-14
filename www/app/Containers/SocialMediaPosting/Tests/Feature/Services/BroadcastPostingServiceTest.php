@@ -7,6 +7,7 @@ use App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingExce
 use App\Containers\SocialMediaPosting\Models\SocialMediaPostingHistoryModel;
 use App\Containers\SocialMediaPosting\Services\BroadcastPostingService;
 use App\Containers\SocialMediaPosting\Tests\Traits\CreateSocialMediaPostingHistoryTrait;
+use App\Containers\Tag\Tests\Traits\CreateTagTrait;
 use App\Containers\Vk\Services\VkWallPostingStrategy;
 use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tests\TestCase;
@@ -16,7 +17,7 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class BroadcastPostingServiceTest extends TestCase
 {
-    use CreateSocialMediaPostingHistoryTrait, CreatePictureWithRelationsTrait;
+    use CreateSocialMediaPostingHistoryTrait, CreatePictureWithRelationsTrait, CreateTagTrait;
 
     public function testExpectNotFoundPictureIdForPostingException(): void
     {
@@ -35,6 +36,14 @@ class BroadcastPostingServiceTest extends TestCase
         $picture = $this->createPicture();
         $picture->flag(FlagsEnum::PICTURE_IN_VK_POSTING);
         $pictureFile = $this->createPictureFile($picture);
+
+        $tagHiddenVk = $this->createTag();
+        $tagHiddenVk->flag(FlagsEnum::TAG_HIDDEN_VK);
+        $this->createPictureTag($picture, $tagHiddenVk);
+
+        $tagNotHiddenVk = $this->createTag();
+        $this->createPictureTag($picture, $tagNotHiddenVk);
+
         $mock = $this->createMock(VkWallPostingStrategy::class);
         $strategyParams = [];
         $this->app->bind(VkWallPostingStrategy::class, function ($app, $params) use ($mock, &$strategyParams) {
@@ -50,7 +59,7 @@ class BroadcastPostingServiceTest extends TestCase
         /** @var SocialMediaPostingHistoryModel $firstResultHistoryItem */
         $firstResultHistoryItem = $resultHistoryItems->first();
         self::assertSame($picture->id, $firstResultHistoryItem->picture_id);
-        self::assertSame([], $strategyParams['tags']);
+        self::assertSame([$tagNotHiddenVk->name], $strategyParams['tags']);
         self::assertSame(formArtFsPath($pictureFile->path), $strategyParams['artPath']);
     }
 

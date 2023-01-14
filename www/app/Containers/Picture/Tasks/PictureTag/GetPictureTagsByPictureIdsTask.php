@@ -36,8 +36,7 @@ class GetPictureTagsByPictureIdsTask extends Task
         $columns->push(PictureTagsColumnsEnum::$tId)
             ->push(PictureTagsColumnsEnum::$tPICTURE_ID)
             ->push(PictureTagsColumnsEnum::$tTAG_ID)
-            ->push(SprTagsColumnsEnum::$tHIDDEN)
-            ->push(SprTagsColumnsEnum::$tHIDDEN_VK);
+            ->push(SprTagsColumnsEnum::$tHIDDEN);
         if ($locale === LangEnum::EN) {
             $columns->push(SprTagsColumnsEnum::$tNAME_EN . ' as name');
             $columns->push(SprTagsColumnsEnum::$tSLUG_EN . ' as seo');

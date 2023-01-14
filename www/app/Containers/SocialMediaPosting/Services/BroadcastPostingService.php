@@ -2,11 +2,15 @@
 
 namespace App\Containers\SocialMediaPosting\Services;
 
+use App\Containers\Picture\Exceptions\NotFoundPicture;
 use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Picture\Tasks\Picture\GetPictureIdForPostingTask;
+use App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException;
 use App\Containers\SocialMediaPosting\Tasks\CreateSocialMediaPostingItemTask;
 use App\Containers\Tag\Services\TagsService;
 use App\Containers\Vk\Services\VkWallPostingStrategy;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Prettus\Repository\Exceptions\RepositoryException;
 
 /**
  * @see \App\Containers\SocialMediaPosting\Tests\Feature\Services\BroadcastPostingServiceTest
@@ -33,9 +37,10 @@ class BroadcastPostingService
 
     /**
      * @return void
-     * @throws \App\Containers\Picture\Exceptions\NotFoundPicture
-     * @throws \App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws NotFoundPicture
+     * @throws NotFoundPictureIdForPostingException
+     * @throws BindingResolutionException
+     * @throws RepositoryException
      */
     public function broadcast(): void
     {
