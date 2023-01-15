@@ -28,22 +28,13 @@ class GetTagBySeoNameTask extends Task
      */
     public function run(string $tagSeoName, string $locale): ?array
     {
-        $columns = new Collection();
-        $columns->push(SprTagsColumnsEnum::ID);
-        if ($locale === LangEnum::EN) {
-            $columns->push(SprTagsColumnsEnum::NAME_EN . ' as name');
-            $columns->push(SprTagsColumnsEnum::SLUG_EN . ' as seo');
-        } else {
-            $columns->push(SprTagsColumnsEnum::NAME);
-            $columns->push(SprTagsColumnsEnum::SEO);
-        }
         if ($locale === LangEnum::EN) {
             $this->repository->pushCriteria(new WhereTagSlugEnCriteria($tagSeoName));
         }
         if ($locale === LangEnum::RU) {
             $this->repository->pushCriteria(new WhereTagSlugRuCriteria($tagSeoName));
         }
-        $result = $this->repository->first($columns->toArray());
+        $result = $this->repository->first();
         if (!$result) {
             return null;
         }

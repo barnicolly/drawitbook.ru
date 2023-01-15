@@ -26,6 +26,11 @@ class ArtHttpControllerTest extends TestCase
         $this->app->setLocale($locale);
         [$picture, $file] = $this->createPictureWithFile();
 
+        [$pictureForPopularTag] = $this->createPictureWithFile();
+        $tagPopular = $this->createTag();
+        $tagPopular->flag(FlagsEnum::TAG_IS_POPULAR);
+        $this->createPictureTag($pictureForPopularTag, $tagPopular);
+
         $tagHidden = $this->createTag();
         $tagHidden->flag(FlagsEnum::TAG_HIDDEN);
         $this->createPictureTag($picture, $tagHidden);

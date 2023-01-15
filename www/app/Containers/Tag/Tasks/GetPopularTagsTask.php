@@ -8,7 +8,6 @@ use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tasks\Task;
-use Illuminate\Support\Collection;
 
 class GetPopularTagsTask extends Task
 {
@@ -27,18 +26,16 @@ class GetPopularTagsTask extends Task
      */
     public function run(string $locale): array
     {
-        $columns = new Collection();
-        if ($locale === LangEnum::EN) {
-            $columns->push(SprTagsColumnsEnum::NAME_EN . ' as name');
-            $columns->push(SprTagsColumnsEnum::SLUG_EN . ' as seo');
-        } else {
-            $columns->push(SprTagsColumnsEnum::NAME);
-            $columns->push(SprTagsColumnsEnum::SEO);
-        }
         if ($locale === LangEnum::EN) {
             $this->repository->pushCriteria(new WhereTagSlugEnIsNotNullCriteria());
         }
-        return $this->repository->flagged(FlagsEnum::TAG_IS_POPULAR)->get($columns->toArray())->toArray();
+        $result = $this->repository->flagged(FlagsEnum::TAG_IS_POPULAR)->get()->toArray();
+        if ($result) {
+            foreach ($result as $index => $item) {
+                $result[$index]['name'] = $item['seo_lang']->current->name;
+            }
+        }
+        return $result;
     }
 }
 

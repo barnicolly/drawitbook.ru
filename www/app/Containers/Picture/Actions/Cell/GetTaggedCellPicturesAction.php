@@ -68,13 +68,14 @@ class GetTaggedCellPicturesAction extends Action
                 LangEnum::fromValue($locale)
             );
         }
+        $tagName = $tagInfo['seo_lang']->current->name;
         $alternateLinks = $this->formCellPageAlternativeLocaleLinksTask->run($locale, $tag, $tagInfo['id']);
         $viewData['leftArtsText'] = $leftArtsText ?? null;
-        $viewData['tag'] = $tagInfo;
+        $viewData['tagName'] = $tagName;
         $viewData['alternateLinks'] = count($alternateLinks) > 1 ? $alternateLinks : [];
         [$title, $description] = $this->seoService->formCellTaggedTitleAndDescription(
             $viewData['countRelatedArts'],
-            $tagInfo['name']
+            $tagName
         );
         $pageMetaDto = new PageMetaDto(title: $title, description: $description);
         $firstArt = Arr::first($viewData['arts']);
@@ -91,7 +92,7 @@ class GetTaggedCellPicturesAction extends Action
         $breadCrumbs->push(
             new BreadcrumbDto(title: __('breadcrumbs.pixel_arts'), url: $this->routeService->getRouteArtsCell())
         );
-        $breadCrumbs->push(new BreadcrumbDto(title: Str::ucfirst($tagInfo['name'])));
+        $breadCrumbs->push(new BreadcrumbDto(title: Str::ucfirst($tagName)));
         $viewData['breadcrumbs'] = $breadCrumbs;
         return [$viewData, $pageMetaDto];
     }
