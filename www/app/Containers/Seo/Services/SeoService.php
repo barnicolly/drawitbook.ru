@@ -3,6 +3,7 @@
 namespace App\Containers\Seo\Services;
 
 use App\Containers\Tag\Services\TagsService;
+use App\Containers\Tag\Tasks\GetTagsByIdsWithFlagsTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 
@@ -65,8 +66,23 @@ class SeoService
 
     public function setArtsAlt(array $arts): array
     {
-        foreach ($arts as $index => $art) {
-            $arts[$index] = $this->setArtAlt($art);
+        $tagIds = [];
+        foreach ($arts as $art) {
+            if (!empty($art['tags'])) {
+                $artTagIds = array_column($art['tags'], 'tag_id');
+                $tagIds = array_merge($tagIds, $artTagIds);
+            }
+        }
+        $tagIds = array_unique($tagIds);
+        if (!empty($tagIds)) {
+            $tags = app(GetTagsByIdsWithFlagsTask::class)->run($tagIds);
+            foreach ($arts as $index => $art) {
+                foreach ($art['tags'] as $indexTag => $tag) {
+                    $tagId = $tag['tag_id'];
+                    $art['tags'][$indexTag]['flags'] = $tags[$tagId]['flags'] ?? [];
+                }
+                $arts[$index] = $this->setArtAlt($art);
+            }
         }
         return $arts;
     }

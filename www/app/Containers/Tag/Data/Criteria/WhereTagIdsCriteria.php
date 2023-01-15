@@ -6,11 +6,17 @@ use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Ship\Parents\Criterias\Criteria;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
-class WhereTagNotHiddenCriteria extends Criteria
+class WhereTagIdsCriteria extends Criteria
 {
+    private array $tagIds;
+
+    public function __construct(array $tagIds)
+    {
+        $this->tagIds = $tagIds;
+    }
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->where(SprTagsColumnsEnum::$tHIDDEN, '=', 0);
+        return $model->whereIn(SprTagsColumnsEnum::$tId, $this->tagIds);
     }
 }

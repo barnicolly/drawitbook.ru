@@ -15,7 +15,6 @@ use Spatie\ModelFlags\Models\Concerns\HasFlags;
  * @property int $id
  * @property string $name
  * @property string $name_en
- * @property int $hidden
  * @property string $seo
  * @property string $slug_en
  *

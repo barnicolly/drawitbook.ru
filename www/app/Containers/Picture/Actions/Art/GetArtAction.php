@@ -9,10 +9,13 @@ use App\Containers\Seo\Data\Dto\ShareImageDto;
 use App\Containers\Seo\Services\SeoService;
 use App\Containers\Tag\Actions\GetPopularTagsAction;
 use App\Containers\Tag\Services\TagsService;
+use App\Containers\Tag\Tasks\GetTagsByIdsWithFlagsTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Dto\PageMetaDto;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Route\RouteService;
+use Prettus\Repository\Exceptions\RepositoryException;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetArtAction extends Action
 {
@@ -56,14 +59,14 @@ class GetArtAction extends Action
      * @param int $artId
      * @return array
      * @throws NotFoundPicture
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
-     * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
+     * @throws RepositoryException
+     * @throws UnknownProperties
      */
     public function run(int $artId): array
     {
         $art = $this->artsService->getById($artId);
         $locale = app()->getLocale();
-        $artTags = $this->getPictureTagsByPictureIdsTask->run([$artId], false, $locale);
+        $artTags = $this->getPictureTagsByPictureIdsTask->run([$artId], true, $locale);
         $art['tags'] = $this->prepareArtTags($artTags);
         $art = $this->seoService->setArtAlt($art);
         $alternateLinks = $this->getAlternateLinks($artId);
@@ -81,9 +84,9 @@ class GetArtAction extends Action
             height:       $image['height']
         );
         $pageMetaDto = new PageMetaDto(
-            title: $title,
+            title:       $title,
             description: $description,
-            shareImage: $shareImage
+            shareImage:  $shareImage
         );
         return [$viewData, $pageMetaDto];
     }
@@ -104,6 +107,14 @@ class GetArtAction extends Action
 
     private function prepareArtTags(array $artTags): array
     {
+        $tagIds = array_column($artTags, 'tag_id');
+        if (!empty($tagIds)) {
+            $tags = app(GetTagsByIdsWithFlagsTask::class)->run($tagIds);
+            foreach ($artTags as $indexTag => $tag) {
+                $tagId = $tag['tag_id'];
+                $artTags[$indexTag]['flags'] = $tags[$tagId]['flags'] ?? [];
+            }
+        }
         return $this->tagsService->setLinkOnTags($artTags);
     }
 

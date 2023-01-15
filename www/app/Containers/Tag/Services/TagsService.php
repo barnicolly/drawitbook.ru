@@ -4,6 +4,9 @@ namespace App\Containers\Tag\Services;
 
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsByPictureIdsTask;
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsNamesWithoutHiddenVkByPictureIdTask;
+use App\Containers\Tag\Enums\SprTagsColumnsEnum;
+use App\Containers\Tag\Tasks\GetTagsByIdsWithFlagsTask;
+use App\Ship\Enums\FlagsEnum;
 use App\Ship\Services\Route\RouteService;
 
 class TagsService
@@ -41,24 +44,35 @@ class TagsService
 
     public function extractNotHiddenTagNamesFromArt(array $art): array
     {
-        $tags = [];
-        foreach ($art['tags'] as $tag) {
-            if ($tag['hidden'] === 0) {
-                $tags[] = mbUcfirst($tag['name']);
+        $result = [];
+        if (!empty($art['tags'])) {
+            foreach ($art['tags'] as $tag) {
+                if (!in_array(FlagsEnum::TAG_HIDDEN, $tag['flags'], true)) {
+                    $result[] = $tag[SprTagsColumnsEnum::NAME];
+                }
             }
         }
-        return $tags;
+        return $result;
     }
 
+    /**
+     * @param array $artTags
+     * @return array{array,array}
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     */
     public function separateTagsForHiddenAndShowIds(array $artTags): array
     {
         $hidden = [];
         $shown = [];
-        foreach ($artTags as $tag) {
-            if ($tag['hidden'] === 1) {
-                $hidden[] = $tag['tag_id'];
-            } else {
-                $shown[] = $tag['tag_id'];
+        $tagIds = array_column($artTags, 'tag_id');
+        if (!empty($tagIds)) {
+            $tags = app(GetTagsByIdsWithFlagsTask::class)->run($tagIds);
+            foreach ($tags as $tag) {
+                if (in_array(FlagsEnum::TAG_HIDDEN, $tag['flags'], true)) {
+                    $hidden[] = $tag[SprTagsColumnsEnum::ID];
+                } else {
+                    $shown[] = $tag[SprTagsColumnsEnum::ID];
+                }
             }
         }
         return [$shown, $hidden];

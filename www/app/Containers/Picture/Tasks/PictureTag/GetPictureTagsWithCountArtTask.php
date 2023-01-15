@@ -3,11 +3,12 @@
 namespace App\Containers\Picture\Tasks\PictureTag;
 
 use App\Containers\Picture\Data\Criteria\PictureTag\JoinTagCriteria;
+use App\Containers\Picture\Data\Criteria\PictureTag\WhereNotTagIdsCriteria;
 use App\Containers\Picture\Data\Repositories\PictureTagRepository;
 use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
-use App\Containers\Tag\Data\Criteria\WhereTagNotHiddenCriteria;
 use App\Containers\Tag\Data\Criteria\WhereTagSlugEnIsNotNullCriteria;
 use App\Containers\Tag\Enums\SprTagsColumnsEnum;
+use App\Containers\Tag\Tasks\GetHiddenTagsIdsTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
@@ -17,10 +18,12 @@ class GetPictureTagsWithCountArtTask extends Task
 {
 
     protected PictureTagRepository $repository;
+    private GetHiddenTagsIdsTask $getHiddenTagsIdsTask;
 
-    public function __construct(PictureTagRepository $repository)
+    public function __construct(PictureTagRepository $repository, GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
     {
         $this->repository = $repository;
+        $this->getHiddenTagsIdsTask = $getHiddenTagsIdsTask;
     }
 
     /**
@@ -31,6 +34,8 @@ class GetPictureTagsWithCountArtTask extends Task
      */
     public function run(int $limit, string $locale): array
     {
+        $tagsHiddenIds = $this->getHiddenTagsIdsTask->run();
+
         $columns = new Collection();
         $columns->push(DB::raw('count("' . PictureTagsColumnsEnum::$tId . '") as count'));
         if ($locale === LangEnum::EN) {
@@ -48,7 +53,7 @@ class GetPictureTagsWithCountArtTask extends Task
                 ->groupBy(SprTagsColumnsEnum::$tId)
                 ->orderBy('count', 'desc');
         });
-        return $this->repository->pushCriteria(new WhereTagNotHiddenCriteria())
+        return $this->repository->pushCriteria(new WhereNotTagIdsCriteria($tagsHiddenIds))
             ->pushCriteria(new JoinTagCriteria())
             ->take($limit)
             ->get($columns->toArray())->toArray();

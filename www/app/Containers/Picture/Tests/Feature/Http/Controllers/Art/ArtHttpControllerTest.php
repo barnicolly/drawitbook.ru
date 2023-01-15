@@ -3,7 +3,9 @@
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Art;
 
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
+use App\Containers\Tag\Tests\Traits\CreateTagTrait;
 use App\Containers\Translation\Enums\LangEnum;
+use App\Ship\Enums\FlagsEnum;
 use App\Ship\Services\File\FileService;
 use App\Ship\Parents\Tests\TestCase;
 
@@ -12,7 +14,7 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class ArtHttpControllerTest extends TestCase
 {
-    use CreatePictureWithRelationsTrait;
+    use CreatePictureWithRelationsTrait, CreateTagTrait;
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
@@ -23,6 +25,14 @@ class ArtHttpControllerTest extends TestCase
     {
         $this->app->setLocale($locale);
         [$picture, $file] = $this->createPictureWithFile();
+
+        $tagHidden = $this->createTag();
+        $tagHidden->flag(FlagsEnum::TAG_HIDDEN);
+        $this->createPictureTag($picture, $tagHidden);
+
+        $tagNotHidden = $this->createTag();
+        $this->createPictureTag($picture, $tagNotHidden);
+
         $mock = $this->createMock(FileService::class);
         $mock->method('formArtUrlPath')
             ->willReturn($file->path);
