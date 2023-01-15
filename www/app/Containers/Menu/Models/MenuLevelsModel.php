@@ -27,26 +27,26 @@ class MenuLevelsModel extends CoreModel
     {
         $query = self::query();
         $select = [
-            MenuLevelsColumnsEnum::$tId,
-            MenuLevelsColumnsEnum::$tPARENT_LEVEL_ID,
-            MenuLevelsColumnsEnum::$tCOLUMN,
+            MenuLevelsColumnsEnum::tId,
+            MenuLevelsColumnsEnum::tPARENT_LEVEL_ID,
+            MenuLevelsColumnsEnum::tCOLUMN,
         ];
         if ($locale === LangEnum::EN) {
             $select = array_merge(
                 $select,
                 [
-                    SprTagsColumnsEnum::$tNAME_EN . ' as name',
-                    SprTagsColumnsEnum::$tSLUG_EN . ' as seo',
-                    MenuLevelsColumnsEnum::$tCUSTOM_NAME_EN . ' as customName',
+                    SprTagsColumnsEnum::tNAME_EN . ' as name',
+                    SprTagsColumnsEnum::tSLUG_EN . ' as seo',
+                    MenuLevelsColumnsEnum::tCUSTOM_NAME_EN . ' as customName',
                 ]
             );
         } else {
             $select = array_merge(
                 $select,
                 [
-                    SprTagsColumnsEnum::$tNAME,
-                    SprTagsColumnsEnum::$tSEO,
-                    MenuLevelsColumnsEnum::$tCUSTOM_NAME_RU . ' as customName',
+                    SprTagsColumnsEnum::tNAME,
+                    SprTagsColumnsEnum::tSEO,
+                    MenuLevelsColumnsEnum::tCUSTOM_NAME_RU . ' as customName',
                 ]
             );
         }
@@ -55,15 +55,15 @@ class MenuLevelsModel extends CoreModel
             ->where(
                 function ($query) use ($locale) {
                     if ($locale === LangEnum::EN) {
-                        $query->where(MenuLevelsColumnsEnum::$tSHOW_EN, 1);
+                        $query->where(MenuLevelsColumnsEnum::tSHOW_EN, 1);
                     }
                     if ($locale === LangEnum::RU) {
-                        $query->where(MenuLevelsColumnsEnum::$tSHOW_RU, 1);
+                        $query->where(MenuLevelsColumnsEnum::tSHOW_RU, 1);
                     }
                 }
             )
-            ->leftJoin(SprTagsColumnsEnum::TABlE, SprTagsColumnsEnum::$tId, '=', MenuLevelsColumnsEnum::$tSPR_TAG_ID)
-            ->orderBy(MenuLevelsColumnsEnum::$tPARENT_LEVEL_ID, 'asc')
+            ->leftJoin(SprTagsColumnsEnum::TABlE, SprTagsColumnsEnum::tId, '=', MenuLevelsColumnsEnum::tSPR_TAG_ID)
+            ->orderBy(MenuLevelsColumnsEnum::tPARENT_LEVEL_ID, 'asc')
             ->getQuery()
             ->get()
             ->toArray();

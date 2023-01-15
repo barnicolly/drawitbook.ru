@@ -18,7 +18,7 @@ class GetPictureIdForPostingTask extends Task
      */
     public function run(): int
     {
-        $pictureIds = PictureModel::flagged(FlagsEnum::PICTURE_IN_VK_POSTING)->select([PictureColumnsEnum::$tId])->get()->pluck(PictureColumnsEnum::ID)->toArray();
+        $pictureIds = PictureModel::flagged(FlagsEnum::PICTURE_IN_VK_POSTING)->select([PictureColumnsEnum::tId])->get()->pluck(PictureColumnsEnum::ID)->toArray();
         if (!blank($pictureIds)) {
             $pictureIdsString = implode(',', $pictureIds);
             //TODO-misha переписать на query;

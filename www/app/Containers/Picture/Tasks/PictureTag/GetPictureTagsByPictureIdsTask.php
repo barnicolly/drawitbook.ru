@@ -37,15 +37,15 @@ class GetPictureTagsByPictureIdsTask extends Task
     public function run(array $artIds, bool $withHidden, string $locale): array
     {
         $columns = new Collection();
-        $columns->push(PictureTagsColumnsEnum::$tId)
-            ->push(PictureTagsColumnsEnum::$tPICTURE_ID)
-            ->push(PictureTagsColumnsEnum::$tTAG_ID);
+        $columns->push(PictureTagsColumnsEnum::tId)
+            ->push(PictureTagsColumnsEnum::tPICTURE_ID)
+            ->push(PictureTagsColumnsEnum::tTAG_ID);
         if ($locale === LangEnum::EN) {
-            $columns->push(SprTagsColumnsEnum::$tNAME_EN . ' as name');
-            $columns->push(SprTagsColumnsEnum::$tSLUG_EN . ' as seo');
+            $columns->push(SprTagsColumnsEnum::tNAME_EN . ' as name');
+            $columns->push(SprTagsColumnsEnum::tSLUG_EN . ' as seo');
         } else {
-            $columns->push(SprTagsColumnsEnum::$tNAME);
-            $columns->push(SprTagsColumnsEnum::$tSEO);
+            $columns->push(SprTagsColumnsEnum::tNAME);
+            $columns->push(SprTagsColumnsEnum::tSEO);
         }
         if ($locale === LangEnum::EN) {
             $this->repository->pushCriteria(new WhereTagSlugEnIsNotNullCriteria());

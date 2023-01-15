@@ -11,6 +11,6 @@ class WhereTagSlugEnIsNotNullCriteria extends Criteria
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->whereNotNull(SprTagsColumnsEnum::$tSLUG_EN);
+        return $model->whereNotNull(SprTagsColumnsEnum::tSLUG_EN);
     }
 }

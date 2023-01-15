@@ -16,11 +16,11 @@ final class PictureExtensionsColumnsEnum extends Enum
     public const EXT = 'ext';
     public const MIME_TYPE = 'mime_type';
 
-    public static string $tId = self::TABlE . '.' . self::ID;
-    public static string $tPICTURE_ID = self::TABlE . '.' . self::PICTURE_ID;
-    public static string $tPATH = self::TABlE . '.' . self::PATH;
-    public static string $tWIDTH = self::TABlE . '.' . self::WIDTH;
-    public static string $tHEIGHT = self::TABlE . '.' . self::HEIGHT;
-    public static string $tEXT = self::TABlE . '.' . self::EXT;
-    public static string $tMIME_TYPE = self::TABlE . '.' . self::MIME_TYPE;
+    public const tId = self::TABlE . '.' . self::ID;
+    public const tPICTURE_ID = self::TABlE . '.' . self::PICTURE_ID;
+    public const tPATH = self::TABlE . '.' . self::PATH;
+    public const tWIDTH = self::TABlE . '.' . self::WIDTH;
+    public const tHEIGHT = self::TABlE . '.' . self::HEIGHT;
+    public const tEXT = self::TABlE . '.' . self::EXT;
+    public const tMIME_TYPE = self::TABlE . '.' . self::MIME_TYPE;
 }

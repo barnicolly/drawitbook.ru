@@ -12,6 +12,6 @@ class JoinPictureTagCriteria extends Criteria
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->join(PictureTagsColumnsEnum::TABlE, PictureColumnsEnum::$tId, '=', PictureTagsColumnsEnum::$tPICTURE_ID);
+        return $model->join(PictureTagsColumnsEnum::TABlE, PictureColumnsEnum::tId, '=', PictureTagsColumnsEnum::tPICTURE_ID);
     }
 }

@@ -14,9 +14,9 @@ final class SprTagsColumnsEnum extends Enum
     public const SEO = 'seo';
     public const SLUG_EN = 'slug_en';
 
-    public static string $tId = self::TABlE . '.' . self::ID;
-    public static string $tNAME = self::TABlE . '.' . self::NAME;
-    public static string $tNAME_EN = self::TABlE . '.' . self::NAME_EN;
-    public static string $tSEO = self::TABlE . '.' . self::SEO;
-    public static string $tSLUG_EN = self::TABlE . '.' . self::SLUG_EN;
+    public const tId = self::TABlE . '.' . self::ID;
+    public const tNAME = self::TABlE . '.' . self::NAME;
+    public const tNAME_EN = self::TABlE . '.' . self::NAME_EN;
+    public const tSEO = self::TABlE . '.' . self::SEO;
+    public const tSLUG_EN = self::TABlE . '.' . self::SLUG_EN;
 }

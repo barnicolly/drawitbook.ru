@@ -37,20 +37,20 @@ class GetPictureTagsWithCountArtTask extends Task
         $tagsHiddenIds = $this->getHiddenTagsIdsTask->run();
 
         $columns = new Collection();
-        $columns->push(DB::raw('count("' . PictureTagsColumnsEnum::$tId . '") as count'));
+        $columns->push(DB::raw('count("' . PictureTagsColumnsEnum::tId . '") as count'));
         if ($locale === LangEnum::EN) {
-            $columns->push(SprTagsColumnsEnum::$tNAME_EN . ' as name');
-            $columns->push(SprTagsColumnsEnum::$tSLUG_EN . ' as seo');
+            $columns->push(SprTagsColumnsEnum::tNAME_EN . ' as name');
+            $columns->push(SprTagsColumnsEnum::tSLUG_EN . ' as seo');
         } else {
-            $columns->push(SprTagsColumnsEnum::$tNAME);
-            $columns->push(SprTagsColumnsEnum::$tSEO);
+            $columns->push(SprTagsColumnsEnum::tNAME);
+            $columns->push(SprTagsColumnsEnum::tSEO);
         }
         if ($locale === LangEnum::EN) {
             $this->repository->pushCriteria(new WhereTagSlugEnIsNotNullCriteria());
         }
         $this->repository->scopeQuery(function ($model) {
             return $model
-                ->groupBy(SprTagsColumnsEnum::$tId)
+                ->groupBy(SprTagsColumnsEnum::tId)
                 ->orderBy('count', 'desc');
         });
         return $this->repository->pushCriteria(new WhereNotTagIdsCriteria($tagsHiddenIds))

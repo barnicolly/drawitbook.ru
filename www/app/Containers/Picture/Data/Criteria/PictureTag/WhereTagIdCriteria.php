@@ -17,6 +17,6 @@ class WhereTagIdCriteria extends Criteria
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->where(PictureTagsColumnsEnum::$tTAG_ID, '=', $this->tagId);
+        return $model->where(PictureTagsColumnsEnum::tTAG_ID, '=', $this->tagId);
     }
 }

@@ -11,6 +11,6 @@ final class SprClaimReasonColumnsEnum extends Enum
     public const ID = 'id';
     public const REASON = 'reason';
 
-    public static string $tId = self::TABlE . '.' . self::ID;
-    public static string $tREASON = self::TABlE . '.' . self::REASON;
+    public const tId = self::TABlE . '.' . self::ID;
+    public const tREASON = self::TABlE . '.' . self::REASON;
 }

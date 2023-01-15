@@ -83,9 +83,9 @@ class CreateSitemapService
         ];
         $result = $query
             ->select($select)
-            ->join(PictureTagsColumnsEnum::TABlE, PictureTagsColumnsEnum::$tTAG_ID, '=', SprTagsColumnsEnum::$tId)
-            ->join(PictureColumnsEnum::TABlE, PictureColumnsEnum::$tId, '=', PictureTagsColumnsEnum::$tPICTURE_ID)
-            ->groupBy(SprTagsColumnsEnum::$tId)
+            ->join(PictureTagsColumnsEnum::TABlE, PictureTagsColumnsEnum::tTAG_ID, '=', SprTagsColumnsEnum::tId)
+            ->join(PictureColumnsEnum::TABlE, PictureColumnsEnum::tId, '=', PictureTagsColumnsEnum::tPICTURE_ID)
+            ->groupBy(SprTagsColumnsEnum::tId)
             ->getQuery()
             ->get()
             ->toArray();

@@ -13,8 +13,8 @@ final class LikesColumnsEnum extends Enum
     public const USER_ID = 'user_id';
     public const PICTURE_ID = 'picture_id';
 
-    public static string $tId = self::TABlE . '.' . self::ID;
-    public static string $tIP = self::TABlE . '.' . self::IP;
-    public static string $tUSER_ID = self::TABlE . '.' . self::USER_ID;
-    public static string $tPICTURE_ID = self::TABlE . '.' . self::PICTURE_ID;
+    public const tId = self::TABlE . '.' . self::ID;
+    public const tIP = self::TABlE . '.' . self::IP;
+    public const tUSER_ID = self::TABlE . '.' . self::USER_ID;
+    public const tPICTURE_ID = self::TABlE . '.' . self::PICTURE_ID;
 }

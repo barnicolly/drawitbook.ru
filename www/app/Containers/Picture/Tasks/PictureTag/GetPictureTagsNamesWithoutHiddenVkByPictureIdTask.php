@@ -33,7 +33,7 @@ class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
         $this->repository->pushCriteria(new WherePictureIdCriteria($artId))
             ->pushCriteria(new WhereNotTagIdsCriteria($hiddenVkTagIds))
             ->pushCriteria(new JoinTagCriteria());
-        return $this->repository->get([SprTagsColumnsEnum::$tNAME])
+        return $this->repository->get([SprTagsColumnsEnum::tNAME])
             ->pluck(SprTagsColumnsEnum::NAME)
             ->toArray();
     }

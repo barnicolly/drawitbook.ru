@@ -17,6 +17,6 @@ class WhereNotTagIdsCriteria extends Criteria
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->whereNotIn(PictureTagsColumnsEnum::$tTAG_ID, $this->tagIds);
+        return $model->whereNotIn(PictureTagsColumnsEnum::tTAG_ID, $this->tagIds);
     }
 }

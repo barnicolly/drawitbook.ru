@@ -6,6 +6,6 @@ use BenSampo\Enum\Enum;
 
 final class LangEnum extends Enum
 {
-    const RU = 'ru';
-    const EN = 'en';
+    public const RU = 'ru';
+    public const EN = 'en';
 }

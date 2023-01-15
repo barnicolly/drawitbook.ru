@@ -17,6 +17,6 @@ class WhereTagIdsCriteria extends Criteria
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->whereIn(SprTagsColumnsEnum::$tId, $this->tagIds);
+        return $model->whereIn(SprTagsColumnsEnum::tId, $this->tagIds);
     }
 }

@@ -17,6 +17,6 @@ class WherePictureIdsCriteria extends Criteria
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->whereIn(PictureTagsColumnsEnum::$tPICTURE_ID, $this->pictureIds);
+        return $model->whereIn(PictureTagsColumnsEnum::tPICTURE_ID, $this->pictureIds);
     }
 }

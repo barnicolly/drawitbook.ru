@@ -17,6 +17,6 @@ class WhereTagSlugRuCriteria extends Criteria
 
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->where(SprTagsColumnsEnum::$tSEO, '=', $this->tagSeoName);
+        return $model->where(SprTagsColumnsEnum::tSEO, '=', $this->tagSeoName);
     }
 }

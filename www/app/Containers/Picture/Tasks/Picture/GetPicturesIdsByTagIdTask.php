@@ -28,7 +28,7 @@ class GetPicturesIdsByTagIdTask extends Task
     {
         $this->repository->pushCriteria(new JoinPictureTagCriteria())
             ->pushCriteria(new WhereTagIdCriteria($tagId));
-        return $this->repository->take($limit)->get([PictureColumnsEnum::$tId])->pluck(PictureColumnsEnum::ID)->toArray();
+        return $this->repository->take($limit)->get([PictureColumnsEnum::tId])->pluck(PictureColumnsEnum::ID)->toArray();
     }
 }
 

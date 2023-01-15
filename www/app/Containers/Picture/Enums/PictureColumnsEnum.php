@@ -12,5 +12,5 @@ final class PictureColumnsEnum extends Enum
     public const CREATED_AT = 'created_at';
     public const UPDATED_AT = 'updated_at';
 
-    public static string $tId = self::TABlE . '.' . self::ID;
+    public const tId = self::TABlE . '.' . self::ID;
 }
