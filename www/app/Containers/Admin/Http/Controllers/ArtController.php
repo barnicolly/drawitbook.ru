@@ -34,7 +34,7 @@ class ArtController extends HttpController
         try {
             $task->run($request->id);
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
         return response()->json();
@@ -54,7 +54,7 @@ class ArtController extends HttpController
         try {
             $task->run($request->id);
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
         return response()->json();
@@ -74,7 +74,7 @@ class ArtController extends HttpController
             $result = fractal()->item($resultDto, new GetSettingsModalTransformer());
             return response()->json($result);
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
     }
@@ -91,7 +91,7 @@ class ArtController extends HttpController
         try {
             $action->run($request->id, $request->album_id);
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
         return response()->json();
@@ -109,7 +109,7 @@ class ArtController extends HttpController
         try {
             $action->run($request->id, $request->album_id);
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
         return response()->json();

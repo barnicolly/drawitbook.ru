@@ -42,7 +42,7 @@ class VkPostingCommand extends Command
             $this->service->broadcast();
             $this->info('Success');
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             $this->error($e->getMessage());
         }
     }

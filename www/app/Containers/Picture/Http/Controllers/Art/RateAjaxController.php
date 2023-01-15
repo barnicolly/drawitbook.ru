@@ -25,7 +25,7 @@ class RateAjaxController extends HttpController
             $turnOn = $request->off !== 'true';
             $action->run($request->id, $turnOn);
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
         return response()->json();

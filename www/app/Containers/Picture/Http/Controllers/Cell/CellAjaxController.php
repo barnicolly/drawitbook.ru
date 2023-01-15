@@ -44,7 +44,7 @@ class CellAjaxController extends AjaxController
         } catch (NotFoundTagException|NotFoundRelativeArts $e) {
             throw new NotFoundHttpException();
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
     }

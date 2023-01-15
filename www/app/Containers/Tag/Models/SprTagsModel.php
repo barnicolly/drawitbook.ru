@@ -36,17 +36,16 @@ class SprTagsModel extends CoreModel
         $locale = app()->getLocale();
         $alternativeLang = $locale === LangEnum::RU ? LangEnum::EN : LangEnum::RU;
 
-        $current = $this->createTagSeoDto($locale);
-        $alternative = $this->createTagSeoDto($alternativeLang);
+        if ($locale === LangEnum::RU) {
+            $current = new TagSeoDto(locale: LangEnum::fromValue($locale), slug: $this->seo, name: $this->name);
+            $alternative = new TagSeoDto(locale: LangEnum::fromValue($alternativeLang), slug: $this->slug_en, name: $this->name_en);
+        } else {
+            $current = new TagSeoDto(locale: LangEnum::fromValue($locale), slug: $this->slug_en, name: $this->name_en);
+            $alternative = new TagSeoDto(locale: LangEnum::fromValue($alternativeLang), slug: $this->seo, name: $this->name);
+        }
+
 
         return new TagSeoLangDto(current: $current, alternative: $alternative);
-    }
-
-    private function createTagSeoDto(string $locale): TagSeoDto
-    {
-        $name = $locale === LangEnum::RU ? $this->name: $this->name_en;
-        $slug = $locale === LangEnum::RU ? $this->seo: $this->slug_en;
-        return new TagSeoDto(locale: LangEnum::fromValue($locale), slug: $slug, name: $name);
     }
 
     public $timestamps = false;

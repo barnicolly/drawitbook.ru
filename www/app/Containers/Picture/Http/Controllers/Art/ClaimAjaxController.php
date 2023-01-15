@@ -23,7 +23,7 @@ class ClaimAjaxController extends HttpController
         try {
             $action->run($request->id, $request->reason);
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
         return response()->json();

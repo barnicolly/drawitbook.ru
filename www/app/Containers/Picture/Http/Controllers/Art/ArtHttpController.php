@@ -32,7 +32,7 @@ class ArtHttpController extends HttpController
         } catch (NotFoundPicture $e) {
             return abort(404);
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
     }

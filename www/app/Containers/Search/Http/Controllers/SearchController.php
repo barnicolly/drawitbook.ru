@@ -36,7 +36,7 @@ class SearchController extends HttpController
                 ->setRobots('noindex, follow');
             return response()->view('search::index', $viewData);
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
     }
@@ -67,7 +67,7 @@ class SearchController extends HttpController
         } catch (NotFoundRelativeArts $e) {
             throw new NotFoundHttpException();
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
     }

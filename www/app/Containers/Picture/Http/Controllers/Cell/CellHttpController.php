@@ -40,7 +40,7 @@ class CellHttpController extends HttpController
                 ->setShareImage($pageMetaDto->shareImage);
             return response()->view('picture::cell.index', $viewData);
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
     }
@@ -77,7 +77,7 @@ class CellHttpController extends HttpController
         } catch (NotFoundRelativeArts $e) {
             return abort(404);
         } catch (Throwable $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
             abort(500);
         }
     }

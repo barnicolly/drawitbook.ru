@@ -8,10 +8,10 @@
 
 @section('layouts.landing.first_block')
     <h1 class="title form-group">
-        {{ __('pages.pixel_arts.landing.h1', ['tag' => $tag['name']]) }}
+        {{ __('pages.pixel_arts.landing.h1', ['tag' => $tagName]) }}
     </h1>
     <div class="form-group">
-        {!! __('pages.pixel_arts.landing.seo_text_begin', ['tag' => $tag['name']]) !!}
+        {!! __('pages.pixel_arts.landing.seo_text_begin', ['tag' => $tagName]) !!}
     </div>
 @endsection
 
@@ -20,5 +20,5 @@
 @endsection
 
 @section('layouts.landing.seo')
-    {!! __('pages.pixel_arts.landing.seo_text_end', ['tag' => $tag['name']]) !!}
+    {!! __('pages.pixel_arts.landing.seo_text_end', ['tag' => $tagName]) !!}
 @endsection
