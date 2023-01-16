@@ -13,11 +13,6 @@ class TagAjaxControllerTest extends TestCase
 
     private string $url = '/ru/tag/list';
 
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testGetListPopularTagsWithCountArtsOk(): void
     {
         $response = $this->ajaxGet($this->url);

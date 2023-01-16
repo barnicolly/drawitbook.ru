@@ -18,11 +18,6 @@ class GetSearchPageSliceTest extends TestCase
 
     use CreateTagTrait, CreatePictureWithRelationsTrait;
 
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testSearchSliceOk(): void
     {
         $this->app->setLocale(LangEnum::RU);

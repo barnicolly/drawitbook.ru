@@ -20,11 +20,6 @@ class CellHttpControllerTaggedTest extends TestCase
 
     use CreateTagTrait, CreatePictureWithRelationsTrait;
 
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      *
