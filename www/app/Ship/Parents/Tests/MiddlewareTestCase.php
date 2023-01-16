@@ -21,6 +21,10 @@ abstract class MiddlewareTestCase extends BaseTestCase
             return 'Ok';
         }
         )->middleware($middlewares);
+        Route::post($url, function () {
+            return 'Ok';
+        }
+        )->middleware($middlewares);
     }
 
     /**

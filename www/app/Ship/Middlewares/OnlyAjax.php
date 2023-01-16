@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class OnlyAjax implements MiddlewareContract
 {
-//    todo-misha закрыть тестом;
     /**
      * Handle an incoming request.
      *
