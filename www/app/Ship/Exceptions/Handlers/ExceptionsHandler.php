@@ -2,7 +2,11 @@
 
 namespace App\Ship\Exceptions\Handlers;
 
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as LaravelExceptionHandler;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class ExceptionsHandler extends LaravelExceptionHandler
@@ -29,10 +33,10 @@ class ExceptionsHandler extends LaravelExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param \Throwable $exception
+     * @param Throwable $exception
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function report(Throwable $exception)
     {
@@ -42,26 +46,31 @@ class ExceptionsHandler extends LaravelExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Throwable $exception
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     * @param Throwable $exception
+     * @return Response
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
-//            todo-misha убрать обработку exception в контроллер;
-            $url = $request->url();
-            if (mb_stripos($url, '/en/risunki-po-kletochkam') !== false) {
-                $redirectTo = str_ireplace('en/risunki-po-kletochkam', 'en/pixel-arts', $url);
-            } elseif (mb_stripos($url, '/ru/pixel-arts') !== false) {
-                $redirectTo = str_ireplace('ru/pixel-arts', 'ru/risunki-po-kletochkam', $url);
-            }
+        if ($exception instanceof NotFoundHttpException) {
+            $redirectTo = $this->checkKnownRedirect($request->url());
             if (!empty($redirectTo)) {
                 return redirect($redirectTo);
             }
         }
         return parent::render($request, $exception);
+    }
+
+    private function checkKnownRedirect(string $url): ?string
+    {
+        $redirectTo = null;
+        if (mb_stripos($url, '/en/risunki-po-kletochkam') !== false) {
+            $redirectTo = str_ireplace('en/risunki-po-kletochkam', 'en/pixel-arts', $url);
+        } elseif (mb_stripos($url, '/ru/pixel-arts') !== false) {
+            $redirectTo = str_ireplace('ru/pixel-arts', 'ru/risunki-po-kletochkam', $url);
+        }
+        return $redirectTo;
     }
 }
