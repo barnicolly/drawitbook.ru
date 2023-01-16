@@ -10,8 +10,6 @@ use App\Containers\Translation\Services\TranslationService;
 class SeoService
 {
 
-//    todo-misha вынести в контроллеры;
-
     public function formTitleAndDescriptionShowArt(int $artId): array
     {
         $title = 'Art #' . $artId . ' | Drawitbook.com';

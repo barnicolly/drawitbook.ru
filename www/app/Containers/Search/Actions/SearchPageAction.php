@@ -66,7 +66,6 @@ class SearchPageAction extends Action
             $countLeftArtsText = $this->translationService->getPluralForm($countLeftArts, LangEnum::fromValue($locale));
         }
         $viewData['leftArtsText'] = $countLeftArtsText ?? null;
-        //TODO-misha добавить генерацию title;
         [$title] = $this->formTitleAndDescriptionSearch();
         $pageMetaDto = new PageMetaDto(
             title: $title,
