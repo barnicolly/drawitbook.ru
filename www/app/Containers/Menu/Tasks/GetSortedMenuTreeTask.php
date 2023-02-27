@@ -1,41 +1,25 @@
 <?php
 
-namespace App\Containers\Menu\Services;
+namespace App\Containers\Menu\Tasks;
 
-use App\Containers\Menu\Models\MenuLevelsModel;
+use App\Ship\Parents\Tasks\Task;
 use App\Ship\Services\Route\RouteService;
-use Illuminate\Support\Facades\Cache;
 
-class MenuGroupService
+class GetSortedMenuTreeTask extends Task
 {
 
     private RouteService $routeService;
+    private GetAllMenuTask $getAllMenuTask;
 
-    public function __construct()
+    public function __construct(RouteService $routeService, GetAllMenuTask $getAllMenuTask)
     {
-        $this->routeService = app(RouteService::class);
+        $this->routeService = $routeService;
+        $this->getAllMenuTask = $getAllMenuTask;
     }
 
-    public function formCategoriesGroups(string $locale): array
+    public function run(string $locale): array
     {
-        $cacheName = $locale . '.menu.categories';
-        $results = Cache::get($cacheName);
-        if (!$results) {
-            $results = Cache::remember(
-                $cacheName,
-                config('cache.expiration'),
-                function () use ($locale) {
-                    return $this->getData($locale);
-                }
-            );
-        }
-        return $results;
-    }
-
-//    todo-misha вынести в таск и закрыть тестом;
-    private function getData(string $locale): array
-    {
-        $items = MenuLevelsModel::getAll($locale);
+        $items = $this->getAllMenuTask->run($locale);
         $relationItemIdWithColumn = $this->getRelationItemIdWithColumn($items);
         $result = [];
         foreach ($items as $item) {
@@ -84,3 +68,5 @@ class MenuGroupService
         return $result;
     }
 }
+
+
