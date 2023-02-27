@@ -13,6 +13,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use ReflectionClass;
 use Tests\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -67,6 +68,14 @@ abstract class TestCase extends BaseTestCase
     private function seedTranslatorLanguages(): void
     {
         app(DatabaseSeeder::class)->call(TranslatorLanguagesSeeder::class);
+    }
+
+    final protected function getProtectedProperty($object, string $property)
+    {
+        $reflection = new ReflectionClass($object);
+        $reflectionProperty = $reflection->getProperty($property);
+        $reflectionProperty->setAccessible(true);
+        return $reflectionProperty->getValue($object);
     }
 
 }
