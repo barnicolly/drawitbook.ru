@@ -35,7 +35,7 @@ class GetPaginatedCellArtsByTagTask extends Task
         if (!$relativeArtIds) {
             throw new NotFoundRelativeArts();
         }
-        $relativeArts = $this->artsService->getByIdsWithTags($relativeArtIds);
+        $relativeArts = $this->artsService->getByIdsWithRelations($relativeArtIds);
         $result['countRelatedArts'] = $countSearchResults;
         $result['arts'] = $relativeArts;
         $result['countLeftArts'] = $countLeftArts;

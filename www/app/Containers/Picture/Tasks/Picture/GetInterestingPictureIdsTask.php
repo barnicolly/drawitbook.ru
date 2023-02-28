@@ -4,10 +4,12 @@ namespace App\Containers\Picture\Tasks\Picture;
 
 use App\Containers\Picture\Data\Criteria\Picture\WherePictureExcludeIdCriteria;
 use App\Containers\Picture\Data\Repositories\PictureRepository;
+use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tasks\Task;
+use Prettus\Repository\Exceptions\RepositoryException;
 
-class GetInterestingPicturesTask extends Task
+class GetInterestingPictureIdsTask extends Task
 {
 
     protected PictureRepository $repository;
@@ -21,12 +23,16 @@ class GetInterestingPicturesTask extends Task
      * @param int $excludeId
      * @param int $limit
      * @return array
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(int $excludeId, int $limit): array
     {
         $this->repository->pushCriteria(new WherePictureExcludeIdCriteria($excludeId));
-        return $this->repository->take($limit)->with('flags')->flagged(FlagsEnum::PICTURE_COMMON)->get()->toArray();
+        return $this->repository->take($limit)
+            ->flagged(FlagsEnum::PICTURE_COMMON)
+            ->get()
+            ->pluck(PictureColumnsEnum::ID)
+            ->toArray();
     }
 }
 

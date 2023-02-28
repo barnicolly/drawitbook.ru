@@ -51,7 +51,7 @@ class SearchPageAction extends Action
             1
         );
         if (!$relativeArts) {
-            $viewData['popularArts'] = $this->artsService->getInterestingArts(0, 10);
+            $viewData['popularArts'] = $this->artsService->getInterestingArtsWithRelations(0, 10);
             $viewData['popularTags'] = $this->getPopularTagsAction->run();
         }
         $viewData['alternateLinks'] = $this->getAlternateLinks();

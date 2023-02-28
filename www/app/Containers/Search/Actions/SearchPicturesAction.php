@@ -49,7 +49,7 @@ class SearchPicturesAction extends Action
                 if (!$relativeArtIds) {
                     throw new NotFoundRelativeArts();
                 }
-                $relativeArts = $this->artsService->getByIdsWithTags($relativeArtIds);
+                $relativeArts = $this->artsService->getByIdsWithRelations($relativeArtIds);
             } else {
                 throw new NotFoundRelativeArts();
             }

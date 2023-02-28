@@ -2,10 +2,8 @@
 
 namespace App\Containers\Tag\Services;
 
-use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsByPictureIdsTask;
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsNamesWithoutHiddenVkByPictureIdTask;
 use App\Containers\Tag\Enums\SprTagsColumnsEnum;
-use App\Containers\Tag\Tasks\GetTagsByIdsWithFlagsTask;
 use App\Ship\Enums\FlagsEnum;
 use App\Ship\Services\Route\RouteService;
 
@@ -25,12 +23,6 @@ class TagsService
         return app(GetPictureTagsNamesWithoutHiddenVkByPictureIdTask::class)->run($artId);
     }
 
-    public function getTagsByArtIds(array $artIds, bool $withHidden): array
-    {
-        $locale = app()->getLocale();
-        return app(GetPictureTagsByPictureIdsTask::class)->run($artIds, $withHidden, $locale);
-    }
-
     public function setLinkOnTags(array $tags): array
     {
         foreach ($tags as $key => $tag) {
@@ -42,19 +34,6 @@ class TagsService
         return $tags;
     }
 
-    public function extractNotHiddenTagNamesFromArt(array $art): array
-    {
-        $result = [];
-        if (!empty($art['tags'])) {
-            foreach ($art['tags'] as $tag) {
-                if (!in_array(FlagsEnum::TAG_HIDDEN, $tag['flags'], true)) {
-                    $result[] = $tag[SprTagsColumnsEnum::NAME];
-                }
-            }
-        }
-        return $result;
-    }
-
     /**
      * @param array $artTags
      * @return array{array,array}
@@ -64,10 +43,8 @@ class TagsService
     {
         $hidden = [];
         $shown = [];
-        $tagIds = array_column($artTags, 'tag_id');
-        if (!empty($tagIds)) {
-            $tags = app(GetTagsByIdsWithFlagsTask::class)->run($tagIds);
-            foreach ($tags as $tag) {
+        if (!empty($artTags)) {
+            foreach ($artTags as $tag) {
                 if (in_array(FlagsEnum::TAG_HIDDEN, $tag['flags'], true)) {
                     $hidden[] = $tag[SprTagsColumnsEnum::ID];
                 } else {

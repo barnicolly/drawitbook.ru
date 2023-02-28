@@ -38,7 +38,7 @@ class GetCellPicturesIndexAction extends Action
      */
     public function run(): array
     {
-        $arts = $this->artsService->getInterestingArts(0, 25);
+        $arts = $this->artsService->getInterestingArtsWithRelations(0, 25);
         [$title, $description] = $this->seoService->formTitleAndDescriptionCellIndex();
         $pageMetaDto = new PageMetaDto(
             title: $title,

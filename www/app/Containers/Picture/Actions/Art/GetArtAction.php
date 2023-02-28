@@ -4,12 +4,9 @@ namespace App\Containers\Picture\Actions\Art;
 
 use App\Containers\Picture\Exceptions\NotFoundPicture;
 use App\Containers\Picture\Services\ArtsService;
-use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsByPictureIdsTask;
 use App\Containers\Seo\Data\Dto\ShareImageDto;
 use App\Containers\Seo\Services\SeoService;
 use App\Containers\Tag\Actions\GetPopularTagsAction;
-use App\Containers\Tag\Services\TagsService;
-use App\Containers\Tag\Tasks\GetTagsByIdsWithFlagsTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Dto\PageMetaDto;
 use App\Ship\Parents\Actions\Action;
@@ -24,35 +21,20 @@ class GetArtAction extends Action
     private GetPopularTagsAction $getPopularTagsAction;
     private GetRelativeArtsAction $getRelativeArtsAction;
     private SeoService $seoService;
-    private TagsService $tagsService;
     private RouteService $routeService;
-    private GetPictureTagsByPictureIdsTask $getPictureTagsByPictureIdsTask;
 
-    /**
-     * @param ArtsService $artsService
-     * @param GetPopularTagsAction $getPopularTagsAction
-     * @param GetRelativeArtsAction $getRelativeArtsAction
-     * @param SeoService $seoService
-     * @param TagsService $tagsService
-     * @param RouteService $routeService
-     * @param GetPictureTagsByPictureIdsTask $getPictureTagsByPictureIdsTask
-     */
     public function __construct(
         ArtsService $artsService,
         GetPopularTagsAction $getPopularTagsAction,
         GetRelativeArtsAction $getRelativeArtsAction,
         SeoService $seoService,
-        TagsService $tagsService,
         RouteService $routeService,
-        GetPictureTagsByPictureIdsTask $getPictureTagsByPictureIdsTask
     ) {
         $this->artsService = $artsService;
         $this->getPopularTagsAction = $getPopularTagsAction;
         $this->getRelativeArtsAction = $getRelativeArtsAction;
         $this->seoService = $seoService;
-        $this->tagsService = $tagsService;
         $this->routeService = $routeService;
-        $this->getPictureTagsByPictureIdsTask = $getPictureTagsByPictureIdsTask;
     }
 
     /**
@@ -64,15 +46,11 @@ class GetArtAction extends Action
      */
     public function run(int $artId): array
     {
-        $art = $this->artsService->getById($artId);
-        $locale = app()->getLocale();
-        $artTags = $this->getPictureTagsByPictureIdsTask->run([$artId], true, $locale);
-        $art['tags'] = $this->prepareArtTags($artTags);
-        $art = $this->seoService->setArtAlt($art);
+        $art = $this->artsService->getById($artId, true);
         $alternateLinks = $this->getAlternateLinks($artId);
         $viewData = [
             'art' => $art,
-            'arts' => $this->getRelativeArtsAction->run($artTags, $artId),
+            'arts' => $this->getRelativeArtsAction->run($art['tags'], $artId),
             'popularTags' => $this->getPopularTagsAction->run(),
             'alternateLinks' => $alternateLinks,
         ];
@@ -103,19 +81,6 @@ class GetArtAction extends Action
             'href' => $this->routeService->getRouteArt($id, true, LangEnum::EN),
         ];
         return $links;
-    }
-
-    private function prepareArtTags(array $artTags): array
-    {
-        $tagIds = array_column($artTags, 'tag_id');
-        if (!empty($tagIds)) {
-            $tags = app(GetTagsByIdsWithFlagsTask::class)->run($tagIds);
-            foreach ($artTags as $indexTag => $tag) {
-                $tagId = $tag['tag_id'];
-                $artTags[$indexTag]['flags'] = $tags[$tagId]['flags'] ?? [];
-            }
-        }
-        return $this->tagsService->setLinkOnTags($artTags);
     }
 
 }

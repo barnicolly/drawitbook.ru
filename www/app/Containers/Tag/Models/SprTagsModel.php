@@ -8,8 +8,10 @@ use App\Containers\Tag\Data\Factories\SprTagsModelFactory;
 use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Models\CoreModel;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\ModelFlags\Models\Concerns\HasFlags;
+use Spatie\ModelFlags\Models\Flag;
 
 /**
  * @property int $id
@@ -19,6 +21,7 @@ use Spatie\ModelFlags\Models\Concerns\HasFlags;
  * @property string $slug_en
  *
  * @property TagSeoLangDto $seo_lang
+ * @property Flag[] | Collection flags
  *
  * @method static SprTagsModelFactory factory()
  */
