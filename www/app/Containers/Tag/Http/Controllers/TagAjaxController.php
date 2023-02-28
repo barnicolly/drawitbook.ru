@@ -4,9 +4,8 @@ namespace App\Containers\Tag\Http\Controllers;
 
 use App\Containers\Tag\Actions\GetListPopularTagsWithCountArtsAction;
 use App\Containers\Tag\Data\Dto\GetListPopularTagsWithCountArtsResultDto;
-use App\Containers\Tag\Http\Requests\GetListPopularTagsWithCountArtsAjaxRequest;
-use App\Containers\Tag\Http\Transformers\GetListPopularTagsWithCountArtsTransformer;
 use App\Ship\Parents\Controllers\HttpController;
+use App\Ship\Parents\Resources\JsonResource;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
@@ -18,7 +17,6 @@ class TagAjaxController extends HttpController
      */
     public function getListPopularTagsWithCountArts(
         GetListPopularTagsWithCountArtsAction $action,
-        GetListPopularTagsWithCountArtsAjaxRequest $request
     ): JsonResponse {
         try {
             $resultDto = new GetListPopularTagsWithCountArtsResultDto(
@@ -26,8 +24,8 @@ class TagAjaxController extends HttpController
                     'cloudItems' => $action->run(),
                 ]
             );
-            $result = fractal()->item($resultDto, new GetListPopularTagsWithCountArtsTransformer());
-            return response()->json($result);
+            return JsonResource::make($resultDto)
+                ->response();
         } catch (Throwable $e) {
             abort(500);
         }
