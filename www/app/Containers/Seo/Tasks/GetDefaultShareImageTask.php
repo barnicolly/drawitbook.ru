@@ -30,12 +30,11 @@ class GetDefaultShareImageTask extends Task
                 config('cache.expiration'),
                 function () {
                     try {
-                        $picture = $this->artsService->getById(205);
-                        $image = $picture['images']['primary'];
+                        $picture = $this->artsService->getByIdWithFiles(205);
                         return new ShareImageDto(
-                            relativePath: getArtsFolder() . $image['path'],
-                            width:        $image['width'],
-                            height:       $image['height']
+                            relativePath: $picture->images->primary->relative_path,
+                            width:        $picture->images->primary->width,
+                            height:       $picture->images->primary->height
                         );
                     } catch (NotFoundPicture $e) {
                         return null;

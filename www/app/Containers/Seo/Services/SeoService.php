@@ -52,21 +52,6 @@ class SeoService
         return $category . ' ✎ ' . implode(' ➣ ', $parts) . '.';
     }
 
-    public function setArtAltForDto(Collection $tags): string
-    {
-        $result = __('common.pixel_arts');
-        if ($tags->isNotEmpty()) {
-            $localizedTags = $tags
-                ->map(function (SprTagsModel $tag) {
-                    $seoLang = $tag->seo_lang;
-                    return $seoLang->current->name;
-                })
-                ->toArray();
-            $result .= " ➣ " . implode(' ➣ ', $localizedTags);
-        }
-        return $result;
-    }
-
     public function formCategoryCountPostfix(int $countResults): string
     {
         $countPostfix = '';

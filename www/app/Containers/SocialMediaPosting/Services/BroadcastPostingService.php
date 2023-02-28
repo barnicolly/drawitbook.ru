@@ -11,6 +11,7 @@ use App\Containers\Tag\Services\TagsService;
 use App\Containers\Vk\Services\VkWallPostingStrategy;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Prettus\Repository\Exceptions\RepositoryException;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 /**
  * @see \App\Containers\SocialMediaPosting\Tests\Feature\Services\BroadcastPostingServiceTest
@@ -37,17 +38,18 @@ class BroadcastPostingService
 
     /**
      * @return void
+     * @throws BindingResolutionException
      * @throws NotFoundPicture
      * @throws NotFoundPictureIdForPostingException
-     * @throws BindingResolutionException
      * @throws RepositoryException
+     * @throws UnknownProperties
      */
     public function broadcast(): void
     {
         $pictureIdForPosting = $this->getPictureIdForPostingTask->run();
-        $picture = $this->artsService->getById($pictureIdForPosting);
+        $picture = $this->artsService->getByIdWithFiles($pictureIdForPosting);
         $tags = $this->tagsService->getNamesWithoutHiddenVkByArtId($pictureIdForPosting);
-        $pictureFsPath = $picture['images']['primary']['fs_path'];
+        $pictureFsPath = $picture->images->primary->fs_path;
         $postingStrategy = app()->make(VkWallPostingStrategy::class, ['tags' => $tags, 'artPath' => $pictureFsPath]);
         $postingStrategy->post();
         $this->createSocialMediaPostingItemTask->run($pictureIdForPosting);

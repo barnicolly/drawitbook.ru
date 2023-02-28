@@ -2,10 +2,15 @@
 
 namespace App\Containers\Picture\Services;
 
+use App\Containers\Picture\Data\Dto\ArtDto;
+use App\Containers\Picture\Data\PictureDtoBuilder;
 use App\Containers\Picture\Exceptions\NotFoundPicture;
-use App\Containers\Picture\Tasks\Picture\FormPictureDtoTask;
+use App\Containers\Picture\Tasks\Picture\FormPicturesDtoTask;
 use App\Containers\Picture\Tasks\Picture\GetInterestingPictureIdsTask;
+use App\Containers\Picture\Tasks\Picture\GetPictureByIdTask;
 use App\Containers\Picture\Tasks\Picture\GetPicturesByIdsTask;
+use Prettus\Repository\Exceptions\RepositoryException;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 //todo-misha разнести по таскам;
 class ArtsService
@@ -19,7 +24,9 @@ class ArtsService
 
     /**
      * @param int $id
+     * @param bool $withHiddenTags
      * @return array|null
+     * @throws NotFoundPicture
      */
     public function getById(int $id, bool $withHiddenTags = false): ?array
     {
@@ -31,10 +38,29 @@ class ArtsService
         return $art;
     }
 
+    /**
+     * @param int $id
+     * @return ArtDto
+     * @throws NotFoundPicture
+     * @throws RepositoryException
+     * @throws UnknownProperties
+     */
+    public function getByIdWithFiles(int $id): ArtDto
+    {
+        $art = app(GetPictureByIdTask::class)->run($id);
+        if (!$art) {
+            throw new NotFoundPicture();
+        }
+        $art->load(['extensions']);
+        return (new PictureDtoBuilder($art))
+            ->setFiles($art->extensions)
+            ->build();
+    }
+
     public function getByIdsWithRelations(array $ids, bool $withHiddenTags = false): array
     {
         $arts = app(GetPicturesByIdsTask::class)->run($ids, $withHiddenTags);
-        return app(FormPictureDtoTask::class)->run($arts);
+        return app(FormPicturesDtoTask::class)->run($arts);
     }
 }
 

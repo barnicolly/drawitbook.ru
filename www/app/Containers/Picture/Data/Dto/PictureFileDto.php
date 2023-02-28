@@ -13,6 +13,8 @@ class PictureFileDto extends Dto
 
     public string $path;
 
+    public string $relative_path;
+
     public string $mime_type;
 
     public string $fs_path;

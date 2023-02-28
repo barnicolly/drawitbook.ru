@@ -9,11 +9,19 @@ class ArtDto extends Dto
 
     public int $id;
 
-    public string $alt;
+    public ?string $alt;
 
-    public array $flags;
+    public ?array $flags;
 
-    public array $images;
+    /**
+     * @var PictureFilesDto|null $images
+     */
+    public ?PictureFilesDto $images;
 
-    public array $tags;
+//    /**
+//     * @var Collection<TagDto>|null $tags
+//     */
+//    public ?Collection $tags;
+
+    public ?array $tags;
 }
