@@ -2,19 +2,18 @@
 
 namespace App\Containers\Tag\Actions;
 
-use App\Containers\Tag\Services\TagsService;
+use App\Containers\Tag\Data\Dto\TagDto;
+use App\Containers\Tag\Models\SprTagsModel;
 use App\Containers\Tag\Tasks\GetPopularTagsTask;
 use App\Ship\Parents\Actions\Action;
 
 class GetPopularTagsAction extends Action
 {
 
-    private TagsService $tagsService;
     private GetPopularTagsTask $getPopularTagsTask;
 
-    public function __construct(TagsService $tagsService, GetPopularTagsTask $getPopularTagsTask)
+    public function __construct(GetPopularTagsTask $getPopularTagsTask)
     {
-        $this->tagsService = $tagsService;
         $this->getPopularTagsTask = $getPopularTagsTask;
     }
 
@@ -25,8 +24,9 @@ class GetPopularTagsAction extends Action
     public function run(): array
     {
         $locale = app()->getLocale();
-        $popularTags = $this->getPopularTagsTask->run($locale);
-        return $this->tagsService->setLinkOnTags($popularTags);
+        return $this->getPopularTagsTask->run($locale)
+            ->map(fn(SprTagsModel $tag) => TagDto::fromModel($tag, $locale)->toArray())
+            ->toArray();
     }
 
 }

@@ -4,9 +4,11 @@ namespace App\Containers\Tag\Tasks;
 
 use App\Containers\Tag\Data\Criteria\WhereTagSlugEnIsNotNullCriteria;
 use App\Containers\Tag\Data\Repositories\TagRepository;
+use App\Containers\Tag\Models\SprTagsModel;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tasks\Task;
+use Illuminate\Support\Collection;
 
 class GetPopularTagsTask extends Task
 {
@@ -20,21 +22,15 @@ class GetPopularTagsTask extends Task
 
     /**
      * @param string $locale
-     * @return array
+     * @return Collection<SprTagsModel>
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
-    public function run(string $locale): array
+    public function run(string $locale): Collection
     {
         if ($locale === LangEnum::EN) {
             $this->repository->pushCriteria(new WhereTagSlugEnIsNotNullCriteria());
         }
-        $result = $this->repository->flagged(FlagsEnum::TAG_IS_POPULAR)->get()->toArray();
-        if ($result) {
-            foreach ($result as $index => $item) {
-                $result[$index]['name'] = $item['seo_lang']->current->name;
-            }
-        }
-        return $result;
+        return $this->repository->flagged(FlagsEnum::TAG_IS_POPULAR)->get();
     }
 }
 

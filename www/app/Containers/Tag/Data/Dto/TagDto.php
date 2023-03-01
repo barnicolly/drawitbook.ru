@@ -39,13 +39,16 @@ class TagDto extends Dto
             $prefix = __('common.pixel_arts');
             $linkTitle = "{$prefix} «{$tagName}»";
         }
+        $flags = $model->relationLoaded('flags')
+            ? self::formFlags($model->flags)
+            : [];
         return new static(
             id: $model->id,
             name: $seoLang->current->name,
             seo: $seoLang->current->slug,
             link: $link,
             link_title: $linkTitle ?? null,
-            flags: self::formFlags($model->flags),
+            flags: $flags,
             seo_lang: $seoLang,
         );
     }
