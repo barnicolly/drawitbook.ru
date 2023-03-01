@@ -41,7 +41,6 @@ class CellHttpController extends HttpController
             return response()->view('picture::cell.index', $viewData);
         } catch (Throwable $e) {
             Log::error($e);
-            abort(500);
         }
     }
 
@@ -78,7 +77,6 @@ class CellHttpController extends HttpController
             return abort(404);
         } catch (Throwable $e) {
             Log::error($e);
-            abort(500);
         }
     }
 

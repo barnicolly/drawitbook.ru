@@ -18,6 +18,7 @@ class ContentHttpController extends HttpController
      */
     public function showMainPage(MainPageAction $action): Response
     {
+        $a=$b;
         [$viewData, $pageMetaDto] = $action->run();
         $this->setMeta($pageMetaDto->title, $pageMetaDto->description)
             ->setShareImage($pageMetaDto->shareImage);
