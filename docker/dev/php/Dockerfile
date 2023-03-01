@@ -1,4 +1,4 @@
-FROM dockerhub.ratnikovmikhail.ru/php:8.1.6-composer
+FROM dockerhub.ratnikovmikhail.ru/php:8.2.3-composer
 
 ARG USER_NAME
 ARG USER_ID

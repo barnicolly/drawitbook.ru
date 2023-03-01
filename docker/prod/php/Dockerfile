@@ -4,7 +4,7 @@ FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/vendor:${TAG} as vendo
 
 FROM dockerhub.ratnikovmikhail.ru/projects/drawitbook_com/static:${TAG} as assets
 
-FROM dockerhub.ratnikovmikhail.ru/php:8.1.6-composer
+FROM dockerhub.ratnikovmikhail.ru/php:8.2.3-composer
 RUN apk add --no-cache bash
 COPY docker/prod/php/opcache.ini /usr/local/etc/php/conf.d/
 
