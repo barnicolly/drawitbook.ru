@@ -23,20 +23,30 @@ class TagDto extends Dto
 
     public array $flags;
 
-    public static function fromModel(SprTagsModel $model): self
+    public TagSeoLangDto $seo_lang;
+
+    public static function fromModel(SprTagsModel $model, string $locale = null): self
     {
-        $seoLang = $model->seo_lang;
-        $link = app(RouteService::class)->getRouteArtsCellTagged($seoLang->current->slug);
-        $tagName = mbUcfirst($seoLang->current->name);
-        $prefix = __('common.pixel_arts');
-        $linkTitle = "{$prefix} «{$tagName}»";
+        $locale = $locale ?? app()->getLocale();
+        $seoLang = TagSeoLangDto::fromModel($model, $locale);
+        $link = $seoLang->current->slug
+        ? app(RouteService::class)->getRouteArtsCellTagged($seoLang->current->slug)
+        : null;
+        $tagName = $seoLang->current->name
+             ? mbUcfirst($seoLang->current->name)
+        : null;
+        if ($tagName) {
+            $prefix = __('common.pixel_arts');
+            $linkTitle = "{$prefix} «{$tagName}»";
+        }
         return new static(
             id: $model->id,
             name: $seoLang->current->name,
             seo: $seoLang->current->slug,
             link: $link,
-            link_title: $linkTitle,
+            link_title: $linkTitle ?? null,
             flags: self::formFlags($model->flags),
+            seo_lang: $seoLang,
         );
     }
 

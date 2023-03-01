@@ -4,7 +4,6 @@ namespace App\Containers\Tag\Tasks;
 
 use App\Containers\Tag\Data\Criteria\WhereTagSlugEnIsNotNullCriteria;
 use App\Containers\Tag\Data\Repositories\TagRepository;
-use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tasks\Task;

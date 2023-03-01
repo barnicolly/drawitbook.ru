@@ -24,13 +24,7 @@ class FindRedirectTagSlugByLocaleTask extends Task
     {
         $alternativeLang = $locale === LangEnum::RU ? LangEnum::EN : LangEnum::RU;
         $tagInfo = $this->getTagBySeoNameTask->run($tagSlug, $alternativeLang);
-        if (!empty($tagInfo)) {
-            $slug = $tagInfo['seo_lang']->current->slug;
-            if ($slug) {
-                return $slug;
-            }
-        }
-        return null;
+        return $tagInfo->seo_lang->alternative->slug ?? null;
     }
 }
 

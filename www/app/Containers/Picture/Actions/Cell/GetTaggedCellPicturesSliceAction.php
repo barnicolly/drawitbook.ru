@@ -50,7 +50,7 @@ class GetTaggedCellPicturesSliceAction extends Action
         if (!$tagInfo) {
             throw new NotFoundTagException();
         }
-        $viewData = $this->getPaginatedCellArtsByTagTask->run($tagInfo['id'], $pageNum);
+        $viewData = $this->getPaginatedCellArtsByTagTask->run($tagInfo->id, $pageNum);
         $isLastSlice = $viewData['isLastSlice'];
         if (!$isLastSlice) {
             $countLeftArtsText = $this->translationService->getPluralForm(

@@ -2,8 +2,7 @@
 
 namespace App\Containers\Picture\Tasks\Picture\Cell;
 
-use App\Containers\Tag\Tasks\FindTagByIdTask;
-use App\Containers\Translation\Enums\LangEnum;
+use App\Containers\Tag\Data\Dto\TagDto;
 use App\Ship\Parents\Tasks\Task;
 use App\Ship\Services\Route\RouteService;
 
@@ -11,29 +10,22 @@ class FormCellPageAlternativeLocaleLinksTask extends Task
 {
 
     private RouteService $routeService;
-    private FindTagByIdTask $findTagByIdTask;
 
-    public function __construct(RouteService $routeService, FindTagByIdTask $findTagByIdTask)
+    public function __construct(RouteService $routeService)
     {
         $this->routeService = $routeService;
-        $this->findTagByIdTask = $findTagByIdTask;
     }
 
-    public function run(string $locale, string $initSlug, int $tagId): array
+    public function run(TagDto $tag): array
     {
         $forFormAlternateLinks[] = [
-            'lang' => $locale,
-            'tag' => $initSlug,
+            'lang' => $tag->seo_lang->current->locale,
+            'tag' => $tag->seo_lang->current->slug,
         ];
-        $tagInfo = $this->findTagByIdTask->run($tagId);
-        $alternativeLang = $locale === LangEnum::RU ? LangEnum::EN : LangEnum::RU;
-        $slug = $alternativeLang === LangEnum::RU
-            ? $tagInfo['seo']
-            : $tagInfo['slug_en'];
-        if (!empty($slug)) {
+        if (!empty($tag->seo_lang->alternative->slug)) {
             $forFormAlternateLinks[] = [
-                'lang' => $alternativeLang,
-                'tag' => $slug,
+                'lang' => $tag->seo_lang->alternative->locale,
+                'tag' => $tag->seo_lang->alternative->slug,
             ];
             $alternateLinks = $this->getTaggedAlternateLinks($forFormAlternateLinks);
         } else {

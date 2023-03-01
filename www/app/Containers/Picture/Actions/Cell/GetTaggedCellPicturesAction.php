@@ -61,15 +61,15 @@ class GetTaggedCellPicturesAction extends Action
         if (!$tagInfo) {
             throw new NotFoundTagException();
         }
-        $viewData = $this->getPaginatedCellArtsByTagTask->run($tagInfo['id'], $pageNum);
+        $viewData = $this->getPaginatedCellArtsByTagTask->run($tagInfo->id, $pageNum);
         if (!$viewData['isLastSlice']) {
             $leftArtsText = $this->translationService->getPluralForm(
                 $viewData['countLeftArts'],
                 LangEnum::fromValue($locale)
             );
         }
-        $tagName = $tagInfo['seo_lang']->current->name;
-        $alternateLinks = $this->formCellPageAlternativeLocaleLinksTask->run($locale, $tag, $tagInfo['id']);
+        $tagName = $tagInfo->name;
+        $alternateLinks = $this->formCellPageAlternativeLocaleLinksTask->run($tagInfo);
         $viewData['leftArtsText'] = $leftArtsText ?? null;
         $viewData['tagName'] = $tagName;
         $viewData['alternateLinks'] = count($alternateLinks) > 1 ? $alternateLinks : [];

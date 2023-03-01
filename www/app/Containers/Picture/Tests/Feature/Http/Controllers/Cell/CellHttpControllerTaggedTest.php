@@ -5,6 +5,7 @@ namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Cell;
 use App\Containers\Picture\Http\Controllers\Cell\CellHttpController;
 use App\Containers\Picture\Models\PictureExtensionsModel;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
+use App\Containers\Tag\Data\Dto\TagDto;
 use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Tag\Tests\Traits\CreateTagTrait;
 use App\Containers\Translation\Enums\LangEnum;
@@ -18,7 +19,8 @@ use App\Ship\Parents\Tests\TestCase;
 class CellHttpControllerTaggedTest extends TestCase
 {
 
-    use CreateTagTrait, CreatePictureWithRelationsTrait;
+    use CreatePictureWithRelationsTrait;
+    use CreateTagTrait;
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
@@ -29,6 +31,8 @@ class CellHttpControllerTaggedTest extends TestCase
     {
         $this->app->setLocale($locale);
         $tag = $this->createTag();
+        $tagDto = TagDto::fromModel($tag, $locale);
+
         $pictures = new Collection();
         for ($index = 1; $index < 30; $index++) {
             [$picture] = $this->createPictureWithFile();
@@ -36,7 +40,7 @@ class CellHttpControllerTaggedTest extends TestCase
             $this->createPictureTag($picture, $tag);
         }
 
-        $response = $this->get($this->routeService->getRouteArtsCellTagged($tag->seo_lang->current->slug));
+        $response = $this->get($this->routeService->getRouteArtsCellTagged($tagDto->seo_lang->current->slug));
 
         $response->assertOk();
         /** @var PictureExtensionsModel $firstExtension */
@@ -57,8 +61,9 @@ class CellHttpControllerTaggedTest extends TestCase
     {
         $this->app->setLocale($locale);
         $tag = $this->createTag();
+        $tagDto = TagDto::fromModel($tag, $locale);
 
-        $response = $this->get($this->routeService->getRouteArtsCellTagged($tag->seo_lang->current->slug));
+        $response = $this->get($this->routeService->getRouteArtsCellTagged($tagDto->seo_lang->current->slug));
 
         $response->assertNotFound();
     }
@@ -72,11 +77,12 @@ class CellHttpControllerTaggedTest extends TestCase
     {
         $this->app->setLocale($locale);
         $tag = $this->createTag();
+        $tagDto = TagDto::fromModel($tag, $locale);
 
-        $url = $this->routeService->getRouteArtsCellTagged($tag->seo_lang->alternative->slug);
+        $url = $this->routeService->getRouteArtsCellTagged($tagDto->seo_lang->alternative->slug);
         $response = $this->get($url);
 
-        $expectedTag = $tag->seo_lang->current->slug;
+        $expectedTag = $tagDto->seo_lang->current->slug;
         $assetRedirect = $this->routeService->getRouteArtsCellTagged($expectedTag);
         $response->assertStatus(Response::HTTP_MOVED_PERMANENTLY);
         $response->assertRedirect($assetRedirect);
@@ -93,12 +99,13 @@ class CellHttpControllerTaggedTest extends TestCase
             ? 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7'
             : 'en-us,en;q=0.5';
         $tag = $this->createTag();
+        $tagDto = TagDto::fromModel($tag);
 
-        $url = $this->routeService->getRouteArtsCellTagged($tag->seo_lang->alternative->slug);
+        $url = $this->routeService->getRouteArtsCellTagged($tagDto->seo_lang->alternative->slug);
         $response = $this->withHeader('accept-language', $acceptLanguageHeader)
             ->get($url);
 
-        $expectedTag = $tag->seo_lang->current->slug;
+        $expectedTag = $tagDto->seo_lang->current->slug;
         $assetRedirect = $this->routeService->getRouteArtsCellTagged($expectedTag);
         $response->assertStatus(Response::HTTP_MOVED_PERMANENTLY);
         $response->assertRedirect($assetRedirect);
@@ -115,13 +122,14 @@ class CellHttpControllerTaggedTest extends TestCase
         $tag = $this->createTag();
         [$picture] = $this->createPictureWithFile();
         $this->createPictureTag($picture, $tag);
+        $tagDto = TagDto::fromModel($tag, $locale);
 
-        $url = $this->routeService->getRouteArtsCellTagged($tag->seo_lang->current->slug);
+        $url = $this->routeService->getRouteArtsCellTagged($tagDto->seo_lang->current->slug);
         $response = $this->get($url);
 
-        $alternativeLang = $tag->seo_lang->alternative->locale;
+        $alternativeLang = $tagDto->seo_lang->alternative->locale;
         $alternativeUrl = $this->routeService->getRouteArtsCellTagged(
-            $tag->seo_lang->alternative->slug,
+            $tagDto->seo_lang->alternative->slug,
             true,
             $alternativeLang
         );
