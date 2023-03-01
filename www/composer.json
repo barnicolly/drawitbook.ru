@@ -27,8 +27,8 @@
         "barryvdh/laravel-ide-helper": "^2.13",
         "fakerphp/faker": "^1.21",
         "mockery/mockery": "^1.5",
-        "nunomaduro/collision": "^6",
-        "phpunit/phpunit": "^9",
+        "nunomaduro/collision": "^7",
+        "phpunit/phpunit": "^10",
         "spatie/laravel-ignition": "^2.0"
     },
     "config": {
