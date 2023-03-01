@@ -10,11 +10,8 @@ use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Tag\Data\Dto\TagDto;
 use App\Containers\Tag\Models\SprTagsModel;
 use App\Ship\Parents\Tasks\Task;
-use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Collection;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
-
-use function App\Containers\Picture\Data\Dto\collect;
 
 class PictureDtoBuilder extends Task
 {
@@ -45,14 +42,7 @@ class PictureDtoBuilder extends Task
     public function setFiles(?Collection $files): self
     {
         foreach ($files as $file) {
-            $fileDto = new PictureFileDto(
-                path: $file->path,
-                fs_path: formArtFsPath($file->path),
-                relative_path: getArtsFolder() . $file->path,
-                height: $file->id,
-                width: $file->id,
-                mime_type: $file->mime_type,
-            );
+            $fileDto = PictureFileDto::fromModel($file);
             if ($file->ext === 'webp') {
                 $optimizedArt = $fileDto;
             } else {
@@ -94,21 +84,7 @@ class PictureDtoBuilder extends Task
     public function setTags(Collection $artTags): self
     {
         $this->tags = $artTags
-            ->map(function (SprTagsModel $artTag) {
-                $seoLang = $artTag->seo_lang;
-                $link = app(RouteService::class)->getRouteArtsCellTagged($seoLang->current->slug);
-                $tagName = mbUcfirst($seoLang->current->name);
-                $prefix = __('common.pixel_arts');
-                $linkTitle = "{$prefix} «{$tagName}»";
-                return new TagDto(
-                    id: $artTag->id,
-                    name: $seoLang->current->name,
-                    seo: $seoLang->current->slug,
-                    link: $link,
-                    link_title: $linkTitle,
-                    flags: $this->formFlags($artTag->flags),
-                );
-            })
+            ->map(fn (SprTagsModel $tag) => TagDto::fromModel($tag))
             ->toArray();
         $this->alt = $this->setArtAltForDto($this->tags);
         return $this;

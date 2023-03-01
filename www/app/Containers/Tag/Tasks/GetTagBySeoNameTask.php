@@ -5,10 +5,8 @@ namespace App\Containers\Tag\Tasks;
 use App\Containers\Tag\Data\Criteria\WhereTagSlugEnCriteria;
 use App\Containers\Tag\Data\Criteria\WhereTagSlugRuCriteria;
 use App\Containers\Tag\Data\Repositories\TagRepository;
-use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
-use Illuminate\Support\Collection;
 
 class GetTagBySeoNameTask extends Task
 {
@@ -35,6 +33,7 @@ class GetTagBySeoNameTask extends Task
             $this->repository->pushCriteria(new WhereTagSlugRuCriteria($tagSeoName));
         }
         $result = $this->repository->first();
+//    todo-misha dto;
         if (!$result) {
             return null;
         }
