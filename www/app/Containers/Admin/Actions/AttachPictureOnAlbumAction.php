@@ -3,7 +3,7 @@
 namespace App\Containers\Admin\Actions;
 
 use App\Containers\Picture\Services\ArtsService;
-use App\Containers\Tag\Services\TagsService;
+use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsNamesWithoutHiddenVkByPictureIdTask;
 use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Services\VkWallPostingService;
 use App\Containers\Vk\Tasks\VkAlbum\GetVkAlbumByIdTask;
@@ -15,32 +15,24 @@ class AttachPictureOnAlbumAction extends Action
     private PhotoService $apiPhotoService;
     private VkWallPostingService $apiPostingService;
     private ArtsService $artsService;
-    private TagsService $tagsService;
     private GetVkAlbumByIdTask $getVkAlbumByIdTask;
     private CreateVkAlbumPictureTask $createVkAlbumPictureTask;
+    private GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask;
 
-    /**
-     * @param PhotoService $apiPhotoService
-     * @param VkWallPostingService $apiPostingService
-     * @param ArtsService $artsService
-     * @param TagsService $tagsService
-     * @param GetVkAlbumByIdTask $getVkAlbumByIdTask
-     * @param CreateVkAlbumPictureTask $createVkAlbumPictureTask
-     */
     public function __construct(
         PhotoService $apiPhotoService,
         VkWallPostingService $apiPostingService,
         ArtsService $artsService,
-        TagsService $tagsService,
         GetVkAlbumByIdTask $getVkAlbumByIdTask,
-        CreateVkAlbumPictureTask $createVkAlbumPictureTask
+        CreateVkAlbumPictureTask $createVkAlbumPictureTask,
+        GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask
     ) {
         $this->apiPhotoService = $apiPhotoService;
         $this->apiPostingService = $apiPostingService;
         $this->artsService = $artsService;
-        $this->tagsService = $tagsService;
         $this->getVkAlbumByIdTask = $getVkAlbumByIdTask;
         $this->createVkAlbumPictureTask = $createVkAlbumPictureTask;
+        $this->getPictureTagsNamesWithoutHiddenVkByPictureIdTask = $getPictureTagsNamesWithoutHiddenVkByPictureIdTask;
     }
 
     /**
@@ -55,7 +47,7 @@ class AttachPictureOnAlbumAction extends Action
         $vkAlbum = $this->getVkAlbumByIdTask->run($vkAlbumId);
         $art = $this->artsService->getByIdWithFiles($artId);
         $artFsPath = $art->images->primary->fs_path;
-        $tags = $this->tagsService->getNamesWithoutHiddenVkByArtId($artId);
+        $tags = $this->getPictureTagsNamesWithoutHiddenVkByPictureIdTask->run($artId);
         $photoId = $this->postPhotoInAlbum($vkAlbum->album_id, $vkAlbum->share, $artFsPath, $tags);
         $this->createVkAlbumPictureTask->run($artId, $vkAlbum->id, $photoId);
     }
