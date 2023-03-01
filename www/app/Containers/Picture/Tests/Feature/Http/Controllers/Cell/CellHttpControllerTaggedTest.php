@@ -47,7 +47,7 @@ class CellHttpControllerTaggedTest extends TestCase
         $firstExtension = $pictures->first()->extensions()->first();
         $path = asset(getArtsFolder() . $firstExtension->path);
         $response->assertSee(
-            "<meta property=\"og:image\" content=\"$path\" />",
+            "<meta property=\"og:image\" content=\"$path\">",
             false
         );
     }

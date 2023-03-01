@@ -50,7 +50,7 @@ where picture.id in ($pictureIdsString)
 group by picture.id
 order by dayDiff DESC
 limit 1"
-                )
+                )->getValue(DB::connection()->getQueryGrammar())
             );
             if ($results) {
                 return $results[0]->id;

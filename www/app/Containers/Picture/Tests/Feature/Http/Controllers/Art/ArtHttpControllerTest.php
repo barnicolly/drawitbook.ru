@@ -57,7 +57,7 @@ class ArtHttpControllerTest extends TestCase
         );
         $path = asset(getArtsFolder() . $file->path);
         $response->assertSee(
-            "<meta property=\"og:image\" content=\"$path\" />",
+            "<meta property=\"og:image\" content=\"$path\">",
             false
         );
     }

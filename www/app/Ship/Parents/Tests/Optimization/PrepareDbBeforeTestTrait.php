@@ -13,13 +13,9 @@ trait PrepareDbBeforeTestTrait
         $excludeTables = [
             'migrations',
         ];
-        $nonEmptyTables = collect(
-            DB::select(
-                DB::raw(
-                    "SHOW TABLE STATUS WHERE Rows > 0;"
-                )
-            )
-        )
+        $expression = DB::raw('SHOW TABLE STATUS WHERE Rows > 0;');
+        
+        $nonEmptyTables = collect(DB::select($expression->getValue(DB::connection()->getQueryGrammar())))
             ->pluck('Name')
             ->toArray();
         if (!empty($nonEmptyTables)) {
