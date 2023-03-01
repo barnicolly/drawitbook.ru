@@ -9,7 +9,7 @@ class Error500Composer
 {
     use SeoTrait;
 
-    public function compose(View $view)
+    public function compose(View $view): View
     {
         $title = 'Произошла ошибка на стороне сервера';
         $viewData = [];

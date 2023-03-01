@@ -9,7 +9,7 @@ class Error404Composer
 {
     use SeoTrait;
 
-    public function compose(View $view)
+    public function compose(View $view): View
     {
         $viewData = [];
         $title = 'Страница не найдена или была удалена';

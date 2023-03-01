@@ -15,7 +15,7 @@ class HeaderComposer
         $this->getCachedMenuTreeAction = $getCachedMenuTreeAction;
     }
 
-    public function compose(View $view)
+    public function compose(View $view): void
     {
         $locale = app()->getLocale();
         $viewData = [
