@@ -2,8 +2,8 @@
 
 namespace App\Containers\Picture\Tasks\Picture\Cell;
 
+use App\Containers\Picture\Actions\Art\GetArtsByIdsAction;
 use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
-use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Search\Services\SearchService;
 use App\Ship\Parents\Tasks\Task;
 use App\Ship\Services\Paginator\PaginatorService;
@@ -11,18 +11,18 @@ use App\Ship\Services\Paginator\PaginatorService;
 class GetPaginatedCellArtsByTagTask extends Task
 {
 
-    private ArtsService $artsService;
     private SearchService $searchService;
     private PaginatorService $paginatorService;
+    private GetArtsByIdsAction $getArtsByIdsAction;
 
     public function __construct(
-        ArtsService $artsService,
         SearchService $searchService,
-        PaginatorService $paginatorService
+        PaginatorService $paginatorService,
+        GetArtsByIdsAction $getArtsByIdsAction,
     ) {
-        $this->artsService = $artsService;
         $this->searchService = $searchService;
         $this->paginatorService = $paginatorService;
+        $this->getArtsByIdsAction = $getArtsByIdsAction;
     }
 
     public function run(int $tagId, int $pageNum): array
@@ -35,7 +35,7 @@ class GetPaginatedCellArtsByTagTask extends Task
         if (!$relativeArtIds) {
             throw new NotFoundRelativeArts();
         }
-        $relativeArts = $this->artsService->getByIdsWithRelations($relativeArtIds);
+        $relativeArts = $this->getArtsByIdsAction->run($relativeArtIds);
         $result['countRelatedArts'] = $countSearchResults;
         $result['arts'] = $relativeArts;
         $result['countLeftArts'] = $countLeftArts;

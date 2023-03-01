@@ -2,7 +2,6 @@
 
 namespace App\Containers\Picture\Actions\Art;
 
-use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Picture\Tasks\Picture\GetInterestingPictureIdsTask;
 use App\Containers\Search\Services\SearchService;
 use App\Containers\Tag\Tasks\SeparateTagsForHiddenAndShowIdsTask;
@@ -13,20 +12,20 @@ class GetRelativeArtsAction extends Action
 {
 
     private SearchService $searchService;
-    private ArtsService $artsService;
     private GetInterestingPictureIdsTask $getInterestingPictureIdsTask;
     private SeparateTagsForHiddenAndShowIdsTask $separateTagsForHiddenAndShowIdsTask;
+    private GetArtsByIdsAction $getArtsByIdsAction;
 
     public function __construct(
         SearchService $searchService,
-        ArtsService $artsService,
         GetInterestingPictureIdsTask $getInterestingPictureIdsTask,
-        SeparateTagsForHiddenAndShowIdsTask $separateTagsForHiddenAndShowIdsTask
+        SeparateTagsForHiddenAndShowIdsTask $separateTagsForHiddenAndShowIdsTask,
+        GetArtsByIdsAction $getArtsByIdsAction,
     ) {
         $this->searchService = $searchService;
-        $this->artsService = $artsService;
         $this->getInterestingPictureIdsTask = $getInterestingPictureIdsTask;
         $this->separateTagsForHiddenAndShowIdsTask = $separateTagsForHiddenAndShowIdsTask;
+        $this->getArtsByIdsAction = $getArtsByIdsAction;
     }
 
     /**
@@ -46,7 +45,7 @@ class GetRelativeArtsAction extends Action
             $artIds = $this->getInterestingPictureIdsTask->run($artId, 10);
         }
         if (!empty($artIds)) {
-            $arts = $this->artsService->getByIdsWithRelations($artIds);
+            $arts = $this->getArtsByIdsAction->run($artIds);
         }
         return $arts;
     }

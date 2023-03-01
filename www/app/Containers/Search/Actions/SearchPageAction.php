@@ -2,7 +2,7 @@
 
 namespace App\Containers\Search\Actions;
 
-use App\Containers\Picture\Services\ArtsService;
+use App\Containers\Picture\Actions\Art\GetInterestingArtsAction;
 use App\Containers\Search\Data\Dto\SearchDto;
 use App\Containers\Seo\Tasks\GetDefaultShareImageTask;
 use App\Containers\Tag\Actions\GetPopularTagsAction;
@@ -18,24 +18,24 @@ class SearchPageAction extends Action
     private RouteService $routeService;
     private GetPopularTagsAction $getPopularTagsAction;
     private TranslationService $translationService;
-    private ArtsService $artsService;
     private SearchPicturesAction $searchPicturesAction;
     private GetDefaultShareImageTask $getDefaultShareImageTask;
+    private GetInterestingArtsAction $getInterestingArtsAction;
 
     public function __construct(
-        ArtsService $artsService,
         RouteService $routeService,
         TranslationService $translationService,
         GetPopularTagsAction $getPopularTagsAction,
         SearchPicturesAction $searchPicturesAction,
-        GetDefaultShareImageTask $getDefaultShareImageTask
+        GetDefaultShareImageTask $getDefaultShareImageTask,
+        GetInterestingArtsAction $getInterestingArtsAction
     ) {
         $this->routeService = $routeService;
         $this->getPopularTagsAction = $getPopularTagsAction;
         $this->translationService = $translationService;
-        $this->artsService = $artsService;
         $this->searchPicturesAction = $searchPicturesAction;
         $this->getDefaultShareImageTask = $getDefaultShareImageTask;
+        $this->getInterestingArtsAction = $getInterestingArtsAction;
     }
 
     /**
@@ -51,7 +51,7 @@ class SearchPageAction extends Action
             1
         );
         if (!$relativeArts) {
-            $viewData['popularArts'] = $this->artsService->getInterestingArtsWithRelations(0, 10);
+            $viewData['popularArts'] = $this->getInterestingArtsAction->run(0, 10);
             $viewData['popularTags'] = $this->getPopularTagsAction->run();
         }
         $viewData['alternateLinks'] = $this->getAlternateLinks();

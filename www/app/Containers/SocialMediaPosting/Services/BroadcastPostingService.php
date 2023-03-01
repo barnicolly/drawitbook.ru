@@ -2,8 +2,8 @@
 
 namespace App\Containers\SocialMediaPosting\Services;
 
+use App\Containers\Picture\Actions\Art\GetArtByIdWithFilesAction;
 use App\Containers\Picture\Exceptions\NotFoundPicture;
-use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Picture\Tasks\Picture\GetPictureIdForPostingTask;
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsNamesWithoutHiddenVkByPictureIdTask;
 use App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException;
@@ -19,21 +19,21 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 class BroadcastPostingService
 {
 
-    private ArtsService $artsService;
     private GetPictureIdForPostingTask $getPictureIdForPostingTask;
     private CreateSocialMediaPostingItemTask $createSocialMediaPostingItemTask;
     private GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask;
+    private GetArtByIdWithFilesAction $getArtByIdWithFilesAction;
 
     public function __construct(
-        ArtsService $artsService,
         GetPictureIdForPostingTask $getPictureIdForPostingTask,
         CreateSocialMediaPostingItemTask $createSocialMediaPostingItemTask,
-        GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask
+        GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask,
+        GetArtByIdWithFilesAction $getArtByIdWithFilesAction,
     ) {
-        $this->artsService = $artsService;
         $this->getPictureIdForPostingTask = $getPictureIdForPostingTask;
         $this->createSocialMediaPostingItemTask = $createSocialMediaPostingItemTask;
         $this->getPictureTagsNamesWithoutHiddenVkByPictureIdTask = $getPictureTagsNamesWithoutHiddenVkByPictureIdTask;
+        $this->getArtByIdWithFilesAction = $getArtByIdWithFilesAction;
     }
 
     /**
@@ -47,7 +47,7 @@ class BroadcastPostingService
     public function broadcast(): void
     {
         $pictureIdForPosting = $this->getPictureIdForPostingTask->run();
-        $picture = $this->artsService->getByIdWithFiles($pictureIdForPosting);
+        $picture = $this->getArtByIdWithFilesAction->run($pictureIdForPosting);
         $tags = $this->getPictureTagsNamesWithoutHiddenVkByPictureIdTask->run($pictureIdForPosting);
         $pictureFsPath = $picture->images->primary->fs_path;
         $postingStrategy = app()->make(VkWallPostingStrategy::class, ['tags' => $tags, 'artPath' => $pictureFsPath]);

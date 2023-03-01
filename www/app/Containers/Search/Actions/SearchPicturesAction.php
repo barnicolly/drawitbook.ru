@@ -2,8 +2,8 @@
 
 namespace App\Containers\Search\Actions;
 
+use App\Containers\Picture\Actions\Art\GetArtsByIdsAction;
 use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
-use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Search\Data\Dto\SearchDto;
 use App\Containers\Search\Services\SearchService;
 use App\Ship\Parents\Actions\Action;
@@ -11,18 +11,18 @@ use App\Ship\Services\Paginator\PaginatorService;
 
 class SearchPicturesAction extends Action
 {
-    private ArtsService $artsService;
     private SearchService $searchService;
     private PaginatorService $paginatorService;
+    private GetArtsByIdsAction $getArtsByIdsAction;
 
     public function __construct(
         SearchService $searchService,
         PaginatorService $paginatorService,
-        ArtsService $artsService,
+        GetArtsByIdsAction $getArtsByIdsAction,
     ) {
-        $this->artsService = $artsService;
         $this->searchService = $searchService;
         $this->paginatorService = $paginatorService;
+        $this->getArtsByIdsAction = $getArtsByIdsAction;
     }
 
     /**
@@ -49,7 +49,7 @@ class SearchPicturesAction extends Action
                 if (!$relativeArtIds) {
                     throw new NotFoundRelativeArts();
                 }
-                $relativeArts = $this->artsService->getByIdsWithRelations($relativeArtIds);
+                $relativeArts = $this->getArtsByIdsAction->run($relativeArtIds);
             } else {
                 throw new NotFoundRelativeArts();
             }

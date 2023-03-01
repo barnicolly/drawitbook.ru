@@ -3,7 +3,6 @@
 namespace App\Containers\Picture\Actions\Art;
 
 use App\Containers\Picture\Exceptions\NotFoundPicture;
-use App\Containers\Picture\Services\ArtsService;
 use App\Containers\Seo\Data\Dto\ShareImageDto;
 use App\Containers\Seo\Services\SeoService;
 use App\Containers\Tag\Actions\GetPopularTagsAction;
@@ -17,24 +16,24 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 class GetArtAction extends Action
 {
 
-    private ArtsService $artsService;
     private GetPopularTagsAction $getPopularTagsAction;
     private GetRelativeArtsAction $getRelativeArtsAction;
     private SeoService $seoService;
     private RouteService $routeService;
+    private GetArtByIdAction $getArtByIdAction;
 
     public function __construct(
-        ArtsService $artsService,
         GetPopularTagsAction $getPopularTagsAction,
         GetRelativeArtsAction $getRelativeArtsAction,
         SeoService $seoService,
         RouteService $routeService,
+        GetArtByIdAction $getArtByIdAction,
     ) {
-        $this->artsService = $artsService;
         $this->getPopularTagsAction = $getPopularTagsAction;
         $this->getRelativeArtsAction = $getRelativeArtsAction;
         $this->seoService = $seoService;
         $this->routeService = $routeService;
+        $this->getArtByIdAction = $getArtByIdAction;
     }
 
     /**
@@ -46,7 +45,7 @@ class GetArtAction extends Action
      */
     public function run(int $artId): array
     {
-        $art = $this->artsService->getById($artId, true);
+        $art = $this->getArtByIdAction->run($artId, true);
         $alternateLinks = $this->getAlternateLinks($artId);
         $viewData = [
             'art' => $art,

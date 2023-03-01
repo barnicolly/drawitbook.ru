@@ -2,7 +2,7 @@
 
 namespace App\Containers\Picture\Actions\Cell;
 
-use App\Containers\Picture\Services\ArtsService;
+use App\Containers\Picture\Actions\Art\GetInterestingArtsAction;
 use App\Containers\Seo\Data\Dto\BreadcrumbDto;
 use App\Containers\Seo\Services\SeoService;
 use App\Containers\Seo\Tasks\GetDefaultShareImageTask;
@@ -16,20 +16,20 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 class GetCellPicturesIndexAction extends Action
 {
     private SeoService $seoService;
-    private ArtsService $artsService;
     private RouteService $routeService;
     private GetDefaultShareImageTask $getDefaultShareImageTask;
+    private GetInterestingArtsAction $getInterestingArtsAction;
 
     public function __construct(
         SeoService $seoService,
-        ArtsService $artsService,
         RouteService $routeService,
-        GetDefaultShareImageTask $getDefaultShareImageTask
+        GetDefaultShareImageTask $getDefaultShareImageTask,
+        GetInterestingArtsAction $getInterestingArtsAction
     ) {
         $this->seoService = $seoService;
-        $this->artsService = $artsService;
         $this->routeService = $routeService;
         $this->getDefaultShareImageTask = $getDefaultShareImageTask;
+        $this->getInterestingArtsAction = $getInterestingArtsAction;
     }
 
     /**
@@ -38,7 +38,7 @@ class GetCellPicturesIndexAction extends Action
      */
     public function run(): array
     {
-        $arts = $this->artsService->getInterestingArtsWithRelations(0, 25);
+        $arts = $this->getInterestingArtsAction->run(0, 25);
         [$title, $description] = $this->seoService->formTitleAndDescriptionCellIndex();
         $pageMetaDto = new PageMetaDto(
             title: $title,

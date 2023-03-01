@@ -2,7 +2,7 @@
 
 namespace App\Containers\Admin\Actions;
 
-use App\Containers\Picture\Services\ArtsService;
+use App\Containers\Picture\Actions\Art\GetArtByIdWithFilesAction;
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsNamesWithoutHiddenVkByPictureIdTask;
 use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Services\VkWallPostingService;
@@ -14,25 +14,25 @@ class AttachPictureOnAlbumAction extends Action
 {
     private PhotoService $apiPhotoService;
     private VkWallPostingService $apiPostingService;
-    private ArtsService $artsService;
     private GetVkAlbumByIdTask $getVkAlbumByIdTask;
     private CreateVkAlbumPictureTask $createVkAlbumPictureTask;
     private GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask;
+    private GetArtByIdWithFilesAction $getArtByIdWithFilesAction;
 
     public function __construct(
         PhotoService $apiPhotoService,
         VkWallPostingService $apiPostingService,
-        ArtsService $artsService,
         GetVkAlbumByIdTask $getVkAlbumByIdTask,
         CreateVkAlbumPictureTask $createVkAlbumPictureTask,
-        GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask
+        GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask,
+        GetArtByIdWithFilesAction $getArtByIdWithFilesAction,
     ) {
         $this->apiPhotoService = $apiPhotoService;
         $this->apiPostingService = $apiPostingService;
-        $this->artsService = $artsService;
         $this->getVkAlbumByIdTask = $getVkAlbumByIdTask;
         $this->createVkAlbumPictureTask = $createVkAlbumPictureTask;
         $this->getPictureTagsNamesWithoutHiddenVkByPictureIdTask = $getPictureTagsNamesWithoutHiddenVkByPictureIdTask;
+        $this->getArtByIdWithFilesAction = $getArtByIdWithFilesAction;
     }
 
     /**
@@ -45,7 +45,7 @@ class AttachPictureOnAlbumAction extends Action
     public function run(int $artId, int $vkAlbumId): void
     {
         $vkAlbum = $this->getVkAlbumByIdTask->run($vkAlbumId);
-        $art = $this->artsService->getByIdWithFiles($artId);
+        $art = $this->getArtByIdWithFilesAction->run($artId);
         $artFsPath = $art->images->primary->fs_path;
         $tags = $this->getPictureTagsNamesWithoutHiddenVkByPictureIdTask->run($artId);
         $photoId = $this->postPhotoInAlbum($vkAlbum->album_id, $vkAlbum->share, $artFsPath, $tags);
