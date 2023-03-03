@@ -31,7 +31,7 @@ class CellAjaxController extends AjaxController
     ): JsonResponse {
         try {
             $pageNum = $request->page;
-            [$getCellTaggedResultDto, $isLastSlice] = $action->run($tag, $pageNum);
+            [$getCellTaggedResultDto, $isLastSlice] = $action->run($tag);
             $paginationMetaDto = new PaginationMetaDto(
                 [
                     'page' => $pageNum,

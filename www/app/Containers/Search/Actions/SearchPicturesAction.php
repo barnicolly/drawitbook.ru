@@ -3,63 +3,41 @@
 namespace App\Containers\Search\Actions;
 
 use App\Containers\Picture\Actions\Art\GetArtsByIdsAction;
-use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Search\Data\Dto\SearchDto;
 use App\Containers\Search\Services\SearchService;
+use App\Ship\Factories\PaginatorFactory;
 use App\Ship\Parents\Actions\Action;
-use App\Ship\Services\Paginator\PaginatorService;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchPicturesAction extends Action
 {
     private SearchService $searchService;
-    private PaginatorService $paginatorService;
     private GetArtsByIdsAction $getArtsByIdsAction;
 
     public function __construct(
         SearchService $searchService,
-        PaginatorService $paginatorService,
         GetArtsByIdsAction $getArtsByIdsAction,
     ) {
         $this->searchService = $searchService;
-        $this->paginatorService = $paginatorService;
         $this->getArtsByIdsAction = $getArtsByIdsAction;
     }
 
     /**
      * @param SearchDto $searchDto
-     * @param int $pageNum
-     * @return array{array, int, bool, int}
+     * @return LengthAwarePaginator
      */
-    public function run(SearchDto $searchDto, int $pageNum): array
+    public function run(SearchDto $searchDto): LengthAwarePaginator
     {
-        try {
-            $relativeArtIds = $this->searchService
-                ->setLimit(1000)
-                ->searchByQuery($searchDto->query);
-            if ($relativeArtIds) {
-                [
-                    $relativeArtIds,
-                    $countSearchResults,
-                    $isLastSlice,
-                    $countLeftArts,
-                ] = $this->paginatorService->formSlice(
-                    $relativeArtIds,
-                    $pageNum
-                );
-                if (!$relativeArtIds) {
-                    throw new NotFoundRelativeArts();
-                }
-                $relativeArts = $this->getArtsByIdsAction->run($relativeArtIds);
-            } else {
-                throw new NotFoundRelativeArts();
-            }
-        } catch (NotFoundRelativeArts $e) {
-            $relativeArts = [];
-            $countSearchResults = 0;
+        $relativeArtIds = $this->searchService
+            ->setLimit(1000)
+            ->searchByQuery($searchDto->query);
+        $paginator = PaginatorFactory::create(collect($relativeArtIds));
+        if ($paginator->isNotEmpty()) {
+            $relativeArtIds = $paginator->getCollection()->toArray();
+            $relativeArts = $this->getArtsByIdsAction->run($relativeArtIds);
+            $paginator = PaginatorFactory::createFromAnother($paginator, collect($relativeArts));
         }
-        $isLastSlice = $isLastSlice ?? false;
-        $countLeftArts = $countLeftArts ?? 0;
-        return [$relativeArts, $countSearchResults, $isLastSlice, $countLeftArts];
+        return $paginator;
     }
 
 }

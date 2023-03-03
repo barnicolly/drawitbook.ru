@@ -2,7 +2,6 @@
 
 namespace App\Containers\Search\Services;
 
-use App\Containers\Picture\Tasks\Picture\GetPicturesIdsByTagIdTask;
 use App\Containers\Translation\Enums\LangEnum;
 use Foolz\SphinxQL\Drivers\Mysqli\Connection;
 use Foolz\SphinxQL\SphinxQL;
@@ -96,11 +95,6 @@ class SearchService
         }
         return $result->execute()
             ->fetchAllAssoc();
-    }
-
-    public function searchByTagId(int $tagId): array
-    {
-        return app(GetPicturesIdsByTagIdTask::class)->run($tagId, $this->limit);
     }
 
 }

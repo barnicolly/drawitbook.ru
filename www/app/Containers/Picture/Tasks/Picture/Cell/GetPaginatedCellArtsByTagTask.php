@@ -3,53 +3,36 @@
 namespace App\Containers\Picture\Tasks\Picture\Cell;
 
 use App\Containers\Picture\Actions\Art\GetArtsByIdsAction;
+use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
-use App\Containers\Search\Services\SearchService;
+use App\Containers\Picture\Tasks\Picture\GetPaginatedPicturesIdsByTagIdTask;
+use App\Ship\Factories\PaginatorFactory;
 use App\Ship\Parents\Tasks\Task;
-use App\Ship\Services\Paginator\PaginatorService;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class GetPaginatedCellArtsByTagTask extends Task
 {
 
-    private SearchService $searchService;
-    private PaginatorService $paginatorService;
     private GetArtsByIdsAction $getArtsByIdsAction;
+    private GetPaginatedPicturesIdsByTagIdTask $getPaginatedPicturesIdsByTagIdTask;
 
     public function __construct(
-        SearchService $searchService,
-        PaginatorService $paginatorService,
         GetArtsByIdsAction $getArtsByIdsAction,
+        GetPaginatedPicturesIdsByTagIdTask $getPaginatedPicturesIdsByTagIdTask,
     ) {
-        $this->searchService = $searchService;
-        $this->paginatorService = $paginatorService;
         $this->getArtsByIdsAction = $getArtsByIdsAction;
+        $this->getPaginatedPicturesIdsByTagIdTask = $getPaginatedPicturesIdsByTagIdTask;
     }
 
-    public function run(int $tagId, int $pageNum): array
+    public function run(int $tagId): LengthAwarePaginator
     {
-        //        todo-misha сформировать dto;
-        [$relativeArtIds, $countSearchResults, $isLastSlice, $countLeftArts] = $this->formSliceArtIds(
-            $tagId,
-            $pageNum
-        );
-        if (!$relativeArtIds) {
+        $paginator = $this->getPaginatedPicturesIdsByTagIdTask->run($tagId, PaginatorFactory::DEFAULT_PER_PAGE);
+        if (!$paginator->isNotEmpty()) {
             throw new NotFoundRelativeArts();
         }
+        $relativeArtIds = $paginator->getCollection()->pluck(PictureColumnsEnum::ID)->toArray();
         $relativeArts = $this->getArtsByIdsAction->run($relativeArtIds);
-        $result['countRelatedArts'] = $countSearchResults;
-        $result['arts'] = $relativeArts;
-        $result['countLeftArts'] = $countLeftArts;
-        $result['isLastSlice'] = $isLastSlice;
-        $result['page'] = $pageNum;
-        return $result;
-    }
-
-    private function formSliceArtIds(int $tagId, int $pageNum): array
-    {
-        $relativePictureIds = $this->searchService
-            ->setLimit(1000)
-            ->searchByTagId($tagId);
-        return $this->paginatorService->formSlice($relativePictureIds, $pageNum);
+        return PaginatorFactory::createFromAnother($paginator, collect($relativeArts));
     }
 }
 

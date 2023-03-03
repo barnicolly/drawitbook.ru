@@ -33,10 +33,13 @@ class SearchPageSliceAction extends Action
     public function run(int $pageNum, SearchDto $searchDto): array
     {
         $locale = app()->getLocale();
-        [$relativeArts, $countSearchResults, $isLastSlice, $countLeftArts] = $this->searchPicturesAction->run(
-            $searchDto,
-            $pageNum
-        );
+        $paginator = $this->searchPicturesAction->run($searchDto);
+
+        $countSearchResults = $paginator->total();
+        $countLeftArts = $paginator->total() - ($paginator->perPage() * $paginator->currentPage());
+        $isLastSlice = !$paginator->hasMorePages();
+        $relativeArts = $paginator->getCollection()->toArray();
+
         if (!$relativeArts) {
             throw new NotFoundRelativeArts();
         }

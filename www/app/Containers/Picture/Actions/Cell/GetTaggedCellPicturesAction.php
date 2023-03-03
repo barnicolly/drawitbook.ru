@@ -56,12 +56,17 @@ class GetTaggedCellPicturesAction extends Action
     public function run(string $tag): array
     {
         $locale = app()->getLocale();
-        $pageNum = 1;
         $tagInfo = $this->getTagBySeoNameTask->run($tag, $locale);
         if (!$tagInfo) {
             throw new NotFoundTagException();
         }
-        $viewData = $this->getPaginatedCellArtsByTagTask->run($tagInfo->id, $pageNum);
+        $paginator = $this->getPaginatedCellArtsByTagTask->run($tagInfo->id);
+        $viewData['countRelatedArts'] = $paginator->total();
+        $viewData['arts'] = $paginator->getCollection()->toArray();
+        $viewData['countLeftArts'] = $paginator->total() - ($paginator->perPage() * $paginator->currentPage());
+        $viewData['isLastSlice'] = !$paginator->hasMorePages();
+        $viewData['page'] = $paginator->currentPage();
+
         if (!$viewData['isLastSlice']) {
             $leftArtsText = $this->translationService->getPluralForm(
                 $viewData['countLeftArts'],

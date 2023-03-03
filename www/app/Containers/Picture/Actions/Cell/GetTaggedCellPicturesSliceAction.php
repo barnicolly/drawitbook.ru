@@ -10,6 +10,7 @@ use App\Containers\Tag\Tasks\GetTagBySeoNameTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Parents\Actions\Action;
+use Prettus\Repository\Exceptions\RepositoryException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetTaggedCellPicturesSliceAction extends Action
@@ -36,21 +37,26 @@ class GetTaggedCellPicturesSliceAction extends Action
 
     /**
      * @param string $tag
-     * @param int $pageNum
      * @return array{GetCellTaggedResultDto, bool}
      * @throws NotFoundRelativeArts
      * @throws NotFoundTagException
      * @throws UnknownProperties
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
-    public function run(string $tag, int $pageNum): array
+    public function run(string $tag): array
     {
         $locale = app()->getLocale();
         $tagInfo = $this->getTagBySeoNameTask->run($tag, $locale);
         if (!$tagInfo) {
             throw new NotFoundTagException();
         }
-        $viewData = $this->getPaginatedCellArtsByTagTask->run($tagInfo->id, $pageNum);
+        $paginator = $this->getPaginatedCellArtsByTagTask->run($tagInfo->id);
+        $viewData['countRelatedArts'] = $paginator->total();
+        $viewData['arts'] = $paginator->getCollection()->toArray();
+        $viewData['countLeftArts'] = $paginator->total() - ($paginator->perPage() * $paginator->currentPage());
+        $viewData['isLastSlice'] = !$paginator->hasMorePages();
+        $viewData['page'] = $paginator->currentPage();
+
         $isLastSlice = $viewData['isLastSlice'];
         if (!$isLastSlice) {
             $countLeftArtsText = $this->translationService->getPluralForm(

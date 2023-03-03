@@ -26,6 +26,7 @@ class GetArtsByIdsAction extends Action
     public function run(array $ids, bool $withHiddenTags = false): array
     {
         $arts = $this->getPicturesByIdsTask->run($ids, $withHiddenTags);
+//        todo-misha заменить на коллекцию;
         return $this->formPicturesDtoTask->run($arts);
     }
 

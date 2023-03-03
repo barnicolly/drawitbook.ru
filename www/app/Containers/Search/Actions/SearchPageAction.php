@@ -46,10 +46,13 @@ class SearchPageAction extends Action
      */
     public function run(SearchDto $searchDto): array
     {
-        [$relativeArts, $countSearchResults, $isLastSlice, $countLeftArts] = $this->searchPicturesAction->run(
-            $searchDto,
-            1
-        );
+        $paginator = $this->searchPicturesAction->run($searchDto);
+
+        $countSearchResults = $paginator->total();
+        $countLeftArts = $paginator->total() - ($paginator->perPage() * $paginator->currentPage());
+        $isLastSlice = !$paginator->hasMorePages();
+        $relativeArts = $paginator->getCollection()->toArray();
+
         if (!$relativeArts) {
             $viewData['popularArts'] = $this->getInterestingArtsAction->run(0, 10);
             $viewData['popularTags'] = $this->getPopularTagsAction->run();

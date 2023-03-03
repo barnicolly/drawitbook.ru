@@ -9,6 +9,7 @@ use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Tag\Tasks\GetHiddenTagsIdsTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
+use Illuminate\Contracts\Database\Query\Builder as BuilderContract;
 use Illuminate\Support\Collection;
 
 class GetPicturesByIdsTask extends Task
@@ -31,11 +32,12 @@ class GetPicturesByIdsTask extends Task
     public function run(array $ids, bool $withHiddenTags): Collection
     {
         $locale = app()->getLocale();
-        return $this->repository->with([
+        return $this->repository
+            ->with([
                 'flags',
                 'extensions',
                 'tags.flags',
-                'tags' => function ($q) use ($locale, $withHiddenTags) {
+                'tags' => function (BuilderContract $q) use ($locale, $withHiddenTags) {
                     if ($locale === LangEnum::EN) {
                         $q->whereNotNull(SprTagsColumnsEnum::SLUG_EN);
                     }
