@@ -1,6 +1,6 @@
 @php use App\Ship\Enums\FlagsEnum; @endphp
 
-<div class="art-container" data-page="{{ $page ?? 1 }}">
+<div class="art-container">
     <div class="art-wrapper">
         @include('picture::template.stack_grid.art.img_social', ['art' => $art])
         @if (!empty(session('is_admin')))

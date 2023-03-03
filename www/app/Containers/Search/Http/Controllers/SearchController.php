@@ -37,7 +37,7 @@ class SearchController extends HttpController
             return response()->view('search::index', $viewData);
         } catch (Throwable $e) {
             Log::error($e);
-            abort(500);
+            throw $e;
         }
     }
 
@@ -54,13 +54,14 @@ class SearchController extends HttpController
         try {
             $pageNum = $request->page;
             $searchDto = new SearchDto($request->input());
-            [$getCellTaggedResultDto, $isLastSlice] = $action->run($pageNum, $searchDto);
+            [$getCellTaggedResultDto, $isLastSlice] = $action->run($searchDto);
             $paginationMetaDto = new PaginationMetaDto(
                 [
                     'page' => $pageNum,
                     'isLastPage' => $isLastSlice,
                 ]
             );
+//            todo-misha переделать на ресурс;
             $result = fractal()->item($getCellTaggedResultDto, new GetCellTaggedArtsSliceTransformer())
                 ->addMeta(['pagination' => $paginationMetaDto]);
             return response()->json($result);
@@ -68,7 +69,7 @@ class SearchController extends HttpController
             throw new NotFoundHttpException();
         } catch (Throwable $e) {
             Log::error($e);
-            abort(500);
+            throw $e;
         }
     }
 

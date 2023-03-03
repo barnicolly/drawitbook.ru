@@ -14,8 +14,11 @@
          itemtype="http://schema.org/SiteNavigationElement">
             @include('picture::template.stack_grid.elements')
     </div>
-    @if (isset($countRelatedArts, $isLastSlice, $countLeftArts))
-        @if ($countRelatedArts && !$isLastSlice)
+    <?php
+    /** @var \App\Ship\Dto\PaginationDto $paginationData */
+    ?>
+    @if (isset($paginationData))
+        @if ($paginationData->left)
             <div class="download-more form-group">
                 <button type="button" class="download-more__btn">
                     {!! __('common.arts_left', ['countLeftArtsText' => $leftArtsText]) !!}

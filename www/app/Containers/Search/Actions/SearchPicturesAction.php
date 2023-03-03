@@ -3,6 +3,7 @@
 namespace App\Containers\Search\Actions;
 
 use App\Containers\Picture\Actions\Art\GetArtsByIdsAction;
+use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Search\Data\Dto\SearchDto;
 use App\Containers\Search\Services\SearchService;
 use App\Ship\Factories\PaginatorFactory;
@@ -36,6 +37,8 @@ class SearchPicturesAction extends Action
             $relativeArtIds = $paginator->getCollection()->toArray();
             $relativeArts = $this->getArtsByIdsAction->run($relativeArtIds);
             $paginator = PaginatorFactory::createFromAnother($paginator, collect($relativeArts));
+        } else {
+            throw new NotFoundRelativeArts();
         }
         return $paginator;
     }

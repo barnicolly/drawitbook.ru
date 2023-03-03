@@ -7,6 +7,7 @@ use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Search\Data\Dto\SearchDto;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
+use App\Ship\Dto\PaginationDto;
 use App\Ship\Parents\Actions\Action;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
@@ -24,35 +25,25 @@ class SearchPageSliceAction extends Action
     }
 
     /**
-     * @param int $pageNum
      * @param SearchDto $searchDto
      * @return array{GetCellTaggedResultDto, bool}
      * @throws NotFoundRelativeArts
      * @throws UnknownProperties
      */
-    public function run(int $pageNum, SearchDto $searchDto): array
+    public function run(SearchDto $searchDto): array
     {
         $locale = app()->getLocale();
         $paginator = $this->searchPicturesAction->run($searchDto);
 
-        $countSearchResults = $paginator->total();
-        $countLeftArts = $paginator->total() - ($paginator->perPage() * $paginator->currentPage());
-        $isLastSlice = !$paginator->hasMorePages();
         $relativeArts = $paginator->getCollection()->toArray();
 
-        if (!$relativeArts) {
-            throw new NotFoundRelativeArts();
-        }
+        $paginationData = PaginationDto::createFromPaginator($paginator);
         $viewData = [
-            'page' => $pageNum,
-            'isLastSlice' => $isLastSlice,
-            'countLeftArts' => $countLeftArts,
             'arts' => $relativeArts,
-            'countRelatedArts' => $countSearchResults,
         ];
-        if (!$isLastSlice) {
+        if ($paginationData->hasMore) {
             $countLeftArtsText = $this->translationService->getPluralForm(
-                $countLeftArts,
+                $paginationData->left,
                 LangEnum::fromValue($locale)
             );
         }
@@ -60,7 +51,7 @@ class SearchPageSliceAction extends Action
             html:              view('picture::template.stack_grid.elements', $viewData)->render(),
             countLeftArtsText: $countLeftArtsText ?? null,
         );
-        return [$getCellTaggedResultDto, $isLastSlice];
+        return [$getCellTaggedResultDto, !$paginationData->hasMore];
     }
 
 }

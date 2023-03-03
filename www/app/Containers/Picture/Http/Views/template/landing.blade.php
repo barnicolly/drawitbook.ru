@@ -11,7 +11,10 @@
     </div>
     <div class="content">
         <div class="d-inline">
-            {!! __('common.arts_count', ['countArts' => $countRelatedArts]) !!}
+            <?php
+            /** @var \App\Ship\Dto\PaginationDto $paginationData */
+            ?>
+            {!! __('common.arts_count', ['countArts' => $paginationData->total]) !!}
         </div>
     </div>
     <div class="content">

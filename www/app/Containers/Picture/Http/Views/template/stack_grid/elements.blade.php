@@ -18,7 +18,6 @@ $showAds = app()->getLocale() === \App\Containers\Translation\Enums\LangEnum::RU
     @endif
     <?php $viewData = [
         'art' => $art,
-        'page' => $page ?? 1
     ]; ?>
     @include('picture::template.stack_grid.art.index', $viewData)
 @endforeach

@@ -13,6 +13,7 @@ use App\Containers\Tag\Tasks\GetTagBySeoNameTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Dto\PageMetaDto;
+use App\Ship\Dto\PaginationDto;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Arr;
@@ -61,15 +62,13 @@ class GetTaggedCellPicturesAction extends Action
             throw new NotFoundTagException();
         }
         $paginator = $this->getPaginatedCellArtsByTagTask->run($tagInfo->id);
-        $viewData['countRelatedArts'] = $paginator->total();
         $viewData['arts'] = $paginator->getCollection()->toArray();
-        $viewData['countLeftArts'] = $paginator->total() - ($paginator->perPage() * $paginator->currentPage());
-        $viewData['isLastSlice'] = !$paginator->hasMorePages();
-        $viewData['page'] = $paginator->currentPage();
+        $paginationData = PaginationDto::createFromPaginator($paginator);
+        $viewData['paginationData'] = $paginationData;
 
-        if (!$viewData['isLastSlice']) {
+        if ($paginationData->hasMore) {
             $leftArtsText = $this->translationService->getPluralForm(
-                $viewData['countLeftArts'],
+                $paginationData->left,
                 LangEnum::fromValue($locale)
             );
         }
@@ -79,7 +78,7 @@ class GetTaggedCellPicturesAction extends Action
         $viewData['tagName'] = $tagName;
         $viewData['alternateLinks'] = count($alternateLinks) > 1 ? $alternateLinks : [];
         [$title, $description] = $this->seoService->formCellTaggedTitleAndDescription(
-            $viewData['countRelatedArts'],
+            $paginationData->total,
             $tagName
         );
         $pageMetaDto = new PageMetaDto(title: $title, description: $description);
@@ -88,8 +87,8 @@ class GetTaggedCellPicturesAction extends Action
             $image = $firstArt['images']['primary'];
             $shareImage = new ShareImageDto(
                 relativePath: getArtsFolder() . $image['path'],
-                width:        $image['width'],
-                height:       $image['height']
+                width: $image['width'],
+                height: $image['height']
             );
             $pageMetaDto->shareImage = $shareImage;
         }

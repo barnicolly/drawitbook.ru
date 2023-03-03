@@ -9,6 +9,7 @@ use App\Containers\Tag\Exceptions\NotFoundTagException;
 use App\Containers\Tag\Tasks\GetTagBySeoNameTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
+use App\Ship\Dto\PaginationDto;
 use App\Ship\Parents\Actions\Action;
 use Prettus\Repository\Exceptions\RepositoryException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
@@ -51,16 +52,12 @@ class GetTaggedCellPicturesSliceAction extends Action
             throw new NotFoundTagException();
         }
         $paginator = $this->getPaginatedCellArtsByTagTask->run($tagInfo->id);
-        $viewData['countRelatedArts'] = $paginator->total();
         $viewData['arts'] = $paginator->getCollection()->toArray();
-        $viewData['countLeftArts'] = $paginator->total() - ($paginator->perPage() * $paginator->currentPage());
-        $viewData['isLastSlice'] = !$paginator->hasMorePages();
-        $viewData['page'] = $paginator->currentPage();
-
-        $isLastSlice = $viewData['isLastSlice'];
-        if (!$isLastSlice) {
+        $paginationData = PaginationDto::createFromPaginator($paginator);
+        $viewData['paginationData'] = $paginationData;
+        if ($paginationData->hasMore) {
             $countLeftArtsText = $this->translationService->getPluralForm(
-                $viewData['countLeftArts'],
+                $paginationData->left,
                 LangEnum::fromValue($locale)
             );
         }
@@ -68,7 +65,7 @@ class GetTaggedCellPicturesSliceAction extends Action
             html:              view('picture::template.stack_grid.elements', $viewData)->render(),
             countLeftArtsText: $countLeftArtsText ?? null,
         );
-        return [$getCellTaggedResultDto, $isLastSlice];
+        return [$getCellTaggedResultDto, !$paginationData->hasMore];
     }
 
 }

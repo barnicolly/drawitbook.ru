@@ -9,6 +9,7 @@ use App\Containers\Tag\Actions\GetPopularTagsAction;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Dto\PageMetaDto;
+use App\Ship\Dto\PaginationDto;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Route\RouteService;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
@@ -47,10 +48,8 @@ class SearchPageAction extends Action
     public function run(SearchDto $searchDto): array
     {
         $paginator = $this->searchPicturesAction->run($searchDto);
+        $paginationData = PaginationDto::createFromPaginator($paginator);
 
-        $countSearchResults = $paginator->total();
-        $countLeftArts = $paginator->total() - ($paginator->perPage() * $paginator->currentPage());
-        $isLastSlice = !$paginator->hasMorePages();
         $relativeArts = $paginator->getCollection()->toArray();
 
         if (!$relativeArts) {
@@ -60,15 +59,13 @@ class SearchPageAction extends Action
         $viewData['alternateLinks'] = $this->getAlternateLinks();
         $viewData['searchQuery'] = $searchDto->query;
         $viewData['filters'] = $searchDto->toArray();
-        $viewData['isLastSlice'] = $isLastSlice;
-        $viewData['countLeftArts'] = $countLeftArts;
-        $viewData['countRelatedArts'] = $countSearchResults;
         $viewData['arts'] = $relativeArts;
+        $viewData['paginationData'] = $paginationData;
+
         $locale = app()->getLocale();
-        if (!$isLastSlice) {
-            $countLeftArtsText = $this->translationService->getPluralForm($countLeftArts, LangEnum::fromValue($locale));
-        }
-        $viewData['leftArtsText'] = $countLeftArtsText ?? null;
+        $viewData['leftArtsText'] = $paginator->hasMorePages()
+            ? $this->translationService->getPluralForm($paginationData->left, LangEnum::fromValue($locale))
+            : null;
         [$title] = $this->formTitleAndDescriptionSearch();
         $pageMetaDto = new PageMetaDto(
             title: $title,
