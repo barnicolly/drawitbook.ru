@@ -19,40 +19,42 @@ use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Prettus\Repository\Exceptions\RepositoryException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetTaggedCellPicturesAction extends Action
 {
 
-    private TranslationService $translationService;
     private RouteService $routeService;
     private SeoService $seoService;
     private FormCellPageAlternativeLocaleLinksTask $formCellPageAlternativeLocaleLinksTask;
     private GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask;
     private GetTagBySeoNameTask $getTagBySeoNameTask;
+    private CreateCellResultsAction $createCellResultsAction;
 
     public function __construct(
-        TranslationService $translationService,
         RouteService $routeService,
         SeoService $seoService,
         FormCellPageAlternativeLocaleLinksTask $formCellPageAlternativeLocaleLinksTask,
         GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask,
-        GetTagBySeoNameTask $getTagBySeoNameTask
+        GetTagBySeoNameTask $getTagBySeoNameTask,
+        CreateCellResultsAction $createCellResultsAction
     ) {
-        $this->translationService = $translationService;
         $this->routeService = $routeService;
         $this->seoService = $seoService;
         $this->formCellPageAlternativeLocaleLinksTask = $formCellPageAlternativeLocaleLinksTask;
         $this->getPaginatedCellArtsByTagTask = $getPaginatedCellArtsByTagTask;
         $this->getTagBySeoNameTask = $getTagBySeoNameTask;
+        $this->createCellResultsAction = $createCellResultsAction;
     }
 
     /**
      * @param string $tag
      * @return array{array, PageMetaDto}
-     * @throws NotFoundTagException
      * @throws NotFoundRelativeArts
+     * @throws NotFoundTagException
      * @throws UnknownProperties
+     * @throws RepositoryException
      */
     public function run(string $tag): array
     {
@@ -61,20 +63,15 @@ class GetTaggedCellPicturesAction extends Action
         if (!$tagInfo) {
             throw new NotFoundTagException();
         }
-        $paginator = $this->getPaginatedCellArtsByTagTask->run($tagInfo->id);
-        $viewData['arts'] = $paginator->getCollection()->toArray();
-        $paginationData = PaginationDto::createFromPaginator($paginator);
-        $viewData['paginationData'] = $paginationData;
 
-        if ($paginationData->hasMore) {
-            $leftArtsText = $this->translationService->getPluralForm(
-                $paginationData->left,
-                LangEnum::fromValue($locale)
-            );
-        }
+        $paginator = $this->getPaginatedCellArtsByTagTask->run($tagInfo->id);
+        $viewData = $this->createCellResultsAction->run($locale, $paginator);
+        /** @var PaginationDto $paginationData */
+        $paginationData = $viewData['paginationData'];
+
         $tagName = $tagInfo->name;
         $alternateLinks = $this->formCellPageAlternativeLocaleLinksTask->run($tagInfo);
-        $viewData['leftArtsText'] = $leftArtsText ?? null;
+
         $viewData['tagName'] = $tagName;
         $viewData['alternateLinks'] = count($alternateLinks) > 1 ? $alternateLinks : [];
         [$title, $description] = $this->seoService->formCellTaggedTitleAndDescription(

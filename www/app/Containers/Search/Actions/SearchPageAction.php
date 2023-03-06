@@ -3,69 +3,62 @@
 namespace App\Containers\Search\Actions;
 
 use App\Containers\Picture\Actions\Art\GetInterestingArtsAction;
+use App\Containers\Picture\Actions\Cell\CreateCellResultsAction;
+use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Search\Data\Dto\SearchDto;
 use App\Containers\Seo\Tasks\GetDefaultShareImageTask;
 use App\Containers\Tag\Actions\GetPopularTagsAction;
 use App\Containers\Translation\Enums\LangEnum;
-use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Dto\PageMetaDto;
-use App\Ship\Dto\PaginationDto;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Route\RouteService;
+use Prettus\Repository\Exceptions\RepositoryException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class SearchPageAction extends Action
 {
     private RouteService $routeService;
     private GetPopularTagsAction $getPopularTagsAction;
-    private TranslationService $translationService;
     private SearchPicturesAction $searchPicturesAction;
     private GetDefaultShareImageTask $getDefaultShareImageTask;
     private GetInterestingArtsAction $getInterestingArtsAction;
+    private CreateCellResultsAction $createCellResultsAction;
 
     public function __construct(
         RouteService $routeService,
-        TranslationService $translationService,
         GetPopularTagsAction $getPopularTagsAction,
         SearchPicturesAction $searchPicturesAction,
         GetDefaultShareImageTask $getDefaultShareImageTask,
-        GetInterestingArtsAction $getInterestingArtsAction
+        GetInterestingArtsAction $getInterestingArtsAction,
+        CreateCellResultsAction $createCellResultsAction
     ) {
         $this->routeService = $routeService;
         $this->getPopularTagsAction = $getPopularTagsAction;
-        $this->translationService = $translationService;
         $this->searchPicturesAction = $searchPicturesAction;
         $this->getDefaultShareImageTask = $getDefaultShareImageTask;
         $this->getInterestingArtsAction = $getInterestingArtsAction;
+        $this->createCellResultsAction = $createCellResultsAction;
     }
 
     /**
      * @param SearchDto $searchDto
      * @return array{array, PageMetaDto}
      * @throws UnknownProperties
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws NotFoundRelativeArts
+     * @throws RepositoryException
      */
     public function run(SearchDto $searchDto): array
     {
+        $locale = app()->getLocale();
         $paginator = $this->searchPicturesAction->run($searchDto);
-        $paginationData = PaginationDto::createFromPaginator($paginator);
-
-        $relativeArts = $paginator->getCollection()->toArray();
-
-        if (!$relativeArts) {
+        $viewData = $this->createCellResultsAction->run($locale, $paginator);
+        if (!$viewData['arts']) {
             $viewData['popularArts'] = $this->getInterestingArtsAction->run(0, 10);
             $viewData['popularTags'] = $this->getPopularTagsAction->run();
         }
         $viewData['alternateLinks'] = $this->getAlternateLinks();
         $viewData['searchQuery'] = $searchDto->query;
         $viewData['filters'] = $searchDto->toArray();
-        $viewData['arts'] = $relativeArts;
-        $viewData['paginationData'] = $paginationData;
-
-        $locale = app()->getLocale();
-        $viewData['leftArtsText'] = $paginator->hasMorePages()
-            ? $this->translationService->getPluralForm($paginationData->left, LangEnum::fromValue($locale))
-            : null;
         [$title] = $this->formTitleAndDescriptionSearch();
         $pageMetaDto = new PageMetaDto(
             title: $title,

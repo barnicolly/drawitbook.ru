@@ -7,8 +7,6 @@ use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Picture\Tasks\Picture\Cell\GetPaginatedCellArtsByTagTask;
 use App\Containers\Tag\Exceptions\NotFoundTagException;
 use App\Containers\Tag\Tasks\GetTagBySeoNameTask;
-use App\Containers\Translation\Enums\LangEnum;
-use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Dto\PaginationDto;
 use App\Ship\Parents\Actions\Action;
 use Prettus\Repository\Exceptions\RepositoryException;
@@ -17,23 +15,18 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 class GetTaggedCellPicturesSliceAction extends Action
 {
 
-    private TranslationService $translationService;
     private GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask;
     private GetTagBySeoNameTask $getTagBySeoNameTask;
+    private CreateCellSliceResultsAction $createCellSliceResultsAction;
 
-    /**
-     * @param TranslationService $translationService
-     * @param GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask
-     * @param GetTagBySeoNameTask $getTagBySeoNameTask
-     */
     public function __construct(
-        TranslationService $translationService,
         GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask,
-        GetTagBySeoNameTask $getTagBySeoNameTask
+        GetTagBySeoNameTask $getTagBySeoNameTask,
+        CreateCellSliceResultsAction $createCellResultsAction
     ) {
-        $this->translationService = $translationService;
         $this->getPaginatedCellArtsByTagTask = $getPaginatedCellArtsByTagTask;
         $this->getTagBySeoNameTask = $getTagBySeoNameTask;
+        $this->createCellSliceResultsAction = $createCellResultsAction;
     }
 
     /**
@@ -52,20 +45,7 @@ class GetTaggedCellPicturesSliceAction extends Action
             throw new NotFoundTagException();
         }
         $paginator = $this->getPaginatedCellArtsByTagTask->run($tagInfo->id);
-        $viewData['arts'] = $paginator->getCollection()->toArray();
-        $paginationData = PaginationDto::createFromPaginator($paginator);
-        $viewData['paginationData'] = $paginationData;
-        if ($paginationData->hasMore) {
-            $countLeftArtsText = $this->translationService->getPluralForm(
-                $paginationData->left,
-                LangEnum::fromValue($locale)
-            );
-        }
-        $getCellTaggedResultDto = new GetCellTaggedResultDto(
-            html:              view('picture::template.stack_grid.elements', $viewData)->render(),
-            countLeftArtsText: $countLeftArtsText ?? null,
-        );
-        return [$getCellTaggedResultDto, $paginationData];
+        return $this->createCellSliceResultsAction->run($locale, $paginator);
     }
 
 }

@@ -49,7 +49,6 @@ class SearchController extends HttpController
      */
     public function slice(SearchArtsSliceAjaxRequest $request, SearchPageSliceAction $action): JsonResponse
     {
-        //TODO-misha вынести и объединить с кодом из cell;
         try {
             $searchDto = new SearchDto($request->input());
             [$getCellTaggedResultDto, $paginationMetaDto] = $action->run($searchDto);
