@@ -9,10 +9,10 @@ use App\Containers\Admin\Http\Requests\Art\AttachPictureOnAlbumRequest;
 use App\Containers\Admin\Http\Requests\Art\DetachPictureFromAlbumRequest;
 use App\Containers\Admin\Http\Requests\Settings\GetSettingsModalRequest;
 use App\Containers\Admin\Http\Requests\VkPosting\ArtSetVkPostingRequest;
-use App\Containers\Admin\Http\Transformers\GetSettingsModalTransformer;
 use App\Containers\Picture\Tasks\Picture\PictureSetVkPostingFlagTask;
 use App\Containers\Picture\Tasks\Picture\PictureUnsetVkPostingFlagTask;
 use App\Ship\Parents\Controllers\HttpController;
+use App\Ship\Parents\Resources\JsonResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -71,8 +71,8 @@ class ArtController extends HttpController
     {
         try {
             $resultDto = $action->run($request->id);
-            $result = fractal()->item($resultDto, new GetSettingsModalTransformer());
-            return response()->json($result);
+            return JsonResource::make($resultDto)
+                ->response();
         } catch (Throwable $e) {
             Log::error($e);
             abort(500);

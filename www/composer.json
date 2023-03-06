@@ -16,7 +16,6 @@
         "laravel/ui": "^4",
         "mik009/sanitizer": "^1.4",
         "spatie/data-transfer-object": "^3.9",
-        "spatie/laravel-fractal": "^6.0",
         "spatie/laravel-model-flags": "^1.2",
         "spatie/laravel-sitemap": "^6",
         "tightenco/collect": "^9",
