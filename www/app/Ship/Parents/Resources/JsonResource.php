@@ -2,10 +2,20 @@
 
 namespace App\Ship\Parents\Resources;
 
+use App\Ship\Dto\PaginationMetaDto;
 use Illuminate\Http\Resources\Json\JsonResource as LaravelJsonResource;
 
 class JsonResource extends LaravelJsonResource
 {
+
+    private ?PaginationMetaDto $paginationMetaDto = null;
+
+    public function withPaginationMeta(PaginationMetaDto $paginationMetaDto): self
+    {
+        $this->paginationMetaDto = $paginationMetaDto;
+        return $this;
+    }
+
     /**
      * Transform the resource collection into an array.
      *
@@ -14,6 +24,13 @@ class JsonResource extends LaravelJsonResource
      */
     public function toArray($request)
     {
+        if ($this->paginationMetaDto) {
+            $this->additional([
+                'meta' => [
+                    'pagination' => $this->paginationMetaDto,
+                ]
+            ]);
+        }
         return parent::toArray($request);
     }
 }

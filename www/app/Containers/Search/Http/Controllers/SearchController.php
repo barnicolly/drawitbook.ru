@@ -3,14 +3,13 @@
 namespace App\Containers\Search\Http\Controllers;
 
 use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
-use App\Containers\Picture\Http\Transformers\Cell\GetCellTaggedArtsSliceTransformer;
 use App\Containers\Search\Actions\SearchPageAction;
 use App\Containers\Search\Actions\SearchPageSliceAction;
 use App\Containers\Search\Data\Dto\SearchDto;
 use App\Containers\Search\Http\Requests\SearchArtsHttpRequest;
 use App\Containers\Search\Http\Requests\SearchArtsSliceAjaxRequest;
-use App\Ship\Dto\PaginationMetaDto;
 use App\Ship\Parents\Controllers\HttpController;
+use App\Ship\Parents\Resources\JsonResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
@@ -52,19 +51,11 @@ class SearchController extends HttpController
     {
         //TODO-misha вынести и объединить с кодом из cell;
         try {
-            $pageNum = $request->page;
             $searchDto = new SearchDto($request->input());
-            [$getCellTaggedResultDto, $isLastSlice] = $action->run($searchDto);
-            $paginationMetaDto = new PaginationMetaDto(
-                [
-                    'page' => $pageNum,
-                    'isLastPage' => $isLastSlice,
-                ]
-            );
-//            todo-misha переделать на ресурс;
-            $result = fractal()->item($getCellTaggedResultDto, new GetCellTaggedArtsSliceTransformer())
-                ->addMeta(['pagination' => $paginationMetaDto]);
-            return response()->json($result);
+            [$getCellTaggedResultDto, $paginationMetaDto] = $action->run($searchDto);
+            return JsonResource::make($getCellTaggedResultDto)
+                ->withPaginationMeta($paginationMetaDto)
+                ->response();
         } catch (NotFoundRelativeArts $e) {
             throw new NotFoundHttpException();
         } catch (Throwable $e) {

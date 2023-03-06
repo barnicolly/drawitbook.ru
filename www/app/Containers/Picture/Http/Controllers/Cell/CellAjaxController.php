@@ -5,10 +5,9 @@ namespace App\Containers\Picture\Http\Controllers\Cell;
 use App\Containers\Picture\Actions\Cell\GetTaggedCellPicturesSliceAction;
 use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
 use App\Containers\Picture\Http\Requests\Cell\CellTaggedArtsSliceAjaxRequest;
-use App\Containers\Picture\Http\Transformers\Cell\GetCellTaggedArtsSliceTransformer;
 use App\Containers\Tag\Exceptions\NotFoundTagException;
-use App\Ship\Dto\PaginationMetaDto;
 use App\Ship\Parents\Controllers\AjaxController;
+use App\Ship\Parents\Resources\JsonResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -30,17 +29,10 @@ class CellAjaxController extends AjaxController
         GetTaggedCellPicturesSliceAction $action
     ): JsonResponse {
         try {
-            $pageNum = $request->page;
-            [$getCellTaggedResultDto, $isLastSlice] = $action->run($tag);
-            $paginationMetaDto = new PaginationMetaDto(
-                [
-                    'page' => $pageNum,
-                    'isLastPage' => $isLastSlice,
-                ]
-            );
-            $result = fractal()->item($getCellTaggedResultDto, new GetCellTaggedArtsSliceTransformer())
-                ->addMeta(['pagination' => $paginationMetaDto]);
-            return response()->json($result);
+            [$getCellTaggedResultDto, $paginationMetaDto] = $action->run($tag);
+            return JsonResource::make($getCellTaggedResultDto)
+                ->withPaginationMeta($paginationMetaDto)
+                ->response();
         } catch (NotFoundTagException|NotFoundRelativeArts $e) {
             throw new NotFoundHttpException();
         } catch (Throwable $e) {
