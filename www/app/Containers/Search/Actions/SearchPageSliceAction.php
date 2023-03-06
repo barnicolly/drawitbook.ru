@@ -8,7 +8,6 @@ use App\Containers\Search\Data\Dto\SearchDto;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Dto\PaginationDto;
-use App\Ship\Dto\PaginationMetaDto;
 use App\Ship\Parents\Actions\Action;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
@@ -27,7 +26,7 @@ class SearchPageSliceAction extends Action
 
     /**
      * @param SearchDto $searchDto
-     * @return array{GetCellTaggedResultDto, PaginationMetaDto}
+     * @return array{GetCellTaggedResultDto, PaginationDto}
      * @throws NotFoundRelativeArts
      * @throws UnknownProperties
      */
@@ -52,13 +51,7 @@ class SearchPageSliceAction extends Action
             html:              view('picture::template.stack_grid.elements', $viewData)->render(),
             countLeftArtsText: $countLeftArtsText ?? null,
         );
-        $paginationMetaDto = new PaginationMetaDto(
-            [
-                'page' => $paginationData->page,
-                'isLastPage' => !$paginationData->hasMore,
-            ]
-        );
-        return [$getCellTaggedResultDto, $paginationMetaDto];
+        return [$getCellTaggedResultDto, $paginationData];
     }
 
 }

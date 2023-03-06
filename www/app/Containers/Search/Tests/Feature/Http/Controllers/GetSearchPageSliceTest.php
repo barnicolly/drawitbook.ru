@@ -52,15 +52,17 @@ class GetSearchPageSliceTest extends TestCase
                     ],
                     'meta' => [
                         'pagination' => [
-                            'isLastPage',
+                            'hasMore',
                             'page',
+                            'total',
+                            'left',
                         ],
                     ],
                 ]
             );
         $result = $response->decodeResponseJson();
         self::assertSame($page, Arr::get($result, 'meta.pagination.page'));
-        self::assertFalse(Arr::get($result, 'meta.pagination.isLastPage'));
+        self::assertTrue(Arr::get($result, 'meta.pagination.hasMore'));
     }
 
     public function testSearchSliceNotFound(): void

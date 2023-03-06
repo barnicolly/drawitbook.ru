@@ -62,7 +62,7 @@ export function loadStackGrid() {
                         loadFancybox($newImages);
                         $stackGrid.attr('data-page', paginationData.page);
                         $downloadBtn.find('.left-arts-cnt').text(res.data.countLeftArtsText);
-                        if (paginationData.isLastPage) {
+                        if (!paginationData.hasMore) {
                             $downloadBtn.remove();
                         }
                         const $rateContainers = $stackGrid.find(`.art-container[data-page="${paginationData.page}"]`).find('.rate-control');

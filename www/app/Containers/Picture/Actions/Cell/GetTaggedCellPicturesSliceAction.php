@@ -10,7 +10,6 @@ use App\Containers\Tag\Tasks\GetTagBySeoNameTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Dto\PaginationDto;
-use App\Ship\Dto\PaginationMetaDto;
 use App\Ship\Parents\Actions\Action;
 use Prettus\Repository\Exceptions\RepositoryException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
@@ -39,7 +38,7 @@ class GetTaggedCellPicturesSliceAction extends Action
 
     /**
      * @param string $tag
-     * @return array{GetCellTaggedResultDto, PaginationMetaDto}
+     * @return array{GetCellTaggedResultDto, PaginationDto}
      * @throws NotFoundRelativeArts
      * @throws NotFoundTagException
      * @throws UnknownProperties
@@ -66,13 +65,7 @@ class GetTaggedCellPicturesSliceAction extends Action
             html:              view('picture::template.stack_grid.elements', $viewData)->render(),
             countLeftArtsText: $countLeftArtsText ?? null,
         );
-        $paginationMetaDto = new PaginationMetaDto(
-            [
-                'page' => $paginationData->page,
-                'isLastPage' => !$paginationData->hasMore,
-            ]
-        );
-        return [$getCellTaggedResultDto, $paginationMetaDto];
+        return [$getCellTaggedResultDto, $paginationData];
     }
 
 }

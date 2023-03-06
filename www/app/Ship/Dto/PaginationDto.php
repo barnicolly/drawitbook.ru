@@ -18,10 +18,11 @@ class PaginationDto extends Dto
 
     public static function createFromPaginator(LengthAwarePaginator $paginator): self
     {
+        $left = $paginator->total() - ($paginator->perPage() * $paginator->currentPage());
         return new self(
             page: $paginator->currentPage(),
             total: $paginator->total(),
-            left: $paginator->total() - ($paginator->perPage() * $paginator->currentPage()),
+            left: max($left, 0),
             hasMore: $paginator->hasMorePages(),
         );
     }
