@@ -2,10 +2,8 @@
 
 namespace App\Containers\Seo\Services;
 
-use App\Containers\Tag\Models\SprTagsModel;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
-use Illuminate\Support\Collection;
 
 class SeoService
 {

@@ -5,7 +5,7 @@ namespace App\Containers\Admin\Actions;
 use App\Containers\Picture\Actions\Art\GetArtByIdWithFilesAction;
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsNamesWithoutHiddenVkByPictureIdTask;
 use App\Containers\Vk\Services\Api\PhotoService;
-use App\Containers\Vk\Services\VkWallPostingService;
+use App\Containers\Vk\Tasks\FormHashTagsTask;
 use App\Containers\Vk\Tasks\VkAlbum\GetVkAlbumByIdTask;
 use App\Containers\Vk\Tasks\VkAlbumPicture\CreateVkAlbumPictureTask;
 use App\Ship\Parents\Actions\Action;
@@ -13,26 +13,26 @@ use App\Ship\Parents\Actions\Action;
 class AttachPictureOnAlbumAction extends Action
 {
     private PhotoService $apiPhotoService;
-    private VkWallPostingService $apiPostingService;
     private GetVkAlbumByIdTask $getVkAlbumByIdTask;
     private CreateVkAlbumPictureTask $createVkAlbumPictureTask;
     private GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask;
     private GetArtByIdWithFilesAction $getArtByIdWithFilesAction;
+    private FormHashTagsTask $formHashTagsTask;
 
     public function __construct(
         PhotoService $apiPhotoService,
-        VkWallPostingService $apiPostingService,
         GetVkAlbumByIdTask $getVkAlbumByIdTask,
         CreateVkAlbumPictureTask $createVkAlbumPictureTask,
         GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask,
         GetArtByIdWithFilesAction $getArtByIdWithFilesAction,
+        FormHashTagsTask $formHashTagsTask
     ) {
         $this->apiPhotoService = $apiPhotoService;
-        $this->apiPostingService = $apiPostingService;
         $this->getVkAlbumByIdTask = $getVkAlbumByIdTask;
         $this->createVkAlbumPictureTask = $createVkAlbumPictureTask;
         $this->getPictureTagsNamesWithoutHiddenVkByPictureIdTask = $getPictureTagsNamesWithoutHiddenVkByPictureIdTask;
         $this->getArtByIdWithFilesAction = $getArtByIdWithFilesAction;
+        $this->formHashTagsTask = $formHashTagsTask;
     }
 
     /**
@@ -60,7 +60,7 @@ class AttachPictureOnAlbumAction extends Action
         } else {
             $url = 'https://drawitbook.com/ru';
         }
-        $hashTags = $this->apiPostingService->formHashTags($tags);
+        $hashTags = $this->formHashTagsTask->run($tags);
         $this->apiPhotoService->timeout();
         $this->apiPhotoService->edit($photoId, ['caption' => $hashTags . "\n\n" . ' Больше рисунков ► ' . $url], true);
         return $photoId;

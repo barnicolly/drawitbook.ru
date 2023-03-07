@@ -2,7 +2,7 @@
 
 namespace App\Containers\Seo\Console;
 
-use App\Containers\Seo\Services\CreateSitemapService;
+use App\Containers\Seo\Tasks\CreateSitemapTask;
 use Illuminate\Console\Command;
 
 class CreateSitemapCommand extends Command
@@ -38,7 +38,6 @@ class CreateSitemapCommand extends Command
      */
     public function handle()
     {
-        $cron = new CreateSitemapService();
-        $cron->create();
+        app(CreateSitemapTask::class)->run();
     }
 }

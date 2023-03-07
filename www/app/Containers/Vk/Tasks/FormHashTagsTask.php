@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Containers\Vk\Services;
+namespace App\Containers\Vk\Tasks;
 
-class VkWallPostingService
+use App\Ship\Parents\Tasks\Task;
+
+class FormHashTagsTask extends Task
 {
 
-    public function formHashTags(array $tags): string
+    public function run(array $tags): string
     {
         foreach ($tags as $key => $tag) {
             $tags[$key] = preg_replace('/\s+/', '', $tag);
@@ -18,6 +20,6 @@ class VkWallPostingService
         $hashTags .= ' #drawitbook';
         return $hashTags;
     }
-
 }
+
 

@@ -6,6 +6,7 @@ use App\Containers\SocialMediaPosting\Contracts\SocialMediaPostingContract;
 use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Services\Api\VkApi;
 use App\Containers\Vk\Services\Api\WallService;
+use App\Containers\Vk\Tasks\FormHashTagsTask;
 
 class VkWallPostingStrategy implements SocialMediaPostingContract
 {
@@ -16,9 +17,10 @@ class VkWallPostingStrategy implements SocialMediaPostingContract
 
     private PhotoService $photoService;
     private WallService $wallService;
-    private VkWallPostingService $vkWallPostingService;
 
     private string $url = 'https://drawitbook.com/ru';
+
+    private FormHashTagsTask $formHashTagsTask;
 
     public function __construct(array $tags, string $artPath)
     {
@@ -28,7 +30,7 @@ class VkWallPostingStrategy implements SocialMediaPostingContract
         $this->apiInstance = $apiInstance;
         $this->photoService = (new PhotoService($apiInstance));
         $this->wallService = (new WallService($apiInstance));
-        $this->vkWallPostingService = (new VkWallPostingService());
+        $this->formHashTagsTask = app(FormHashTagsTask::class);
     }
 
     public function post(): void
@@ -38,7 +40,7 @@ class VkWallPostingStrategy implements SocialMediaPostingContract
 
     private function create(): void
     {
-        $hashTags = $this->vkWallPostingService->formHashTags($this->tags);
+        $hashTags = $this->formHashTagsTask->run($this->tags);
         $uploadedPhoto = $this->photoService->saveWallPhoto($this->artPath);
         $postId = $this->createPost($uploadedPhoto['owner_id'], $uploadedPhoto['id'], $hashTags);
         if (empty($postId)) {

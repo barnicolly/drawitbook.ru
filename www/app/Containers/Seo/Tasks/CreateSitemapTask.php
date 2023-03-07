@@ -1,28 +1,29 @@
 <?php
 
-namespace App\Containers\Seo\Services;
+namespace App\Containers\Seo\Tasks;
 
 use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
 use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Tag\Models\SprTagsModel;
 use App\Containers\Translation\Enums\LangEnum;
+use App\Ship\Parents\Tasks\Task;
 use App\Ship\Services\Route\RouteService;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapIndex;
 use Spatie\Sitemap\Tags\Url;
 
-class CreateSitemapService
+class CreateSitemapTask extends Task
 {
 
     private RouteService $routeService;
 
-    public function __construct()
+    public function __construct(RouteService $routeService)
     {
-        $this->routeService = app(RouteService::class);
+        $this->routeService = $routeService;
     }
 
-    public function create()
+    public function run()
     {
         $sitemap = Sitemap::create();
         $locales = config('translator.available_locales');
