@@ -13,5 +13,6 @@
     "Authorization": true,
     "Authentication": true,
     "Menu": true,
-    "SocialMediaPosting": true
+    "SocialMediaPosting": true,
+    "Category": true
 }
