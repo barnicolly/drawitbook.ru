@@ -12,8 +12,8 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class RateAjaxControllerLikeTest extends TestCase
 {
-    use CreatePictureWithRelationsTrait, CreateLikesTrait;
-
+    use CreatePictureWithRelationsTrait;
+    use CreateLikesTrait;
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      */

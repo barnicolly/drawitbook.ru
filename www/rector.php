@@ -53,7 +53,7 @@ return static function (RectorConfig $rectorConfig): void {
         ConsistentImplodeRector::class,
         NullifyUnionNullableRector::class,
 //      обязательно применить все правила ниже по разделению use, свойств, переменных в разные строки (при рефакторинге будет проще)
-//      \Rector\CodingStyle\Rector\Use_\SeparateMultiUseImportsRector::class,
+      \Rector\CodingStyle\Rector\Use_\SeparateMultiUseImportsRector::class,
 //      \Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector::class,
 //      \Rector\CodingStyle\Rector\ClassConst\SplitGroupedClassConstantsRector::class,
 //      \Rector\CodingStyle\Rector\Property\SplitGroupedPropertiesRector::class,
@@ -66,9 +66,9 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->sets([
-        LevelSetList::UP_TO_PHP_82,
+//        LevelSetList::UP_TO_PHP_82,
         SetList::TYPE_DECLARATION,
-        SetList::CODE_QUALITY,
+//        SetList::CODE_QUALITY,
     ]);
 
     $rectorConfig->skip([
@@ -78,21 +78,8 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/app/Ship/Configs',
 
         //-- исключения для SetList::TYPE_DECLARATION
-        AddClosureReturnTypeRector::class,
-        AddVoidReturnTypeWhereNoReturnRector::class,
-        ArrayShapeFromConstantArrayReturnRector::class,
-        AddArrowFunctionReturnTypeRector::class,
-        // добавляет typehint функции, основываясь на вызовах метода
-        // требуется дополнительная проверка позже (как подключим все контейнеры)
-        // вероятно если запуск был только одного модуля, не поймет
-        ParamTypeByMethodCallTypeRector::class,
-        AddMethodCallBasedStrictParamTypeRector::class => [
-            // наличие спред операторов в параметрах функции не может обработать корректно
-            __DIR__ . '/app/Containers/Asup/Actions/AsupAdaptationSendCoursesAction.php',
-            __DIR__ . '/app/Containers/Calendar/Actions/GetCalendarAction.php',
-        ],
 
-        //--- исключения для LevelSetList::UP_TO_PHP_74
+        //--- исключения для LevelSetList::UP_TO_PHP_82
         CountOnNullRector::class,
         AddDefaultValueForUndefinedVariableRector::class,
         NullCoalescingOperatorRector::class,

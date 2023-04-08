@@ -16,8 +16,8 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class AttachPictureOnAlbumTest extends TestCase
 {
-    use CreatePictureWithRelationsTrait, CreateVkAlbumTrait;
-
+    use CreatePictureWithRelationsTrait;
+    use CreateVkAlbumTrait;
     protected function setUp(): void
     {
         parent::setUp();

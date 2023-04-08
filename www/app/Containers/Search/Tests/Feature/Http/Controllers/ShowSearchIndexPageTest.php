@@ -16,8 +16,8 @@ use App\Ship\Parents\Tests\TestCase;
 class ShowSearchIndexPageTest extends TestCase
 {
 
-    use CreateTagTrait, CreatePictureWithRelationsTrait;
-
+    use CreateTagTrait;
+    use CreatePictureWithRelationsTrait;
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      */

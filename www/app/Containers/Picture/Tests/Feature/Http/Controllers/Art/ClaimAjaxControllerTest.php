@@ -12,8 +12,8 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class ClaimAjaxControllerTest extends TestCase
 {
-    use CreatePictureWithRelationsTrait, CreateClaimTrait;
-
+    use CreatePictureWithRelationsTrait;
+    use CreateClaimTrait;
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      *

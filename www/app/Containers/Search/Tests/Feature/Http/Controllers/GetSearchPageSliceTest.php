@@ -17,8 +17,8 @@ use Illuminate\Support\Arr;
 class GetSearchPageSliceTest extends TestCase
 {
 
-    use CreateTagTrait, CreatePictureWithRelationsTrait;
-
+    use CreateTagTrait;
+    use CreatePictureWithRelationsTrait;
     public function testSearchSliceOk(): void
     {
         $this->app->setLocale(LangEnum::RU);

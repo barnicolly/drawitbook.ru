@@ -14,8 +14,8 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class CellAjaxControllerTest extends TestCase
 {
-    use CreateTagTrait, CreatePictureWithRelationsTrait;
-
+    use CreateTagTrait;
+    use CreatePictureWithRelationsTrait;
     public function testGetCellTaggedArtsSliceOk(): void
     {
         $this->app->setLocale(LangEnum::RU);

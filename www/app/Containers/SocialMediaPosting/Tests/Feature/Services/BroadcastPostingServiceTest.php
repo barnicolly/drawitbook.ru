@@ -18,8 +18,9 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class BroadcastPostingServiceTest extends TestCase
 {
-    use CreateSocialMediaPostingHistoryTrait, CreatePictureWithRelationsTrait, CreateTagTrait;
-
+    use CreateSocialMediaPostingHistoryTrait;
+    use CreatePictureWithRelationsTrait;
+    use CreateTagTrait;
     public function testExpectNotFoundPictureIdForPostingException(): void
     {
         $mock = $this->createMock(VkWallPostingStrategy::class);

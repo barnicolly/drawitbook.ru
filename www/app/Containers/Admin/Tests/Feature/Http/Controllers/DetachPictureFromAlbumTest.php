@@ -18,8 +18,8 @@ use Illuminate\Support\Collection;
  */
 class DetachPictureFromAlbumTest extends TestCase
 {
-    use CreatePictureWithRelationsTrait, CreateVkAlbumTrait;
-
+    use CreatePictureWithRelationsTrait;
+    use CreateVkAlbumTrait;
     protected function setUp(): void
     {
         parent::setUp();

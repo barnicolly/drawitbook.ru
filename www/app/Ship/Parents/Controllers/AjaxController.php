@@ -9,5 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 class AjaxController extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
 }

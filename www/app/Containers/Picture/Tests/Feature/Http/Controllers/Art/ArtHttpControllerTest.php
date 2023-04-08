@@ -15,8 +15,8 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class ArtHttpControllerTest extends TestCase
 {
-    use CreatePictureWithRelationsTrait, CreateTagTrait;
-
+    use CreatePictureWithRelationsTrait;
+    use CreateTagTrait;
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      *

@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Cache;
 class HeaderComposerTest extends TestCase
 {
 
-    use CreateMenuLevelTrait, CreateTagTrait;
-
+    use CreateMenuLevelTrait;
+    use CreateTagTrait;
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      * @param string $locale
