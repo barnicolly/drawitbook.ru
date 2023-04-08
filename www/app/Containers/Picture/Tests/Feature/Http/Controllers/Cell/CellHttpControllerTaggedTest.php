@@ -24,8 +24,6 @@ class CellHttpControllerTaggedTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testCellCategoryOk(string $locale): void
     {
@@ -54,8 +52,6 @@ class CellHttpControllerTaggedTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testCellCategoryNotFound(string $locale): void
     {
@@ -70,8 +66,6 @@ class CellHttpControllerTaggedTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testHasRedirects(string $locale): void
     {
@@ -90,8 +84,6 @@ class CellHttpControllerTaggedTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testHasRedirectsIfUndefinedLang(string $locale): void
     {
@@ -113,8 +105,6 @@ class CellHttpControllerTaggedTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testHasAlternativeLink(string $locale): void
     {

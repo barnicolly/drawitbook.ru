@@ -2,6 +2,7 @@
 
 namespace App\Containers\Vk\Tasks\VkAlbumPicture;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Vk\Data\Criteria\VkAlbumPicture\WhereVkAlbumPicturePictureIdCriteria;
 use App\Containers\Vk\Data\Criteria\VkAlbumPicture\WhereVkAlbumPictureVkAlbumIdCriteria;
 use App\Containers\Vk\Data\Repositories\VkAlbumPictureRepository;
@@ -24,7 +25,7 @@ class GetVkAlbumPictureByVkAlbumIdAndPictureIdTask extends Task
      * @param int $pictureId
      * @return VkAlbumPictureModel
      * @throws NotFoundVkAlbumPictureException
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(int $vkAlbumId, int $pictureId): VkAlbumPictureModel
     {

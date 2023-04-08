@@ -8,19 +8,11 @@ use Prettus\Repository\Exceptions\RepositoryException;
 
 class GetInterestingArtsAction extends Action
 {
-    private GetInterestingPictureIdsTask $getInterestingPictureIdsTask;
-    private GetArtsByIdsAction $getArtsByIdsAction;
-
-    public function __construct(GetInterestingPictureIdsTask $getInterestingPictureIdsTask, GetArtsByIdsAction $getArtsByIdsAction)
+    public function __construct(private readonly GetInterestingPictureIdsTask $getInterestingPictureIdsTask, private readonly GetArtsByIdsAction $getArtsByIdsAction)
     {
-        $this->getInterestingPictureIdsTask = $getInterestingPictureIdsTask;
-        $this->getArtsByIdsAction = $getArtsByIdsAction;
     }
 
     /**
-     * @param int $excludeId
-     * @param int $limit
-     * @return array
      * @throws RepositoryException
      */
     public function run(int $excludeId, int $limit): array

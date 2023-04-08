@@ -2,6 +2,7 @@
 
 namespace App\Containers\Picture\Tasks\PictureTag;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Picture\Data\Criteria\PictureTag\JoinTagCriteria;
 use App\Containers\Picture\Data\Criteria\PictureTag\WhereNotTagIdsCriteria;
 use App\Containers\Picture\Data\Criteria\PictureTag\WherePictureIdCriteria;
@@ -25,7 +26,7 @@ class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
     /**
      * @param int $artId
      * @return array
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(int $artId): array
     {

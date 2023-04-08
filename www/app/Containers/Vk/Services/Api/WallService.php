@@ -2,6 +2,7 @@
 
 namespace App\Containers\Vk\Services\Api;
 
+use Exception;
 class WallService
 {
 
@@ -24,7 +25,7 @@ class WallService
         );
         try {
             $response = $this->instance->api->request('wall.edit', $data);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
     }
 

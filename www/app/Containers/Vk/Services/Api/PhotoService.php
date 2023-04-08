@@ -2,6 +2,8 @@
 
 namespace App\Containers\Vk\Services\Api;
 
+use Exception;
+use GuzzleHttp\Client;
 class PhotoService
 {
 
@@ -28,7 +30,7 @@ class PhotoService
         if ($response) {
             return $response['response'][0]['id'];
         } else {
-            throw new \Exception();
+            throw new Exception();
         }
     }
 
@@ -60,7 +62,7 @@ class PhotoService
         try {
             $response = $this->instance->api->request('photos.get', $data);
             return $response['response']['items'][0]['id'];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return null;
         }
     }
@@ -81,7 +83,7 @@ class PhotoService
                 return $response['response'][0];
             }
             return null;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return null;
         }
     }
@@ -120,7 +122,7 @@ class PhotoService
 
     private function upload(string $uploadUrl, string $filePath): array
     {
-        $client = new \GuzzleHttp\Client();
+        $client = new Client();
         $res = $client->post(
             $uploadUrl,
             [

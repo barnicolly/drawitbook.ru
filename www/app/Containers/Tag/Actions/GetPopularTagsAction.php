@@ -2,6 +2,7 @@
 
 namespace App\Containers\Tag\Actions;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Tag\Data\Dto\TagDto;
 use App\Containers\Tag\Models\SprTagsModel;
 use App\Containers\Tag\Tasks\GetPopularTagsTask;
@@ -19,7 +20,7 @@ class GetPopularTagsAction extends Action
 
     /**
      * @return array
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(): array
     {

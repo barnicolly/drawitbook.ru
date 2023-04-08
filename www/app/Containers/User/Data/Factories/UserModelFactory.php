@@ -2,6 +2,7 @@
 
 namespace App\Containers\User\Data\Factories;
 
+use DateTimeImmutable;
 use App\Containers\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,7 +30,7 @@ class UserModelFactory extends Factory
     ])]
     public function definition(): array
     {
-        $dateTime = (new \DateTimeImmutable())->format('Y-m-d H:i:s');
+        $dateTime = (new DateTimeImmutable())->format('Y-m-d H:i:s');
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->email,

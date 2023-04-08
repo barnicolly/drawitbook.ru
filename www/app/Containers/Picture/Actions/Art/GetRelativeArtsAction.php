@@ -11,27 +11,11 @@ use Prettus\Repository\Exceptions\RepositoryException;
 class GetRelativeArtsAction extends Action
 {
 
-    private SearchService $searchService;
-    private GetInterestingPictureIdsTask $getInterestingPictureIdsTask;
-    private SeparateTagsForHiddenAndShowIdsTask $separateTagsForHiddenAndShowIdsTask;
-    private GetArtsByIdsAction $getArtsByIdsAction;
-
-    public function __construct(
-        SearchService $searchService,
-        GetInterestingPictureIdsTask $getInterestingPictureIdsTask,
-        SeparateTagsForHiddenAndShowIdsTask $separateTagsForHiddenAndShowIdsTask,
-        GetArtsByIdsAction $getArtsByIdsAction,
-    ) {
-        $this->searchService = $searchService;
-        $this->getInterestingPictureIdsTask = $getInterestingPictureIdsTask;
-        $this->separateTagsForHiddenAndShowIdsTask = $separateTagsForHiddenAndShowIdsTask;
-        $this->getArtsByIdsAction = $getArtsByIdsAction;
+    public function __construct(private readonly SearchService $searchService, private readonly GetInterestingPictureIdsTask $getInterestingPictureIdsTask, private readonly SeparateTagsForHiddenAndShowIdsTask $separateTagsForHiddenAndShowIdsTask, private readonly GetArtsByIdsAction $getArtsByIdsAction)
+    {
     }
 
     /**
-     * @param array $artTags
-     * @param int $artId
-     * @return array
      * @throws RepositoryException
      */
     public function run(array $artTags, int $artId): array

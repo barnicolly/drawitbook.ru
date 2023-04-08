@@ -14,8 +14,6 @@ class CellHttpControllerIndexTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testCellIndexResponseCode200(string $locale): void
     {

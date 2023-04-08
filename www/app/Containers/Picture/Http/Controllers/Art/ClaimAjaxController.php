@@ -13,9 +13,6 @@ class ClaimAjaxController extends HttpController
 {
 
     /**
-     * @param ClaimAjaxRequest $request
-     * @param CreateUserClaimIfNotExistAction $action
-     * @return JsonResponse
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\ClaimAjaxControllerTest
      */
     public function register(ClaimAjaxRequest $request, CreateUserClaimIfNotExistAction $action): JsonResponse

@@ -2,13 +2,14 @@
 
 namespace App\Containers\Search\Services;
 
+use Exception;
 use App\Containers\Translation\Enums\LangEnum;
 use Foolz\SphinxQL\Drivers\Mysqli\Connection;
 use Foolz\SphinxQL\SphinxQL;
 
 class SearchService
 {
-    private Connection $connection;
+    private readonly Connection $connection;
     private int $limit = 15;
 
     public function __construct()
@@ -36,7 +37,7 @@ class SearchService
                 return array_column($result, 'id');
             }
             return [];
-        } catch (\Exception $e) {
+        } catch (Exception) {
             return [];
         }
     }
@@ -70,7 +71,7 @@ class SearchService
                 return array_column($result, 'id');
             }
             return [];
-        } catch (\Exception $e) {
+        } catch (Exception) {
             return [];
         }
     }
@@ -84,10 +85,10 @@ class SearchService
 
         $query = $filters['query'] ?? '';
         if ($query) {
-            $exploded = explode(' ', $query);
+            $exploded = explode(' ', (string) $query);
             $exploded = array_filter(
                 $exploded,
-                function ($item) {
+                function ($item): bool {
                     return $item !== '';
                 }
             );

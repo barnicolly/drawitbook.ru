@@ -1,5 +1,7 @@
 <?php
 
+use DaveJamesMiller\Breadcrumbs\BreadcrumbsManager;
+use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
 return [
 
     /*
@@ -67,9 +69,9 @@ return [
     */
 
     // Manager
-    'manager-class' => DaveJamesMiller\Breadcrumbs\BreadcrumbsManager::class,
+    'manager-class' => BreadcrumbsManager::class,
 
     // Generator
-    'generator-class' => DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator::class,
+    'generator-class' => BreadcrumbsGenerator::class,
 
 ];

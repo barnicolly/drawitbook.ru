@@ -2,6 +2,7 @@
 
 namespace App\Containers\Seo\Traits;
 
+use stdClass;
 trait BreadcrumbsTrait
 {
 
@@ -9,7 +10,7 @@ trait BreadcrumbsTrait
 
     protected function addBreadcrumb(string $title, ?string $url = null): void
     {
-        $breadcrumb = new \stdClass();
+        $breadcrumb = new stdClass();
         $breadcrumb->title = $title;
         $breadcrumb->url = $url;
         $this->breadcrumbs->push($breadcrumb);

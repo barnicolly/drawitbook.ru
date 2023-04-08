@@ -1,5 +1,6 @@
-<?php $adPostfix = $page ?? 1;
-$showAds = app()->getLocale() === \App\Containers\Translation\Enums\LangEnum::RU;
+<?php use App\Containers\Translation\Enums\LangEnum;
+$adPostfix = $page ?? 1;
+$showAds = app()->getLocale() === LangEnum::RU;
 ?>
 @foreach($arts as $art)
     @if(in_array($loop->index, [5, 12, 18], true) && $showAds)

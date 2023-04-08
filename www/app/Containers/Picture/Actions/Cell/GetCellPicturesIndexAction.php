@@ -15,21 +15,8 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetCellPicturesIndexAction extends Action
 {
-    private SeoService $seoService;
-    private RouteService $routeService;
-    private GetDefaultShareImageTask $getDefaultShareImageTask;
-    private GetInterestingArtsAction $getInterestingArtsAction;
-
-    public function __construct(
-        SeoService $seoService,
-        RouteService $routeService,
-        GetDefaultShareImageTask $getDefaultShareImageTask,
-        GetInterestingArtsAction $getInterestingArtsAction
-    ) {
-        $this->seoService = $seoService;
-        $this->routeService = $routeService;
-        $this->getDefaultShareImageTask = $getDefaultShareImageTask;
-        $this->getInterestingArtsAction = $getInterestingArtsAction;
+    public function __construct(private readonly SeoService $seoService, private readonly RouteService $routeService, private readonly GetDefaultShareImageTask $getDefaultShareImageTask, private readonly GetInterestingArtsAction $getInterestingArtsAction)
+    {
     }
 
     /**
@@ -60,16 +47,13 @@ class GetCellPicturesIndexAction extends Action
 
     private function getAlternateLinks(): array
     {
-        $links = [];
-        $links[] = [
+        return [[
             'lang' => LangEnum::RU,
             'href' => $this->routeService->getRouteArtsCell([], true, LangEnum::RU),
-        ];
-        $links[] = [
+        ], [
             'lang' => LangEnum::EN,
             'href' => $this->routeService->getRouteArtsCell([], true, LangEnum::EN),
-        ];
-        return $links;
+        ]];
     }
 
 }

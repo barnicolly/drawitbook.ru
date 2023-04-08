@@ -43,7 +43,6 @@ class RegisterHttpController extends HttpController
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -58,8 +57,7 @@ class RegisterHttpController extends HttpController
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\Containers\User\Models\User
+     * @return User
      */
     protected function create(array $data)
     {

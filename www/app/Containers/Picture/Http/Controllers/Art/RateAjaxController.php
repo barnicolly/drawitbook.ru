@@ -13,9 +13,6 @@ class RateAjaxController extends HttpController
 {
 
     /**
-     * @param RateAjaxRequest $request
-     * @param SetLikePictureAction $action
-     * @return JsonResponse
      *
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\RateAjaxControllerLikeTest
      */

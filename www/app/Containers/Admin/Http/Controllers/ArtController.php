@@ -21,9 +21,6 @@ class ArtController extends HttpController
 {
 
     /**
-     * @param ArtSetVkPostingRequest $request
-     * @param PictureSetVkPostingFlagTask $task
-     * @return JsonResponse
      *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\SetVkPostingOnTest
      */
@@ -41,9 +38,6 @@ class ArtController extends HttpController
     }
 
     /**
-     * @param ArtSetVkPostingRequest $request
-     * @param PictureUnsetVkPostingFlagTask $task
-     * @return JsonResponse
      *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\SetVkPostingOffTest
      */
@@ -61,9 +55,6 @@ class ArtController extends HttpController
     }
 
     /**
-     * @param GetSettingsModalRequest $request
-     * @param GetSettingsModalAction $action
-     * @return JsonResponse
      *
      * @see  \App\Containers\Admin\Tests\Feature\Http\Controllers\GetSettingsModalTest
      */
@@ -80,9 +71,6 @@ class ArtController extends HttpController
     }
 
     /**
-     * @param AttachPictureOnAlbumRequest $request
-     * @param AttachPictureOnAlbumAction $action
-     * @return JsonResponse
      *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\AttachPictureOnAlbumTest
      */
@@ -98,9 +86,6 @@ class ArtController extends HttpController
     }
 
     /**
-     * @param DetachPictureFromAlbumRequest $request
-     * @param DetachPictureFromAlbumAction $action
-     * @return JsonResponse
      *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\AttachPictureOnAlbumTest
      */

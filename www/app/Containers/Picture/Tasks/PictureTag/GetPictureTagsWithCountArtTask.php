@@ -2,6 +2,7 @@
 
 namespace App\Containers\Picture\Tasks\PictureTag;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Picture\Data\Criteria\PictureTag\JoinTagCriteria;
 use App\Containers\Picture\Data\Criteria\PictureTag\WhereNotTagIdsCriteria;
 use App\Containers\Picture\Data\Repositories\PictureTagRepository;
@@ -30,7 +31,7 @@ class GetPictureTagsWithCountArtTask extends Task
      * @param int $limit
      * @param string $locale
      * @return array
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(int $limit, string $locale): array
     {

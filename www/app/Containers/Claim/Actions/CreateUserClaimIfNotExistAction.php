@@ -2,6 +2,8 @@
 
 namespace App\Containers\Claim\Actions;
 
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Claim\Tasks\CreateUserClaimTask;
 use App\Containers\Claim\Tasks\GetUserClaimByPictureIdTask;
 use App\Containers\User\Data\Dto\UserDto;
@@ -31,8 +33,8 @@ class CreateUserClaimIfNotExistAction extends Action
     }
 
     /**
-     * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws UnknownProperties
+     * @throws RepositoryException
      */
     public function run(int $pictureId, int $reasonId): void
     {

@@ -2,6 +2,7 @@
 
 namespace App\Containers\Claim\Tasks;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Claim\Data\Criteria\WhereUserClaimIpCriteria;
 use App\Containers\Claim\Data\Criteria\WhereUserClaimPictureIdCriteria;
 use App\Containers\Claim\Data\Criteria\WhereUserClaimReasonIdCriteria;
@@ -26,7 +27,7 @@ class GetUserClaimByPictureIdTask extends Task
      * @param int $reasonId
      * @param UserDto $user
      * @return UserClaimModel|null
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(int $pictureId, int $reasonId, UserDto $user): ?UserClaimModel
     {

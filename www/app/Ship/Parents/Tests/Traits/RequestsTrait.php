@@ -2,6 +2,7 @@
 
 namespace App\Ship\Parents\Tests\Traits;
 
+use Session;
 use App\Containers\Authorization\Enums\RoleEnum;
 use App\Containers\Authorization\Models\Role;
 use App\Containers\User\Models\User;
@@ -12,7 +13,7 @@ trait RequestsTrait
 
     protected function ajaxPost(string $uri, array $data = []): TestResponse
     {
-        \Session::start();
+        Session::start();
         $data = array_merge($data, [
             "_token" => csrf_token(),
         ]);

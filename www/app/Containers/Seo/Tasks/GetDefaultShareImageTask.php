@@ -10,16 +10,10 @@ use Illuminate\Support\Facades\Cache;
 
 class GetDefaultShareImageTask extends Task
 {
-    private GetArtByIdWithFilesAction $getArtByIdWithFilesAction;
-
-    public function __construct(GetArtByIdWithFilesAction $getArtByIdWithFilesAction)
+    public function __construct(private readonly GetArtByIdWithFilesAction $getArtByIdWithFilesAction)
     {
-        $this->getArtByIdWithFilesAction = $getArtByIdWithFilesAction;
     }
 
-    /**
-     * @return ShareImageDto|null
-     */
     public function run(): ?ShareImageDto
     {
         $cacheName = 'seo.default_share_image';
@@ -36,7 +30,7 @@ class GetDefaultShareImageTask extends Task
                             width:        $picture->images->primary->width,
                             height:       $picture->images->primary->height
                         );
-                    } catch (NotFoundPicture $e) {
+                    } catch (NotFoundPicture) {
                         return null;
                     }
                 }

@@ -2,6 +2,7 @@
 
 namespace App\Containers\Tag\Actions;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsWithCountArtTask;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Route\RouteService;
@@ -21,7 +22,7 @@ class GetListPopularTagsWithCountArtsAction extends Action
 
     /**
      * @return array
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(): array
     {

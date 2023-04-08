@@ -2,6 +2,7 @@
 
 namespace App\Containers\Admin\Actions;
 
+use Exception;
 use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Tasks\VkAlbum\GetVkAlbumByIdTask;
 use App\Containers\Vk\Tasks\VkAlbumPicture\DeleteVkAlbumPictureByIdTask;
@@ -10,35 +11,13 @@ use App\Ship\Parents\Actions\Action;
 
 class DetachPictureFromAlbumAction extends Action
 {
-    private PhotoService $apiPhotoService;
-    private GetVkAlbumByIdTask $getVkAlbumByIdTask;
-    private GetVkAlbumPictureByVkAlbumIdAndPictureIdTask $getVkAlbumPictureByVkAlbumIdAndPictureIdTask;
-    private DeleteVkAlbumPictureByIdTask $deleteVkAlbumPictureByIdTask;
-
-    /**
-     * @param PhotoService $apiPhotoService
-     * @param GetVkAlbumByIdTask $getVkAlbumByIdTask
-     * @param GetVkAlbumPictureByVkAlbumIdAndPictureIdTask $getVkAlbumPictureByVkAlbumIdAndPictureIdTask
-     * @param DeleteVkAlbumPictureByIdTask $deleteVkAlbumPictureByIdTask
-     */
-    public function __construct(
-        PhotoService $apiPhotoService,
-        GetVkAlbumByIdTask $getVkAlbumByIdTask,
-        GetVkAlbumPictureByVkAlbumIdAndPictureIdTask $getVkAlbumPictureByVkAlbumIdAndPictureIdTask,
-        DeleteVkAlbumPictureByIdTask $deleteVkAlbumPictureByIdTask
-    ) {
-        $this->apiPhotoService = $apiPhotoService;
-        $this->getVkAlbumByIdTask = $getVkAlbumByIdTask;
-        $this->getVkAlbumPictureByVkAlbumIdAndPictureIdTask = $getVkAlbumPictureByVkAlbumIdAndPictureIdTask;
-        $this->deleteVkAlbumPictureByIdTask = $deleteVkAlbumPictureByIdTask;
+    public function __construct(private readonly PhotoService $apiPhotoService, private readonly GetVkAlbumByIdTask $getVkAlbumByIdTask, private readonly GetVkAlbumPictureByVkAlbumIdAndPictureIdTask $getVkAlbumPictureByVkAlbumIdAndPictureIdTask, private readonly DeleteVkAlbumPictureByIdTask $deleteVkAlbumPictureByIdTask)
+    {
     }
 
     /**
-     * @param int $artId
-     * @param int $vkAlbumId
-     * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function run(int $artId, int $vkAlbumId): void
     {

@@ -29,7 +29,7 @@ foreach (config('translator.available_locales') as $prefix) {
                         }
                     );
 
-                    Route::get('/{tag}/slice', [CellAjaxController::class, 'slice'])
+                    Route::get('/{tag}/slice', (new CellAjaxController())->slice(...))
                         ->middleware('ajax');
                 }
             );
@@ -40,7 +40,7 @@ foreach (config('translator.available_locales') as $prefix) {
                     'middleware' => 'web',
                 ],
                 function () use ($prefix) {
-                    Route::get('/{id}', [ArtHttpController::class, 'index'])
+                    Route::get('/{id}', (new ArtHttpController())->index(...))
                         ->middleware(['lower_case', 'no_get'])
                         ->name($prefix . '_art');
 
@@ -49,7 +49,7 @@ foreach (config('translator.available_locales') as $prefix) {
                             'middleware' => ['ajax'],
                         ],
                         function () {
-                            Route::post('/{id}/like', [RateAjaxController::class, 'like']);
+                            Route::post('/{id}/like', (new RateAjaxController())->like(...));
                         }
                     );
 
@@ -58,7 +58,7 @@ foreach (config('translator.available_locales') as $prefix) {
                             'middleware' => ['ajax'],
                         ],
                         function () {
-                            Route::post('/{id}/claim', [ClaimAjaxController::class, 'register']);
+                            Route::post('/{id}/claim', (new ClaimAjaxController())->register(...));
                         }
                     );
                 }

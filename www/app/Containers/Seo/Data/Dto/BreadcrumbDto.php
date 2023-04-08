@@ -8,5 +8,5 @@ class BreadcrumbDto extends Dto
 {
     public string $title;
 
-    public ?string $url;
+    public ?string $url = null;
 }

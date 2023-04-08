@@ -2,6 +2,7 @@
 
 namespace App\Containers\Vk\Services;
 
+use Exception;
 use App\Containers\SocialMediaPosting\Contracts\SocialMediaPostingContract;
 use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Services\Api\VkApi;
@@ -44,7 +45,7 @@ class VkWallPostingStrategy implements SocialMediaPostingContract
         $uploadedPhoto = $this->photoService->saveWallPhoto($this->artPath);
         $postId = $this->createPost($uploadedPhoto['owner_id'], $uploadedPhoto['id'], $hashTags);
         if (empty($postId)) {
-            throw new \Exception();
+            throw new Exception();
         }
         $lastWallPhotoId = $this->photoService->getLastOnWall();
         if ($lastWallPhotoId) {

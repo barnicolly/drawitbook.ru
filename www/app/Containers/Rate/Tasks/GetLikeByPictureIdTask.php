@@ -2,6 +2,7 @@
 
 namespace App\Containers\Rate\Tasks;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Rate\Data\Criteria\WhereLikesIpCriteria;
 use App\Containers\Rate\Data\Criteria\WhereLikesPictureIdCriteria;
 use App\Containers\Rate\Data\Criteria\WhereLikesUserIdCriteria;
@@ -24,7 +25,7 @@ class GetLikeByPictureIdTask extends Task
      * @param int $pictureId
      * @param UserDto $user
      * @return LikesModel|null
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(int $pictureId, UserDto $user): ?LikesModel
     {

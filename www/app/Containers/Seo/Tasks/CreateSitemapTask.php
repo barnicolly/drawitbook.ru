@@ -16,11 +16,8 @@ use Spatie\Sitemap\Tags\Url;
 class CreateSitemapTask extends Task
 {
 
-    private RouteService $routeService;
-
-    public function __construct(RouteService $routeService)
+    public function __construct(private readonly RouteService $routeService)
     {
-        $this->routeService = $routeService;
     }
 
     public function run(): void

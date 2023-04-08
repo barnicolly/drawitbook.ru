@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 class PaginatorFactory
 {
 
-    public const DEFAULT_PER_PAGE = 25;
+    final public const DEFAULT_PER_PAGE = 25;
 
     public static function createFromAnother(LengthAwarePaginator $paginator, Collection $items): LengthAwarePaginator
     {

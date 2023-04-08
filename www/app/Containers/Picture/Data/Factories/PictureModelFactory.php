@@ -2,6 +2,7 @@
 
 namespace App\Containers\Picture\Data\Factories;
 
+use DateTimeImmutable;
 use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Containers\Picture\Models\PictureModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -31,7 +32,7 @@ class PictureModelFactory extends Factory
     ])]
     public function definition(): array
     {
-        $dateTime = (new \DateTimeImmutable())->format('Y-m-d H:i:s');
+        $dateTime = (new DateTimeImmutable())->format('Y-m-d H:i:s');
         return [
             PictureColumnsEnum::CREATED_AT => $dateTime,
             PictureColumnsEnum::UPDATED_AT => $dateTime,

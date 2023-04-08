@@ -2,6 +2,7 @@
 
 namespace App\Containers\Claim\Providers;
 
+use Config;
 use Illuminate\Support\ServiceProvider;
 
 class ClaimServiceProvider extends ServiceProvider
@@ -61,7 +62,7 @@ class ClaimServiceProvider extends ServiceProvider
     private function getPublishableViewPaths(): array
     {
         $paths = [];
-        foreach (\Config::get('view.paths') as $path) {
+        foreach (Config::get('view.paths') as $path) {
             if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }

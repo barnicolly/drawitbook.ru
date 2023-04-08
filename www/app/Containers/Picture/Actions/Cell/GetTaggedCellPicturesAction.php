@@ -25,31 +25,11 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 class GetTaggedCellPicturesAction extends Action
 {
 
-    private RouteService $routeService;
-    private SeoService $seoService;
-    private FormCellPageAlternativeLocaleLinksTask $formCellPageAlternativeLocaleLinksTask;
-    private GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask;
-    private GetTagBySeoNameTask $getTagBySeoNameTask;
-    private CreateCellResultsAction $createCellResultsAction;
-
-    public function __construct(
-        RouteService $routeService,
-        SeoService $seoService,
-        FormCellPageAlternativeLocaleLinksTask $formCellPageAlternativeLocaleLinksTask,
-        GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask,
-        GetTagBySeoNameTask $getTagBySeoNameTask,
-        CreateCellResultsAction $createCellResultsAction
-    ) {
-        $this->routeService = $routeService;
-        $this->seoService = $seoService;
-        $this->formCellPageAlternativeLocaleLinksTask = $formCellPageAlternativeLocaleLinksTask;
-        $this->getPaginatedCellArtsByTagTask = $getPaginatedCellArtsByTagTask;
-        $this->getTagBySeoNameTask = $getTagBySeoNameTask;
-        $this->createCellResultsAction = $createCellResultsAction;
+    public function __construct(private readonly RouteService $routeService, private readonly SeoService $seoService, private readonly FormCellPageAlternativeLocaleLinksTask $formCellPageAlternativeLocaleLinksTask, private readonly GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask, private readonly GetTagBySeoNameTask $getTagBySeoNameTask, private readonly CreateCellResultsAction $createCellResultsAction)
+    {
     }
 
     /**
-     * @param string $tag
      * @return array{array, PageMetaDto}
      * @throws NotFoundRelativeArts
      * @throws NotFoundTagException

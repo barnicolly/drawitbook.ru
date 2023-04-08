@@ -13,9 +13,6 @@ class ArtHttpController extends HttpController
 {
 
     /**
-     * @param int $artId
-     * @param GetArtAction $action
-     * @return Response
      *
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\ArtHttpControllerTest
      */

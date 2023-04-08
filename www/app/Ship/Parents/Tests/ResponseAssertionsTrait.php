@@ -2,6 +2,7 @@
 
 namespace App\Ship\Parents\Tests;
 
+use Illuminate\Routing\Router;
 use PHPUnit\Framework\Assert;
 
 trait ResponseAssertionsTrait
@@ -10,7 +11,7 @@ trait ResponseAssertionsTrait
 
     public function assertRouteUsesMiddleware(string $routeName, array $middlewares, bool $exact = false): void
     {
-        $router = resolve(\Illuminate\Routing\Router::class);
+        $router = resolve(Router::class);
 
         $route = $router->getRoutes()->getByName($routeName);
         $usedMiddlewares = $route->gatherMiddleware();

@@ -2,6 +2,7 @@
 
 namespace App\Containers\Picture\Actions\Cell;
 
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 use App\Containers\Picture\Data\Dto\GetCellTaggedResultDto;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
@@ -12,18 +13,13 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class CreateCellSliceResultsAction extends Action
 {
 
-    private TranslationService $translationService;
-
-    public function __construct(TranslationService $translationService)
+    public function __construct(private readonly TranslationService $translationService)
     {
-        $this->translationService = $translationService;
     }
 
     /**
-     * @param string $locale
-     * @param LengthAwarePaginator $paginator
      * @return array{GetCellTaggedResultDto, PaginationDto}
-     * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
+     * @throws UnknownProperties
      */
     public function run(string $locale, LengthAwarePaginator $paginator): array
     {

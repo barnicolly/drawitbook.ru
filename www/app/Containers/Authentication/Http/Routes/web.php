@@ -8,14 +8,14 @@ Route::group(
         'prefix' => '/',
     ],
     function () {
-        Route::get('/ru/login', [LoginController::class, 'showLoginForm'])->name('loginPage');
-        Route::post('/ru/login', [LoginController::class, 'login'])->name('login');
-        Route::get('/register', [LoginController::class, 'dump']);
-        Route::post('/register', [LoginController::class, 'dump']);
-        Route::get('/password/reset', [LoginController::class, 'dump']);
-        Route::post('password/email', [LoginController::class, 'dump']);
-        Route::get('password/reset/{token}', [LoginController::class, 'dump']);
-        Route::post('password/reset', [LoginController::class, 'dump']);
-        Route::get('/logout', [LoginController::class, 'logout']);
+        Route::get('/ru/login', (new LoginController())->showLoginForm(...))->name('loginPage');
+        Route::post('/ru/login', (new LoginController())->login(...))->name('login');
+        Route::get('/register', (new LoginController())->dump(...));
+        Route::post('/register', (new LoginController())->dump(...));
+        Route::get('/password/reset', (new LoginController())->dump(...));
+        Route::post('password/email', (new LoginController())->dump(...));
+        Route::get('password/reset/{token}', (new LoginController())->dump(...));
+        Route::post('password/reset', (new LoginController())->dump(...));
+        Route::get('/logout', (new LoginController())->logout(...));
     }
 );

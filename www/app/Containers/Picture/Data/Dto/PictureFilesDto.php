@@ -9,5 +9,5 @@ class PictureFilesDto extends Dto
 
     public PictureFileDto $primary;
 
-    public ?PictureFileDto $optimized;
+    public ?PictureFileDto $optimized = null;
 }

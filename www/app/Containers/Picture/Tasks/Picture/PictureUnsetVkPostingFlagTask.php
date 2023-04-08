@@ -2,6 +2,7 @@
 
 namespace App\Containers\Picture\Tasks\Picture;
 
+use Prettus\Validator\Exceptions\ValidatorException;
 use App\Containers\Picture\Data\Repositories\PictureRepository;
 use App\Containers\Picture\Models\PictureModel;
 use App\Ship\Enums\FlagsEnum;
@@ -20,7 +21,7 @@ class PictureUnsetVkPostingFlagTask extends Task
     /**
      * @param int $id
      * @return PictureModel
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     * @throws ValidatorException
      */
     public function run(int $id): PictureModel
     {

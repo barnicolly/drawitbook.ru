@@ -11,18 +11,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class CreateCellResultsAction extends Action
 {
 
-    private TranslationService $translationService;
-
-    public function __construct(TranslationService $translationService)
+    public function __construct(private readonly TranslationService $translationService)
     {
-        $this->translationService = $translationService;
     }
 
-    /**
-     * @param string $locale
-     * @param LengthAwarePaginator $paginator
-     * @return array
-     */
     public function run(string $locale, LengthAwarePaginator $paginator): array
     {
         $paginationData = PaginationDto::createFromPaginator($paginator);

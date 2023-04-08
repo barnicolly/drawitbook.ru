@@ -9,11 +9,8 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 
 class WhereNotTagIdsCriteria extends Criteria
 {
-    private array $tagIds;
-
-    public function __construct(array $tagIds)
+    public function __construct(private readonly array $tagIds)
     {
-        $this->tagIds = $tagIds;
     }
 
     /**

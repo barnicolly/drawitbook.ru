@@ -13,17 +13,11 @@ use Prettus\Repository\Exceptions\RepositoryException;
 class GetTagBySeoNameTask extends Task
 {
 
-    protected TagRepository $repository;
-
-    public function __construct(TagRepository $repository)
+    public function __construct(protected TagRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
-     * @param string $tagSeoName
-     * @param string $locale
-     * @return TagDto|null
      * @throws RepositoryException
      */
     public function run(string $tagSeoName, string $locale): ?TagDto

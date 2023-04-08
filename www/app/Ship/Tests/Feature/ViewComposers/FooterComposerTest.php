@@ -2,6 +2,7 @@
 
 namespace App\Ship\Tests\Feature\ViewComposers;
 
+use Illuminate\View\View;
 use App\Containers\Menu\Enums\MenuLevelsColumnsEnum;
 use App\Containers\Menu\Tests\Traits\CreateMenuLevelTrait;
 use App\Containers\Tag\Models\SprTagsModel;
@@ -54,7 +55,7 @@ class FooterComposerTest extends TestCase
 
         $view = $this->view('layouts.public.footer.index');
 
-        /** @var \Illuminate\View\View $innerView */
+        /** @var View $innerView */
         $innerView = $this->getProtectedProperty($view, 'view');
         $innerViewData = $innerView->getData();
 

@@ -9,7 +9,7 @@ class RouterServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        $this->app->bind('Router',function(){
+        $this->app->bind('Router',function(): RouteService{
             return new RouteService();
         });
     }

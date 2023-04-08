@@ -1,5 +1,6 @@
 <?php
 
+use App\Ship\Services\File\FileService;
 if (!function_exists('buildUrl')) {
     function buildUrl(string $path): string
     {
@@ -25,7 +26,7 @@ if (!function_exists('getArtsFolder')) {
 if (!function_exists('formArtUrlPath')) {
     function formArtUrlPath(string $artRelativePath): string
     {
-        return app(\App\Ship\Services\File\FileService::class)->formArtUrlPath($artRelativePath);
+        return app(FileService::class)->formArtUrlPath($artRelativePath);
     }
 }
 

@@ -1,5 +1,6 @@
 <?php
 namespace App\Containers\Authorization\Http\Middleware;
+use Illuminate\Http\Request;
 use Closure;
 
 class CheckRole
@@ -7,7 +8,7 @@ class CheckRole
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  \Closure  $next
      * @return mixed
      */

@@ -10,7 +10,6 @@ class SeparateTagsForHiddenAndShowIdsTask extends Task
 {
 
     /**
-     * @param array $artTags
      * @return array{array,array}
      */
     public function run(array $artTags): array

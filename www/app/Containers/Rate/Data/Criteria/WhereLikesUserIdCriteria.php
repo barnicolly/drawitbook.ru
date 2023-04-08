@@ -10,11 +10,8 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 class WhereLikesUserIdCriteria extends Criteria
 {
 
-    private int $userId;
-
-    public function __construct(int $userId)
+    public function __construct(private readonly int $userId)
     {
-        $this->userId = $userId;
     }
 
     /**

@@ -19,8 +19,6 @@ class ShowSearchIndexPageTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testSearchOk(string $locale): void
     {

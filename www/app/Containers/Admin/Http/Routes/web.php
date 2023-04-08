@@ -10,11 +10,11 @@ Route::group(
         'roles' => [RoleEnum::ADMIN],
     ],
     function () {
-        Route::post('/setVkPostingOn', [ArtController::class, 'setVkPostingOn'])->name('admin.posting.vk.on');
-        Route::post('/setVkPostingOff', [ArtController::class, 'setVkPostingOff'])->name('admin.posting.vk.off');
-        Route::get('/{id}/getSettingsModal', [ArtController::class, 'getSettingsModal'])->name('admin.picture.settings');
-        Route::post('/{id}/postInVkAlbum', [ArtController::class, 'attachPictureOnAlbum'])->name('admin.posting.vk.album.attach');
-        Route::post('/{id}/removeFromVkAlbum', [ArtController::class, 'detachPictureFromAlbum'])->name('admin.posting.vk.album.detach');
+        Route::post('/setVkPostingOn', (new ArtController())->setVkPostingOn(...))->name('admin.posting.vk.on');
+        Route::post('/setVkPostingOff', (new ArtController())->setVkPostingOff(...))->name('admin.posting.vk.off');
+        Route::get('/{id}/getSettingsModal', (new ArtController())->getSettingsModal(...))->name('admin.picture.settings');
+        Route::post('/{id}/postInVkAlbum', (new ArtController())->attachPictureOnAlbum(...))->name('admin.posting.vk.album.attach');
+        Route::post('/{id}/removeFromVkAlbum', (new ArtController())->detachPictureFromAlbum(...))->name('admin.posting.vk.album.detach');
     }
 );
 

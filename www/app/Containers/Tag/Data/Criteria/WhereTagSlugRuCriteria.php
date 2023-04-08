@@ -9,11 +9,8 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 
 class WhereTagSlugRuCriteria extends Criteria
 {
-    private string $tagSeoName;
-
-    public function __construct(string $tagSeoName)
+    public function __construct(private readonly string $tagSeoName)
     {
-        $this->tagSeoName = $tagSeoName;
     }
 
     /**
