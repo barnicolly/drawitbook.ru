@@ -1,0 +1,33 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - app/Ship
+        - app/Containers
+
+    level: 5
+    parallel:
+        maximumNumberOfProcesses: 16
+    ignoreErrors:
+        - '#^Parameter \#1 \$artisan of method Illuminate\\Foundation\\Console\\Kernel\:\:setArtisan\(\) expects Illuminate\\Console\\Application, null given\.$#'
+        - '#^Call to an undefined method App\\Containers\\Tag\\Data\\Repositories\\TagRepository\:\:flagged\(\)\.$#'
+        - '#^Attribute class JetBrains\\PhpStorm\\ArrayShape does not exist\.$#'
+        -
+            message: '#^Dead catch \- Throwable is never thrown in the try block\.$#'
+            path: app/Ship/Parents/Tests/Optimization/ClearTestPropertiesAfterTestTrait.php
+        -
+            message: '#^PHPDoc tag @method has invalid value [a-zA-Z0-9\\_\\\\:\\(\\)]+#'
+            path: app/Containers/*/Models/*.php
+        -
+            message: '#^PHPDoc tag @property has invalid value [a-zA-Z0-9\\_\\\\:\\(\\)]+#'
+            path: app/Containers/*/Models/*.php
+        -
+        	message: '#^Call to an undefined method App\\Containers\\Picture\\Data\\Repositories\\PictureRepository\:\:flagged\(\)\.$#'
+        	path: app/Containers/Picture/Tasks/Picture/GetInterestingPictureIdsTask.php
+
+    excludePaths:
+        - app/Containers/Translation/Http/Middleware/CustomTranslationMiddleware.php
+
+    reportUnmatchedIgnoredErrors: false
