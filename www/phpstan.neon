@@ -7,7 +7,7 @@ parameters:
         - app/Ship
         - app/Containers
 
-    level: 5
+    level: 6
     parallel:
         maximumNumberOfProcesses: 16
     ignoreErrors:
@@ -31,3 +31,8 @@ parameters:
         - app/Containers/Translation/Http/Middleware/CustomTranslationMiddleware.php
 
     reportUnmatchedIgnoredErrors: false
+    editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+
+#   level 6
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
