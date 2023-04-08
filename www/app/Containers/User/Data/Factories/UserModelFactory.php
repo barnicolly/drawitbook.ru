@@ -6,7 +6,6 @@ use DateTimeImmutable;
 use App\Containers\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
-use JetBrains\PhpStorm\ArrayShape;
 
 class UserModelFactory extends Factory
 {
@@ -22,12 +21,6 @@ class UserModelFactory extends Factory
      *
      * @return array{name: string, email: string, email_verified_at: string, password: string}
      */
-    #[ArrayShape([
-        'name' => "string",
-        'email' => "string",
-        'email_verified_at' => "string",
-        'password' => "string",
-    ])]
     public function definition(): array
     {
         $dateTime = (new DateTimeImmutable())->format('Y-m-d H:i:s');

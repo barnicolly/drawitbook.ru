@@ -6,7 +6,6 @@ use App\Containers\Claim\Enums\SprClaimReasonColumnsEnum;
 use App\Containers\Claim\Models\SprClaimReasonModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
-use JetBrains\PhpStorm\ArrayShape;
 
 class SprClaimReasonModelFactory extends Factory
 {
@@ -22,7 +21,6 @@ class SprClaimReasonModelFactory extends Factory
      *
      * @return array{reason: string}
      */
-    #[ArrayShape([SprClaimReasonColumnsEnum::REASON => "string"])]
     public function definition(): array
     {
         return [

@@ -5,8 +5,6 @@ namespace App\Containers\Picture\Data\Factories;
 use App\Containers\Picture\Enums\PictureExtensionsColumnsEnum;
 use App\Containers\Picture\Models\PictureExtensionsModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Model;
-use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @extends Factory<PictureExtensionsModel>
@@ -25,14 +23,6 @@ class PictureExtensionsModelFactory extends Factory
      *
      * @return array{picture_id: int, path: string, width: int, height: int, ext: string, mime_type: string}
      */
-    #[ArrayShape([
-        PictureExtensionsColumnsEnum::PICTURE_ID => "int",
-        PictureExtensionsColumnsEnum::PATH => "string",
-        PictureExtensionsColumnsEnum::WIDTH => "int",
-        PictureExtensionsColumnsEnum::HEIGHT => "int",
-        PictureExtensionsColumnsEnum::EXT => "string",
-        PictureExtensionsColumnsEnum::MIME_TYPE => "string",
-    ])]
     public function definition(): array
     {
         $width = $this->faker->randomDigitNotZero();

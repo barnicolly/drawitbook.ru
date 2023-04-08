@@ -5,7 +5,6 @@ namespace App\Containers\Authorization\Data\Factories;
 use App\Containers\Authorization\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
-use JetBrains\PhpStorm\ArrayShape;
 
 class RoleModelFactory extends Factory
 {
@@ -21,7 +20,6 @@ class RoleModelFactory extends Factory
      *
      * @return array{name: string, description: string}
      */
-    #[ArrayShape(['name' => "string", 'description' => "string"])]
     public function definition(): array
     {
         return [

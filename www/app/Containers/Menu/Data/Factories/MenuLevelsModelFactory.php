@@ -8,7 +8,6 @@ use App\Containers\Menu\Models\MenuLevelsModel;
 use App\Containers\Tag\Models\SprTagsModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
-use JetBrains\PhpStorm\ArrayShape;
 
 class MenuLevelsModelFactory extends Factory
 {
@@ -24,15 +23,6 @@ class MenuLevelsModelFactory extends Factory
      *
      * @return array{custom_name_en: null, custom_name_ru: null, show_en: int, show_ru: int, spr_tag_id: SprTagsModelFactory, parent_level_id: int, column: null}
      */
-    #[ArrayShape([
-        MenuLevelsColumnsEnum::CUSTOM_NAME_EN => "string",
-        MenuLevelsColumnsEnum::CUSTOM_NAME_RU => "string",
-        MenuLevelsColumnsEnum::SPR_TAG_ID => "int|null",
-        MenuLevelsColumnsEnum::PARENT_LEVEL_ID => "int|null",
-        MenuLevelsColumnsEnum::COLUMN => "int|null",
-        MenuLevelsColumnsEnum::SHOW_EN => "int",
-        MenuLevelsColumnsEnum::SHOW_RU => "int",
-    ])]
     public function definition(): array
     {
         return [

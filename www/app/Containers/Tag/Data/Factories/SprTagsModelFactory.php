@@ -7,7 +7,6 @@ use App\Containers\Tag\Models\SprTagsModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use JetBrains\PhpStorm\ArrayShape;
 
 class SprTagsModelFactory extends Factory
 {
@@ -23,12 +22,6 @@ class SprTagsModelFactory extends Factory
      *
      * @return array{name: string, name_en: string, seo: string, slug_en: string}
      */
-    #[ArrayShape([
-        SprTagsColumnsEnum::NAME => "string",
-        SprTagsColumnsEnum::NAME_EN => "string",
-        SprTagsColumnsEnum::SEO => "string",
-        SprTagsColumnsEnum::SLUG_EN => "string",
-    ])]
     public function definition(): array
     {
         $name = $this->faker->unique()->text(15);

@@ -13,7 +13,6 @@ parameters:
     ignoreErrors:
         - '#^Parameter \#1 \$artisan of method Illuminate\\Foundation\\Console\\Kernel\:\:setArtisan\(\) expects Illuminate\\Console\\Application, null given\.$#'
         - '#^Call to an undefined method App\\Containers\\Tag\\Data\\Repositories\\TagRepository\:\:flagged\(\)\.$#'
-        - '#^Attribute class JetBrains\\PhpStorm\\ArrayShape does not exist\.$#'
         -
             message: '#^Dead catch \- Throwable is never thrown in the try block\.$#'
             path: app/Ship/Parents/Tests/Optimization/ClearTestPropertiesAfterTestTrait.php

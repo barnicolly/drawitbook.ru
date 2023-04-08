@@ -6,7 +6,6 @@ use App\Containers\Rate\Enums\LikesColumnsEnum;
 use App\Containers\Rate\Models\LikesModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
-use JetBrains\PhpStorm\ArrayShape;
 
 class LikesModelFactory extends Factory
 {
@@ -22,10 +21,6 @@ class LikesModelFactory extends Factory
      *
      * @return array{picture_id: int, user_id: null}
      */
-    #[ArrayShape([
-        LikesColumnsEnum::PICTURE_ID => "int",
-        LikesColumnsEnum::USER_ID => "null|int",
-    ])]
     public function definition(): array
     {
         return [

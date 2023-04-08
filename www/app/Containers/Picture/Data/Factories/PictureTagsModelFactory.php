@@ -5,7 +5,6 @@ namespace App\Containers\Picture\Data\Factories;
 use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
 use App\Containers\Picture\Models\PictureTagsModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @extends Factory<PictureTagsModel>
@@ -24,10 +23,6 @@ class PictureTagsModelFactory extends Factory
      *
      * @return array{picture_id: int, tag_id: int}
      */
-    #[ArrayShape([
-        PictureTagsColumnsEnum::PICTURE_ID => "int",
-        PictureTagsColumnsEnum::TAG_ID => "int",
-    ])]
     public function definition(): array
     {
         return [
