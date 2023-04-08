@@ -14,7 +14,7 @@ class ExceptionsHandler extends LaravelExceptionHandler
     /**
      * A list of the exception types that are not reported.
      *
-     * @var array
+     * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [
         //
@@ -23,25 +23,12 @@ class ExceptionsHandler extends LaravelExceptionHandler
     /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $dontFlash = [
         'password',
         'password_confirmation',
     ];
-
-    /**
-     * Report or log an exception.
-     *
-     * @param Throwable $exception
-     * @return void
-     *
-     * @throws Exception
-     */
-    public function report(Throwable $exception)
-    {
-        parent::report($exception);
-    }
 
     /**
      * Render an exception into an HTTP response.
@@ -52,7 +39,7 @@ class ExceptionsHandler extends LaravelExceptionHandler
      *
      * @throws Throwable
      */
-    public function render($request, Throwable $exception)
+    public function render($request, Throwable $exception): Response
     {
         if ($exception instanceof NotFoundHttpException) {
             $redirectTo = $this->checkKnownRedirect($request->url());

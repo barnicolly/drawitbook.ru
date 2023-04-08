@@ -80,8 +80,9 @@ class PhotoService
             if ($response) {
                 return $response['response'][0];
             }
+            return null;
         } catch (\Exception $e) {
-            return [];
+            return null;
         }
     }
 

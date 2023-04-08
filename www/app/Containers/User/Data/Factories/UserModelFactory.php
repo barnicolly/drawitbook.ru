@@ -4,6 +4,7 @@ namespace App\Containers\User\Data\Factories;
 
 use App\Containers\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use JetBrains\PhpStorm\ArrayShape;
 
 class UserModelFactory extends Factory
@@ -11,14 +12,14 @@ class UserModelFactory extends Factory
     /**
      * The name of the factory's corresponding model.
      *
-     * @var string
+     * @var class-string<Model>
      */
     protected $model = User::class;
 
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     #[ArrayShape([
         'name' => "string",

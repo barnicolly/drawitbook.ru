@@ -19,9 +19,6 @@ class GetPictureByIdTask extends Task
     }
 
     /**
-     * @param int $id
-     * @return array|null
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
      * @throws NotFoundPicture
      */
     public function run(int $id): ?PictureModel

@@ -5,12 +5,13 @@ namespace App\Containers\Claim\Models;
 use App\Containers\Claim\Data\Factories\UserClaimModelFactory;
 use App\Containers\Claim\Enums\UserClaimColumnsEnum;
 use App\Ship\Parents\Models\CoreModel;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property int $id
  * @property int $user_id
- * @property int $ip
+ * @property int|Expression $ip
  * @property int $picture_id
  * @property int $reason_id
  *

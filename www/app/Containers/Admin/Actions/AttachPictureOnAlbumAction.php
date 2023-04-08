@@ -62,7 +62,7 @@ class AttachPictureOnAlbumAction extends Action
         }
         $hashTags = $this->formHashTagsTask->run($tags);
         $this->apiPhotoService->timeout();
-        $this->apiPhotoService->edit($photoId, ['caption' => $hashTags . "\n\n" . ' Больше рисунков ► ' . $url], true);
+        $this->apiPhotoService->edit($photoId, ['caption' => $hashTags . "\n\n" . ' Больше рисунков ► ' . $url]);
         return $photoId;
     }
 

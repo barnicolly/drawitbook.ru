@@ -5,11 +5,12 @@ namespace App\Containers\Rate\Models;
 use App\Containers\Rate\Data\Factories\LikesModelFactory;
 use App\Containers\Rate\Enums\LikesColumnsEnum;
 use App\Ship\Parents\Models\CoreModel;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property int $id
- * @property int $ip
+ * @property int|Expression $ip
  * @property int $user_id
  * @property int $picture_id
  * @property int $activity

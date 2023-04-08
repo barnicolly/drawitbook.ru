@@ -41,7 +41,7 @@ class GetRelativeArtsAction extends Action
         if ($shown || $hidden) {
             $artIds = $this->searchService->searchRelatedPicturesIds($shown, $hidden, $artId);
         }
-        if (empty($arts)) {
+        if (empty($artIds)) {
             $artIds = $this->getInterestingPictureIdsTask->run($artId, 10);
         }
         if (!empty($artIds)) {

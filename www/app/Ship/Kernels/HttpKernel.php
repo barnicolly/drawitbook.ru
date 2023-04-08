@@ -11,7 +11,7 @@ class HttpKernel extends LaravelHttpKernel
      *
      * These middleware are run during every request to your application.
      *
-     * @var array
+     * @var array<int, class-string|string>
      */
     protected $middleware = [
         \App\Containers\Translation\Http\Middleware\CustomTranslationMiddleware::class,
@@ -25,7 +25,7 @@ class HttpKernel extends LaravelHttpKernel
     /**
      * The application's route middleware groups.
      *
-     * @var array
+     * @var array<string, array<int, class-string|string>>
      */
     protected $middlewareGroups = [
         'web' => [
@@ -49,7 +49,7 @@ class HttpKernel extends LaravelHttpKernel
      *
      * These middleware may be assigned to groups or used individually.
      *
-     * @var array
+     * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
         'auth' => \App\Ship\Middlewares\Authenticate::class,
@@ -73,7 +73,7 @@ class HttpKernel extends LaravelHttpKernel
      *
      * This forces non-global middleware to always be in the given order.
      *
-     * @var array
+     * @var string[]
      */
     protected $middlewarePriority = [
         \Illuminate\Session\Middleware\StartSession::class,

@@ -20,7 +20,7 @@ class CreateUserClaimTask extends Task
 
     public function run(int $pictureId, int $reasonId, UserDto $user): UserClaimModel
     {
-        $claim = new UserClaimModel;
+        $claim = new UserClaimModel();
         $claim->picture_id = $pictureId;
         $claim->ip = DB::raw("inet_aton($user->ip)");
         $claim->reason_id = $reasonId;

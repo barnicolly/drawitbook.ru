@@ -5,6 +5,7 @@ namespace App\Containers\Picture\Data\Factories;
 use App\Containers\Picture\Enums\PictureExtensionsColumnsEnum;
 use App\Containers\Picture\Models\PictureExtensionsModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use JetBrains\PhpStorm\ArrayShape;
 
 class PictureExtensionsModelFactory extends Factory
@@ -12,14 +13,14 @@ class PictureExtensionsModelFactory extends Factory
     /**
      * The name of the factory's corresponding model.
      *
-     * @var string
+     * @var class-string<Model>
      */
     protected $model = PictureExtensionsModel::class;
 
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     #[ArrayShape([
         PictureExtensionsColumnsEnum::PICTURE_ID => "int",

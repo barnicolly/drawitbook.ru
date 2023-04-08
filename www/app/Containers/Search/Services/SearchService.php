@@ -53,7 +53,7 @@ class SearchService
                         'tag' => 8,
                     ]
                 )
-                ->from('drawItBookSearchByTag')
+                ->from(['drawItBookSearchByTag'])
                 ->limit($this->limit);
             if (!empty($shown)) {
                 $result->where('tag', 'IN', $shown);
@@ -79,7 +79,7 @@ class SearchService
     {
         $result = (new SphinxQL($this->connection))
             ->select('id', 'query', 'weight() AS weight')
-            ->from($index)
+            ->from([$index])
             ->limit($this->limit);
 
         $query = $filters['query'] ?? '';

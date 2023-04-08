@@ -5,6 +5,7 @@ namespace App\Containers\Rate\Data\Factories;
 use App\Containers\Rate\Enums\LikesColumnsEnum;
 use App\Containers\Rate\Models\LikesModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use JetBrains\PhpStorm\ArrayShape;
 
 class LikesModelFactory extends Factory
@@ -12,14 +13,14 @@ class LikesModelFactory extends Factory
     /**
      * The name of the factory's corresponding model.
      *
-     * @var string
+     * @var class-string<Model>
      */
     protected $model = LikesModel::class;
 
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     #[ArrayShape([
         LikesColumnsEnum::PICTURE_ID => "int",

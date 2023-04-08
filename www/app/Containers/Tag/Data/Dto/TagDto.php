@@ -7,7 +7,7 @@ use App\Ship\Parents\Dto\Dto;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Collection;
 
-class TagDto extends Dto
+final class TagDto extends Dto
 {
 
     public int $id;
@@ -42,7 +42,7 @@ class TagDto extends Dto
         $flags = $model->relationLoaded('flags')
             ? self::formFlags($model->flags)
             : [];
-        return new static(
+        return new self(
             id: $model->id,
             name: $seoLang->current->name,
             seo: $seoLang->current->slug,

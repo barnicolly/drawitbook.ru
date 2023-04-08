@@ -5,6 +5,7 @@ namespace App\Containers\Tag\Data\Factories;
 use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Tag\Models\SprTagsModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\ArrayShape;
 
@@ -13,14 +14,14 @@ class SprTagsModelFactory extends Factory
     /**
      * The name of the factory's corresponding model.
      *
-     * @var string
+     * @var class-string<Model>
      */
     protected $model = SprTagsModel::class;
 
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     #[ArrayShape([
         SprTagsColumnsEnum::NAME => "string",

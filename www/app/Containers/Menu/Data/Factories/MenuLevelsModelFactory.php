@@ -6,6 +6,7 @@ use App\Containers\Menu\Enums\MenuLevelsColumnsEnum;
 use App\Containers\Menu\Models\MenuLevelsModel;
 use App\Containers\Tag\Models\SprTagsModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use JetBrains\PhpStorm\ArrayShape;
 
 class MenuLevelsModelFactory extends Factory
@@ -13,14 +14,14 @@ class MenuLevelsModelFactory extends Factory
     /**
      * The name of the factory's corresponding model.
      *
-     * @var string
+     * @var class-string<Model>
      */
     protected $model = MenuLevelsModel::class;
 
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     #[ArrayShape([
         MenuLevelsColumnsEnum::CUSTOM_NAME_EN => "string",
