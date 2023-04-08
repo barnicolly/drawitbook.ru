@@ -58,9 +58,11 @@ class FooterComposerTest extends TestCase
         $innerView = $this->getProtectedProperty($view, 'view');
         $innerViewData = $innerView->getData();
 
+        /** @var array<array> $languagesArr */
+        $languagesArr = $innerViewData['languages'];
         $view->assertViewHas('groups')
             ->assertViewHas('languages');
-        $languages = collect($innerViewData['languages']);
+        $languages = collect($languagesArr);
         $selectedLanguage = $languages->firstWhere(fn($item) => $item['selected']);
         $expectedLanguages = [LangEnum::EN, LangEnum::RU];
         self::assertEqualsCanonicalizing($expectedLanguages, $languages->pluck('lang')->toArray());

@@ -10,12 +10,12 @@ use App\Ship\Parents\Requests\BaseFormRequest;
 class CellTaggedArtsSliceAjaxRequest extends BaseFormRequest
 {
 
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'page' => [
@@ -25,7 +25,7 @@ class CellTaggedArtsSliceAjaxRequest extends BaseFormRequest
         ];
     }
 
-    public function filters()
+    public function filters(): array
     {
         return [];
     }

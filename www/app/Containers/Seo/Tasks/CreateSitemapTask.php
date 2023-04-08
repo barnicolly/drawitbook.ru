@@ -23,7 +23,7 @@ class CreateSitemapTask extends Task
         $this->routeService = $routeService;
     }
 
-    public function run()
+    public function run(): void
     {
         $sitemap = Sitemap::create();
         $locales = config('translator.available_locales');

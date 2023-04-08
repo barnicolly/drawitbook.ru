@@ -16,7 +16,7 @@ abstract class BaseFormRequest extends FormRequest
     /**
      * For more sanitizer rule check https://github.com/Waavi/Sanitizer
      */
-    public function validateResolved()
+    public function validateResolved(): void
     {
         {
             $this->sanitize();
@@ -24,27 +24,17 @@ abstract class BaseFormRequest extends FormRequest
         }
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    abstract public function rules();
+    abstract public function rules(): array;
 
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    abstract public function authorize();
+    abstract public function authorize(): bool;
 
-    public function withValidator($validator): void
+    public function withValidator(mixed $validator): void
     {
         $locale = app()->getLocale();
         $validator->getTranslator()->setLocale($locale);
     }
 
-    protected function failedValidation(Validator $validator)
+    protected function failedValidation(Validator $validator): void
     {
         if ($this->isJson() || $this->ajax()) {
             throw new HttpResponseException(

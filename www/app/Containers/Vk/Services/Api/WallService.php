@@ -5,7 +5,7 @@ namespace App\Containers\Vk\Services\Api;
 class WallService
 {
 
-    protected $instance;
+    protected VkApi $instance;
 
     public function __construct(VkApi $api)
     {
@@ -13,7 +13,7 @@ class WallService
         $this->instance = $api;
     }
 
-    public function edit(int $postId, array $data)
+    public function edit(int $postId, array $data): void
     {
         $data = array_merge(
             [
@@ -44,21 +44,5 @@ class WallService
         }
         return null;
     }
-
-   /* public function getUploadServer(int $albumId = 0)
-    {
-        $data = [];
-        if ($albumId) {
-            $data['album_id'] = $albumId;
-        }
-        $data = array_merge(
-            $data,
-            [
-                'group_id' => $this->instance->groupId,
-            ]
-        );
-        $response = $this->instance->api->request('photos.getUploadServer', $data);
-        return $response['response']['upload_url'];
-    }*/
 
 }

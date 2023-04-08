@@ -6,5 +6,6 @@ use Exception;
 
 class NotFoundPicture extends Exception
 {
+    /** @var string $message */
     protected $message = 'Не найдено изображение';
 }

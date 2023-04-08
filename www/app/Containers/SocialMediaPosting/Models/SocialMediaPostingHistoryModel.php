@@ -18,7 +18,7 @@ class SocialMediaPostingHistoryModel extends CoreModel
     use HasFactory;
 
     public $timestamps = false;
-    protected $dates = ['created_at'];
+    protected array $dates = ['created_at'];
     protected $table = SocialMediaPostingHistoryColumnsEnum::TABlE;
     protected $fillable = [];
 

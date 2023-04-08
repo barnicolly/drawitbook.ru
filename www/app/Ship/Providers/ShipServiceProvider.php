@@ -6,22 +6,13 @@ use Illuminate\Support\ServiceProvider;
 
 class ShipServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
+
+    public function register(): void
     {
         $this->registerConfig();
     }
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         $this->app->register(AppServiceProvider::class);
         $this->app->register(AuthServiceProvider::class);
@@ -37,7 +28,7 @@ class ShipServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(app_path('Ship/Migrations'));
     }
 
-    private function registerConfig()
+    private function registerConfig(): void
     {
         $this->publishes(
             [

@@ -7,7 +7,7 @@ use Prettus\Repository\Eloquent\BaseRepository as AbstractRepository;
 abstract class Repository extends AbstractRepository
 {
 
-    public function resetModel()
+    public function resetModel(): void
     {
         $this->makeModel();
         /**

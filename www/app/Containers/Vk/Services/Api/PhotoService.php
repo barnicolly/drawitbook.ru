@@ -5,7 +5,7 @@ namespace App\Containers\Vk\Services\Api;
 class PhotoService
 {
 
-    protected $instance;
+    protected VkApi $instance;
 
     public function __construct(VkApi $api)
     {
@@ -95,7 +95,7 @@ class PhotoService
         $response = $this->instance->api->request('photos.delete', $data);
     }
 
-    private function getWallUploadServer()
+    private function getWallUploadServer(): string
     {
         $response = $this->instance->api->request(
             'photos.getWallUploadServer',
@@ -104,7 +104,7 @@ class PhotoService
         return $response['response']['upload_url'];
     }
 
-    private function getAlbumUploadServer(int $albumId)
+    private function getAlbumUploadServer(int $albumId): string
     {
         $data = [];
         $data['album_id'] = $albumId;
@@ -118,7 +118,7 @@ class PhotoService
         return $response['response']['upload_url'];
     }
 
-    private function upload(string $uploadUrl, string $filePath)
+    private function upload(string $uploadUrl, string $filePath): array
     {
         $client = new \GuzzleHttp\Client();
         $res = $client->post(

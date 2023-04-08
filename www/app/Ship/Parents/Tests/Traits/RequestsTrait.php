@@ -10,13 +10,7 @@ use Illuminate\Testing\TestResponse;
 trait RequestsTrait
 {
 
-    /**
-     * Make ajax POST request
-     * @param $uri
-     * @param array $data
-     * @return TestResponse
-     */
-    protected function ajaxPost($uri, array $data = []): TestResponse
+    protected function ajaxPost(string $uri, array $data = []): TestResponse
     {
         \Session::start();
         $data = array_merge($data, [
@@ -27,10 +21,7 @@ trait RequestsTrait
         ]);
     }
 
-    /**
-     * Make ajax GET request
-     */
-    protected function ajaxGet($uri): TestResponse
+    protected function ajaxGet(string $uri): TestResponse
     {
         return $this->get(
             $uri,

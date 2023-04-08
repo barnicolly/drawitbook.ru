@@ -11,23 +11,14 @@ use Symfony\Component\Finder\Finder;
 
 class ConsoleServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
+
+    public function register(): void
     {
         //
 
     }
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         //
         $modules = Module::all();
@@ -38,7 +29,7 @@ class ConsoleServiceProvider extends ServiceProvider
         }
     }
 
-    protected function loadCommands(string $moduleName, string $namespace)
+    protected function loadCommands(string $moduleName, string $namespace): void
     {
         $paths = module_path($moduleName, 'Console');
         $paths = array_unique(Arr::wrap($paths));

@@ -24,7 +24,7 @@ class UserClaimModel extends CoreModel
     protected $table = UserClaimColumnsEnum::TABlE;
 
     public $timestamps = false;
-    protected $dates = ['created_at'];
+    protected array $dates = ['created_at'];
 
     protected $fillable = [];
 

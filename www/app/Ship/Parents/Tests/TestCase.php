@@ -70,7 +70,7 @@ abstract class TestCase extends BaseTestCase
         app(DatabaseSeeder::class)->call(TranslatorLanguagesSeeder::class);
     }
 
-    final protected function getProtectedProperty($object, string $property)
+    final protected function getProtectedProperty(object|string $object, string $property): mixed
     {
         $reflection = new ReflectionClass($object);
         $reflectionProperty = $reflection->getProperty($property);

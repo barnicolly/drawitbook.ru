@@ -5,6 +5,8 @@ namespace App\Containers\User\Models;
 use App\Containers\User\Data\Factories\UserModelFactory;
 use App\Ship\Parents\Models\UserModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Containers\Authorization\Models\Role;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int $id
@@ -49,12 +51,15 @@ class User extends UserModel
         return UserModelFactory::new();
     }
 
-    public function roles()
+    /**
+     * @return BelongsToMany<Role>
+     */
+    public function roles(): BelongsToMany
     {
-        return $this->belongsToMany('App\Containers\Authorization\Models\Role', 'user_role', 'user_id', 'role_id');
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
     }
 
-    public function hasAnyRole($roles)
+    public function hasAnyRole(array|string $roles): bool
     {
         if (is_array($roles)) {
             foreach ($roles as $role) {
@@ -70,7 +75,7 @@ class User extends UserModel
         return false;
     }
 
-    public function hasRole($role)
+    public function hasRole(string $role): bool
     {
         if ($this->roles()->where('name', $role)->first()) {
             return true;

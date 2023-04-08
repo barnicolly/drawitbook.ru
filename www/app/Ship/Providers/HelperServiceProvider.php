@@ -6,24 +6,15 @@ use Illuminate\Support\ServiceProvider;
 
 class HelperServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
+
+    public function register(): void
     {
         //
         require_once app_path('Ship/Helpers/Functions.php');
         require_once app_path('Ship/Helpers/Path_helper.php');
     }
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         //
     }

@@ -1,7 +1,7 @@
 <?php
 
 if (!function_exists('buildUrl')) {
-    function buildUrl(string $path)
+    function buildUrl(string $path): string
     {
         $uri = preg_replace("/\/{2,}/", '/', '/build/' . $path);
         return asset($uri);
@@ -9,7 +9,7 @@ if (!function_exists('buildUrl')) {
 }
 
 if (!function_exists('getUrlFromManifest')) {
-    function getUrlFromManifest(string $path)
+    function getUrlFromManifest(string $path): string
     {
         $files = config('app.manifest');
         return $files[$path] ?? '';
