@@ -45,7 +45,7 @@ from picture
                DATEDIFF(NOW(), MAX(social_media_posting_history.created_at)) as dayDiff
              from social_media_posting_history
              group by picture_id) as lastPostingDate on picture.id = lastPostingDate.picture_id
-where picture.id in ($pictureIdsString)
+where picture.id in ({$pictureIdsString})
       and (lastPostingDate.dayDiff > 10 or lastPostingDate.dayDiff is null)
 group by picture.id
 order by dayDiff DESC

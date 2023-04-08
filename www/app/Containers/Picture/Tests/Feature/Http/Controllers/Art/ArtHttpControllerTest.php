@@ -53,12 +53,12 @@ class ArtHttpControllerTest extends TestCase
         $alternativeLang = $locale === LangEnum::RU ? LangEnum::EN : LangEnum::RU;
         $alternativeUrl = $this->routeService->getRouteArt($picture->id, true, $alternativeLang);
         $response->assertSee(
-            "<link rel=\"alternate\" href=\"$alternativeUrl\" hreflang=\"{$alternativeLang}\">",
+            "<link rel=\"alternate\" href=\"{$alternativeUrl}\" hreflang=\"{$alternativeLang}\">",
             false
         );
         $path = asset(getArtsFolder() . $file->path);
         $response->assertSee(
-            "<meta property=\"og:image\" content=\"$path\">",
+            "<meta property=\"og:image\" content=\"{$path}\">",
             false
         );
     }

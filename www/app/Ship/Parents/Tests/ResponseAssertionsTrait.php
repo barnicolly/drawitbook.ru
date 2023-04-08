@@ -16,7 +16,7 @@ trait ResponseAssertionsTrait
         $route = $router->getRoutes()->getByName($routeName);
         $usedMiddlewares = $route->gatherMiddleware();
 
-        Assert::assertNotNull($route, "Unable to find route for name `$routeName`");
+        Assert::assertNotNull($route, "Unable to find route for name `{$routeName}`");
 
         if ($exact) {
             $unusedMiddlewares = array_diff($middlewares, $usedMiddlewares);
@@ -37,14 +37,14 @@ trait ResponseAssertionsTrait
             Assert::assertSame(
                 count($unusedMiddlewares) + count($extraMiddlewares),
                 0,
-                "Route `$routeName` " . $messages
+                "Route `{$routeName}` " . $messages
             );
         } else {
             $unusedMiddlewares = array_diff($middlewares, $usedMiddlewares);
 
             Assert::assertEmpty(
                 $unusedMiddlewares,
-                "Route `$routeName` does not use expected `" . implode(
+                "Route `{$routeName}` does not use expected `" . implode(
                     ', ',
                     $unusedMiddlewares
                 ) . "` middleware(s)"

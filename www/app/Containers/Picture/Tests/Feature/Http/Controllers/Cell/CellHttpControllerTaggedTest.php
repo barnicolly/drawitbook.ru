@@ -45,7 +45,7 @@ class CellHttpControllerTaggedTest extends TestCase
         $firstExtension = $pictures->first()?->extensions()->first();
         $path = asset(getArtsFolder() . $firstExtension->path);
         $response->assertSee(
-            "<meta property=\"og:image\" content=\"$path\">",
+            "<meta property=\"og:image\" content=\"{$path}\">",
             false
         );
     }
@@ -124,7 +124,7 @@ class CellHttpControllerTaggedTest extends TestCase
             $alternativeLang
         );
         $response->assertSee(
-            "<link rel=\"alternate\" href=\"$alternativeUrl\" hreflang=\"{$alternativeLang}\">",
+            "<link rel=\"alternate\" href=\"{$alternativeUrl}\" hreflang=\"{$alternativeLang}\">",
             false
         );
     }
@@ -154,9 +154,9 @@ class CellHttpControllerTaggedTest extends TestCase
         $url = $this->routeService->getRouteArtsCellTagged($tag->slug_en);
         $response = $this->get($url);
 
-        $response->assertSee("<title>Pixel arts «{$tag->name_en}» ☆ $countPictures arts</title>", false);
+        $response->assertSee("<title>Pixel arts «{$tag->name_en}» ☆ {$countPictures} arts</title>", false);
         $response->assertSee(
-            "<meta name=\"description\" content=\"Pixel arts ✎ {$tag->name_en} ➣ $countPictures arts ➣ Black/white and colored schemes of pixel arts from light and simple to complex.\">",
+            "<meta name=\"description\" content=\"Pixel arts ✎ {$tag->name_en} ➣ {$countPictures} arts ➣ Black/white and colored schemes of pixel arts from light and simple to complex.\">",
             false
         );
     }
