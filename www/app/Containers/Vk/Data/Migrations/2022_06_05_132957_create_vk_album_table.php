@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vk_album', function (Blueprint $table) {
+        Schema::create('vk_album', function (Blueprint $table): void {
             $table->id();
             $table->integer('album_id')->nullable(false)->index();
             $table->string('description', 255)->nullable(false);

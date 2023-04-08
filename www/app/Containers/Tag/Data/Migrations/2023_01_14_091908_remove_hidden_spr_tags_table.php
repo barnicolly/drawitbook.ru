@@ -14,7 +14,7 @@ return new class extends Migration
     {
         if (Schema::hasColumn('spr_tags', 'hidden'))
         {
-            Schema::table('spr_tags', function (Blueprint $table)
+            Schema::table('spr_tags', function (Blueprint $table): void
             {
                 $table->dropColumn('hidden');
             });

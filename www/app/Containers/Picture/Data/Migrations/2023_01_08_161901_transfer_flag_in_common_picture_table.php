@@ -13,7 +13,7 @@ return new class extends Migration
     {
        $pictures = PictureModel::where('in_common', 1)->get();
        if (!blank($pictures)) {
-            $pictures->each(function (PictureModel $picture) {
+            $pictures->each(function (PictureModel $picture): void {
                 $picture->flag(FlagsEnum::PICTURE_COMMON);
             });
        }

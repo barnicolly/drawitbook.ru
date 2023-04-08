@@ -23,7 +23,7 @@ class PictureExtensionsModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{picture_id: int, path: string, width: int, height: int, ext: string, mime_type: string}
      */
     #[ArrayShape([
         PictureExtensionsColumnsEnum::PICTURE_ID => "int",

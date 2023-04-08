@@ -2,6 +2,7 @@
 
 namespace App\Containers\SocialMediaPosting\Tests\Feature\Services;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException;
 use App\Containers\SocialMediaPosting\Models\SocialMediaPostingHistoryModel;
@@ -22,7 +23,7 @@ class BroadcastPostingServiceTest extends TestCase
     public function testExpectNotFoundPictureIdForPostingException(): void
     {
         $mock = $this->createMock(VkWallPostingStrategy::class);
-        $this->app->bind(VkWallPostingStrategy::class, function () use ($mock) {
+        $this->app->bind(VkWallPostingStrategy::class, function () use ($mock): MockObject&VkWallPostingStrategy {
             return $mock;
         });
 
@@ -46,7 +47,7 @@ class BroadcastPostingServiceTest extends TestCase
 
         $mock = $this->createMock(VkWallPostingStrategy::class);
         $strategyParams = [];
-        $this->app->bind(VkWallPostingStrategy::class, function ($app, $params) use ($mock, &$strategyParams) {
+        $this->app->bind(VkWallPostingStrategy::class, function ($app, $params) use ($mock, &$strategyParams): MockObject&VkWallPostingStrategy {
             $strategyParams = $params;
             return $mock;
         });

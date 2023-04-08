@@ -15,6 +15,9 @@ class SearchArtsSliceAjaxRequest extends BaseFormRequest
         return true;
     }
 
+    /**
+     * @return array{query: string[], page: string[]}
+     */
     public function rules(): array
     {
         return [
@@ -29,6 +32,9 @@ class SearchArtsSliceAjaxRequest extends BaseFormRequest
         ];
     }
 
+    /**
+     * @return array{query: string}
+     */
     public function filters(): array
     {
         return [

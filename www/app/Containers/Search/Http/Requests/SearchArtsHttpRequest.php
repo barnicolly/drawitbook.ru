@@ -16,6 +16,9 @@ class SearchArtsHttpRequest extends BaseFormRequest
         return true;
     }
 
+    /**
+     * @return array{query: string[]}
+     */
     public function rules(): array
     {
         return [
@@ -26,6 +29,9 @@ class SearchArtsHttpRequest extends BaseFormRequest
         ];
     }
 
+    /**
+     * @return array{query: string}
+     */
     public function filters(): array
     {
         return [

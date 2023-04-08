@@ -15,7 +15,7 @@ return new class extends Migration
     {
        $tags = SprTagsModel::where('is_popular', 1)->get();
        if (!blank($tags)) {
-           $tags->each(function (SprTagsModel $tag) {
+           $tags->each(function (SprTagsModel $tag): void {
                $tag->flag(FlagsEnum::TAG_IS_POPULAR);
             });
        }

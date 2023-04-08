@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         if (!Schema::hasColumn('picture_extensions', 'mime_type'))
         {
-            Schema::table('picture_extensions', function (Blueprint $table)
+            Schema::table('picture_extensions', function (Blueprint $table): void
             {
                 $table->string('mime_type', 255)->nullable(false);
             });

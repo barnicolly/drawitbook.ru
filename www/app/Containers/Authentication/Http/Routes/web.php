@@ -7,7 +7,7 @@ Route::group(
         'middleware' => 'web',
         'prefix' => '/',
     ],
-    function () {
+    function (): void {
         Route::get('/ru/login', (new LoginController())->showLoginForm(...))->name('loginPage');
         Route::post('/ru/login', (new LoginController())->login(...))->name('login');
         Route::get('/register', (new LoginController())->dump(...));

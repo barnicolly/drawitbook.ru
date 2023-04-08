@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('history_vk_posting', function (Blueprint $table) {
+        Schema::create('history_vk_posting', function (Blueprint $table): void {
             $table->id();
             $table->integer('picture_id')->index()->nullable(false);
             $table->timestamp('created_at')->nullable(false)->default(DB::raw('CURRENT_TIMESTAMP'));

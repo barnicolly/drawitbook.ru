@@ -19,7 +19,7 @@ class RoleModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{name: string, description: string}
      */
     #[ArrayShape(['name' => "string", 'description' => "string"])]
     public function definition(): array

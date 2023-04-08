@@ -24,7 +24,7 @@ class PictureModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{created_at: string, updated_at: string}
      */
     #[ArrayShape([
         PictureColumnsEnum::CREATED_AT => "string",

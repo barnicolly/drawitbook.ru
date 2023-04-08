@@ -15,6 +15,9 @@ class CellTaggedArtsSliceAjaxRequest extends BaseFormRequest
         return true;
     }
 
+    /**
+     * @return array{page: string[]}
+     */
     public function rules(): array
     {
         return [

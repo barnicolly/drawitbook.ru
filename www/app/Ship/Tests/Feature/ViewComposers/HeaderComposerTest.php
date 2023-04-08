@@ -2,6 +2,7 @@
 
 namespace App\Ship\Tests\Feature\ViewComposers;
 
+use Illuminate\Testing\TestView;
 use Illuminate\View\View;
 use App\Containers\Menu\Enums\MenuLevelsColumnsEnum;
 use App\Containers\Menu\Tests\Traits\CreateMenuLevelTrait;
@@ -61,6 +62,6 @@ class HeaderComposerTest extends TestCase
 
         $view->assertViewHas('groups');
 
-        $tagCollections->each(fn(SprTagsModel $tag) => $view->assertSee($tag->name, false));
+        $tagCollections->each(fn(SprTagsModel $tag): TestView => $view->assertSee($tag->name, false));
     }
 }

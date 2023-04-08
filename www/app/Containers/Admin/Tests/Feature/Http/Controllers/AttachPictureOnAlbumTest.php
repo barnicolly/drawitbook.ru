@@ -2,6 +2,7 @@
 
 namespace App\Containers\Admin\Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Admin\Http\Controllers\ArtController;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Vk\Models\VkAlbumPictureModel;
@@ -21,7 +22,7 @@ class AttachPictureOnAlbumTest extends TestCase
     {
         parent::setUp();
         $mock = $this->createMock(VkApi::class);
-        $this->app->bind(VkApi::class, function () use ($mock) {
+        $this->app->bind(VkApi::class, function () use ($mock): MockObject&VkApi {
             return $mock;
         });
     }
@@ -43,7 +44,7 @@ class AttachPictureOnAlbumTest extends TestCase
             ->willReturn($outVkImageId);
         $mock->method('edit');
         $mock->method('timeout');
-        $this->app->bind(PhotoService::class, function () use ($mock) {
+        $this->app->bind(PhotoService::class, function () use ($mock): MockObject&PhotoService {
             return $mock;
         });
 

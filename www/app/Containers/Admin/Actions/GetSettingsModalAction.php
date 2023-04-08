@@ -26,7 +26,7 @@ class GetSettingsModalAction extends Action
         $viewData['vkAlbums'] = $vkAlbums;
         $vkAlbumPictures = $this->getVkAlbumPicturesByVkAlbumIdsAndPictureIdTask->run($pictureId, $vkAlbumIds);
         $viewData['issetInVkAlbums'] = $vkAlbumPictures
-            ->map(function (VkAlbumPictureModel $item) {
+            ->map(function (VkAlbumPictureModel $item): int {
                 return $item->vk_album_id;
             })
             ->unique()

@@ -21,7 +21,7 @@ class VkAlbumPictureModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{vk_album_id: Factory<VkAlbumModel>, out_vk_image_id: int, picture_id: Factory<PictureModel>}
      */
     public function definition(): array
     {

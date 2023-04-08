@@ -22,7 +22,7 @@ class GetDefaultShareImageTask extends Task
             $result = Cache::remember(
                 $cacheName,
                 config('cache.expiration'),
-                function () {
+                function (): ?ShareImageDto {
                     try {
                         $picture = $this->getArtByIdWithFilesAction->run(205);
                         return new ShareImageDto(

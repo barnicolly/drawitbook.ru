@@ -9,18 +9,18 @@ use App\Containers\Picture\Http\Controllers\Cell\CellHttpController;
 foreach (config('translator.available_locales') as $prefix) {
     Route::group(
         ['prefix' => $prefix],
-        function () use ($prefix) {
+        function () use ($prefix): void {
             Route::group(
                 [
                     'prefix' => Lang::get('routes.pixel_arts', [], $prefix),
                     'middleware' => 'web',
                 ],
-                function () use ($prefix) {
+                function () use ($prefix): void {
                     Route::group(
                         [
                             'middleware' => ['lower_case', 'no_get'],
                         ],
-                        function () use ($prefix) {
+                        function () use ($prefix): void {
                             Route::get('/', [CellHttpController::class, 'index'])
                                 ->name($prefix . '_arts.cell');
 
@@ -39,7 +39,7 @@ foreach (config('translator.available_locales') as $prefix) {
                     'prefix' => '/arts',
                     'middleware' => 'web',
                 ],
-                function () use ($prefix) {
+                function () use ($prefix): void {
                     Route::get('/{id}', (new ArtHttpController())->index(...))
                         ->middleware(['lower_case', 'no_get'])
                         ->name($prefix . '_art');
@@ -48,7 +48,7 @@ foreach (config('translator.available_locales') as $prefix) {
                         [
                             'middleware' => ['ajax'],
                         ],
-                        function () {
+                        function (): void {
                             Route::post('/{id}/like', (new RateAjaxController())->like(...));
                         }
                     );
@@ -57,7 +57,7 @@ foreach (config('translator.available_locales') as $prefix) {
                         [
                             'middleware' => ['ajax'],
                         ],
-                        function () {
+                        function (): void {
                             Route::post('/{id}/claim', (new ClaimAjaxController())->register(...));
                         }
                     );

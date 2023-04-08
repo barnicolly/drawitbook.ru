@@ -50,7 +50,7 @@ class ConsoleServiceProvider extends ServiceProvider
                 $class
             );
             if (is_subclass_of($command, Command::class)) {
-                Artisan::starting(function ($artisan) use ($command) {
+                Artisan::starting(function ($artisan) use ($command): void {
                     $artisan->resolve($command);
                 });
             }

@@ -26,7 +26,7 @@ class GetPopularTagsAction extends Action
     {
         $locale = app()->getLocale();
         return $this->getPopularTagsTask->run($locale)
-            ->map(fn(SprTagsModel $tag) => TagDto::fromModel($tag, $locale)->toArray())
+            ->map(fn(SprTagsModel $tag): array => TagDto::fromModel($tag, $locale)->toArray())
             ->toArray();
     }
 

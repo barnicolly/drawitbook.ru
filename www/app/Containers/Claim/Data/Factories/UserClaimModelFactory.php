@@ -19,7 +19,7 @@ class UserClaimModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{user_id: null, picture_id: int, reason_id: int}
      */
     public function definition(): array
     {

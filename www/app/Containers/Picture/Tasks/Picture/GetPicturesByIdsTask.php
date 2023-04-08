@@ -37,7 +37,7 @@ class GetPicturesByIdsTask extends Task
                 'flags',
                 'extensions',
                 'tags.flags',
-                'tags' => function (BuilderContract $q) use ($locale, $withHiddenTags) {
+                'tags' => function (BuilderContract $q) use ($locale, $withHiddenTags): void {
                     if ($locale === LangEnum::EN) {
                         $q->whereNotNull(SprTagsColumnsEnum::SLUG_EN);
                     }

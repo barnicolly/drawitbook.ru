@@ -2,6 +2,7 @@
 
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Art;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Tag\Tests\Traits\CreateTagTrait;
 use App\Containers\Translation\Enums\LangEnum;
@@ -41,7 +42,7 @@ class ArtHttpControllerTest extends TestCase
         $mock = $this->createMock(FileService::class);
         $mock->method('formArtUrlPath')
             ->willReturn($file->path);
-        $this->app->bind(FileService::class, function () use ($mock) {
+        $this->app->bind(FileService::class, function () use ($mock): MockObject&FileService {
             return $mock;
         });
 

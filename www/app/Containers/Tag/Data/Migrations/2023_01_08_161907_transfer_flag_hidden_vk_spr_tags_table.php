@@ -15,7 +15,7 @@ return new class extends Migration
     {
        $tags = SprTagsModel::where('hidden_vk', 1)->get();
        if (!blank($tags)) {
-           $tags->each(function (SprTagsModel $tag) {
+           $tags->each(function (SprTagsModel $tag): void {
                $tag->flag(FlagsEnum::TAG_HIDDEN_VK);
             });
        }

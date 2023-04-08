@@ -21,7 +21,7 @@ class SprTagsModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{name: string, name_en: string, seo: string, slug_en: string}
      */
     #[ArrayShape([
         SprTagsColumnsEnum::NAME => "string",

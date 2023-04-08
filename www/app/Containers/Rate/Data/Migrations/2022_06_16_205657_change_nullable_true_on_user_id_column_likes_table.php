@@ -11,7 +11,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('likes', function ($table) {
+        Schema::table('likes', function ($table): void {
             $table->integer('user_id')->index()->nullable()->change();
         });
     }

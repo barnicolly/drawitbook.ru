@@ -12,7 +12,7 @@ return new class extends Migration
     {
         if (Schema::hasColumn('picture', 'in_vk_posting'))
         {
-            Schema::table('picture', function (Blueprint $table)
+            Schema::table('picture', function (Blueprint $table): void
             {
                 $table->dropColumn('in_vk_posting');
             });

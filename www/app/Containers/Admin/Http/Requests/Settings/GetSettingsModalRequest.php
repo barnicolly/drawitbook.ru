@@ -21,6 +21,9 @@ class GetSettingsModalRequest extends BaseFormRequest
         $this->merge(['id' => $this->route('id')]);
     }
 
+    /**
+     * @return array{id: string}
+     */
     public function rules(): array
     {
         $pictureTable = PictureColumnsEnum::TABlE;
@@ -29,6 +32,9 @@ class GetSettingsModalRequest extends BaseFormRequest
         ];
     }
 
+    /**
+     * @return array{id: string}
+     */
     public function filters(): array
     {
         return [

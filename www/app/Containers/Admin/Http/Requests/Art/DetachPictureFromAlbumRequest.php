@@ -22,6 +22,9 @@ class DetachPictureFromAlbumRequest extends BaseFormRequest
         $this->merge(['id' => $this->route('id')]);
     }
 
+    /**
+     * @return array{id: string, album_id: string}
+     */
     public function rules(): array
     {
         $pictureTable = PictureColumnsEnum::TABlE;
@@ -32,6 +35,9 @@ class DetachPictureFromAlbumRequest extends BaseFormRequest
         ];
     }
 
+    /**
+     * @return array{id: string, album_id: string}
+     */
     public function filters(): array
     {
         return [

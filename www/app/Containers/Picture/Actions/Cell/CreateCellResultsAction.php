@@ -15,6 +15,9 @@ class CreateCellResultsAction extends Action
     {
     }
 
+    /**
+     * @return array{arts: mixed[], paginationData: PaginationDto, leftArtsText: (string | null)}
+     */
     public function run(string $locale, LengthAwarePaginator $paginator): array
     {
         $paginationData = PaginationDto::createFromPaginator($paginator);

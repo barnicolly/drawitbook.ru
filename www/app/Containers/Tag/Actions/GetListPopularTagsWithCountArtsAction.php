@@ -48,7 +48,7 @@ class GetListPopularTagsWithCountArtsAction extends Action
             $results = Cache::remember(
                 $cacheName,
                 config('cache.expiration'),
-                function () use ($limit, $locale) {
+                function () use ($limit, $locale): array {
                     return $this->getPictureTagsWithCountArtTask->run($limit, $locale);
                 }
             );

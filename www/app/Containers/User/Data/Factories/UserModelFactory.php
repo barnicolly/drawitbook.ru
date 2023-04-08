@@ -20,7 +20,7 @@ class UserModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{name: string, email: string, email_verified_at: string, password: string}
      */
     #[ArrayShape([
         'name' => "string",

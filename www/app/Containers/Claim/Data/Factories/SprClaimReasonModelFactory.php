@@ -20,7 +20,7 @@ class SprClaimReasonModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{reason: string}
      */
     #[ArrayShape([SprClaimReasonColumnsEnum::REASON => "string"])]
     public function definition(): array

@@ -25,7 +25,7 @@ class JsonResource extends LaravelJsonResource
      * @param Request $request
      * @return array|Arrayable|JsonSerializable
      */
-    public function toArray($request)
+    public function toArray(Request $request)
     {
         if ($this->paginationMetaDto) {
             $this->additional([

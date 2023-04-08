@@ -16,20 +16,20 @@ use App\Containers\Search\Http\Controllers\SearchController;
 foreach (config('translator.available_locales') as $prefix) {
     Route::group(
         ['prefix' => $prefix],
-        function () use ($prefix) {
+        function () use ($prefix): void {
 
                   Route::group(
                       [
                           'middleware' => 'web',
                       ],
-                      function () use ($prefix) {
+                      function () use ($prefix): void {
                           Route::get('/search', [SearchController::class, 'index'])->name($prefix . '_search');
 
                           Route::group(
                               [
                                   'middleware' => ['ajax'],
                               ],
-                              function () use ($prefix) {
+                              function () use ($prefix): void {
                                   Route::get('/search/slice', [SearchController::class, 'slice'])->name($prefix . '_search.slice');
                               });
                       }

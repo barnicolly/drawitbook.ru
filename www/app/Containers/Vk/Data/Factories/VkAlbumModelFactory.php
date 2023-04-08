@@ -19,7 +19,7 @@ class VkAlbumModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{album_id: int, share: null, description: string}
      */
     public function definition(): array
     {

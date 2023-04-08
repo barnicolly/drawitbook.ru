@@ -20,7 +20,7 @@ class SocialMediaPostingHistoryModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{picture_id: Factory<PictureModel>}
      */
     public function definition(): array
     {

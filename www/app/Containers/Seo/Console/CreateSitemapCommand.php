@@ -36,7 +36,7 @@ class CreateSitemapCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         app(CreateSitemapTask::class)->run();
     }

@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up(): void
     {
         if (Schema::hasColumn('likes', 'activity')) {
-            Schema::table('likes', function (Blueprint $table) {
+            Schema::table('likes', function (Blueprint $table): void {
                 $table->dropColumn('activity');
             });
         }

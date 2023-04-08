@@ -20,7 +20,7 @@ class LikesModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{picture_id: int, user_id: null}
      */
     #[ArrayShape([
         LikesColumnsEnum::PICTURE_ID => "int",

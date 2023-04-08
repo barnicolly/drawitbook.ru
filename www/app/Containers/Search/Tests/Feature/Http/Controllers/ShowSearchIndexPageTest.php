@@ -2,6 +2,7 @@
 
 namespace App\Containers\Search\Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Search\Http\Controllers\SearchController;
 use App\Containers\Search\Services\SearchService;
@@ -39,7 +40,7 @@ class ShowSearchIndexPageTest extends TestCase
             ->willReturn($pictureIds);
         $mock->method('setLimit')
             ->willReturnSelf();
-        $this->app->bind(SearchService::class, function () use ($mock) {
+        $this->app->bind(SearchService::class, function () use ($mock): MockObject&SearchService {
             return $mock;
         });
 
@@ -69,7 +70,7 @@ class ShowSearchIndexPageTest extends TestCase
             ->willReturn($pictureIds);
         $mock->method('setLimit')
             ->willReturnSelf();
-        $this->app->bind(SearchService::class, function () use ($mock) {
+        $this->app->bind(SearchService::class, function () use ($mock): MockObject&SearchService {
             return $mock;
         });
 

@@ -2,6 +2,7 @@
 
 namespace App\Containers\Menu\Data\Factories;
 
+use App\Containers\Tag\Data\Factories\SprTagsModelFactory;
 use App\Containers\Menu\Enums\MenuLevelsColumnsEnum;
 use App\Containers\Menu\Models\MenuLevelsModel;
 use App\Containers\Tag\Models\SprTagsModel;
@@ -21,7 +22,7 @@ class MenuLevelsModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{custom_name_en: null, custom_name_ru: null, show_en: int, show_ru: int, spr_tag_id: SprTagsModelFactory, parent_level_id: int, column: null}
      */
     #[ArrayShape([
         MenuLevelsColumnsEnum::CUSTOM_NAME_EN => "string",

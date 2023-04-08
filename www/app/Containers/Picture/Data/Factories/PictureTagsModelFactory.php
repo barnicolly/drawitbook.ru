@@ -22,7 +22,7 @@ class PictureTagsModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array{picture_id: int, tag_id: int}
      */
     #[ArrayShape([
         PictureTagsColumnsEnum::PICTURE_ID => "int",

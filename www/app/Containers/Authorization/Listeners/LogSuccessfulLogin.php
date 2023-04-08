@@ -23,7 +23,7 @@ class LogSuccessfulLogin
      * @param  Login  $event
      * @return void
      */
-    public function handle(Login $event)
+    public function handle(Login $event): void
     {
         $roles = Auth::user()->roles()->pluck('name')->toArray();
         if (in_array('Admin', $roles)) {
