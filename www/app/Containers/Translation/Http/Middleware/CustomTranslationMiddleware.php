@@ -2,11 +2,21 @@
 namespace App\Containers\Translation\Http\Middleware;
 
 use Closure;
+use Illuminate\Config\Repository as Config;
+use Illuminate\Foundation\Application;
+use Illuminate\View\Factory as ViewFactory;
 use Waavi\Translation\Middleware\TranslationMiddleware;
+use Waavi\Translation\Repositories\LanguageRepository;
+use Waavi\Translation\UriLocalizer;
 
 class CustomTranslationMiddleware extends TranslationMiddleware
 {
 
+    public UriLocalizer $uriLocalizer;
+    public Config $config;
+    public LanguageRepository $languageRepository;
+    public Application $app;
+    public ViewFactory $viewFactory;
     public function handle($request, Closure $next, $segment = 0)
     {
         // Ignores all non GET requests:

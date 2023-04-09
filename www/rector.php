@@ -82,8 +82,6 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/app/*/*.blade',
         __DIR__ . '/app/Ship/Configs',
 
-        //-- исключения для SetList::TYPE_DECLARATION
-
         //--- исключения для LevelSetList::UP_TO_PHP_82
         CountOnNullRector::class,
         AddDefaultValueForUndefinedVariableRector::class,
@@ -98,11 +96,9 @@ return static function (RectorConfig $rectorConfig): void {
         SimplifyEmptyCheckOnEmptyArrayRector::class,
         // изменение ради оптимизации скорости (под вопросом)
         CountArrayToEmptyArrayComparisonRector::class,
-        // https://3v4l.org/TI8XL под вопросом
-        IssetOnPropertyObjectToPropertyExistsRector::class,
         FlipTypeControlToUseExclusiveTypeRector::class,
         // обязательно к добавлению, но позже (необходимо проверить трейты)
-        CompleteDynamicPropertiesRector::class,
+//        CompleteDynamicPropertiesRector::class,
         SwitchNegatedTernaryRector::class,
         JsonThrowOnErrorRector::class,
         OptionalParametersAfterRequiredRector::class,
