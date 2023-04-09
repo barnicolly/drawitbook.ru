@@ -19,6 +19,7 @@ class CustomTranslationMiddleware extends TranslationMiddleware
     public ViewFactory $viewFactory;
     public function handle($request, Closure $next, $segment = 0)
     {
+        $sessionLocale = null;
         // Ignores all non GET requests:
         if ($request->method() !== 'GET') {
             return $next($request);

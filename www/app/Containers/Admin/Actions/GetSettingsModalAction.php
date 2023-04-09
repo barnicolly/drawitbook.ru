@@ -21,6 +21,7 @@ class GetSettingsModalAction extends Action
      */
     public function run(int $pictureId): GetSettingsModalResultDto
     {
+        $viewData = [];
         $vkAlbums = $this->getAllVkAlbumTask->run();
         $vkAlbumIds = array_column($vkAlbums, 'id');
         $viewData['vkAlbums'] = $vkAlbums;

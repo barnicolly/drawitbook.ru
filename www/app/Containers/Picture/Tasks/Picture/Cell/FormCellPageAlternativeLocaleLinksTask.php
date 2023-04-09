@@ -15,6 +15,7 @@ class FormCellPageAlternativeLocaleLinksTask extends Task
 
     public function run(TagDto $tag): array
     {
+        $forFormAlternateLinks = [];
         $forFormAlternateLinks[] = [
             'lang' => $tag->seo_lang->current->locale,
             'tag' => $tag->seo_lang->current->slug,

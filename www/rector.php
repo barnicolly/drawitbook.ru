@@ -19,15 +19,11 @@ use Rector\CodingStyle\Rector\String_\UseClassKeywordForClassNameResolutionRecto
 use Rector\CodingStyle\Rector\Ternary\TernaryConditionVariableAssignmentRector;
 use Rector\CodingStyle\Rector\Use_\SeparateMultiUseImportsRector;
 use Rector\Config\RectorConfig;
-use Rector\Php56\Rector\FunctionLike\AddDefaultValueForUndefinedVariableRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
-use Rector\Php74\Rector\Assign\NullCoalescingOperatorRector;
-use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use Rector\Php74\Rector\LNumber\AddLiteralSeparatorToNumberRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
-use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 
 /**
  * Перечень правил (в сет листах и исключениях) https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md
@@ -73,7 +69,6 @@ return static function (RectorConfig $rectorConfig): void {
 
         //--- исключения для LevelSetList::UP_TO_PHP_82
         CountOnNullRector::class,
-        AddDefaultValueForUndefinedVariableRector::class,
 
         //--- исключения для SetList::CODE_QUALITY
         CallableThisArrayToAnonymousFunctionRector::class,

@@ -20,6 +20,7 @@ class CreateCellResultsAction extends Action
      */
     public function run(string $locale, LengthAwarePaginator $paginator): array
     {
+        $viewData = [];
         $paginationData = PaginationDto::createFromPaginator($paginator);
 
         $relativeArts = $paginator->getCollection()->toArray();
