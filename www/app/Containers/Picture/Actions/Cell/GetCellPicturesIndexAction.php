@@ -21,6 +21,7 @@ class GetCellPicturesIndexAction extends Action
 
     /**
      * @return array{array, PageMetaDto}
+     *
      * @throws UnknownProperties
      */
     public function run(): array
@@ -55,7 +56,4 @@ class GetCellPicturesIndexAction extends Action
             'href' => $this->routeService->getRouteArtsCell([], true, LangEnum::EN),
         ]];
     }
-
 }
-
-

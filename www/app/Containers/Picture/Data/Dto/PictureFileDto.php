@@ -7,7 +7,6 @@ use App\Ship\Parents\Dto\Dto;
 
 class PictureFileDto extends Dto
 {
-
     public int $width;
 
     public int $height;

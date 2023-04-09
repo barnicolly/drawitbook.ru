@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class GetPictureIdForPostingTask extends Task
 {
-
     /**
      * @throws NotFoundPictureIdForPostingException
      */
@@ -20,7 +19,7 @@ class GetPictureIdForPostingTask extends Task
         $pictureIds = PictureModel::flagged(FlagsEnum::PICTURE_IN_VK_POSTING)->select([PictureColumnsEnum::tId])->get()->pluck(PictureColumnsEnum::ID)->toArray();
         if (!blank($pictureIds)) {
             $pictureIdsString = implode(',', $pictureIds);
-            //TODO-misha переписать на query;
+            // TODO-misha переписать на query;
             $results = DB::select(
                 (string) DB::raw(
                     "select picture.id,
@@ -58,5 +57,3 @@ limit 1"
         throw new NotFoundPictureIdForPostingException();
     }
 }
-
-

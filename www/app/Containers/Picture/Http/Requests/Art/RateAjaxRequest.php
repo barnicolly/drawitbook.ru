@@ -34,7 +34,7 @@ class RateAjaxRequest extends BaseFormRequest
             'off' => [
                 'required',
                 Rule::in(['true', 'false']),
-            ]
+            ],
         ];
     }
 

@@ -14,7 +14,6 @@ use Illuminate\Support\Collection;
 
 class GetPicturesByIdsTask extends Task
 {
-
     public function __construct(protected PictureRepository $repository, private readonly GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
     {
     }
@@ -37,10 +36,8 @@ class GetPicturesByIdsTask extends Task
                             $q->whereNotIn(PictureTagsColumnsEnum::tTAG_ID, $tagsHiddenIds);
                         }
                     }
-                }
+                },
             ])
             ->findWhereIn(PictureColumnsEnum::ID, $ids);
     }
 }
-
-

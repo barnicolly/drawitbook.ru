@@ -18,7 +18,6 @@ use Throwable;
 
 class CellHttpController extends HttpController
 {
-
     public function __construct(private readonly RouteService $routeService)
     {
     }
@@ -73,5 +72,4 @@ class CellHttpController extends HttpController
             throw $e;
         }
     }
-
 }

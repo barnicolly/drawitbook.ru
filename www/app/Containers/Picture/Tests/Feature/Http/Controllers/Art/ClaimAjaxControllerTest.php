@@ -14,6 +14,7 @@ class ClaimAjaxControllerTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
     use CreateClaimTrait;
+
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      */
@@ -96,5 +97,4 @@ class ClaimAjaxControllerTest extends TestCase
         $response->assertUnprocessable()
             ->assertJsonValidationErrorFor('reason');
     }
-
 }

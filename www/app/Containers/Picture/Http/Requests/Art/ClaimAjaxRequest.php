@@ -42,6 +42,4 @@ class ClaimAjaxRequest extends BaseFormRequest
     {
         return [];
     }
-
-
 }

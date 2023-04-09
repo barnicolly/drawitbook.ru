@@ -20,7 +20,4 @@ class GetInterestingArtsAction extends Action
         $artIds = $this->getInterestingPictureIdsTask->run($excludeId, $limit);
         return $this->getArtsByIdsAction->run($artIds);
     }
-
 }
-
-

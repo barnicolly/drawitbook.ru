@@ -6,7 +6,6 @@ use App\Ship\Parents\Dto\Dto;
 
 class ArtDto extends Dto
 {
-
     public int $id;
 
     public ?string $alt = null;
@@ -18,10 +17,10 @@ class ArtDto extends Dto
      */
     public ?PictureFilesDto $images = null;
 
-//    /**
-//     * @var Collection<TagDto>|null $tags
-//     */
-//    public ?Collection $tags;
+    //    /**
+    //     * @var Collection<TagDto>|null $tags
+    //     */
+    //    public ?Collection $tags;
 
     public ?array $tags;
 }

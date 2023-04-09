@@ -12,13 +12,13 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class CreateCellSliceResultsAction extends Action
 {
-
     public function __construct(private readonly TranslationService $translationService)
     {
     }
 
     /**
      * @return array{GetCellTaggedResultDto, PaginationDto}
+     *
      * @throws UnknownProperties
      */
     public function run(string $locale, LengthAwarePaginator $paginator): array
@@ -40,7 +40,4 @@ class CreateCellSliceResultsAction extends Action
         );
         return [$getCellTaggedResultDto, $paginationData];
     }
-
 }
-
-

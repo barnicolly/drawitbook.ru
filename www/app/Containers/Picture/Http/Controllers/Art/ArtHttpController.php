@@ -11,9 +11,7 @@ use Throwable;
 
 class ArtHttpController extends HttpController
 {
-
     /**
-     *
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\ArtHttpControllerTest
      */
     public function index(
@@ -33,5 +31,4 @@ class ArtHttpController extends HttpController
             abort(500);
         }
     }
-
 }

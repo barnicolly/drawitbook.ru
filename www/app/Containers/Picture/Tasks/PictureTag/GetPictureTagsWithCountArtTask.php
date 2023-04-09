@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\DB;
 
 class GetPictureTagsWithCountArtTask extends Task
 {
-
     public function __construct(protected PictureTagRepository $repository, private readonly GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
     {
     }
@@ -41,7 +40,7 @@ class GetPictureTagsWithCountArtTask extends Task
         if ($locale === LangEnum::EN) {
             $this->repository->pushCriteria(new WhereTagSlugEnIsNotNullCriteria());
         }
-        $this->repository->scopeQuery(static fn($model) => $model
+        $this->repository->scopeQuery(static fn ($model) => $model
             ->groupBy(SprTagsColumnsEnum::tId)
             ->orderBy('count', 'desc'));
         return $this->repository->pushCriteria(new WhereNotTagIdsCriteria($tagsHiddenIds))
@@ -50,5 +49,3 @@ class GetPictureTagsWithCountArtTask extends Task
             ->get($columns->toArray())->toArray();
     }
 }
-
-

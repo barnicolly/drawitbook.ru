@@ -17,6 +17,7 @@ class ArtHttpControllerTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
     use CreateTagTrait;
+
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      */
@@ -40,7 +41,7 @@ class ArtHttpControllerTest extends TestCase
         $mock = $this->createMock(FileService::class);
         $mock->method('formArtUrlPath')
             ->willReturn($file->path);
-        $this->app->bind(FileService::class, static fn(): MockObject&FileService => $mock);
+        $this->app->bind(FileService::class, static fn (): MockObject&FileService => $mock);
 
         $response = $this->get($this->routeService->getRouteArt($picture->id));
 
@@ -71,5 +72,4 @@ class ArtHttpControllerTest extends TestCase
 
         $response->assertNotFound();
     }
-
 }

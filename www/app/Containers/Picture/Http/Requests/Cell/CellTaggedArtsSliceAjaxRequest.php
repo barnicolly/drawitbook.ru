@@ -9,7 +9,6 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  */
 class CellTaggedArtsSliceAjaxRequest extends BaseFormRequest
 {
-
     public function authorize(): bool
     {
         return true;

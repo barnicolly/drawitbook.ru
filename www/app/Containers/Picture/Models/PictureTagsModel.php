@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int $tag_id
  *
  * @method static PictureTagsModelFactory factory()
+ *
  * @property SprTagsModel tag
  */
 class PictureTagsModel extends CoreModel

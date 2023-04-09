@@ -10,7 +10,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class CreateCellResultsAction extends Action
 {
-
     public function __construct(private readonly TranslationService $translationService)
     {
     }
@@ -33,7 +32,4 @@ class CreateCellResultsAction extends Action
             : null;
         return $viewData;
     }
-
 }
-
-

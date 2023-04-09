@@ -10,9 +10,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        if (!Schema::hasColumn('picture_extensions', 'mime_type'))
-        {
-            Schema::table('picture_extensions', static function (Blueprint $table) : void {
+        if (!Schema::hasColumn('picture_extensions', 'mime_type')) {
+            Schema::table('picture_extensions', static function (Blueprint $table): void {
                 $table->string('mime_type', 255)->nullable(false);
             });
         }

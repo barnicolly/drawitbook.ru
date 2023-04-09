@@ -31,4 +31,3 @@ class PictureTagsModelFactory extends Factory
         ];
     }
 }
-

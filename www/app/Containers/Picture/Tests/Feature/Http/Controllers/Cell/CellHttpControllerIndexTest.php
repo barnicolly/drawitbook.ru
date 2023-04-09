@@ -11,7 +11,6 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class CellHttpControllerIndexTest extends TestCase
 {
-
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      */
@@ -37,5 +36,4 @@ class CellHttpControllerIndexTest extends TestCase
         $response->assertSee('<title>Рисунки по клеточкам | Drawitbook.com</title>', false)
             ->assertSee('<meta name="description" content="Рисунки по клеточкам. Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.">', false);
     }
-
 }

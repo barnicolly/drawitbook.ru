@@ -12,7 +12,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class GetPaginatedCellArtsByTagTask extends Task
 {
-
     public function __construct(private readonly GetArtsByIdsAction $getArtsByIdsAction, private readonly GetPaginatedPicturesIdsByTagIdTask $getPaginatedPicturesIdsByTagIdTask)
     {
     }
@@ -28,5 +27,3 @@ class GetPaginatedCellArtsByTagTask extends Task
         return PaginatorFactory::createFromAnother($paginator, collect($relativeArts));
     }
 }
-
-

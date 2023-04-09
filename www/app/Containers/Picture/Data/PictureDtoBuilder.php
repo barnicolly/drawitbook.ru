@@ -29,7 +29,9 @@ class PictureDtoBuilder extends Task
 
     /**
      * @param Collection<PictureExtensionsModel>|null $files
+     *
      * @return $this
+     *
      * @throws UnknownProperties
      */
     public function setFiles(?Collection $files): self
@@ -72,7 +74,7 @@ class PictureDtoBuilder extends Task
     public function setTags(Collection $artTags): self
     {
         $this->tags = $artTags
-            ->map(static fn(SprTagsModel $tag): TagDto => TagDto::fromModel($tag))
+            ->map(static fn (SprTagsModel $tag): TagDto => TagDto::fromModel($tag))
             ->toArray();
         $this->alt = $this->setArtAltForDto($this->tags);
         return $this;
@@ -87,19 +89,16 @@ class PictureDtoBuilder extends Task
         if (!empty($tags)) {
             $tags = collect($tags);
             $localizedTags = $tags
-                ->map(static fn(TagDto $dto): string => $dto->name)
+                ->map(static fn (TagDto $dto): string => $dto->name)
                 ->toArray();
-            $result .= " ➣ " . implode(' ➣ ', $localizedTags);
+            $result .= ' ➣ ' . implode(' ➣ ', $localizedTags);
         }
         return $result;
     }
 
     private function formFlags(Collection $flags): array
     {
-//        todo-misha вынести имя колонки флага;
+        //        todo-misha вынести имя колонки флага;
         return $flags->pluck('name')->toArray();
     }
-
 }
-
-

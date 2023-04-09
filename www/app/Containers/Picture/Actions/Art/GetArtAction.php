@@ -15,7 +15,6 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetArtAction extends Action
 {
-
     public function __construct(private readonly GetPopularTagsAction $getPopularTagsAction, private readonly GetRelativeArtsAction $getRelativeArtsAction, private readonly SeoService $seoService, private readonly RouteService $routeService, private readonly GetArtByIdAction $getArtByIdAction)
     {
     }
@@ -39,13 +38,13 @@ class GetArtAction extends Action
         $image = $art['images']['primary'];
         $shareImage = new ShareImageDto(
             relativePath: getArtsFolder() . $image['path'],
-            width:        $image['width'],
-            height:       $image['height']
+            width: $image['width'],
+            height: $image['height']
         );
         $pageMetaDto = new PageMetaDto(
-            title:       $title,
+            title: $title,
             description: $description,
-            shareImage:  $shareImage
+            shareImage: $shareImage
         );
         return [$viewData, $pageMetaDto];
     }
@@ -60,7 +59,4 @@ class GetArtAction extends Action
             'href' => $this->routeService->getRouteArt($id, true, LangEnum::EN),
         ]];
     }
-
 }
-
-

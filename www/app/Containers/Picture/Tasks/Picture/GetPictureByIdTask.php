@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class GetPictureByIdTask extends Task
 {
-
     public function __construct(protected PictureRepository $repository)
     {
     }
@@ -27,5 +26,3 @@ class GetPictureByIdTask extends Task
         }
     }
 }
-
-

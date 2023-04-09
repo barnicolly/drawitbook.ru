@@ -15,7 +15,6 @@ use Throwable;
 
 class CellAjaxController extends AjaxController
 {
-
     /**
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellAjaxControllerTest
      */
@@ -36,5 +35,4 @@ class CellAjaxController extends AjaxController
             abort(500);
         }
     }
-
 }

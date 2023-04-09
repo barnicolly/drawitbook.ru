@@ -18,7 +18,6 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class CellHttpControllerTaggedTest extends TestCase
 {
-
     use CreatePictureWithRelationsTrait;
     use CreateTagTrait;
 

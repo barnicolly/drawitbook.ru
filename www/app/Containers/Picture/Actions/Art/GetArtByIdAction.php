@@ -8,7 +8,6 @@ use Illuminate\Support\Arr;
 
 class GetArtByIdAction extends Action
 {
-
     public function __construct(private readonly GetArtsByIdsAction $getArtsByIdsAction)
     {
     }
@@ -25,7 +24,4 @@ class GetArtByIdAction extends Action
         }
         return $art;
     }
-
 }
-
-

@@ -14,6 +14,7 @@ class RateAjaxControllerLikeTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
     use CreateLikesTrait;
+
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      */
@@ -88,5 +89,4 @@ class RateAjaxControllerLikeTest extends TestCase
         $response->assertUnprocessable()
             ->assertJsonValidationErrorFor('off');
     }
-
 }

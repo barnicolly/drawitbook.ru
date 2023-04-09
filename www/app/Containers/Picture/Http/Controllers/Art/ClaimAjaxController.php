@@ -11,7 +11,6 @@ use Throwable;
 
 class ClaimAjaxController extends HttpController
 {
-
     /**
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\ClaimAjaxControllerTest
      */
@@ -25,5 +24,4 @@ class ClaimAjaxController extends HttpController
         }
         return response()->json();
     }
-
 }

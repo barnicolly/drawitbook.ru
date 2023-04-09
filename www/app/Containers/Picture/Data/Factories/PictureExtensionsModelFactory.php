@@ -40,4 +40,3 @@ class PictureExtensionsModelFactory extends Factory
         ];
     }
 }
-

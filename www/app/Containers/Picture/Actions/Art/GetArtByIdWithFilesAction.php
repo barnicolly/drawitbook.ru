@@ -12,7 +12,6 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetArtByIdWithFilesAction extends Action
 {
-
     public function __construct(private readonly GetPictureByIdTask $getPictureByIdTask)
     {
     }
@@ -33,7 +32,4 @@ class GetArtByIdWithFilesAction extends Action
             ->setFiles($art->extensions)
             ->build();
     }
-
 }
-
-

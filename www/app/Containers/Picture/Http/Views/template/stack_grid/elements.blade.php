@@ -1,4 +1,5 @@
 <?php use App\Containers\Translation\Enums\LangEnum;
+
 $adPostfix = $page ?? 1;
 $showAds = app()->getLocale() === LangEnum::RU;
 ?>

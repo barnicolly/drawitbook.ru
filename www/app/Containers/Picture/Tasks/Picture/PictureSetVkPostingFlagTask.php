@@ -10,7 +10,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class PictureSetVkPostingFlagTask extends Task
 {
-
     public function __construct(protected PictureRepository $repository)
     {
     }
@@ -27,5 +26,3 @@ class PictureSetVkPostingFlagTask extends Task
         return $model;
     }
 }
-
-

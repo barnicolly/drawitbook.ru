@@ -10,8 +10,6 @@ use App\Containers\Seo\Data\Dto\ShareImageDto;
 use App\Containers\Seo\Services\SeoService;
 use App\Containers\Tag\Exceptions\NotFoundTagException;
 use App\Containers\Tag\Tasks\GetTagBySeoNameTask;
-use App\Containers\Translation\Enums\LangEnum;
-use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Dto\PageMetaDto;
 use App\Ship\Dto\PaginationDto;
 use App\Ship\Parents\Actions\Action;
@@ -24,13 +22,13 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetTaggedCellPicturesAction extends Action
 {
-
     public function __construct(private readonly RouteService $routeService, private readonly SeoService $seoService, private readonly FormCellPageAlternativeLocaleLinksTask $formCellPageAlternativeLocaleLinksTask, private readonly GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask, private readonly GetTagBySeoNameTask $getTagBySeoNameTask, private readonly CreateCellResultsAction $createCellResultsAction)
     {
     }
 
     /**
      * @return array{array, PageMetaDto}
+     *
      * @throws NotFoundRelativeArts
      * @throws NotFoundTagException
      * @throws UnknownProperties
@@ -77,7 +75,4 @@ class GetTaggedCellPicturesAction extends Action
         $viewData['breadcrumbs'] = $breadCrumbs;
         return [$viewData, $pageMetaDto];
     }
-
 }
-
-

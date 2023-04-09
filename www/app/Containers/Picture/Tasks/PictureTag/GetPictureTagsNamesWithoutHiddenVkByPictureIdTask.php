@@ -13,7 +13,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
 {
-
     public function __construct(protected PictureTagRepository $repository, private readonly GetHiddenVkTagsIdsTask $getHiddenVkTagsIdsTask)
     {
     }
@@ -32,5 +31,3 @@ class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
             ->toArray();
     }
 }
-
-

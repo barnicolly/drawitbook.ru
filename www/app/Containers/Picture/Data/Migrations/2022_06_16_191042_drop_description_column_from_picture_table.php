@@ -10,9 +10,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        if (Schema::hasColumn('picture', 'description'))
-        {
-            Schema::table('picture', static function (Blueprint $table) : void {
+        if (Schema::hasColumn('picture', 'description')) {
+            Schema::table('picture', static function (Blueprint $table): void {
                 $table->dropColumn('description');
             });
         }

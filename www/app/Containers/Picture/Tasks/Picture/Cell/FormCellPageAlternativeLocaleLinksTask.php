@@ -8,7 +8,6 @@ use App\Ship\Services\Route\RouteService;
 
 class FormCellPageAlternativeLocaleLinksTask extends Task
 {
-
     public function __construct(private readonly RouteService $routeService)
     {
     }
@@ -44,5 +43,3 @@ class FormCellPageAlternativeLocaleLinksTask extends Task
         return $links;
     }
 }
-
-

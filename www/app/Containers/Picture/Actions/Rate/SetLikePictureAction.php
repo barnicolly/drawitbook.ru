@@ -11,7 +11,6 @@ use App\Ship\Parents\Actions\Action;
 
 class SetLikePictureAction extends Action
 {
-
     public function __construct(private readonly GetUserIpFromRequestTask $getUserIpFromRequestTask, private readonly LikePictureAction $likePictureAction)
     {
     }
@@ -25,7 +24,4 @@ class SetLikePictureAction extends Action
         $userDto = new UserDto(ip: $this->getUserIpFromRequestTask->run());
         $this->likePictureAction->run($pictureId, $turnOn, $userDto);
     }
-
 }
-
-
