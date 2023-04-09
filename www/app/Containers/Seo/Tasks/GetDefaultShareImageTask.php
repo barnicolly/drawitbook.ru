@@ -10,17 +10,20 @@ use Illuminate\Support\Facades\Cache;
 
 class GetDefaultShareImageTask extends Task
 {
+    /**
+     * @var string
+     */
+    private const CACHE_NAME = 'seo.default_share_image';
     public function __construct(private readonly GetArtByIdWithFilesAction $getArtByIdWithFilesAction)
     {
     }
 
     public function run(): ?ShareImageDto
     {
-        $cacheName = 'seo.default_share_image';
-        $result = Cache::get($cacheName);
+        $result = Cache::get(self::CACHE_NAME);
         if (!$result) {
             $result = Cache::remember(
-                $cacheName,
+                self::CACHE_NAME,
                 config('cache.expiration'),
                 function (): ?ShareImageDto {
                     try {

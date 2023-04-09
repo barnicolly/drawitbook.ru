@@ -22,6 +22,8 @@ use Rector\Config\RectorConfig;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php74\Rector\LNumber\AddLiteralSeparatorToNumberRector;
+use Rector\Privatization\Rector\Class_\FinalizeClassesWithoutChildrenRector;
+use Rector\RemovingStatic\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\BooleanNot\BooleanInBooleanNotRuleFixerRector;
@@ -59,7 +61,7 @@ return static function (RectorConfig $rectorConfig): void {
         BooleanInBooleanNotRuleFixerRector::class,
         BooleanInIfConditionRuleFixerRector::class,
         BooleanInTernaryOperatorRuleFixerRector::class,
-//        Rector\RemovingStatic\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector::class,
+        LocallyCalledStaticMethodToNonStaticRector::class,
     ]);
 
     $rectorConfig->sets([
@@ -67,6 +69,7 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::TYPE_DECLARATION,
         SetList::CODE_QUALITY,
         SetList::PSR_4,
+        SetList::PRIVATIZATION,
     ]);
 
     $rectorConfig->skip([
@@ -87,5 +90,8 @@ return static function (RectorConfig $rectorConfig): void {
         JoinStringConcatRector::class,
         RandomFunctionRector::class,
         AddLiteralSeparatorToNumberRector::class,
+
+        //--- исключения для SetList::PRIVATIZATION
+        FinalizeClassesWithoutChildrenRector::class,
     ]);
 };
