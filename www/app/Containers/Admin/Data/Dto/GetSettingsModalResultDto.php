@@ -6,6 +6,5 @@ use App\Ship\Parents\Dto\Dto;
 
 class GetSettingsModalResultDto extends Dto
 {
-
     public string $html;
 }

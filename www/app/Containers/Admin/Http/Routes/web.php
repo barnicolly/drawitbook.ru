@@ -9,7 +9,7 @@ Route::group(
         'prefix' => '/admin/art',
         'roles' => [RoleEnum::ADMIN],
     ],
-    static function () : void {
+    static function (): void {
         Route::post('/setVkPostingOn', (new ArtController())->setVkPostingOn(...))->name('admin.posting.vk.on');
         Route::post('/setVkPostingOff', (new ArtController())->setVkPostingOff(...))->name('admin.posting.vk.off');
         Route::get('/{id}/getSettingsModal', (new ArtController())->getSettingsModal(...))->name('admin.picture.settings');
@@ -17,4 +17,3 @@ Route::group(
         Route::post('/{id}/removeFromVkAlbum', (new ArtController())->detachPictureFromAlbum(...))->name('admin.posting.vk.album.detach');
     }
 );
-

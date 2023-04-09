@@ -18,11 +18,12 @@ class AttachPictureOnAlbumTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
     use CreateVkAlbumTrait;
+
     protected function setUp(): void
     {
         parent::setUp();
         $mock = $this->createMock(VkApi::class);
-        $this->app->bind(VkApi::class, static fn(): MockObject&VkApi => $mock);
+        $this->app->bind(VkApi::class, static fn (): MockObject&VkApi => $mock);
     }
 
     private function formUrl(int $pictureId): string
@@ -42,7 +43,7 @@ class AttachPictureOnAlbumTest extends TestCase
             ->willReturn($outVkImageId);
         $mock->method('edit');
         $mock->method('timeout');
-        $this->app->bind(PhotoService::class, static fn(): MockObject&PhotoService => $mock);
+        $this->app->bind(PhotoService::class, static fn (): MockObject&PhotoService => $mock);
 
         $data = [
             'id' => $picture->id,
@@ -113,5 +114,4 @@ class AttachPictureOnAlbumTest extends TestCase
 
         $response->assertForbidden();
     }
-
 }

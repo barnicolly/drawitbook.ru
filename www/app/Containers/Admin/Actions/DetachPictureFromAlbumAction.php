@@ -16,7 +16,6 @@ class DetachPictureFromAlbumAction extends Action
     }
 
     /**
-     *
      * @throws Exception
      */
     public function run(int $artId, int $vkAlbumId): void
@@ -26,7 +25,4 @@ class DetachPictureFromAlbumAction extends Action
         $this->apiPhotoService->delete($vkAlbumPicture->out_vk_image_id);
         $this->deleteVkAlbumPictureByIdTask->run($vkAlbumPicture->id);
     }
-
 }
-
-

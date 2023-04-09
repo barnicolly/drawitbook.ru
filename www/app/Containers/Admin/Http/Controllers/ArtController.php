@@ -19,9 +19,7 @@ use Throwable;
 
 class ArtController extends HttpController
 {
-
     /**
-     *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\SetVkPostingOnTest
      */
     public function setVkPostingOn(
@@ -38,7 +36,6 @@ class ArtController extends HttpController
     }
 
     /**
-     *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\SetVkPostingOffTest
      */
     public function setVkPostingOff(
@@ -55,7 +52,6 @@ class ArtController extends HttpController
     }
 
     /**
-     *
      * @see  \App\Containers\Admin\Tests\Feature\Http\Controllers\GetSettingsModalTest
      */
     public function getSettingsModal(GetSettingsModalRequest $request, GetSettingsModalAction $action): JsonResponse
@@ -71,7 +67,6 @@ class ArtController extends HttpController
     }
 
     /**
-     *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\AttachPictureOnAlbumTest
      */
     public function attachPictureOnAlbum(AttachPictureOnAlbumRequest $request, AttachPictureOnAlbumAction $action): JsonResponse
@@ -86,7 +81,6 @@ class ArtController extends HttpController
     }
 
     /**
-     *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\AttachPictureOnAlbumTest
      */
     public function detachPictureFromAlbum(DetachPictureFromAlbumRequest $request, DetachPictureFromAlbumAction $action): JsonResponse

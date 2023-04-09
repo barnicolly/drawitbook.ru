@@ -87,5 +87,4 @@ class SetVkPostingOffTest extends TestCase
 
         $response->assertForbidden();
     }
-
 }

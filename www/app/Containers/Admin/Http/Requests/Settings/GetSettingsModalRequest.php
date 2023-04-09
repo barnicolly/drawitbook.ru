@@ -10,7 +10,6 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  */
 class GetSettingsModalRequest extends BaseFormRequest
 {
-
     public function authorize(): bool
     {
         return true;

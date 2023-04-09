@@ -11,7 +11,6 @@ use App\Ship\Parents\Actions\Action;
 
 class GetSettingsModalAction extends Action
 {
-
     public function __construct(private readonly GetAllVkAlbumTask $getAllVkAlbumTask, private readonly GetVkAlbumPicturesByVkAlbumIdsAndPictureIdTask $getVkAlbumPicturesByVkAlbumIdsAndPictureIdTask)
     {
     }
@@ -27,13 +26,10 @@ class GetSettingsModalAction extends Action
         $viewData['vkAlbums'] = $vkAlbums;
         $vkAlbumPictures = $this->getVkAlbumPicturesByVkAlbumIdsAndPictureIdTask->run($pictureId, $vkAlbumIds);
         $viewData['issetInVkAlbums'] = $vkAlbumPictures
-            ->map(static fn(VkAlbumPictureModel $item): int => $item->vk_album_id)
+            ->map(static fn (VkAlbumPictureModel $item): int => $item->vk_album_id)
             ->unique()
             ->toArray();
         $modal = view('admin::art.modal', $viewData)->render();
         return new GetSettingsModalResultDto(html: $modal);
     }
-
 }
-
-

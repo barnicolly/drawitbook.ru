@@ -18,7 +18,6 @@ class AttachPictureOnAlbumAction extends Action
     }
 
     /**
-     *
      * @throws Exception
      */
     public function run(int $artId, int $vkAlbumId): void
@@ -40,7 +39,4 @@ class AttachPictureOnAlbumAction extends Action
         $this->apiPhotoService->edit($photoId, ['caption' => $hashTags . "\n\n" . ' Больше рисунков ► ' . $url]);
         return $photoId;
     }
-
 }
-
-
