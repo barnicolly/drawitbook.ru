@@ -13,8 +13,7 @@ return new class extends Migration
     {
         if (Schema::hasColumn('user_activity', 'is_del'))
         {
-            Schema::table('user_activity', function (Blueprint $table): void
-            {
+            Schema::table('user_activity', static function (Blueprint $table) : void {
                 $table->dropColumn('is_del');
             });
         }

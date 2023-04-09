@@ -13,8 +13,7 @@ return new class extends Migration
     {
         if (Schema::hasColumn('picture_extensions', 'is_del'))
         {
-            Schema::table('picture_extensions', function (Blueprint $table): void
-            {
+            Schema::table('picture_extensions', static function (Blueprint $table) : void {
                 $table->dropColumn('is_del');
             });
         }

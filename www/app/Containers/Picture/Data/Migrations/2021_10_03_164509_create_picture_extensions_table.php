@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('picture_extensions', function (Blueprint $table): void {
+        Schema::create('picture_extensions', static function (Blueprint $table) : void {
             $table->bigIncrements('id');
             $table->integer('picture_id')->index()->nullable(false);
             $table->string('path')->nullable(false);

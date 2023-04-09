@@ -5,12 +5,12 @@ use App\Containers\Content\Http\Controllers\ContentHttpController;
 foreach (config('translator.available_locales') as $prefix) {
     Route::group(
         ['prefix' => $prefix],
-        function () use ($prefix): void {
+        static function () use ($prefix) : void {
             Route::group(
                 [
                     'middleware' => 'web',
                 ],
-                function () use ($prefix): void {
+                static function () use ($prefix) : void {
                     Route::get('/', (new ContentHttpController())->showMainPage(...))
                         ->middleware(['lower_case', 'no_get'])
                         ->name($prefix . '_home');

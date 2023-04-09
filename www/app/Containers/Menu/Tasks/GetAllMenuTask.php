@@ -45,7 +45,7 @@ class GetAllMenuTask extends Task
         $result = $this->repository->getModel()
             ->select($select)
             ->where(
-                function ($query) use ($locale): void {
+                static function ($query) use ($locale) : void {
                     if ($locale === LangEnum::EN) {
                         $query->where(MenuLevelsColumnsEnum::tSHOW_EN, 1);
                     }

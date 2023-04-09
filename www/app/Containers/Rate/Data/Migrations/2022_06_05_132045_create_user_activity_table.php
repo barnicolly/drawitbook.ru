@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_activity', function (Blueprint $table): void {
+        Schema::create('user_activity', static function (Blueprint $table) : void {
             $table->id();
             $table->integer('ip')->unsigned()->index()->nullable(false);
             $table->integer('user_id')->index()->nullable(false);

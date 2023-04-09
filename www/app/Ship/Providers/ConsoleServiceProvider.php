@@ -34,7 +34,7 @@ class ConsoleServiceProvider extends ServiceProvider
         $paths = module_path($moduleName, 'Console');
         $paths = array_unique(Arr::wrap($paths));
 
-        $paths = array_filter($paths, fn($path): bool => is_dir($path));
+        $paths = array_filter($paths, static fn($path): bool => is_dir($path));
         if (empty($paths)) {
             return;
         }
@@ -48,7 +48,7 @@ class ConsoleServiceProvider extends ServiceProvider
                 $class
             );
             if (is_subclass_of($command, Command::class)) {
-                Artisan::starting(function ($artisan) use ($command): void {
+                Artisan::starting(static function ($artisan) use ($command) : void {
                     $artisan->resolve($command);
                 });
             }

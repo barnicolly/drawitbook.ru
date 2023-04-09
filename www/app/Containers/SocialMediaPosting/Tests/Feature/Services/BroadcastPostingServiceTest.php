@@ -24,7 +24,7 @@ class BroadcastPostingServiceTest extends TestCase
     public function testExpectNotFoundPictureIdForPostingException(): void
     {
         $mock = $this->createMock(VkWallPostingStrategy::class);
-        $this->app->bind(VkWallPostingStrategy::class, fn(): MockObject&VkWallPostingStrategy => $mock);
+        $this->app->bind(VkWallPostingStrategy::class, static fn(): MockObject&VkWallPostingStrategy => $mock);
 
         $this->expectException(NotFoundPictureIdForPostingException::class);
         $command = app(BroadcastPostingService::class);
@@ -46,7 +46,7 @@ class BroadcastPostingServiceTest extends TestCase
 
         $mock = $this->createMock(VkWallPostingStrategy::class);
         $strategyParams = [];
-        $this->app->bind(VkWallPostingStrategy::class, function ($app, $params) use ($mock, &$strategyParams): MockObject&VkWallPostingStrategy {
+        $this->app->bind(VkWallPostingStrategy::class, static function ($app, $params) use ($mock, &$strategyParams) : MockObject&VkWallPostingStrategy {
             $strategyParams = $params;
             return $mock;
         });

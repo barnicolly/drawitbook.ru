@@ -10,7 +10,7 @@ class FormHashTagsTask extends Task
     public function run(array $tags): string
     {
         foreach ($tags as $key => $tag) {
-            $tags[$key] = preg_replace('/\s+/', '', (string) $tag);
+            $tags[$key] = preg_replace('#\s+#', '', (string) $tag);
             $tags[$key] = str_ireplace('-', '', $tags[$key]);
         }
         $hashTags = '#рисунки #рисункипоклеточкам';

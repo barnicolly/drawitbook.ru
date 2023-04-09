@@ -40,7 +40,7 @@ class ArtHttpControllerTest extends TestCase
         $mock = $this->createMock(FileService::class);
         $mock->method('formArtUrlPath')
             ->willReturn($file->path);
-        $this->app->bind(FileService::class, fn(): MockObject&FileService => $mock);
+        $this->app->bind(FileService::class, static fn(): MockObject&FileService => $mock);
 
         $response = $this->get($this->routeService->getRouteArt($picture->id));
 

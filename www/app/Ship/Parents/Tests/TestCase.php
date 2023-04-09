@@ -40,7 +40,7 @@ abstract class TestCase extends BaseTestCase
         Cache::clear();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         if ($this->useTransactionsForTruncateTables) {
             DB::rollBack();

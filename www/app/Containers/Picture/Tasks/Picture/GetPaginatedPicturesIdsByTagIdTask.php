@@ -19,7 +19,7 @@ class GetPaginatedPicturesIdsByTagIdTask extends Task
     public function run(int $tagId, int $perPage): LengthAwarePaginator
     {
         return $this->repository
-            ->whereHas('tags', function (BuilderContract $q) use ($tagId): void {
+            ->whereHas('tags', static function (BuilderContract $q) use ($tagId) : void {
                 $q->where(SprTagsColumnsEnum::tId, $tagId);
             })
             ->paginate($perPage, [PictureColumnsEnum::ID]);

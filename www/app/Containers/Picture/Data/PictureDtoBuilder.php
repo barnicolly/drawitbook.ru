@@ -72,7 +72,7 @@ class PictureDtoBuilder extends Task
     public function setTags(Collection $artTags): self
     {
         $this->tags = $artTags
-            ->map(fn (SprTagsModel $tag): TagDto => TagDto::fromModel($tag))
+            ->map(static fn(SprTagsModel $tag): TagDto => TagDto::fromModel($tag))
             ->toArray();
         $this->alt = $this->setArtAltForDto($this->tags);
         return $this;
@@ -87,7 +87,7 @@ class PictureDtoBuilder extends Task
         if (!empty($tags)) {
             $tags = collect($tags);
             $localizedTags = $tags
-                ->map(fn(TagDto $dto): string => $dto->name)
+                ->map(static fn(TagDto $dto): string => $dto->name)
                 ->toArray();
             $result .= " ➣ " . implode(' ➣ ', $localizedTags);
         }

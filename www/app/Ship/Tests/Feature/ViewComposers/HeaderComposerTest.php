@@ -61,6 +61,6 @@ class HeaderComposerTest extends TestCase
 
         $view->assertViewHas('groups');
 
-        $tagCollections->each(fn(SprTagsModel $tag): TestView => $view->assertSee($tag->name, false));
+        $tagCollections->each(static fn(SprTagsModel $tag): TestView => $view->assertSee($tag->name, false));
     }
 }

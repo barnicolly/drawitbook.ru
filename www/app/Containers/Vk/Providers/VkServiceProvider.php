@@ -29,7 +29,7 @@ class VkServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        $this->app->bind(PhotoService::class, function ($app) {
+        $this->app->bind(PhotoService::class, static function ($app) {
             $apiInstance = $app->make(VkApi::class);
             return $app->make(PhotoService::class, ['api' => $apiInstance]);
         });

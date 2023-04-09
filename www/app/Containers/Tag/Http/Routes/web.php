@@ -8,7 +8,7 @@ foreach (config('translator.available_locales') as $prefix) {
             'prefix' => $prefix,
             'middleware' => ['web', 'ajax'],
         ],
-        function (): void {
+        static function () : void {
             Route::get('/tag/list', (new TagAjaxController())->getListPopularTagsWithCountArts(...));
         }
     );

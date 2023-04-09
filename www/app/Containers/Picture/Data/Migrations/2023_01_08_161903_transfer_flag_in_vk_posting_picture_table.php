@@ -13,7 +13,7 @@ return new class extends Migration
     {
        $pictures = PictureModel::where('in_vk_posting', 1)->get();
        if (!blank($pictures)) {
-            $pictures->each(function (PictureModel $picture): void {
+            $pictures->each(static function (PictureModel $picture) : void {
                 $picture->flag(FlagsEnum::PICTURE_IN_VK_POSTING);
             });
        }

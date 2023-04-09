@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('spr_tags', function (Blueprint $table): void {
+        Schema::create('spr_tags', static function (Blueprint $table) : void {
             $table->id();
             $table->string('name', 255)->index()->nullable(false);
             $table->string('name_en', 255)->nullable(true);
