@@ -26,10 +26,8 @@ use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 
 /**
- * Перечень правил (в сет листах и исключениях) https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md
+ * Перечень правил https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md
  * Документация https://getrector.com/documentation
- *
- * $rectorConfig->phpVersion нет необходимости указывать, возьмет версию php из composer.json
  */
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->parallel(300);
@@ -59,6 +57,7 @@ return static function (RectorConfig $rectorConfig): void {
         LevelSetList::UP_TO_PHP_82,
         SetList::TYPE_DECLARATION,
         SetList::CODE_QUALITY,
+        SetList::PSR_4,
     ]);
 
     $rectorConfig->skip([
