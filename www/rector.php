@@ -22,14 +22,11 @@ use Rector\Config\RectorConfig;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php74\Rector\LNumber\AddLiteralSeparatorToNumberRector;
-use Rector\Privatization\Rector\Class_\FinalizeClassesWithoutChildrenRector;
 use Rector\RemovingStatic\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
-use Rector\Strict\Rector\BooleanNot\BooleanInBooleanNotRuleFixerRector;
 use Rector\Strict\Rector\ClassMethod\AddConstructorParentCallRector;
-use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
-use Rector\Strict\Rector\Ternary\BooleanInTernaryOperatorRuleFixerRector;
+use Rector\Visibility\Rector\ClassMethod\ExplicitPublicClassMethodRector;
 
 /**
  * Перечень правил https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md
@@ -47,6 +44,7 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->rules([
+//        CodingStyle https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md#codingstyle
         ConsistentImplodeRector::class,
         NullifyUnionNullableRector::class,
         SeparateMultiUseImportsRector::class,
@@ -57,19 +55,18 @@ return static function (RectorConfig $rectorConfig): void {
         UnSpreadOperatorRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
         UseClassKeywordForClassNameResolutionRector::class,
+//        Strict https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md#strict
         AddConstructorParentCallRector::class,
-        BooleanInBooleanNotRuleFixerRector::class,
-        BooleanInIfConditionRuleFixerRector::class,
-        BooleanInTernaryOperatorRuleFixerRector::class,
+//        RemovingStatic https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md#removingstatic
         LocallyCalledStaticMethodToNonStaticRector::class,
+//        Visibility https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md#visibility
+        ExplicitPublicClassMethodRector::class,
     ]);
 
     $rectorConfig->sets([
         LevelSetList::UP_TO_PHP_82,
         SetList::TYPE_DECLARATION,
         SetList::CODE_QUALITY,
-        SetList::PSR_4,
-        SetList::PRIVATIZATION,
     ]);
 
     $rectorConfig->skip([
@@ -91,7 +88,9 @@ return static function (RectorConfig $rectorConfig): void {
         RandomFunctionRector::class,
         AddLiteralSeparatorToNumberRector::class,
 
-        //--- исключения для SetList::PRIVATIZATION
-        FinalizeClassesWithoutChildrenRector::class,
+        //--- исключения для RemovingStatic
+        LocallyCalledStaticMethodToNonStaticRector::class => [
+            __DIR__ . '*Test.php',
+        ],
     ]);
 };
