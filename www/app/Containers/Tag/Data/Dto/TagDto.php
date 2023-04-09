@@ -27,7 +27,7 @@ final class TagDto extends Dto
 
     public static function fromModel(SprTagsModel $model, string $locale = null): self
     {
-        $locale = $locale ?? app()->getLocale();
+        $locale ??= app()->getLocale();
         $seoLang = TagSeoLangDto::fromModel($model, $locale);
         $link = $seoLang->current->slug
         ? app(RouteService::class)->getRouteArtsCellTagged($seoLang->current->slug)

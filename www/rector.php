@@ -74,10 +74,6 @@ return static function (RectorConfig $rectorConfig): void {
         //--- исключения для LevelSetList::UP_TO_PHP_82
         CountOnNullRector::class,
         AddDefaultValueForUndefinedVariableRector::class,
-        NullCoalescingOperatorRector::class,
-        TypedPropertyFromAssignsRector::class,
-        // замена на стрелочные функции (под вопросом)
-//        ClosureToArrowFunctionRector::class,
 
         //--- исключения для SetList::CODE_QUALITY
         CallableThisArrayToAnonymousFunctionRector::class,
