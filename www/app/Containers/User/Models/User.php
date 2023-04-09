@@ -67,19 +67,14 @@ class User extends UserModel
                     return true;
                 }
             }
-        } else {
-            if ($this->hasRole($roles)) {
-                return true;
-            }
+        } elseif ($this->hasRole($roles)) {
+            return true;
         }
         return false;
     }
 
     public function hasRole(string $role): bool
     {
-        if ($this->roles()->where('name', $role)->first()) {
-            return true;
-        }
-        return false;
+        return (bool) $this->roles()->where('name', $role)->first();
     }
 }

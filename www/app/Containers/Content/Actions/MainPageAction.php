@@ -41,16 +41,13 @@ class MainPageAction extends Action
 
     private function getAlternateLinks(): array
     {
-        $links = [];
-        $links[] = [
+        return [[
             'lang' => LangEnum::RU,
             'href' => $this->routeService->getRouteHome([], true, LangEnum::RU),
-        ];
-        $links[] = [
+        ], [
             'lang' => LangEnum::EN,
             'href' => $this->routeService->getRouteHome([], true, LangEnum::EN),
-        ];
-        return $links;
+        ]];
     }
 
     private function formTitleAndDescriptionHome(): array

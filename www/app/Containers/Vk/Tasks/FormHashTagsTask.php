@@ -17,8 +17,7 @@ class FormHashTagsTask extends Task
         if ($tags) {
             $hashTags .= ' #' . implode(' #', $tags);
         }
-        $hashTags .= ' #drawitbook';
-        return $hashTags;
+        return $hashTags . ' #drawitbook';
     }
 }
 

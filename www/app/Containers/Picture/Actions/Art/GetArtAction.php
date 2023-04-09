@@ -70,16 +70,13 @@ class GetArtAction extends Action
 
     private function getAlternateLinks(int $id): array
     {
-        $links = [];
-        $links[] = [
+        return [[
             'lang' => LangEnum::RU,
             'href' => $this->routeService->getRouteArt($id, true, LangEnum::RU),
-        ];
-        $links[] = [
+        ], [
             'lang' => LangEnum::EN,
             'href' => $this->routeService->getRouteArt($id, true, LangEnum::EN),
-        ];
-        return $links;
+        ]];
     }
 
 }

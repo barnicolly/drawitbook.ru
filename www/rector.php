@@ -11,9 +11,17 @@ use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
 use Rector\CodeQuality\Rector\PropertyFetch\ExplicitMethodCallOverMagicGetSetRector;
 use Rector\CodeQuality\Rector\Ternary\SwitchNegatedTernaryRector;
+use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
+use Rector\CodingStyle\Rector\ClassConst\SplitGroupedClassConstantsRector;
+use Rector\CodingStyle\Rector\ClassMethod\UnSpreadOperatorRector;
+use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\CodingStyle\Rector\FuncCall\ConsistentImplodeRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\CodingStyle\Rector\Property\NullifyUnionNullableRector;
+use Rector\CodingStyle\Rector\Property\SplitGroupedPropertiesRector;
+use Rector\CodingStyle\Rector\String_\UseClassKeywordForClassNameResolutionRector;
+use Rector\CodingStyle\Rector\Ternary\TernaryConditionVariableAssignmentRector;
+use Rector\CodingStyle\Rector\Use_\SeparateMultiUseImportsRector;
 use Rector\Config\RectorConfig;
 use Rector\Php56\Rector\FunctionLike\AddDefaultValueForUndefinedVariableRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
@@ -52,23 +60,20 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rules([
         ConsistentImplodeRector::class,
         NullifyUnionNullableRector::class,
-//      обязательно применить все правила ниже по разделению use, свойств, переменных в разные строки (при рефакторинге будет проще)
-      \Rector\CodingStyle\Rector\Use_\SeparateMultiUseImportsRector::class,
-//      \Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector::class,
-//      \Rector\CodingStyle\Rector\ClassConst\SplitGroupedClassConstantsRector::class,
-//      \Rector\CodingStyle\Rector\Property\SplitGroupedPropertiesRector::class,
-//      \Rector\CodingStyle\Rector\Ternary\TernaryConditionVariableAssignmentRector::class,
-//      \Rector\CodingStyle\Rector\ClassMethod\UnSpreadOperatorRector::class,
-//      \Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector::class,
-//      \Rector\CodingStyle\Rector\String_\UseClassKeywordForClassNameResolutionRector::class,
-//      может пригодится
-//      \Rector\Transform\Rector\New_\NewToConstructorInjectionRector::class,
+        SeparateMultiUseImportsRector::class,
+        SplitDoubleAssignRector::class,
+        SplitGroupedClassConstantsRector::class,
+        SplitGroupedPropertiesRector::class,
+        TernaryConditionVariableAssignmentRector::class,
+        UnSpreadOperatorRector::class,
+        WrapEncapsedVariableInCurlyBracesRector::class,
+        UseClassKeywordForClassNameResolutionRector::class,
     ]);
 
     $rectorConfig->sets([
 //        LevelSetList::UP_TO_PHP_82,
         SetList::TYPE_DECLARATION,
-//        SetList::CODE_QUALITY,
+        SetList::CODE_QUALITY,
     ]);
 
     $rectorConfig->skip([
@@ -88,6 +93,7 @@ return static function (RectorConfig $rectorConfig): void {
         ClosureToArrowFunctionRector::class,
 
         //--- исключения для SetList::CODE_QUALITY
+        \Rector\CodeQuality\Rector\Array_\CallableThisArrayToAnonymousFunctionRector::class,
         ExplicitBoolCompareRector::class,
         SimplifyEmptyCheckOnEmptyArrayRector::class,
         // изменение ради оптимизации скорости (под вопросом)

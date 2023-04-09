@@ -69,16 +69,13 @@ class SearchPageAction extends Action
 
     private function getAlternateLinks(): array
     {
-        $links = [];
-        $links[] = [
+        return [[
             'lang' => LangEnum::RU,
             'href' => $this->routeService->getRouteSearch([], true, LangEnum::RU),
-        ];
-        $links[] = [
+        ], [
             'lang' => LangEnum::EN,
             'href' => $this->routeService->getRouteSearch([], true, LangEnum::EN),
-        ];
-        return $links;
+        ]];
     }
 
     private function formTitleAndDescriptionSearch(): array
