@@ -21,5 +21,9 @@ return (new PhpCsFixer\Config())->setRules([
     'php_unit_internal_class' => false,
     'no_superfluous_phpdoc_tags' => false,
     'phpdoc_no_empty_return' => false,
+    'yoda_style' => false,
+    'new_with_braces' => false,
+    'phpdoc_align' => false,
+    'phpdoc_types_order' => false,
 ])
     ->setFinder($finder);

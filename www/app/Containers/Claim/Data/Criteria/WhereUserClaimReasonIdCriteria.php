@@ -9,7 +9,6 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 
 class WhereUserClaimReasonIdCriteria extends Criteria
 {
-
     public function __construct(private readonly int $reasonId)
     {
     }
@@ -17,6 +16,7 @@ class WhereUserClaimReasonIdCriteria extends Criteria
     /**
      * @param Builder $model
      * @param PrettusRepositoryInterface $repository
+     *
      * @return Builder
      */
     public function apply($model, PrettusRepositoryInterface $repository): Builder

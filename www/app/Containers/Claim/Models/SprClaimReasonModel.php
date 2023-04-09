@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * @property int $id
  * @property string $reason
- *
  */
 class SprClaimReasonModel extends CoreModel
 {

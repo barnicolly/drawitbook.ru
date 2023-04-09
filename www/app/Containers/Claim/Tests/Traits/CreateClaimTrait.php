@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 trait CreateClaimTrait
 {
-
     public function createUserClaim(
         PictureModel $picture,
         SprClaimReasonModel $reason,

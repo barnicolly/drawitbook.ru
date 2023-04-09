@@ -30,4 +30,3 @@ class UserClaimModelFactory extends Factory
         ];
     }
 }
-

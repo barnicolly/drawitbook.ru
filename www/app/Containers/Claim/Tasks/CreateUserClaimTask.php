@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class CreateUserClaimTask extends Task
 {
-
     public function __construct(protected UserClaimRepository $repository)
     {
     }
@@ -19,12 +18,10 @@ class CreateUserClaimTask extends Task
     {
         $claim = new UserClaimModel();
         $claim->picture_id = $pictureId;
-        $claim->ip = DB::raw("inet_aton($user->ip)");
+        $claim->ip = DB::raw("inet_aton({$user->ip})");
         $claim->reason_id = $reasonId;
         $claim->user_id = $user->id;
         $claim->save();
         return $claim;
     }
 }
-
-

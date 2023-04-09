@@ -14,7 +14,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetUserClaimByPictureIdTask extends Task
 {
-
     public function __construct(protected UserClaimRepository $repository)
     {
     }
@@ -33,5 +32,3 @@ class GetUserClaimByPictureIdTask extends Task
         return $this->repository->first();
     }
 }
-
-

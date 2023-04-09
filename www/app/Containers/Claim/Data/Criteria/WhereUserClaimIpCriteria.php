@@ -9,7 +9,6 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 
 class WhereUserClaimIpCriteria extends Criteria
 {
-
     public function __construct(private readonly string $ip)
     {
     }
@@ -17,10 +16,11 @@ class WhereUserClaimIpCriteria extends Criteria
     /**
      * @param Builder $model
      * @param PrettusRepositoryInterface $repository
+     *
      * @return Builder
      */
     public function apply($model, PrettusRepositoryInterface $repository): Builder
     {
-        return $model->whereRaw(UserClaimColumnsEnum::IP . " = inet_aton($this->ip)");
+        return $model->whereRaw(UserClaimColumnsEnum::IP . " = inet_aton({$this->ip})");
     }
 }
