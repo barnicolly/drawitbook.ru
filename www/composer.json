@@ -24,6 +24,7 @@
         "barryvdh/laravel-debugbar": "^3.8",
         "barryvdh/laravel-ide-helper": "^2.13",
         "fakerphp/faker": "^1.21",
+        "friendsofphp/php-cs-fixer": "^3.16",
         "mockery/mockery": "^1.5",
         "nunomaduro/collision": "^7",
         "nunomaduro/larastan": "^2.0",
