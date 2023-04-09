@@ -15,13 +15,9 @@ abstract class MiddlewareTestCase extends BaseTestCase
      */
     protected function createTestRouteWithMiddlewares(string $url, array $middlewares): void
     {
-        Route::get($url, function (): string {
-            return 'Ok';
-        }
+        Route::get($url, fn(): string => 'Ok'
         )->middleware($middlewares);
-        Route::post($url, function (): string {
-            return 'Ok';
-        }
+        Route::post($url, fn(): string => 'Ok'
         )->middleware($middlewares);
     }
 

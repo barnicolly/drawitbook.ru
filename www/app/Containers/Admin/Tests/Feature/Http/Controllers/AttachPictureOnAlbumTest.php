@@ -22,9 +22,7 @@ class AttachPictureOnAlbumTest extends TestCase
     {
         parent::setUp();
         $mock = $this->createMock(VkApi::class);
-        $this->app->bind(VkApi::class, function () use ($mock): MockObject&VkApi {
-            return $mock;
-        });
+        $this->app->bind(VkApi::class, fn(): MockObject&VkApi => $mock);
     }
 
     private function formUrl(int $pictureId): string
@@ -44,9 +42,7 @@ class AttachPictureOnAlbumTest extends TestCase
             ->willReturn($outVkImageId);
         $mock->method('edit');
         $mock->method('timeout');
-        $this->app->bind(PhotoService::class, function () use ($mock): MockObject&PhotoService {
-            return $mock;
-        });
+        $this->app->bind(PhotoService::class, fn(): MockObject&PhotoService => $mock);
 
         $data = [
             'id' => $picture->id,

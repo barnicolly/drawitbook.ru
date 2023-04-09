@@ -38,9 +38,7 @@ class GetSearchPageSliceTest extends TestCase
             ->willReturn($pictureIds);
         $mock->method('setLimit')
             ->willReturnSelf();
-        $this->app->bind(SearchService::class, function () use ($mock): MockObject&SearchService {
-            return $mock;
-        });
+        $this->app->bind(SearchService::class, fn(): MockObject&SearchService => $mock);
 
         $response = $this->ajaxGet($url);
 

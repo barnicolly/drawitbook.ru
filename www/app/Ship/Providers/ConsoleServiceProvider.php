@@ -34,9 +34,7 @@ class ConsoleServiceProvider extends ServiceProvider
         $paths = module_path($moduleName, 'Console');
         $paths = array_unique(Arr::wrap($paths));
 
-        $paths = array_filter($paths, function ($path): bool {
-            return is_dir($path);
-        });
+        $paths = array_filter($paths, fn($path): bool => is_dir($path));
         if (empty($paths)) {
             return;
         }

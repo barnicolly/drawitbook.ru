@@ -41,11 +41,9 @@ class GetPictureTagsWithCountArtTask extends Task
         if ($locale === LangEnum::EN) {
             $this->repository->pushCriteria(new WhereTagSlugEnIsNotNullCriteria());
         }
-        $this->repository->scopeQuery(function ($model) {
-            return $model
-                ->groupBy(SprTagsColumnsEnum::tId)
-                ->orderBy('count', 'desc');
-        });
+        $this->repository->scopeQuery(fn($model) => $model
+            ->groupBy(SprTagsColumnsEnum::tId)
+            ->orderBy('count', 'desc'));
         return $this->repository->pushCriteria(new WhereNotTagIdsCriteria($tagsHiddenIds))
             ->pushCriteria(new JoinTagCriteria())
             ->take($limit)

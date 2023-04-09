@@ -88,9 +88,7 @@ class SearchService
             $exploded = explode(' ', (string) $query);
             $exploded = array_filter(
                 $exploded,
-                function ($item): bool {
-                    return $item !== '';
-                }
+                fn($item): bool => $item !== ''
             );
             $result->match('query', implode('||', $exploded), true);
         }

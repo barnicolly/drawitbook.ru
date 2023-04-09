@@ -26,9 +26,7 @@ class GetSettingsModalAction extends Action
         $viewData['vkAlbums'] = $vkAlbums;
         $vkAlbumPictures = $this->getVkAlbumPicturesByVkAlbumIdsAndPictureIdTask->run($pictureId, $vkAlbumIds);
         $viewData['issetInVkAlbums'] = $vkAlbumPictures
-            ->map(function (VkAlbumPictureModel $item): int {
-                return $item->vk_album_id;
-            })
+            ->map(fn(VkAlbumPictureModel $item): int => $item->vk_album_id)
             ->unique()
             ->toArray();
         $modal = view('admin::art.modal', $viewData)->render();
