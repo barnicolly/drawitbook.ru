@@ -22,7 +22,7 @@ class GetPictureIdForPostingTask extends Task
             $pictureIdsString = implode(',', $pictureIds);
             //TODO-misha переписать на query;
             $results = DB::select(
-                DB::raw(
+                (string) DB::raw(
                     "select picture.id,
   IF(lastPostingDate.dayDiff IS NULL,
      IF((select DATEDIFF(NOW(), MAX(social_media_posting_history.created_at)) as dayDiff

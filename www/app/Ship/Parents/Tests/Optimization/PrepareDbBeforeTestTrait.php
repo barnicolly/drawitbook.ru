@@ -14,8 +14,8 @@ trait PrepareDbBeforeTestTrait
             'migrations',
         ];
         $expression = DB::raw('SHOW TABLE STATUS WHERE Rows > 0;');
-        
-        $nonEmptyTables = collect(DB::select($expression->getValue(DB::connection()->getQueryGrammar())))
+
+        $nonEmptyTables = collect(DB::select((string) $expression->getValue(DB::connection()->getQueryGrammar())))
             ->pluck('Name')
             ->toArray();
         if (!empty($nonEmptyTables)) {
