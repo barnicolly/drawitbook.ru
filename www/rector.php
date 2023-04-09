@@ -24,6 +24,10 @@ use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php74\Rector\LNumber\AddLiteralSeparatorToNumberRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\Strict\Rector\BooleanNot\BooleanInBooleanNotRuleFixerRector;
+use Rector\Strict\Rector\ClassMethod\AddConstructorParentCallRector;
+use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
+use Rector\Strict\Rector\Ternary\BooleanInTernaryOperatorRuleFixerRector;
 
 /**
  * Перечень правил https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md
@@ -51,6 +55,11 @@ return static function (RectorConfig $rectorConfig): void {
         UnSpreadOperatorRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
         UseClassKeywordForClassNameResolutionRector::class,
+        AddConstructorParentCallRector::class,
+        BooleanInBooleanNotRuleFixerRector::class,
+        BooleanInIfConditionRuleFixerRector::class,
+        BooleanInTernaryOperatorRuleFixerRector::class,
+//        Rector\RemovingStatic\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector::class,
     ]);
 
     $rectorConfig->sets([

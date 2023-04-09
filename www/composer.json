@@ -86,7 +86,10 @@
             "php artisan ide-helper:models -N"
         ],
         "code-quality": [
-            "./vendor/bin/phpstan analyse --memory-limit=2G"
+            "php -d xdebug.mode=off ./vendor/bin/phpstan analyse --memory-limit=2G"
+        ],
+        "rector": [
+            "php -d xdebug.mode=off ./vendor/bin/rector process"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi"
