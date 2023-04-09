@@ -12,18 +12,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class GetPaginatedPicturesIdsByTagIdTask extends Task
 {
 
-    protected PictureRepository $repository;
-
-    public function __construct(PictureRepository $repository)
+    public function __construct(protected PictureRepository $repository)
     {
-        $this->repository = $repository;
     }
 
-    /**
-     * @param int $tagId
-     * @param int $perPage
-     * @return LengthAwarePaginator
-     */
     public function run(int $tagId, int $perPage): LengthAwarePaginator
     {
         return $this->repository

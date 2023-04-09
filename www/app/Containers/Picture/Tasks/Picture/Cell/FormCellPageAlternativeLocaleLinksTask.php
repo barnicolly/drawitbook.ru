@@ -9,11 +9,8 @@ use App\Ship\Services\Route\RouteService;
 class FormCellPageAlternativeLocaleLinksTask extends Task
 {
 
-    private RouteService $routeService;
-
-    public function __construct(RouteService $routeService)
+    public function __construct(private readonly RouteService $routeService)
     {
-        $this->routeService = $routeService;
     }
 
     public function run(TagDto $tag): array

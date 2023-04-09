@@ -10,11 +10,8 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 class WhereUserClaimPictureIdCriteria extends Criteria
 {
 
-    private int $pictureId;
-
-    public function __construct(int $pictureId)
+    public function __construct(private readonly int $pictureId)
     {
-        $this->pictureId = $pictureId;
     }
 
     /**

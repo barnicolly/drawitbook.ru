@@ -2,6 +2,8 @@
 
 namespace App\Containers\Authorization\Providers;
 
+use Illuminate\Auth\Events\Login;
+use App\Containers\Authorization\Listeners\LogSuccessfulLogin;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -12,8 +14,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array<string, array<int, string>>
      */
     protected $listen = [
-        'Illuminate\Auth\Events\Login' => [
-            'App\Containers\Authorization\Listeners\LogSuccessfulLogin',
+        Login::class => [
+            LogSuccessfulLogin::class,
         ],
     ];
 

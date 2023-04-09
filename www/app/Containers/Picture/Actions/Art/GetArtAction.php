@@ -16,29 +16,11 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 class GetArtAction extends Action
 {
 
-    private GetPopularTagsAction $getPopularTagsAction;
-    private GetRelativeArtsAction $getRelativeArtsAction;
-    private SeoService $seoService;
-    private RouteService $routeService;
-    private GetArtByIdAction $getArtByIdAction;
-
-    public function __construct(
-        GetPopularTagsAction $getPopularTagsAction,
-        GetRelativeArtsAction $getRelativeArtsAction,
-        SeoService $seoService,
-        RouteService $routeService,
-        GetArtByIdAction $getArtByIdAction,
-    ) {
-        $this->getPopularTagsAction = $getPopularTagsAction;
-        $this->getRelativeArtsAction = $getRelativeArtsAction;
-        $this->seoService = $seoService;
-        $this->routeService = $routeService;
-        $this->getArtByIdAction = $getArtByIdAction;
+    public function __construct(private readonly GetPopularTagsAction $getPopularTagsAction, private readonly GetRelativeArtsAction $getRelativeArtsAction, private readonly SeoService $seoService, private readonly RouteService $routeService, private readonly GetArtByIdAction $getArtByIdAction)
+    {
     }
 
     /**
-     * @param int $artId
-     * @return array
      * @throws NotFoundPicture
      * @throws RepositoryException
      * @throws UnknownProperties

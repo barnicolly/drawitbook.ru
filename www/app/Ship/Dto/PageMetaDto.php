@@ -9,7 +9,7 @@ class PageMetaDto extends Dto
 {
     public string $title;
 
-    public ?string $description;
+    public ?string $description = null;
 
-    public ?ShareImageDto $shareImage;
+    public ?ShareImageDto $shareImage = null;
 }

@@ -20,7 +20,6 @@ class HeaderComposerTest extends TestCase
     use CreateTagTrait;
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     * @param string $locale
      * @see HeaderComposer
      *
      */

@@ -37,9 +37,6 @@ class WithoutGetTest extends MiddlewareTestCase
 
     /**
      * @dataProvider providerPositive
-     *
-     * @param string $word
-     * @param array $params
      */
     public function testCallNextCallback(string $word, array $params): void
     {

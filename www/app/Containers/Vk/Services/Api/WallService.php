@@ -6,12 +6,8 @@ use Exception;
 class WallService
 {
 
-    protected VkApi $instance;
-
-    public function __construct(VkApi $api)
+    public function __construct(protected VkApi $instance)
     {
-        //TODO-misha добавить exceptions;
-        $this->instance = $api;
     }
 
     public function edit(int $postId, array $data): void
@@ -25,7 +21,7 @@ class WallService
         );
         try {
             $response = $this->instance->api->request('wall.edit', $data);
-        } catch (Exception $e) {
+        } catch (Exception) {
         }
     }
 

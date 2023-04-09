@@ -9,7 +9,7 @@ foreach (config('translator.available_locales') as $prefix) {
             'middleware' => ['web', 'ajax'],
         ],
         function (): void {
-            Route::get('/tag/list', [TagAjaxController::class, 'getListPopularTagsWithCountArts']);
+            Route::get('/tag/list', (new TagAjaxController())->getListPopularTagsWithCountArts(...));
         }
     );
 }

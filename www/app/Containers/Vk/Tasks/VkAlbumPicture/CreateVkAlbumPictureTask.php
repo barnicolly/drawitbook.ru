@@ -9,19 +9,10 @@ use App\Ship\Parents\Tasks\Task;
 class CreateVkAlbumPictureTask extends Task
 {
 
-    protected VkAlbumPictureRepository $repository;
-
-    public function __construct(VkAlbumPictureRepository $repository)
+    public function __construct(protected VkAlbumPictureRepository $repository)
     {
-        $this->repository = $repository;
     }
 
-    /**
-     * @param int $artId
-     * @param int $vkAlbumId
-     * @param int $outVkAlbumId
-     * @return VkAlbumPictureModel
-     */
     public function run(int $artId, int $vkAlbumId, int $outVkAlbumId): VkAlbumPictureModel
     {
         $model = new VkAlbumPictureModel();

@@ -14,17 +14,11 @@ use App\Ship\Parents\Tasks\Task;
 class GetLikeByPictureIdTask extends Task
 {
 
-    protected LikesRepository $repository;
-
-    public function __construct(LikesRepository $repository)
+    public function __construct(protected LikesRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
-     * @param int $pictureId
-     * @param UserDto $user
-     * @return LikesModel|null
      * @throws RepositoryException
      */
     public function run(int $pictureId, UserDto $user): ?LikesModel

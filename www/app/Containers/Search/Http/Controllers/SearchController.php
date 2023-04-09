@@ -20,9 +20,6 @@ class SearchController extends HttpController
 {
 
     /**
-     * @param SearchArtsHttpRequest $request
-     * @param SearchPageAction $action
-     * @return Response
      *
      * @see \App\Containers\Search\Tests\Feature\Http\Controllers\ShowSearchIndexPageTest
      */
@@ -41,9 +38,6 @@ class SearchController extends HttpController
     }
 
     /**
-     * @param SearchArtsSliceAjaxRequest $request
-     * @param SearchPageSliceAction $action
-     * @return JsonResponse
      *
      * @see \App\Containers\Search\Tests\Feature\Http\Controllers\GetSearchPageSliceTest
      */

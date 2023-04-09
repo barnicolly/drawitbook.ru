@@ -9,17 +9,11 @@ use Illuminate\Support\Arr;
 class GetArtByIdAction extends Action
 {
 
-    private GetArtsByIdsAction $getArtsByIdsAction;
-
-    public function __construct(GetArtsByIdsAction $getArtsByIdsAction)
+    public function __construct(private readonly GetArtsByIdsAction $getArtsByIdsAction)
     {
-        $this->getArtsByIdsAction = $getArtsByIdsAction;
     }
 
     /**
-     * @param int $id
-     * @param bool $withHiddenTags
-     * @return array|null
      * @throws NotFoundPicture
      */
     public function run(int $id, bool $withHiddenTags = false): ?array

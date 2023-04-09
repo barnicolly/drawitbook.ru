@@ -9,11 +9,8 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 
 class WhereVkAlbumPictureVkAlbumIdsCriteria extends Criteria
 {
-    private array $vkAlbumIds;
-
-    public function __construct(array $vkAlbumIds)
+    public function __construct(private readonly array $vkAlbumIds)
     {
-        $this->vkAlbumIds = $vkAlbumIds;
     }
 
     /**

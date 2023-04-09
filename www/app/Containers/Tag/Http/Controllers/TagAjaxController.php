@@ -26,7 +26,7 @@ class TagAjaxController extends HttpController
             );
             return JsonResource::make($resultDto)
                 ->response();
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             abort(500);
         }
     }

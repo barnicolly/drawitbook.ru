@@ -11,22 +11,17 @@ use App\Containers\Vk\Tasks\FormHashTagsTask;
 
 class VkWallPostingStrategy implements SocialMediaPostingContract
 {
-    private array $tags;
-    private string $artPath;
+    private readonly VkApi $apiInstance;
 
-    private VkApi $apiInstance;
-
-    private PhotoService $photoService;
-    private WallService $wallService;
+    private readonly PhotoService $photoService;
+    private readonly WallService $wallService;
 
     private string $url = 'https://drawitbook.com/ru';
 
-    private FormHashTagsTask $formHashTagsTask;
+    private readonly FormHashTagsTask $formHashTagsTask;
 
-    public function __construct(array $tags, string $artPath)
+    public function __construct(private readonly array $tags, private readonly string $artPath)
     {
-        $this->tags = $tags;
-        $this->artPath = $artPath;
         $apiInstance = (new VkApi());
         $this->apiInstance = $apiInstance;
         $this->photoService = (new PhotoService($apiInstance));

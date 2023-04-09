@@ -11,11 +11,8 @@ use Illuminate\Support\Facades\DB;
 class CreateUserClaimTask extends Task
 {
 
-    protected UserClaimRepository $repository;
-
-    public function __construct(UserClaimRepository $repository)
+    public function __construct(protected UserClaimRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function run(int $pictureId, int $reasonId, UserDto $user): UserClaimModel

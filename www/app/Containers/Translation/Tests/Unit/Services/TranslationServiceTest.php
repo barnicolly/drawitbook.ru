@@ -57,10 +57,6 @@ class TranslationServiceTest extends TestCase
 
     /**
      * @dataProvider providerTestGetPluralForm
-     *
-     * @param string $locale
-     * @param int $number
-     * @param string $expectedPlural
      */
     public function testGetPluralForm(string $locale, int $number, string $expectedPlural): void
     {

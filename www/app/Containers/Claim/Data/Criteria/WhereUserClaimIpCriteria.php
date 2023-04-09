@@ -10,11 +10,8 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 class WhereUserClaimIpCriteria extends Criteria
 {
 
-    private string $ip;
-
-    public function __construct(string $ip)
+    public function __construct(private readonly string $ip)
     {
-        $this->ip = $ip;
     }
 
     /**

@@ -11,8 +11,6 @@ abstract class MiddlewareTestCase extends BaseTestCase
 {
 
     /**
-     * @param string $url
-     * @param array $middlewares
      * @return void
      */
     protected function createTestRouteWithMiddlewares(string $url, array $middlewares): void
@@ -28,9 +26,6 @@ abstract class MiddlewareTestCase extends BaseTestCase
     }
 
     /**
-     * @param MiddlewareContract $middleware
-     * @param Request $request
-     * @param bool $expectedCalledStatus
      * @return void
      */
     protected function assertCalledNextMiddleware(MiddlewareContract $middleware, Request $request, bool $expectedCalledStatus): void

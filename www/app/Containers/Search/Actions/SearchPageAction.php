@@ -17,31 +17,11 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class SearchPageAction extends Action
 {
-    private RouteService $routeService;
-    private GetPopularTagsAction $getPopularTagsAction;
-    private SearchPicturesAction $searchPicturesAction;
-    private GetDefaultShareImageTask $getDefaultShareImageTask;
-    private GetInterestingArtsAction $getInterestingArtsAction;
-    private CreateCellResultsAction $createCellResultsAction;
-
-    public function __construct(
-        RouteService $routeService,
-        GetPopularTagsAction $getPopularTagsAction,
-        SearchPicturesAction $searchPicturesAction,
-        GetDefaultShareImageTask $getDefaultShareImageTask,
-        GetInterestingArtsAction $getInterestingArtsAction,
-        CreateCellResultsAction $createCellResultsAction
-    ) {
-        $this->routeService = $routeService;
-        $this->getPopularTagsAction = $getPopularTagsAction;
-        $this->searchPicturesAction = $searchPicturesAction;
-        $this->getDefaultShareImageTask = $getDefaultShareImageTask;
-        $this->getInterestingArtsAction = $getInterestingArtsAction;
-        $this->createCellResultsAction = $createCellResultsAction;
+    public function __construct(private readonly RouteService $routeService, private readonly GetPopularTagsAction $getPopularTagsAction, private readonly SearchPicturesAction $searchPicturesAction, private readonly GetDefaultShareImageTask $getDefaultShareImageTask, private readonly GetInterestingArtsAction $getInterestingArtsAction, private readonly CreateCellResultsAction $createCellResultsAction)
+    {
     }
 
     /**
-     * @param SearchDto $searchDto
      * @return array{array, PageMetaDto}
      * @throws UnknownProperties
      * @throws NotFoundRelativeArts

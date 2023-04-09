@@ -11,17 +11,11 @@ use Illuminate\Support\Facades\Cache;
 class GetListPopularTagsWithCountArtsAction extends Action
 {
 
-    private RouteService $routeService;
-    private GetPictureTagsWithCountArtTask $getPictureTagsWithCountArtTask;
-
-    public function __construct(RouteService $routeService, GetPictureTagsWithCountArtTask $getPictureTagsWithCountArtTask)
+    public function __construct(private readonly RouteService $routeService, private readonly GetPictureTagsWithCountArtTask $getPictureTagsWithCountArtTask)
     {
-        $this->routeService = $routeService;
-        $this->getPictureTagsWithCountArtTask = $getPictureTagsWithCountArtTask;
     }
 
     /**
-     * @return array
      * @throws RepositoryException
      */
     public function run(): array

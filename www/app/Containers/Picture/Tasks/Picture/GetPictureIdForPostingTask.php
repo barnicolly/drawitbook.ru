@@ -13,7 +13,6 @@ class GetPictureIdForPostingTask extends Task
 {
 
     /**
-     * @return int
      * @throws NotFoundPictureIdForPostingException
      */
     public function run(): int

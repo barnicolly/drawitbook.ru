@@ -13,17 +13,11 @@ use App\Ship\Parents\Tasks\Task;
 class GetVkAlbumPictureByVkAlbumIdAndPictureIdTask extends Task
 {
 
-    protected VkAlbumPictureRepository $repository;
-
-    public function __construct(VkAlbumPictureRepository $repository)
+    public function __construct(protected VkAlbumPictureRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
-     * @param int $vkAlbumId
-     * @param int $pictureId
-     * @return VkAlbumPictureModel
      * @throws NotFoundVkAlbumPictureException
      * @throws RepositoryException
      */

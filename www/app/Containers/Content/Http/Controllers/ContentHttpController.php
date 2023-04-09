@@ -11,8 +11,6 @@ class ContentHttpController extends HttpController
 {
 
     /**
-     * @param MainPageAction $action
-     * @return Response
      * @throws UnknownProperties
      *
      * @see \App\Containers\Content\Tests\Feature\Http\Controllers\ShowMainPageTest

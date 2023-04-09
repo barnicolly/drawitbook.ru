@@ -14,18 +14,11 @@ use App\Ship\Parents\Tasks\Task;
 class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
 {
 
-    protected PictureTagRepository $repository;
-    private GetHiddenVkTagsIdsTask $getHiddenVkTagsIdsTask;
-
-    public function __construct(PictureTagRepository $repository, GetHiddenVkTagsIdsTask $getHiddenVkTagsIdsTask)
+    public function __construct(protected PictureTagRepository $repository, private readonly GetHiddenVkTagsIdsTask $getHiddenVkTagsIdsTask)
     {
-        $this->repository = $repository;
-        $this->getHiddenVkTagsIdsTask = $getHiddenVkTagsIdsTask;
     }
 
     /**
-     * @param int $artId
-     * @return array
      * @throws RepositoryException
      */
     public function run(int $artId): array

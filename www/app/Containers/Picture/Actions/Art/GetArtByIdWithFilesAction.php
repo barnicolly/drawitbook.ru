@@ -13,16 +13,11 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 class GetArtByIdWithFilesAction extends Action
 {
 
-    private GetPictureByIdTask $getPictureByIdTask;
-
-    public function __construct(GetPictureByIdTask $getPictureByIdTask)
+    public function __construct(private readonly GetPictureByIdTask $getPictureByIdTask)
     {
-        $this->getPictureByIdTask = $getPictureByIdTask;
     }
 
     /**
-     * @param int $id
-     * @return ArtDto
      * @throws NotFoundPicture
      * @throws RepositoryException
      * @throws UnknownProperties

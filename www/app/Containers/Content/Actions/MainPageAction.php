@@ -11,13 +11,8 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class MainPageAction extends Action
 {
-    private RouteService $routeService;
-    private GetDefaultShareImageTask $getDefaultShareImageTask;
-
-    public function __construct(RouteService $routeService, GetDefaultShareImageTask $getDefaultShareImageTask)
+    public function __construct(private readonly RouteService $routeService, private readonly GetDefaultShareImageTask $getDefaultShareImageTask)
     {
-        $this->routeService = $routeService;
-        $this->getDefaultShareImageTask = $getDefaultShareImageTask;
     }
 
     /**

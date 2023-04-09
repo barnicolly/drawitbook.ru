@@ -18,19 +18,11 @@ use Illuminate\Support\Facades\DB;
 class GetPictureTagsWithCountArtTask extends Task
 {
 
-    protected PictureTagRepository $repository;
-    private GetHiddenTagsIdsTask $getHiddenTagsIdsTask;
-
-    public function __construct(PictureTagRepository $repository, GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
+    public function __construct(protected PictureTagRepository $repository, private readonly GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
     {
-        $this->repository = $repository;
-        $this->getHiddenTagsIdsTask = $getHiddenTagsIdsTask;
     }
 
     /**
-     * @param int $limit
-     * @param string $locale
-     * @return array
      * @throws RepositoryException
      */
     public function run(int $limit, string $locale): array

@@ -11,7 +11,7 @@ foreach (config('translator.available_locales') as $prefix) {
                     'middleware' => 'web',
                 ],
                 function () use ($prefix): void {
-                    Route::get('/', [ContentHttpController::class, 'showMainPage'])
+                    Route::get('/', (new ContentHttpController())->showMainPage(...))
                         ->middleware(['lower_case', 'no_get'])
                         ->name($prefix . '_home');
                 }

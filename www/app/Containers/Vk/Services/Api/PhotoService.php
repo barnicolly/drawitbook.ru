@@ -7,12 +7,8 @@ use GuzzleHttp\Client;
 class PhotoService
 {
 
-    protected VkApi $instance;
-
-    public function __construct(VkApi $api)
+    public function __construct(protected VkApi $instance)
     {
-        //TODO-misha добавить exceptions;
-        $this->instance = $api;
     }
 
     public function saveOnAlbum(string $filePath, int $albumId): ?int
@@ -62,7 +58,7 @@ class PhotoService
         try {
             $response = $this->instance->api->request('photos.get', $data);
             return $response['response']['items'][0]['id'];
-        } catch (Exception $e) {
+        } catch (Exception) {
             return null;
         }
     }
@@ -83,7 +79,7 @@ class PhotoService
                 return $response['response'][0];
             }
             return null;
-        } catch (Exception $e) {
+        } catch (Exception) {
             return null;
         }
     }
@@ -110,12 +106,7 @@ class PhotoService
     {
         $data = [];
         $data['album_id'] = $albumId;
-        $data = array_merge(
-            $data,
-            [
-                'group_id' => $this->instance->groupId,
-            ]
-        );
+        $data = [...$data, 'group_id' => $this->instance->groupId];
         $response = $this->instance->api->request('photos.getUploadServer', $data);
         return $response['response']['upload_url'];
     }
@@ -134,7 +125,7 @@ class PhotoService
                 ],
             ]
         );
-        return json_decode($res->getBody()->getContents(), true);
+        return json_decode($res->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
     }
 
 }

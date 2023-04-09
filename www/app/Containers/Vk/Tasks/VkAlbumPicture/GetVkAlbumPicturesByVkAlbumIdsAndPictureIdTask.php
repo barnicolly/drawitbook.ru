@@ -11,11 +11,8 @@ use Illuminate\Support\Collection;
 class GetVkAlbumPicturesByVkAlbumIdsAndPictureIdTask extends Task
 {
 
-    protected VkAlbumPictureRepository $repository;
-
-    public function __construct(VkAlbumPictureRepository $repository)
+    public function __construct(protected VkAlbumPictureRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function run(int $pictureId, array $vkAlbumIds): Collection

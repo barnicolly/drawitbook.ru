@@ -19,25 +19,11 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 class BroadcastPostingService
 {
 
-    private GetPictureIdForPostingTask $getPictureIdForPostingTask;
-    private CreateSocialMediaPostingItemTask $createSocialMediaPostingItemTask;
-    private GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask;
-    private GetArtByIdWithFilesAction $getArtByIdWithFilesAction;
-
-    public function __construct(
-        GetPictureIdForPostingTask $getPictureIdForPostingTask,
-        CreateSocialMediaPostingItemTask $createSocialMediaPostingItemTask,
-        GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask,
-        GetArtByIdWithFilesAction $getArtByIdWithFilesAction,
-    ) {
-        $this->getPictureIdForPostingTask = $getPictureIdForPostingTask;
-        $this->createSocialMediaPostingItemTask = $createSocialMediaPostingItemTask;
-        $this->getPictureTagsNamesWithoutHiddenVkByPictureIdTask = $getPictureTagsNamesWithoutHiddenVkByPictureIdTask;
-        $this->getArtByIdWithFilesAction = $getArtByIdWithFilesAction;
+    public function __construct(private readonly GetPictureIdForPostingTask $getPictureIdForPostingTask, private readonly CreateSocialMediaPostingItemTask $createSocialMediaPostingItemTask, private readonly GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask, private readonly GetArtByIdWithFilesAction $getArtByIdWithFilesAction)
+    {
     }
 
     /**
-     * @return void
      * @throws BindingResolutionException
      * @throws NotFoundPicture
      * @throws NotFoundPictureIdForPostingException

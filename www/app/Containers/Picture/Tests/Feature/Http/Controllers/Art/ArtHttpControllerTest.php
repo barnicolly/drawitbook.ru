@@ -19,8 +19,6 @@ class ArtHttpControllerTest extends TestCase
     use CreateTagTrait;
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testArtPageResponseCode200(string $locale): void
     {
@@ -65,8 +63,6 @@ class ArtHttpControllerTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testArtResponseCode404(string $locale): void
     {

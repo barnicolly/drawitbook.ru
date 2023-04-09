@@ -42,8 +42,6 @@ class InLowerCaseTest extends MiddlewareTestCase
 
     /**
      * @dataProvider provider
-     *
-     * @param string $word
      */
     public function testHasRedirect(string $word): void
     {
@@ -55,8 +53,6 @@ class InLowerCaseTest extends MiddlewareTestCase
 
     /**
      * @dataProvider provider
-     *
-     * @param string $word
      */
     public function testNotCallNextCallback(string $word): void
     {

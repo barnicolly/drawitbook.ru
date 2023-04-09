@@ -23,14 +23,14 @@ foreach (config('translator.available_locales') as $prefix) {
                           'middleware' => 'web',
                       ],
                       function () use ($prefix): void {
-                          Route::get('/search', [SearchController::class, 'index'])->name($prefix . '_search');
+                          Route::get('/search', (new SearchController())->index(...))->name($prefix . '_search');
 
                           Route::group(
                               [
                                   'middleware' => ['ajax'],
                               ],
                               function () use ($prefix): void {
-                                  Route::get('/search/slice', [SearchController::class, 'slice'])->name($prefix . '_search.slice');
+                                  Route::get('/search/slice', (new SearchController())->slice(...))->name($prefix . '_search.slice');
                               });
                       }
                   );

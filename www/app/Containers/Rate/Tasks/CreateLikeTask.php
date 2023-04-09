@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\DB;
 class CreateLikeTask extends Task
 {
 
-    /**
-     * @param int $pictureId
-     * @param UserDto $userDto
-     * @return LikesModel|null
-     */
     public function run(int $pictureId, UserDto $userDto): ?LikesModel
     {
         $activity = new LikesModel();

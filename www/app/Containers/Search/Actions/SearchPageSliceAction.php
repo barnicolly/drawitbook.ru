@@ -12,19 +12,11 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class SearchPageSliceAction extends Action
 {
-    private SearchPicturesAction $searchPicturesAction;
-    private CreateCellSliceResultsAction $createCellSliceResultsAction;
-
-    public function __construct(
-        SearchPicturesAction $searchPicturesAction,
-        CreateCellSliceResultsAction $createCellResultsAction
-    ) {
-        $this->searchPicturesAction = $searchPicturesAction;
-        $this->createCellSliceResultsAction = $createCellResultsAction;
+    public function __construct(private readonly SearchPicturesAction $searchPicturesAction, private readonly CreateCellSliceResultsAction $createCellSliceResultsAction)
+    {
     }
 
     /**
-     * @param SearchDto $searchDto
      * @return array{GetCellTaggedResultDto, PaginationDto}
      * @throws NotFoundRelativeArts
      * @throws UnknownProperties

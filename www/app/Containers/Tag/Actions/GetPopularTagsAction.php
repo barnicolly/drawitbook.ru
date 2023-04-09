@@ -11,15 +11,11 @@ use App\Ship\Parents\Actions\Action;
 class GetPopularTagsAction extends Action
 {
 
-    private GetPopularTagsTask $getPopularTagsTask;
-
-    public function __construct(GetPopularTagsTask $getPopularTagsTask)
+    public function __construct(private readonly GetPopularTagsTask $getPopularTagsTask)
     {
-        $this->getPopularTagsTask = $getPopularTagsTask;
     }
 
     /**
-     * @return array
      * @throws RepositoryException
      */
     public function run(): array

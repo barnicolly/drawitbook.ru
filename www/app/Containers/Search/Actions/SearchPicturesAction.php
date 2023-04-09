@@ -12,21 +12,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchPicturesAction extends Action
 {
-    private SearchService $searchService;
-    private GetArtsByIdsAction $getArtsByIdsAction;
-
-    public function __construct(
-        SearchService $searchService,
-        GetArtsByIdsAction $getArtsByIdsAction,
-    ) {
-        $this->searchService = $searchService;
-        $this->getArtsByIdsAction = $getArtsByIdsAction;
+    public function __construct(private readonly SearchService $searchService, private readonly GetArtsByIdsAction $getArtsByIdsAction)
+    {
     }
 
-    /**
-     * @param SearchDto $searchDto
-     * @return LengthAwarePaginator
-     */
     public function run(SearchDto $searchDto): LengthAwarePaginator
     {
         $relativeArtIds = $this->searchService

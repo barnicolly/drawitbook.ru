@@ -12,11 +12,8 @@ use App\Ship\Parents\Tasks\Task;
 class GetAllMenuTask extends Task
 {
 
-    private MenuLevelsRepository $repository;
-
-    public function __construct(MenuLevelsRepository $repository)
+    public function __construct(private readonly MenuLevelsRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function run(string $locale): array

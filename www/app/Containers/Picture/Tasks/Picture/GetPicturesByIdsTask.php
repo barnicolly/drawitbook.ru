@@ -15,20 +15,10 @@ use Illuminate\Support\Collection;
 class GetPicturesByIdsTask extends Task
 {
 
-    protected PictureRepository $repository;
-    private GetHiddenTagsIdsTask $getHiddenTagsIdsTask;
-
-    public function __construct(PictureRepository $repository, GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
+    public function __construct(protected PictureRepository $repository, private readonly GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
     {
-        $this->repository = $repository;
-        $this->getHiddenTagsIdsTask = $getHiddenTagsIdsTask;
     }
 
-    /**
-     * @param array $ids
-     * @param bool $withHiddenTags
-     * @return Collection
-     */
     public function run(array $ids, bool $withHiddenTags): Collection
     {
         $locale = app()->getLocale();
