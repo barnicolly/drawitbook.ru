@@ -57,8 +57,6 @@ return static function (RectorConfig $rectorConfig): void {
         UseClassKeywordForClassNameResolutionRector::class,
 //        Strict https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md#strict
         AddConstructorParentCallRector::class,
-//        RemovingStatic https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md#removingstatic
-        LocallyCalledStaticMethodToNonStaticRector::class,
 //        Visibility https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md#visibility
         ExplicitPublicClassMethodRector::class,
     ]);
