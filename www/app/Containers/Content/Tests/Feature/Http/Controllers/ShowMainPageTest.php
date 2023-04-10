@@ -11,7 +11,6 @@ use App\Ship\Services\Route\RouteService;
  */
 class ShowMainPageTest extends TestCase
 {
-
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
      */

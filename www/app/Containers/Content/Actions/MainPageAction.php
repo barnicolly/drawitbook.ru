@@ -17,15 +17,16 @@ class MainPageAction extends Action
 
     /**
      * @return array{array, PageMetaDto}
+     *
      * @throws UnknownProperties
      */
     public function run(): array
     {
         [$title, $description] = $this->formTitleAndDescriptionHome();
         $pageMetaDto = new PageMetaDto(
-            title:       $title,
+            title: $title,
             description: $description,
-            shareImage:  $this->getDefaultShareImageTask->run()
+            shareImage: $this->getDefaultShareImageTask->run()
         );
         $alternateLinks = $this->getAlternateLinks();
         $viewData = [
@@ -51,7 +52,4 @@ class MainPageAction extends Action
         $description = __('seo.home.description');
         return [$title, $description];
     }
-
 }
-
-

@@ -9,7 +9,6 @@ use Illuminate\Http\Response;
 
 class ContentHttpController extends HttpController
 {
-
     /**
      * @throws UnknownProperties
      *
@@ -22,5 +21,4 @@ class ContentHttpController extends HttpController
             ->setShareImage($pageMetaDto->shareImage);
         return response()->view('content::mainPage.index', $viewData);
     }
-
 }
