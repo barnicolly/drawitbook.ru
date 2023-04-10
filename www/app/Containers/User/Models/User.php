@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class User extends UserModel
 {
-
     use HasFactory;
     /**
      * The attributes that are mass assignable.
