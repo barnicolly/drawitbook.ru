@@ -14,6 +14,7 @@ class GetDefaultShareImageTask extends Task
      * @var string
      */
     private const CACHE_NAME = 'seo.default_share_image';
+
     public function __construct(private readonly GetArtByIdWithFilesAction $getArtByIdWithFilesAction)
     {
     }
@@ -30,8 +31,8 @@ class GetDefaultShareImageTask extends Task
                         $picture = $this->getArtByIdWithFilesAction->run(205);
                         return new ShareImageDto(
                             relativePath: $picture->images->primary->relative_path,
-                            width:        $picture->images->primary->width,
-                            height:       $picture->images->primary->height
+                            width: $picture->images->primary->width,
+                            height: $picture->images->primary->height
                         );
                     } catch (NotFoundPicture) {
                         return null;
@@ -42,5 +43,3 @@ class GetDefaultShareImageTask extends Task
         return $result;
     }
 }
-
-

@@ -32,20 +32,20 @@ class SeoServiceProvider extends ServiceProvider
     protected function registerConfig(): void
     {
         $this->publishes([
-                             module_path($this->moduleName, 'Configs/config.php') => config_path(
-                                 $this->moduleNameLower . '.php'
-                             ),
-                         ], 'config');
+            module_path($this->moduleName, 'Configs/config.php') => config_path(
+                $this->moduleNameLower . '.php'
+            ),
+        ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Configs/config.php'),
             $this->moduleNameLower
         );
 
         $this->publishes([
-                             module_path($this->moduleName, 'Configs/breadcrumbs.php') => config_path(
-                                 'breadcrumbs.php'
-                             ),
-                         ], 'config');
+            module_path($this->moduleName, 'Configs/breadcrumbs.php') => config_path(
+                'breadcrumbs.php'
+            ),
+        ], 'config');
 
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Configs/breadcrumbs.php'),
@@ -53,8 +53,8 @@ class SeoServiceProvider extends ServiceProvider
         );
 
         $this->publishes([
-                             module_path($this->moduleName, 'Configs/seotools.php') => config_path('seotools.php'),
-                         ], 'config');
+            module_path($this->moduleName, 'Configs/seotools.php') => config_path('seotools.php'),
+        ], 'config');
 
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Configs/seotools.php'),
@@ -69,8 +69,8 @@ class SeoServiceProvider extends ServiceProvider
         $sourcePath = module_path($this->moduleName, 'Http/Views');
 
         $this->publishes([
-                             $sourcePath => $viewPath,
-                         ], ['views', $this->moduleNameLower . '-module-views']);
+            $sourcePath => $viewPath,
+        ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
     }

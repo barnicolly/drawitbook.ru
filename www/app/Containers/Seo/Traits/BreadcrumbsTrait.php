@@ -3,9 +3,9 @@
 namespace App\Containers\Seo\Traits;
 
 use stdClass;
+
 trait BreadcrumbsTrait
 {
-
     protected $breadcrumbs;
 
     protected function addBreadcrumb(string $title, ?string $url = null): void
@@ -15,5 +15,4 @@ trait BreadcrumbsTrait
         $breadcrumb->url = $url;
         $this->breadcrumbs->push($breadcrumb);
     }
-
 }

@@ -2,8 +2,8 @@
 
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsManager;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
-return [
 
+return [
     /*
     |--------------------------------------------------------------------------
     | View Name
@@ -73,5 +73,4 @@ return [
 
     // Generator
     'generator-class' => BreadcrumbsGenerator::class,
-
 ];

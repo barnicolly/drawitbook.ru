@@ -15,7 +15,6 @@ use Spatie\Sitemap\Tags\Url;
 
 class CreateSitemapTask extends Task
 {
-
     public function __construct(private readonly RouteService $routeService)
     {
     }
@@ -64,7 +63,6 @@ class CreateSitemapTask extends Task
                     }
                     $sitemap->add($url);
                 }
-
             }
         }
         $sitemap->writeToFile(public_path('sitemaps/sitemap.xml'));

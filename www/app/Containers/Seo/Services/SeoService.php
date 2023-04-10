@@ -7,7 +7,6 @@ use App\Containers\Translation\Services\TranslationService;
 
 class SeoService
 {
-
     public function formTitleAndDescriptionShowArt(int $artId): array
     {
         $title = 'Art #' . $artId . ' | Drawitbook.com';
@@ -60,5 +59,3 @@ class SeoService
         return $countPostfix;
     }
 }
-
-
