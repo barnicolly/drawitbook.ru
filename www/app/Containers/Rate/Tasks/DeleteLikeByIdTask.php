@@ -7,7 +7,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class DeleteLikeByIdTask extends Task
 {
-
     public function __construct(protected LikesRepository $repository)
     {
     }
@@ -17,5 +16,3 @@ class DeleteLikeByIdTask extends Task
         $this->repository->delete($likeId);
     }
 }
-
-

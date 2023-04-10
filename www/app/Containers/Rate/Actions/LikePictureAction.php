@@ -11,7 +11,6 @@ use App\Ship\Parents\Actions\Action;
 
 class LikePictureAction extends Action
 {
-
     public function __construct(private readonly CreateLikeTask $createLikeTask, private readonly GetLikeByPictureIdTask $getLikeByPictureIdTask, private readonly DeleteLikeByIdTask $deleteLikeByIdTask)
     {
     }
@@ -30,7 +29,4 @@ class LikePictureAction extends Action
             $this->deleteLikeByIdTask->run($activity->id);
         }
     }
-
 }
-
-

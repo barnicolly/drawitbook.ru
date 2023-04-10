@@ -9,7 +9,6 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 
 class WhereLikesPictureIdCriteria extends Criteria
 {
-
     public function __construct(private readonly int $pictureId)
     {
     }
@@ -17,6 +16,7 @@ class WhereLikesPictureIdCriteria extends Criteria
     /**
      * @param Builder $model
      * @param PrettusRepositoryInterface $repository
+     *
      * @return Builder
      */
     public function apply($model, PrettusRepositoryInterface $repository): Builder

@@ -9,7 +9,6 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 
 class WhereLikesIpCriteria extends Criteria
 {
-
     public function __construct(private readonly string $ip)
     {
     }
@@ -17,10 +16,11 @@ class WhereLikesIpCriteria extends Criteria
     /**
      * @param Builder $model
      * @param PrettusRepositoryInterface $repository
+     *
      * @return Builder
      */
     public function apply($model, PrettusRepositoryInterface $repository): Builder
     {
-        return $model->whereRaw("INET_NTOA(" . LikesColumnsEnum::IP . ") = $this->ip");
+        return $model->whereRaw('INET_NTOA(' . LikesColumnsEnum::IP . ") = {$this->ip}");
     }
 }

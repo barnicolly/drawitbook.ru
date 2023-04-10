@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         if (Schema::hasColumn('likes', 'activity')) {
-            Schema::table('likes', static function (Blueprint $table) : void {
+            Schema::table('likes', static function (Blueprint $table): void {
                 $table->dropColumn('activity');
             });
         }

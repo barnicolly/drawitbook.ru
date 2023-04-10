@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 trait CreateLikesTrait
 {
-
     public function createLike(PictureModel $picture, array $data = []): LikesModel
     {
         $ip = app(GetUserIpFromRequestTask::class)->run();

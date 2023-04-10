@@ -13,7 +13,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetLikeByPictureIdTask extends Task
 {
-
     public function __construct(protected LikesRepository $repository)
     {
     }
@@ -31,5 +30,3 @@ class GetLikeByPictureIdTask extends Task
         return $this->repository->first();
     }
 }
-
-
