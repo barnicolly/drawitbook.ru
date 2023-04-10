@@ -10,7 +10,6 @@ use Illuminate\View\View;
 
 class RegisterController extends parentRegisterController
 {
-
     public function showRegistrationForm(): Redirector|View|RedirectResponse|Application
     {
         return redirect('login');

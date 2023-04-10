@@ -10,7 +10,6 @@ use Illuminate\Http\RedirectResponse;
 
 class LoginController extends parentLoginController
 {
-
     public function showLoginForm(): View|Factory|\Illuminate\View\View|Application
     {
         return view('auth.login', []);
