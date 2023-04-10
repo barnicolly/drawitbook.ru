@@ -6,3 +6,10 @@ DIFF=`git diff --shortstat "www/app"`
 if [[ $DIFF != "" ]]; then
     git commit -a -m "style(phprector): Приведение к стандарту" --author="PhpRectorBot <phprector@example.com>"
 fi
+
+docker exec -t drawitbookru_fpm_1 composer run php-cs-fixer
+
+DIFF=`git diff --shortstat "www/app"`
+if [[ $DIFF != "" ]]; then
+    git commit -a -m "style(php-cs-fixer): Приведение к стандарту" --author="PhpCsFixerBot <phpcsfixer@example.com>"
+fi
