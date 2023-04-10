@@ -31,7 +31,4 @@ class SearchPicturesAction extends Action
         }
         return $paginator;
     }
-
 }
-
-

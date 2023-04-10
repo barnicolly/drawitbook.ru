@@ -16,9 +16,9 @@ use Illuminate\Support\Arr;
  */
 class GetSearchPageSliceTest extends TestCase
 {
-
     use CreateTagTrait;
     use CreatePictureWithRelationsTrait;
+
     public function testSearchSliceOk(): void
     {
         $this->app->setLocale(LangEnum::RU);
@@ -38,7 +38,7 @@ class GetSearchPageSliceTest extends TestCase
             ->willReturn($pictureIds);
         $mock->method('setLimit')
             ->willReturnSelf();
-        $this->app->bind(SearchService::class, static fn(): MockObject&SearchService => $mock);
+        $this->app->bind(SearchService::class, static fn (): MockObject&SearchService => $mock);
 
         $response = $this->ajaxGet($url);
 

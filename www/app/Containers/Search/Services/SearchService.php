@@ -31,7 +31,7 @@ class SearchService
             $filters = [
                 'query' => $query,
             ];
-            $index = $locale === LangEnum::RU ? 'drawitbookByQuery': 'drawitbookByQueryEn';
+            $index = $locale === LangEnum::RU ? 'drawitbookByQuery' : 'drawitbookByQueryEn';
             $result = $this->searchByString($filters, $index);
             if (!empty($result)) {
                 return array_column($result, 'id');
@@ -88,12 +88,11 @@ class SearchService
             $exploded = explode(' ', (string) $query);
             $exploded = array_filter(
                 $exploded,
-                static fn($item): bool => $item !== ''
+                static fn ($item): bool => $item !== ''
             );
             $result->match('query', implode('||', $exploded), true);
         }
         return $result->execute()
             ->fetchAllAssoc();
     }
-
 }

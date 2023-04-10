@@ -43,5 +43,4 @@ class SearchArtsHttpRequest extends BaseFormRequest
     {
         abort(Response::HTTP_NOT_FOUND);
     }
-
 }

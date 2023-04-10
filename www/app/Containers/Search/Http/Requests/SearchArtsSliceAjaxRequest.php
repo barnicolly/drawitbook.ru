@@ -41,5 +41,4 @@ class SearchArtsSliceAjaxRequest extends BaseFormRequest
             'query' => 'trim',
         ];
     }
-
 }

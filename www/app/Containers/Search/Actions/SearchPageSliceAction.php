@@ -18,6 +18,7 @@ class SearchPageSliceAction extends Action
 
     /**
      * @return array{GetCellTaggedResultDto, PaginationDto}
+     *
      * @throws NotFoundRelativeArts
      * @throws UnknownProperties
      */
@@ -27,7 +28,4 @@ class SearchPageSliceAction extends Action
         $paginator = $this->searchPicturesAction->run($searchDto);
         return $this->createCellSliceResultsAction->run($locale, $paginator);
     }
-
 }
-
-

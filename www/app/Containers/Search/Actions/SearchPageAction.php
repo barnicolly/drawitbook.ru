@@ -23,6 +23,7 @@ class SearchPageAction extends Action
 
     /**
      * @return array{array, PageMetaDto}
+     *
      * @throws UnknownProperties
      * @throws NotFoundRelativeArts
      * @throws RepositoryException
@@ -63,7 +64,4 @@ class SearchPageAction extends Action
         $title = __('seo.search.title');
         return [$title];
     }
-
 }
-
-

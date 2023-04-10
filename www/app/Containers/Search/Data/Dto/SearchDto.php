@@ -6,6 +6,5 @@ use App\Ship\Parents\Dto\Dto;
 
 class SearchDto extends Dto
 {
-
     public string $query;
 }

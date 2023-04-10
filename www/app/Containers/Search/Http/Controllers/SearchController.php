@@ -18,9 +18,7 @@ use Throwable;
 
 class SearchController extends HttpController
 {
-
     /**
-     *
      * @see \App\Containers\Search\Tests\Feature\Http\Controllers\ShowSearchIndexPageTest
      */
     public function index(SearchArtsHttpRequest $request, SearchPageAction $action): Response
@@ -38,7 +36,6 @@ class SearchController extends HttpController
     }
 
     /**
-     *
      * @see \App\Containers\Search\Tests\Feature\Http\Controllers\GetSearchPageSliceTest
      */
     public function slice(SearchArtsSliceAjaxRequest $request, SearchPageSliceAction $action): JsonResponse
@@ -56,6 +53,4 @@ class SearchController extends HttpController
             throw $e;
         }
     }
-
 }
-
