@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Containers\Translation\Http\Middleware;
 
 use Closure;
@@ -11,12 +12,12 @@ use Waavi\Translation\UriLocalizer;
 
 class CustomTranslationMiddleware extends TranslationMiddleware
 {
-
     public UriLocalizer $uriLocalizer;
     public Config $config;
     public LanguageRepository $languageRepository;
     public Application $app;
     public ViewFactory $viewFactory;
+
     public function handle($request, Closure $next, $segment = 0)
     {
         $sessionLocale = null;
@@ -34,20 +35,20 @@ class CustomTranslationMiddleware extends TranslationMiddleware
             return $next($request);
         }
 
-        $currentUrl    = $request->getUri();
-        $uriLocale     = $this->uriLocalizer->getLocaleFromUrl($currentUrl, $segment);
+        $currentUrl = $request->getUri();
+        $uriLocale = $this->uriLocalizer->getLocaleFromUrl($currentUrl, $segment);
         $defaultLocale = $this->config->get('app.locale');
 
         // If a locale was set in the url:
         if ($uriLocale) {
-            $currentLanguage     = $this->languageRepository->findByLocale($uriLocale);
+            $currentLanguage = $this->languageRepository->findByLocale($uriLocale);
             $selectableLanguages = $this->languageRepository->allExcept($uriLocale);
-            $altLocalizedUrls    = [];
+            $altLocalizedUrls = [];
             foreach ($selectableLanguages as $lang) {
                 $altLocalizedUrls[] = [
                     'locale' => $lang->locale,
-                    'name'   => $lang->name,
-                    'url'    => $this->uriLocalizer->localize($currentUrl, $lang->locale, $segment),
+                    'name' => $lang->name,
+                    'url' => $this->uriLocalizer->localize($currentUrl, $lang->locale, $segment),
                 ];
             }
 

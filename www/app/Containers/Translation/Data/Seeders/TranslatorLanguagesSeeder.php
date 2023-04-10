@@ -8,11 +8,9 @@ use Waavi\Translation\Models\Language;
 
 class TranslatorLanguagesSeeder extends Seeder
 {
-
     public function run(): void
     {
         Language::create(['locale' => LangEnum::EN, 'name' => 'English']);
         Language::create(['locale' => LangEnum::RU, 'name' => 'Русский']);
     }
-
 }

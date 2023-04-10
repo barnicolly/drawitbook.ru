@@ -8,7 +8,6 @@ use App\Ship\Parents\Tests\TestCase;
 
 class TranslationServiceTest extends TestCase
 {
-
     public function providerTestGetPluralForm(): array
     {
         return [
@@ -64,5 +63,4 @@ class TranslationServiceTest extends TestCase
         $result = (new TranslationService())->getPluralForm($number, LangEnum::fromValue($locale));
         $this->assertTrue($expected === $result);
     }
-
 }
