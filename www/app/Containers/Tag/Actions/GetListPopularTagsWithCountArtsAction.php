@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Cache;
 
 class GetListPopularTagsWithCountArtsAction extends Action
 {
-
     public function __construct(private readonly RouteService $routeService, private readonly GetPictureTagsWithCountArtTask $getPictureTagsWithCountArtTask)
     {
     }
@@ -42,12 +41,9 @@ class GetListPopularTagsWithCountArtsAction extends Action
             $results = Cache::remember(
                 $cacheName,
                 config('cache.expiration'),
-                fn(): array => $this->getPictureTagsWithCountArtTask->run($limit, $locale)
+                fn (): array => $this->getPictureTagsWithCountArtTask->run($limit, $locale)
             );
         }
         return $results;
     }
-
 }
-
-

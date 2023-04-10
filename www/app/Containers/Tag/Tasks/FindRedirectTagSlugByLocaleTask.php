@@ -22,5 +22,3 @@ class FindRedirectTagSlugByLocaleTask extends Task
         return $tagInfo->seo_lang->alternative->slug ?? null;
     }
 }
-
-

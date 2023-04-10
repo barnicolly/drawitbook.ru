@@ -11,7 +11,6 @@ use Throwable;
 
 class TagAjaxController extends HttpController
 {
-
     /**
      * @see \App\Containers\Tag\Tests\Feature\Http\Controllers\TagAjaxControllerTest::testGetListPopularTagsWithCountArtsOk()
      */
@@ -30,5 +29,4 @@ class TagAjaxController extends HttpController
             abort(500);
         }
     }
-
 }

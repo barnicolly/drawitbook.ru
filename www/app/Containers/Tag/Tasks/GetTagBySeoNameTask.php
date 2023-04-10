@@ -12,7 +12,6 @@ use Prettus\Repository\Exceptions\RepositoryException;
 
 class GetTagBySeoNameTask extends Task
 {
-
     public function __construct(protected TagRepository $repository)
     {
     }
@@ -35,5 +34,3 @@ class GetTagBySeoNameTask extends Task
         return TagDto::fromModel($result, $locale);
     }
 }
-
-

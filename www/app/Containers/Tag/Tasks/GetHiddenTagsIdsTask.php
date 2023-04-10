@@ -9,7 +9,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetHiddenTagsIdsTask extends Task
 {
-
     public function __construct(protected TagRepository $repository)
     {
     }
@@ -19,5 +18,3 @@ class GetHiddenTagsIdsTask extends Task
         return $this->repository->flagged(FlagsEnum::TAG_HIDDEN)->get()->pluck(SprTagsColumnsEnum::ID)->toArray();
     }
 }
-
-

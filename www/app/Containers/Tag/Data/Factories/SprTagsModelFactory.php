@@ -34,4 +34,3 @@ class SprTagsModelFactory extends Factory
         ];
     }
 }
-

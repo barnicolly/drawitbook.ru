@@ -9,14 +9,13 @@ use Illuminate\Support\Collection;
 
 final class TagDto extends Dto
 {
-
     public int $id;
 
     public string $name;
 
     public string $seo;
 
-//    todo-misha к dto;
+    //    todo-misha к dto;
     public string $link;
 
     public string $link_title;
@@ -55,7 +54,7 @@ final class TagDto extends Dto
 
     private static function formFlags(Collection $flags): array
     {
-//        todo-misha вынести имя колонки флага;
+        //        todo-misha вынести имя колонки флага;
         return $flags->pluck('name')->toArray();
     }
 }

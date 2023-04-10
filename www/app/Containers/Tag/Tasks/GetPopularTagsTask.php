@@ -13,13 +13,13 @@ use Illuminate\Support\Collection;
 
 class GetPopularTagsTask extends Task
 {
-
     public function __construct(protected TagRepository $repository)
     {
     }
 
     /**
      * @return Collection<SprTagsModel>
+     *
      * @throws RepositoryException
      */
     public function run(string $locale): Collection
@@ -30,5 +30,3 @@ class GetPopularTagsTask extends Task
         return $this->repository->flagged(FlagsEnum::TAG_IS_POPULAR)->get();
     }
 }
-
-

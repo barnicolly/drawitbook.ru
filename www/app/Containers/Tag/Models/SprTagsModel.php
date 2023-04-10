@@ -16,7 +16,6 @@ use Spatie\ModelFlags\Models\Flag;
  * @property string $name_en
  * @property string $seo
  * @property string $slug_en
- *
  * @property Flag[] | Collection flags
  *
  * @method static SprTagsModelFactory factory()

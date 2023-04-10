@@ -10,7 +10,6 @@ use App\Ship\Parents\Actions\Action;
 
 class GetPopularTagsAction extends Action
 {
-
     public function __construct(private readonly GetPopularTagsTask $getPopularTagsTask)
     {
     }
@@ -22,10 +21,7 @@ class GetPopularTagsAction extends Action
     {
         $locale = app()->getLocale();
         return $this->getPopularTagsTask->run($locale)
-            ->map(static fn(SprTagsModel $tag): array => TagDto::fromModel($tag, $locale)->toArray())
+            ->map(static fn (SprTagsModel $tag): array => TagDto::fromModel($tag, $locale)->toArray())
             ->toArray();
     }
-
 }
-
-
