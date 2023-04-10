@@ -92,6 +92,9 @@
         "phprector": [
             "php -d xdebug.mode=off ./vendor/bin/rector process"
         ],
+        "php-cs-fixer": [
+            "php -d xdebug.mode=off ./vendor/bin/php-cs-fixer fix -v --diff --allow-risky=yes app/"
+        ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi"
         ],
