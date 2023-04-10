@@ -77,5 +77,4 @@ abstract class TestCase extends BaseTestCase
         $reflectionProperty->setAccessible(true);
         return $reflectionProperty->getValue($object);
     }
-
 }

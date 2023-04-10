@@ -18,10 +18,11 @@ class FooterComposerTest extends TestCase
 {
     use CreateMenuLevelTrait;
     use CreateTagTrait;
+
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     * @see FooterComposer
      *
+     * @see FooterComposer
      */
     public function testViewHasKeys(string $locale): void
     {
@@ -64,11 +65,11 @@ class FooterComposerTest extends TestCase
         $view->assertViewHas('groups')
             ->assertViewHas('languages');
         $languages = collect($languagesArr);
-        $selectedLanguage = $languages->firstWhere(static fn($item) => $item['selected']);
+        $selectedLanguage = $languages->firstWhere(static fn ($item) => $item['selected']);
         $expectedLanguages = [LangEnum::EN, LangEnum::RU];
         self::assertEqualsCanonicalizing($expectedLanguages, $languages->pluck('lang')->toArray());
         self::assertEqualsCanonicalizing($locale, $selectedLanguage['lang']);
 
-        $tagCollections->each(static fn(SprTagsModel $tag): TestView => $view->assertSee($tag->name, false));
+        $tagCollections->each(static fn (SprTagsModel $tag): TestView => $view->assertSee($tag->name, false));
     }
 }

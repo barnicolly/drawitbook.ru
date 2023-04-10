@@ -10,7 +10,6 @@ use Illuminate\Http\Resources\Json\JsonResource as LaravelJsonResource;
 
 class JsonResource extends LaravelJsonResource
 {
-
     private ?PaginationDto $paginationMetaDto = null;
 
     public function withPaginationMeta(PaginationDto $paginationDto): self
@@ -23,6 +22,7 @@ class JsonResource extends LaravelJsonResource
      * Transform the resource collection into an array.
      *
      * @param Request $request
+     *
      * @return array|Arrayable|JsonSerializable
      */
     public function toArray(Request $request)
@@ -31,7 +31,7 @@ class JsonResource extends LaravelJsonResource
             $this->additional([
                 'meta' => [
                     'pagination' => $this->paginationMetaDto,
-                ]
+                ],
             ]);
         }
         return parent::toArray($request);

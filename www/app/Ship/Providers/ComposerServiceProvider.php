@@ -10,15 +10,12 @@ use Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider
 {
-
     public function register(): void
     {
-        //
     }
 
     public function boot(): void
     {
-
         view()->composer('errors::404', Error404Composer::class);
 
         view()->composer('errors::500', Error500Composer::class);

@@ -13,5 +13,4 @@ class FileService
         }
         return asset(getArtsFolder() . $picturePath);
     }
-
 }

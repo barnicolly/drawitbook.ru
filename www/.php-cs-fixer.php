@@ -27,5 +27,8 @@ return (new PhpCsFixer\Config())->setRules([
     'phpdoc_types_order' => false,
     'function_declaration' => ['closure_function_spacing' => 'one', 'closure_fn_spacing' => 'one'],
     'increment_style' => false,
+    'phpdoc_to_comment' => false,
+    'single_quote' => ['strings_containing_single_quote_chars' => false],
+    'phpdoc_summary' => false,
 ])
     ->setFinder($finder);

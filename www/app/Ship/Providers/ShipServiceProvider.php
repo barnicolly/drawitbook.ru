@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 
 class ShipServiceProvider extends ServiceProvider
 {
-
     public function register(): void
     {
         $this->registerConfig();

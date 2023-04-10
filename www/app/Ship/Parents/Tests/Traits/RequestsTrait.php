@@ -10,12 +10,11 @@ use Illuminate\Testing\TestResponse;
 
 trait RequestsTrait
 {
-
     protected function ajaxPost(string $uri, array $data = []): TestResponse
     {
         Session::start();
         $data = array_merge($data, [
-            "_token" => csrf_token(),
+            '_token' => csrf_token(),
         ]);
         return $this->post($uri, $data, [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',

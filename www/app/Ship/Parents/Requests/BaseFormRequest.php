@@ -18,10 +18,8 @@ abstract class BaseFormRequest extends FormRequest
      */
     public function validateResolved(): void
     {
-        {
-            $this->sanitize();
-            parent::validateResolved();
-        }
+        $this->sanitize();
+        parent::validateResolved();
     }
 
     abstract public function rules(): array;

@@ -4,9 +4,9 @@ namespace App\Ship\Parents\Tests\Optimization;
 
 use ReflectionObject;
 use Throwable;
+
 trait ClearTestPropertiesAfterTestTrait
 {
-
     protected function clearProperties(): void
     {
         foreach ((new ReflectionObject($this))->getProperties() as $prop) {

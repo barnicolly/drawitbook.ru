@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 
 class PaginatorFactory
 {
-
     /**
      * @var int
      */
@@ -34,5 +33,4 @@ class PaginatorFactory
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
-
 }

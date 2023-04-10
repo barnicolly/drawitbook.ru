@@ -14,10 +14,9 @@ class ExceptionsHandler extends LaravelExceptionHandler
     /**
      * A list of the exception types that are not reported.
      *
-     * @var array<int, class-string<\Throwable>>
+     * @var array<int, class-string<Throwable>>
      */
     protected $dontReport = [
-        //
     ];
 
     /**
@@ -35,6 +34,7 @@ class ExceptionsHandler extends LaravelExceptionHandler
      *
      * @param Request $request
      * @param Throwable $exception
+     *
      * @return Response
      *
      * @throws Throwable

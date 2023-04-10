@@ -15,13 +15,13 @@ use Illuminate\Support\Facades\Cache;
 
 class HeaderComposerTest extends TestCase
 {
-
     use CreateMenuLevelTrait;
     use CreateTagTrait;
+
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     * @see HeaderComposer
      *
+     * @see HeaderComposer
      */
     public function testViewHasKeys(string $locale): void
     {
@@ -61,6 +61,6 @@ class HeaderComposerTest extends TestCase
 
         $view->assertViewHas('groups');
 
-        $tagCollections->each(static fn(SprTagsModel $tag): TestView => $view->assertSee($tag->name, false));
+        $tagCollections->each(static fn (SprTagsModel $tag): TestView => $view->assertSee($tag->name, false));
     }
 }

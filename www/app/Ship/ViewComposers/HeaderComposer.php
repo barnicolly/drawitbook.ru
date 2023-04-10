@@ -7,7 +7,6 @@ use Illuminate\View\View;
 
 class HeaderComposer
 {
-
     public function __construct(private readonly GetCachedMenuTreeAction $getCachedMenuTreeAction)
     {
     }

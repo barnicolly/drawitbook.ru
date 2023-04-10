@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class WithoutGetTest extends MiddlewareTestCase
 {
-
     private string $url = '/ru/dummy-test-route';
     private string $correctWord = 'абстрактность';
 

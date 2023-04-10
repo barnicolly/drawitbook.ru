@@ -1,10 +1,11 @@
 <?php
 
 use App\Ship\Services\File\FileService;
+
 if (!function_exists('buildUrl')) {
     function buildUrl(string $path): string
     {
-        $uri = preg_replace("#\/{2,}#", '/', '/build/' . $path);
+        $uri = preg_replace('#\\/{2,}#', '/', '/build/' . $path);
         return asset($uri);
     }
 }

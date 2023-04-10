@@ -7,8 +7,6 @@ use PHPUnit\Framework\Assert;
 
 trait ResponseAssertionsTrait
 {
-
-
     public function assertRouteUsesMiddleware(string $routeName, array $middlewares, bool $exact = false): void
     {
         $router = resolve(Router::class);
@@ -25,14 +23,14 @@ trait ResponseAssertionsTrait
             $messages = [];
 
             if ($extraMiddlewares) {
-                $messages[] = "uses unexpected `" . implode(', ', $extraMiddlewares) . "` middlware(s)";
+                $messages[] = 'uses unexpected `' . implode(', ', $extraMiddlewares) . '` middlware(s)';
             }
 
             if ($unusedMiddlewares) {
-                $messages[] = "doesn't use expected `" . implode(', ', $unusedMiddlewares) . "` middlware(s)";
+                $messages[] = "doesn't use expected `" . implode(', ', $unusedMiddlewares) . '` middlware(s)';
             }
 
-            $messages = implode(" and ", $messages);
+            $messages = implode(' and ', $messages);
 
             Assert::assertSame(
                 count($unusedMiddlewares) + count($extraMiddlewares),
@@ -47,7 +45,7 @@ trait ResponseAssertionsTrait
                 "Route `{$routeName}` does not use expected `" . implode(
                     ', ',
                     $unusedMiddlewares
-                ) . "` middleware(s)"
+                ) . '` middleware(s)'
             );
         }
     }

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Schema;
 
 trait PrepareDbBeforeTestTrait
 {
-
     protected function truncateTables(): void
     {
         $excludeTables = [
