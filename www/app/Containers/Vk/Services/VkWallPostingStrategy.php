@@ -76,4 +76,3 @@ class VkWallPostingStrategy implements SocialMediaPostingContract
         return 'photo-' . $this->apiInstance->groupId . '_' . $photoId;
     }
 }
-

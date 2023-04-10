@@ -8,7 +8,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetAllVkAlbumTask extends Task
 {
-
     public function __construct(protected VkAlbumRepository $repository)
     {
     }
@@ -20,5 +19,3 @@ class GetAllVkAlbumTask extends Task
         return VkAlbumModel::mapToArray($result);
     }
 }
-
-

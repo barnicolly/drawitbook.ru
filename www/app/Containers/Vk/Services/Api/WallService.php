@@ -3,9 +3,9 @@
 namespace App\Containers\Vk\Services\Api;
 
 use Exception;
+
 class WallService
 {
-
     public function __construct(protected VkApi $instance)
     {
     }
@@ -41,5 +41,4 @@ class WallService
         }
         return null;
     }
-
 }

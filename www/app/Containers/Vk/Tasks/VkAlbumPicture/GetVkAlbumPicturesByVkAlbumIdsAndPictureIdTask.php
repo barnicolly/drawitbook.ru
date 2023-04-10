@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 
 class GetVkAlbumPicturesByVkAlbumIdsAndPictureIdTask extends Task
 {
-
     public function __construct(protected VkAlbumPictureRepository $repository)
     {
     }
@@ -22,5 +21,3 @@ class GetVkAlbumPicturesByVkAlbumIdsAndPictureIdTask extends Task
         return $this->repository->get();
     }
 }
-
-

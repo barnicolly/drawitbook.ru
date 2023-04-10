@@ -8,7 +8,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class CreateVkAlbumPictureTask extends Task
 {
-
     public function __construct(protected VkAlbumPictureRepository $repository)
     {
     }
@@ -23,5 +22,3 @@ class CreateVkAlbumPictureTask extends Task
         return $model;
     }
 }
-
-

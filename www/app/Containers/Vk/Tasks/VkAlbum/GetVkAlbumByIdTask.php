@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class GetVkAlbumByIdTask extends Task
 {
-
     public function __construct(protected VkAlbumRepository $repository)
     {
     }
@@ -27,5 +26,3 @@ class GetVkAlbumByIdTask extends Task
         }
     }
 }
-
-

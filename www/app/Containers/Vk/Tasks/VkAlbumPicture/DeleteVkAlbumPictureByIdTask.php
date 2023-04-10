@@ -7,7 +7,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class DeleteVkAlbumPictureByIdTask extends Task
 {
-
     public function __construct(protected VkAlbumPictureRepository $repository)
     {
     }
@@ -17,5 +16,3 @@ class DeleteVkAlbumPictureByIdTask extends Task
         $this->repository->delete($id);
     }
 }
-
-

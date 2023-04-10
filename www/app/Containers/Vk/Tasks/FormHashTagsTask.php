@@ -6,7 +6,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class FormHashTagsTask extends Task
 {
-
     public function run(array $tags): string
     {
         foreach ($tags as $key => $tag) {
@@ -20,5 +19,3 @@ class FormHashTagsTask extends Task
         return $hashTags . ' #drawitbook';
     }
 }
-
-

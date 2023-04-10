@@ -4,9 +4,9 @@ namespace App\Containers\Vk\Services\Api;
 
 use Exception;
 use GuzzleHttp\Client;
+
 class PhotoService
 {
-
     public function __construct(protected VkApi $instance)
     {
     }
@@ -25,9 +25,8 @@ class PhotoService
         $response = $this->instance->api->request('photos.save', $data);
         if ($response) {
             return $response['response'][0]['id'];
-        } else {
-            throw new Exception();
         }
+        throw new Exception();
     }
 
     public function timeout(): void
@@ -127,5 +126,4 @@ class PhotoService
         );
         return json_decode($res->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
     }
-
 }

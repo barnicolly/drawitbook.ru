@@ -38,5 +38,4 @@ class VkAlbumModel extends CoreModel
     {
         return VkAlbumModelFactory::new();
     }
-
 }

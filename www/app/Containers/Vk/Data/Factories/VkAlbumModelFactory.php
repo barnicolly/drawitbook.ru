@@ -30,4 +30,3 @@ class VkAlbumModelFactory extends Factory
         ];
     }
 }
-

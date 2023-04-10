@@ -12,7 +12,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetVkAlbumPictureByVkAlbumIdAndPictureIdTask extends Task
 {
-
     public function __construct(protected VkAlbumPictureRepository $repository)
     {
     }
@@ -32,5 +31,3 @@ class GetVkAlbumPictureByVkAlbumIdAndPictureIdTask extends Task
         return $result;
     }
 }
-
-

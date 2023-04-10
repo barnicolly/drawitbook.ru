@@ -28,5 +28,4 @@ class VkAlbumPictureModel extends CoreModel
     {
         return VkAlbumPictureModelFactory::new();
     }
-
 }
