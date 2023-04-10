@@ -28,4 +28,3 @@ class RoleModelFactory extends Factory
         ];
     }
 }
-

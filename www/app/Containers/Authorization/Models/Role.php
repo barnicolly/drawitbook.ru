@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Containers\Authorization\Models;
+
 use App\Containers\Authorization\Data\Factories\RoleModelFactory;
 use App\Containers\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
