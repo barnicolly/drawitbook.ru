@@ -23,12 +23,9 @@ class GetCachedMenuTreeAction extends Action
             $results = Cache::remember(
                 $cacheName,
                 config('cache.expiration'),
-                fn(): array => $this->getDataTask->run($locale)
+                fn (): array => $this->getDataTask->run($locale)
             );
         }
         return $results;
     }
-
 }
-
-

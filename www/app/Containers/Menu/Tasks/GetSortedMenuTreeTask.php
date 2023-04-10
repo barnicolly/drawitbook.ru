@@ -7,7 +7,6 @@ use App\Ship\Services\Route\RouteService;
 
 class GetSortedMenuTreeTask extends Task
 {
-
     public function __construct(private readonly RouteService $routeService, private readonly GetAllMenuTask $getAllMenuTask)
     {
     }
@@ -29,7 +28,7 @@ class GetSortedMenuTreeTask extends Task
                 $result[$columnId] = [];
             }
             $info = [
-                'link' => $slug ? $this->routeService->getRouteArtsCellTagged($slug): '',
+                'link' => $slug ? $this->routeService->getRouteArtsCellTagged($slug) : '',
                 'title' => $title,
                 'id' => $levelId,
             ];
@@ -63,5 +62,3 @@ class GetSortedMenuTreeTask extends Task
         return $result;
     }
 }
-
-

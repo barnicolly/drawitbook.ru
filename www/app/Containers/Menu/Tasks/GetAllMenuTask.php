@@ -11,7 +11,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetAllMenuTask extends Task
 {
-
     public function __construct(private readonly MenuLevelsRepository $repository)
     {
     }
@@ -45,7 +44,7 @@ class GetAllMenuTask extends Task
         $result = $this->repository->getModel()
             ->select($select)
             ->where(
-                static function ($query) use ($locale) : void {
+                static function ($query) use ($locale): void {
                     if ($locale === LangEnum::EN) {
                         $query->where(MenuLevelsColumnsEnum::tSHOW_EN, 1);
                     }
@@ -62,5 +61,3 @@ class GetAllMenuTask extends Task
         return CoreModel::mapToArray($result);
     }
 }
-
-
