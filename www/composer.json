@@ -28,6 +28,7 @@
         "mockery/mockery": "^1.5",
         "nunomaduro/collision": "^7",
         "nunomaduro/larastan": "^2.0",
+        "phpro/grumphp": "^1.15",
         "phpunit/phpunit": "^10",
         "rector/rector": "^0.15.24",
         "spatie/laravel-ignition": "^2.0"
@@ -37,7 +38,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "wikimedia/composer-merge-plugin": true
+            "wikimedia/composer-merge-plugin": true,
+            "phpro/grumphp": true
         }
     },
     "extra": {
