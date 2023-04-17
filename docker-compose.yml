@@ -1,5 +1,27 @@
 version: '3.3'
 services:
+  selenium-hub:
+    image: selenium/hub:latest
+    container_name: selenium-hub
+    restart: unless-stopped
+    networks:
+        - main_network
+#    ports:
+#        - "4442:4442"
+#        - "4443:4443"
+#        - "4445:4444"
+  chrome:
+    image: selenium/node-chrome:beta
+    shm_size: 2gb
+    restart: unless-stopped
+    depends_on:
+        - selenium-hub
+    networks:
+        - main_network
+    environment:
+        - SE_EVENT_BUS_HOST=selenium-hub
+        - SE_EVENT_BUS_PUBLISH_PORT=4442
+        - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
   webserver:
     build:
       context: .
@@ -36,8 +58,9 @@ services:
     environment:
       - XDEBUG_CONFIG=mode=debug client_port=9003 client_host=${XDEBUG_REMOTE_HOST}
       - PHP_IDE_CONFIG=serverName=docker
+      - APP_ENV=local
     env_file:
-      - www/.env
+      - .env
     restart: unless-stopped
     networks:
       - main_network
@@ -58,7 +81,7 @@ services:
       - WEBPACK_DEVSERVER_IN_PORT=10008
       - NODE_ENV=development
     env_file:
-      - www/.env
+      - .env
     restart: unless-stopped
     networks:
       - main_network

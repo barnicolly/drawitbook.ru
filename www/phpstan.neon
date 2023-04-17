@@ -28,6 +28,7 @@ parameters:
 
     excludePaths:
         - app/Containers/Translation/Http/Middleware/CustomTranslationMiddleware.php
+        - tests/Browser/**/*
 
     reportUnmatchedIgnoredErrors: false
     editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'

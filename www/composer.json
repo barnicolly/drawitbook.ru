@@ -25,6 +25,7 @@
         "barryvdh/laravel-ide-helper": "^2.13",
         "fakerphp/faker": "^1.21",
         "friendsofphp/php-cs-fixer": "^3.16",
+        "laravel/dusk": "^7.7",
         "mockery/mockery": "^1.5",
         "nunomaduro/collision": "^7",
         "nunomaduro/larastan": "^2.0",
@@ -37,7 +38,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "wikimedia/composer-merge-plugin": true
+            "wikimedia/composer-merge-plugin": true,
+            "phpro/grumphp": true
         }
     },
     "extra": {

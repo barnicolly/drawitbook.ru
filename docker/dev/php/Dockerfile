@@ -9,6 +9,9 @@ RUN apk add --no-cache $PHPIZE_DEPS \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
+RUN apk add --no-cache zip libzip-dev
+RUN docker-php-ext-configure zip && docker-php-ext-install zip
+
 WORKDIR /var/www/html
 
 RUN addgroup --system --gid ${USER_GROUP_ID} ${USER_GROUP_NAME} \
