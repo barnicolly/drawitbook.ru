@@ -1,8 +1,42 @@
 #!/bin/bash
 
 DIFF_WITH_PREVIOUS_COMMIT=`git diff HEAD^ HEAD --shortstat "www/app/*.php"`
+#CHANGED_FILES=$(git diff --name-only --diff-filter=d HEAD^ HEAD | grep -E "www/app")
+CHANGED_FILES=$(git diff --name-only --diff-filter=ACMRTUXB HEAD^ HEAD | grep -E "www/app" | sed 's|.*www\/||')
+COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+COMMIT_AUTHOR=$(git log -1 --pretty=%an)
 
-if [[ $DIFF_WITH_PREVIOUS_COMMIT != "" ]]; then
+echo '--------------------------------post-commit-------------------------------'
+echo "${COMMIT_MESSAGE} ${COMMIT_AUTHOR}"
+
+if [[ $DIFF_WITH_PREVIOUS_COMMIT != "" && $COMMIT_AUTHOR != "PhpCsFixer" ]]; then
+
+    UNCOMMITED_CHANGES=`git diff --shortstat`
+
+    if [[ $UNCOMMITED_CHANGES != "" ]]; then
+        git stash
+        git stash list
+    fi
+
+    cmd='vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php -v --using-cache=no'
+
+    if ! echo "${CHANGED_FILES}" | grep -qE "^(\\.php-cs-fixer(\\.dist)?\\.php|composer\\.lock)$"; then EXTRA_ARGS=$(printf -- '--path-mode=intersection\n--\n%s' "${CHANGED_FILES}"); else EXTRA_ARGS=''; fi
+    docker exec -t drawitbookru_fpm_1 php -d xdebug.mode=off ${cmd} ${EXTRA_ARGS}
+
+    DIFF=`git diff --shortstat "www/*.php"`
+    if [[ $DIFF != "" ]]; then
+        git commit -a -m "style(php-cs-fixer): Приведение к стандарту" --author="PhpCsFixer <phpcsfixer@example.com>"
+    fi
+
+    if [[ $UNCOMMITED_CHANGES != "" ]]; then
+        git stash apply
+        git stash drop stash@{0}
+
+        git stash list
+    fi
+fi
+
+if [[ $DIFF_WITH_PREVIOUS_COMMIT != "" && $COMMIT_AUTHOR != "PhpCsFixer" ]]; then
 
     UNCOMMITED_CHANGES=`git diff --shortstat`
 
@@ -16,13 +50,6 @@ if [[ $DIFF_WITH_PREVIOUS_COMMIT != "" ]]; then
     DIFF=`git diff --shortstat "www/*.php"`
     if [[ $DIFF != "" ]]; then
         git commit -a -m "style(phprector): Приведение к стандарту" --author="PhpRector <phprector@example.com>"
-    fi
-
-    docker exec -t drawitbookru_fpm_1 composer run php-cs-fixer
-
-    DIFF=`git diff --shortstat "www/*.php"`
-    if [[ $DIFF != "" ]]; then
-        git commit -a -m "style(php-cs-fixer): Приведение к стандарту" --author="PhpCsFixer <phpcsfixer@example.com>"
     fi
 
     if [[ $UNCOMMITED_CHANGES != "" ]]; then
