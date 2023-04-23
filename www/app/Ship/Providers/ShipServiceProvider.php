@@ -16,7 +16,6 @@ class ShipServiceProvider extends ServiceProvider
         $this->app->register(AppServiceProvider::class);
         $this->app->register(AuthServiceProvider::class);
         $this->app->register(ConsoleServiceProvider::class);
-        //        $this->app->register(BroadcastServiceProvider::class);
         $this->app->register(ComposerServiceProvider::class);
         $this->app->register(RouterServiceProvider::class);
         $this->app->register(HelperServiceProvider::class);
