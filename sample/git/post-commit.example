@@ -45,7 +45,9 @@ if [[ $DIFF_WITH_PREVIOUS_COMMIT != "" && $COMMIT_AUTHOR != "PhpCsFixer" ]]; the
         git stash list
     fi
 
-    docker exec -t drawitbookru_fpm_1 composer run phprector
+    cmd='vendor/bin/rector process'
+
+    docker exec -t drawitbookru_fpm_1 php -d xdebug.mode=off ${cmd} ${CHANGED_FILES}
 
     DIFF=`git diff --shortstat "www/*.php"`
     if [[ $DIFF != "" ]]; then
