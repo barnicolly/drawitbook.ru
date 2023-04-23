@@ -31,4 +31,5 @@ return (new PhpCsFixer\Config())->setRules([
     'single_quote' => ['strings_containing_single_quote_chars' => false],
     'phpdoc_summary' => false,
 ])
+    ->setRiskyAllowed(true)
     ->setFinder($finder);
