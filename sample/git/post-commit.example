@@ -1,15 +1,34 @@
 #!/bin/bash
 
-docker exec -t drawitbookru_fpm_1 composer run phprector
+DIFF_WITH_PREVIOUS_COMMIT=`git diff HEAD^ HEAD --shortstat "www/app/*.php"`
 
-DIFF=`git diff --shortstat "www/app"`
-if [[ $DIFF != "" ]]; then
-    git commit -a -m "style(phprector): Приведение к стандарту" --author="PhpRectorBot <phprector@example.com>"
-fi
+if [[ $DIFF_WITH_PREVIOUS_COMMIT != "" ]]; then
 
-docker exec -t drawitbookru_fpm_1 composer run php-cs-fixer
+    UNCOMMITED_CHANGES=`git diff --shortstat`
 
-DIFF=`git diff --shortstat "www/app"`
-if [[ $DIFF != "" ]]; then
-    git commit -a -m "style(php-cs-fixer): Приведение к стандарту" --author="PhpCsFixerBot <phpcsfixer@example.com>"
+    if [[ $UNCOMMITED_CHANGES != "" ]]; then
+        git stash
+        git stash list
+    fi
+
+    docker exec -t drawitbookru_fpm_1 composer run phprector
+
+    DIFF=`git diff --shortstat "www/*.php"`
+    if [[ $DIFF != "" ]]; then
+        git commit -a -m "style(phprector): Приведение к стандарту" --author="PhpRector <phprector@example.com>"
+    fi
+
+    docker exec -t drawitbookru_fpm_1 composer run php-cs-fixer
+
+    DIFF=`git diff --shortstat "www/*.php"`
+    if [[ $DIFF != "" ]]; then
+        git commit -a -m "style(php-cs-fixer): Приведение к стандарту" --author="PhpCsFixer <phpcsfixer@example.com>"
+    fi
+
+    if [[ $UNCOMMITED_CHANGES != "" ]]; then
+        git stash apply
+        git stash drop stash@{0}
+
+        git stash list
+    fi
 fi
