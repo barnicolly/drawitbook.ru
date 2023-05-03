@@ -25,7 +25,7 @@ services:
             dockerfile: docker/dev/nginx/Dockerfile
             labels:
                 dev: true
-        image: 'dev/drawitbook_com/webserver'
+        image: 'drawitbook_com/webserver:dev'
         ports:
             - "8111:80"
         volumes:
@@ -45,7 +45,7 @@ services:
                 - USER_ID=${USER_ID}
                 - USER_GROUP_NAME=${USER_GROUP_NAME}
                 - USER_GROUP_ID=${USER_GROUP_ID}
-        image: 'dev/drawitbook_com/php'
+        image: 'drawitbook_com/php:dev'
         volumes:
             - ./www:/var/www/html
             - ./docker/dev/php/php.ini:/usr/local/etc/php/php.ini:ro
@@ -67,7 +67,7 @@ services:
                 - NPM_TOKEN=${NPM_TOKEN}
             labels:
                 dev: true
-        image: 'dev/drawitbook_com/webpack'
+        image: 'drawitbook_com/webpack:dev'
         volumes:
             - ./www:/var/www/html
         environment:
