@@ -3,8 +3,10 @@
 namespace App\Containers\Image\Data\Factories;
 
 use App\Containers\Image\Models\ImageEntitiesModel;
+use App\Containers\Image\Models\ImagesModel;
 use App\Containers\Picture\Models\PictureModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 /**
  * @extends Factory<ImageEntitiesModel>
@@ -26,8 +28,9 @@ class ImageEntitiesModelFactory extends Factory
     public function definition(): array
     {
         return [
+            'image_id' => ImagesModel::factory(),
             'entity_id' => PictureModel::factory(),
-            'entity_type' => PictureModel::class,
+            'entity_type' => array_search(PictureModel::class, Relation::$morphMap, true),
         ];
     }
 }

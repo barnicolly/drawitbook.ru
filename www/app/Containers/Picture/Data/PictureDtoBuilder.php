@@ -2,10 +2,10 @@
 
 namespace App\Containers\Picture\Data;
 
+use App\Containers\Image\Models\ImagesModel;
 use App\Containers\Picture\Data\Dto\ArtDto;
 use App\Containers\Picture\Data\Dto\PictureFileDto;
 use App\Containers\Picture\Data\Dto\PictureFilesDto;
-use App\Containers\Picture\Models\PictureExtensionsModel;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Tag\Data\Dto\TagDto;
 use App\Containers\Tag\Models\SprTagsModel;
@@ -28,7 +28,7 @@ class PictureDtoBuilder extends Task
     }
 
     /**
-     * @param Collection<PictureExtensionsModel>|null $files
+     * @param Collection<ImagesModel>|null $files
      *
      * @return $this
      *

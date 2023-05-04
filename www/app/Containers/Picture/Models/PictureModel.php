@@ -21,7 +21,7 @@ use Spatie\ModelFlags\Models\Flag;
  *
  * @method static PictureModelFactory factory
  *
- * @property PictureExtensionsModel[] | Collection extensions
+ * @property ImagesModel[] | Collection extensions
  * @property SprTagsModel[] | Collection tags
  * @property Flag[] | Collection flags
  */

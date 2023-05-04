@@ -2,8 +2,8 @@
 
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Cell;
 
+use App\Containers\Image\Models\ImagesModel;
 use App\Containers\Picture\Http\Controllers\Cell\CellHttpController;
-use App\Containers\Picture\Models\PictureExtensionsModel;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Tag\Data\Dto\TagDto;
 use App\Containers\Tag\Enums\SprTagsColumnsEnum;
@@ -40,9 +40,9 @@ class CellHttpControllerTaggedTest extends TestCase
         $response = $this->get($this->routeService->getRouteArtsCellTagged($tagDto->seo_lang->current->slug));
 
         $response->assertOk();
-        /** @var PictureExtensionsModel $firstExtension */
-        $firstExtension = $pictures->first()?->extensions()->first();
-        $path = asset(getArtsFolder() . $firstExtension->path);
+        /** @var ImagesModel $image */
+        $image = $pictures->first()?->extensions()->first();
+        $path = asset(getArtsFolder() . $image->path);
         $response->assertSee(
             "<meta property=\"og:image\" content=\"{$path}\">",
             false

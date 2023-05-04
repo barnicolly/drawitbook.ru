@@ -2,9 +2,10 @@
 
 namespace App\Containers\Picture\Tests\Traits;
 
-use App\Containers\Picture\Enums\PictureExtensionsColumnsEnum;
+use App\Containers\Image\Enums\ImageEntitiesColumnsEnum;
+use App\Containers\Image\Models\ImageEntitiesModel;
+use App\Containers\Image\Models\ImagesModel;
 use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
-use App\Containers\Picture\Models\PictureExtensionsModel;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Picture\Models\PictureTagsModel;
 use App\Containers\Tag\Models\SprTagsModel;
@@ -12,7 +13,7 @@ use App\Containers\Tag\Models\SprTagsModel;
 trait CreatePictureWithRelationsTrait
 {
     /**
-     * @return array{PictureModel, PictureExtensionsModel}
+     * @return array{PictureModel, ImagesModel}
      */
     public function createPictureWithFile(): array
     {
@@ -26,13 +27,15 @@ trait CreatePictureWithRelationsTrait
         return PictureModel::factory()->create($data);
     }
 
-    public function createPictureFile(PictureModel $picture): PictureExtensionsModel
+    public function createPictureFile(PictureModel $picture): ImagesModel
     {
-        return PictureExtensionsModel::factory()->create(
+        $imageEntity = ImageEntitiesModel::factory()->create(
             [
-                PictureExtensionsColumnsEnum::PICTURE_ID => $picture->id,
+                ImageEntitiesColumnsEnum::ENTITY_TYPE => $picture->getMorphClass(),
+                ImageEntitiesColumnsEnum::ENTITY_ID => $picture->id,
             ]
         );
+        return $imageEntity->image;
     }
 
     public function createPictureTag(PictureModel $picture, SprTagsModel $tag): PictureTagsModel
