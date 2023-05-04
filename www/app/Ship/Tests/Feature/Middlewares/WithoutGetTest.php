@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class WithoutGetTest extends MiddlewareTestCase
 {
     private string $url = '/ru/dummy-test-route';
-    private string $correctWord = 'абстрактность';
+    private static string $correctWord = 'абстрактность';
 
     protected function setUp(): void
     {
@@ -20,15 +20,15 @@ class WithoutGetTest extends MiddlewareTestCase
         $this->createTestRouteWithMiddlewares($this->url . '/{word}', [WithoutGet::class]);
     }
 
-    public function providerPositive(): array
+    public static function providerPositive(): array
     {
         return [
             [
-                $this->correctWord,
+                self::$correctWord,
                 [],
             ],
             [
-                $this->correctWord . '?',
+                self::$correctWord . '?',
                 [],
             ],
         ];
@@ -52,7 +52,7 @@ class WithoutGetTest extends MiddlewareTestCase
         $params = [
             'test' => 1,
         ];
-        $assetRedirect = implode('/', [$this->url, $this->correctWord]);
+        $assetRedirect = implode('/', [$this->url, self::$correctWord]);
         $url = $assetRedirect;
         $url .= '?' . http_build_query($params);
         $response = $this->get($url);
@@ -65,7 +65,7 @@ class WithoutGetTest extends MiddlewareTestCase
         $params = [
             'test' => 1,
         ];
-        $url = implode('/', [$this->url, $this->correctWord]);
+        $url = implode('/', [$this->url, self::$correctWord]);
         $url .= '?' . http_build_query($params);
         $request = Request::create($url, 'GET');
         $this->assertCalledNextMiddleware(new WithoutGet(), $request, false);

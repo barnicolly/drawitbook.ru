@@ -6,7 +6,7 @@ use App\Containers\Translation\Enums\LangEnum;
 
 class CommonProvider
 {
-    public function providerLanguages(): array
+    public static function providerLanguages(): array
     {
         return [
             [

@@ -8,7 +8,7 @@ use App\Ship\Parents\Tests\TestCase;
 
 class TranslationServiceTest extends TestCase
 {
-    public function providerTestGetPluralForm(): array
+    public static function providerTestGetPluralForm(): array
     {
         return [
             [

@@ -27,7 +27,7 @@ class InLowerCaseTest extends MiddlewareTestCase
         $this->assertCalledNextMiddleware(new InLowerCase(), $request, true);
     }
 
-    public function provider(): array
+    public static function provider(): array
     {
         return [
             [
