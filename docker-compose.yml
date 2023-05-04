@@ -68,6 +68,7 @@ services:
             labels:
                 dev: true
         image: 'drawitbook_com/webpack:dev'
+        command: ["npm", "run", "dev"]
         volumes:
             - ./www:/var/www/html
         environment:
