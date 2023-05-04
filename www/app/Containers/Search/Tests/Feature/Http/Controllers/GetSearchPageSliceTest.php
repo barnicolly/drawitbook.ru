@@ -2,6 +2,7 @@
 
 namespace App\Containers\Search\Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Search\Http\Controllers\SearchController;
 use App\Containers\Search\Services\SearchService;
@@ -15,8 +16,8 @@ use Illuminate\Support\Arr;
  */
 class GetSearchPageSliceTest extends TestCase
 {
-
-    use CreateTagTrait, CreatePictureWithRelationsTrait;
+    use CreateTagTrait;
+    use CreatePictureWithRelationsTrait;
 
     public function testSearchSliceOk(): void
     {
@@ -37,9 +38,7 @@ class GetSearchPageSliceTest extends TestCase
             ->willReturn($pictureIds);
         $mock->method('setLimit')
             ->willReturnSelf();
-        $this->app->bind(SearchService::class, function () use ($mock) {
-            return $mock;
-        });
+        $this->app->bind(SearchService::class, static fn (): MockObject&SearchService => $mock);
 
         $response = $this->ajaxGet($url);
 

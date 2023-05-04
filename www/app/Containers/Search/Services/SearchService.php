@@ -2,13 +2,14 @@
 
 namespace App\Containers\Search\Services;
 
+use Exception;
 use App\Containers\Translation\Enums\LangEnum;
 use Foolz\SphinxQL\Drivers\Mysqli\Connection;
 use Foolz\SphinxQL\SphinxQL;
 
 class SearchService
 {
-    private Connection $connection;
+    private readonly Connection $connection;
     private int $limit = 15;
 
     public function __construct()
@@ -30,13 +31,13 @@ class SearchService
             $filters = [
                 'query' => $query,
             ];
-            $index = $locale === LangEnum::RU ? 'drawitbookByQuery': 'drawitbookByQueryEn';
+            $index = $locale === LangEnum::RU ? 'drawitbookByQuery' : 'drawitbookByQueryEn';
             $result = $this->searchByString($filters, $index);
             if (!empty($result)) {
                 return array_column($result, 'id');
             }
             return [];
-        } catch (\Exception $e) {
+        } catch (Exception) {
             return [];
         }
     }
@@ -53,7 +54,7 @@ class SearchService
                         'tag' => 8,
                     ]
                 )
-                ->from('drawItBookSearchByTag')
+                ->from(['drawItBookSearchByTag'])
                 ->limit($this->limit);
             if (!empty($shown)) {
                 $result->where('tag', 'IN', $shown);
@@ -70,7 +71,7 @@ class SearchService
                 return array_column($result, 'id');
             }
             return [];
-        } catch (\Exception $e) {
+        } catch (Exception) {
             return [];
         }
     }
@@ -79,22 +80,19 @@ class SearchService
     {
         $result = (new SphinxQL($this->connection))
             ->select('id', 'query', 'weight() AS weight')
-            ->from($index)
+            ->from([$index])
             ->limit($this->limit);
 
         $query = $filters['query'] ?? '';
         if ($query) {
-            $exploded = explode(' ', $query);
+            $exploded = explode(' ', (string) $query);
             $exploded = array_filter(
                 $exploded,
-                function ($item) {
-                    return $item !== '';
-                }
+                static fn ($item): bool => $item !== ''
             );
             $result->match('query', implode('||', $exploded), true);
         }
         return $result->execute()
             ->fetchAllAssoc();
     }
-
 }

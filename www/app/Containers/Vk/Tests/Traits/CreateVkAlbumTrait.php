@@ -8,7 +8,6 @@ use App\Containers\Vk\Models\VkAlbumPictureModel;
 
 trait CreateVkAlbumTrait
 {
-
     public function createVkAlbum(): VkAlbumModel
     {
         return VkAlbumModel::factory()->create();

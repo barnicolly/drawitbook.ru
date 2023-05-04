@@ -11,12 +11,8 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetAllMenuTask extends Task
 {
-
-    private MenuLevelsRepository $repository;
-
-    public function __construct(MenuLevelsRepository $repository)
+    public function __construct(private readonly MenuLevelsRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function run(string $locale): array
@@ -27,28 +23,14 @@ class GetAllMenuTask extends Task
             MenuLevelsColumnsEnum::tCOLUMN,
         ];
         if ($locale === LangEnum::EN) {
-            $select = array_merge(
-                $select,
-                [
-                    SprTagsColumnsEnum::tNAME_EN . ' as name',
-                    SprTagsColumnsEnum::tSLUG_EN . ' as seo',
-                    MenuLevelsColumnsEnum::tCUSTOM_NAME_EN . ' as customName',
-                ]
-            );
+            $select = [...$select, SprTagsColumnsEnum::tNAME_EN . ' as name', SprTagsColumnsEnum::tSLUG_EN . ' as seo', MenuLevelsColumnsEnum::tCUSTOM_NAME_EN . ' as customName'];
         } else {
-            $select = array_merge(
-                $select,
-                [
-                    SprTagsColumnsEnum::tNAME,
-                    SprTagsColumnsEnum::tSEO,
-                    MenuLevelsColumnsEnum::tCUSTOM_NAME_RU . ' as customName',
-                ]
-            );
+            $select = [...$select, SprTagsColumnsEnum::tNAME, SprTagsColumnsEnum::tSEO, MenuLevelsColumnsEnum::tCUSTOM_NAME_RU . ' as customName'];
         }
         $result = $this->repository->getModel()
             ->select($select)
             ->where(
-                function ($query) use ($locale) {
+                static function ($query) use ($locale): void {
                     if ($locale === LangEnum::EN) {
                         $query->where(MenuLevelsColumnsEnum::tSHOW_EN, 1);
                     }
@@ -65,5 +47,3 @@ class GetAllMenuTask extends Task
         return CoreModel::mapToArray($result);
     }
 }
-
-

@@ -11,18 +11,11 @@ use Prettus\Repository\Exceptions\RepositoryException;
 
 class GetInterestingPictureIdsTask extends Task
 {
-
-    protected PictureRepository $repository;
-
-    public function __construct(PictureRepository $repository)
+    public function __construct(protected PictureRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
-     * @param int $excludeId
-     * @param int $limit
-     * @return array
      * @throws RepositoryException
      */
     public function run(int $excludeId, int $limit): array
@@ -35,5 +28,3 @@ class GetInterestingPictureIdsTask extends Task
             ->toArray();
     }
 }
-
-

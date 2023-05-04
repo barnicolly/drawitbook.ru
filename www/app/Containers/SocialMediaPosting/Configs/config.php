@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'SocialMediaPosting'
+    'name' => 'SocialMediaPosting',
 ];

@@ -7,7 +7,6 @@ use App\Ship\Parents\Tests\TestCase;
 
 class RouteHasMiddlewareTest extends TestCase
 {
-
     public function testRouteHasMiddlewares(): void
     {
         $routes = [];

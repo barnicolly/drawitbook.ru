@@ -14,7 +14,8 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class CellAjaxControllerTest extends TestCase
 {
-    use CreateTagTrait, CreatePictureWithRelationsTrait;
+    use CreateTagTrait;
+    use CreatePictureWithRelationsTrait;
 
     public function testGetCellTaggedArtsSliceOk(): void
     {
@@ -61,8 +62,8 @@ class CellAjaxControllerTest extends TestCase
         $page = 2;
         $params = ['page' => $page];
         $url .= '/slice?' . http_build_query($params);
-            [$picture] = $this->createPictureWithFile();
-            $this->createPictureTag($picture, $tag);
+        [$picture] = $this->createPictureWithFile();
+        $this->createPictureTag($picture, $tag);
 
         $response = $this->ajaxGet($url);
 
@@ -81,5 +82,4 @@ class CellAjaxControllerTest extends TestCase
         $response->assertUnprocessable()
             ->assertJsonValidationErrorFor('page');
     }
-
 }

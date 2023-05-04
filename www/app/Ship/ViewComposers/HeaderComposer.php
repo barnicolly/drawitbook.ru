@@ -7,12 +7,8 @@ use Illuminate\View\View;
 
 class HeaderComposer
 {
-
-    private GetCachedMenuTreeAction $getCachedMenuTreeAction;
-
-    public function __construct(GetCachedMenuTreeAction $getCachedMenuTreeAction)
+    public function __construct(private readonly GetCachedMenuTreeAction $getCachedMenuTreeAction)
     {
-        $this->getCachedMenuTreeAction = $getCachedMenuTreeAction;
     }
 
     public function compose(View $view): void

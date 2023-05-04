@@ -2,18 +2,15 @@
 
 namespace App\Containers\Vk\Services\Api;
 
+use Exception;
+
 class WallService
 {
-
-    protected $instance;
-
-    public function __construct(VkApi $api)
+    public function __construct(protected VkApi $instance)
     {
-        //TODO-misha добавить exceptions;
-        $this->instance = $api;
     }
 
-    public function edit(int $postId, array $data)
+    public function edit(int $postId, array $data): void
     {
         $data = array_merge(
             [
@@ -24,7 +21,7 @@ class WallService
         );
         try {
             $response = $this->instance->api->request('wall.edit', $data);
-        } catch (\Exception $e) {
+        } catch (Exception) {
         }
     }
 
@@ -44,21 +41,4 @@ class WallService
         }
         return null;
     }
-
-   /* public function getUploadServer(int $albumId = 0)
-    {
-        $data = [];
-        if ($albumId) {
-            $data['album_id'] = $albumId;
-        }
-        $data = array_merge(
-            $data,
-            [
-                'group_id' => $this->instance->groupId,
-            ]
-        );
-        $response = $this->instance->api->request('photos.getUploadServer', $data);
-        return $response['response']['upload_url'];
-    }*/
-
 }

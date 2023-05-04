@@ -2,6 +2,7 @@
 
 namespace App\Containers\Picture\Http\Requests\Art;
 
+use Illuminate\Validation\Rules\In;
 use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Ship\Parents\Requests\BaseFormRequest;
 use Illuminate\Validation\Rule;
@@ -22,6 +23,9 @@ class RateAjaxRequest extends BaseFormRequest
         $this->merge(['id' => $this->route('id')]);
     }
 
+    /**
+     * @return array{id: string, off: (In[] | string[])}
+     */
     public function rules(): array
     {
         $pictureTable = PictureColumnsEnum::TABlE;
@@ -30,7 +34,7 @@ class RateAjaxRequest extends BaseFormRequest
             'off' => [
                 'required',
                 Rule::in(['true', 'false']),
-            ]
+            ],
         ];
     }
 

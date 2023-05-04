@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\URL;
 
 trait SeoTrait
 {
-
     public function setMeta(
         string $title,
         ?string $description = null,
@@ -87,6 +86,4 @@ trait SeoTrait
         SEOMeta::setRobots($robots);
         return $this;
     }
-
-
 }

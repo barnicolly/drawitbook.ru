@@ -14,24 +14,13 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetTaggedCellPicturesSliceAction extends Action
 {
-
-    private GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask;
-    private GetTagBySeoNameTask $getTagBySeoNameTask;
-    private CreateCellSliceResultsAction $createCellSliceResultsAction;
-
-    public function __construct(
-        GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask,
-        GetTagBySeoNameTask $getTagBySeoNameTask,
-        CreateCellSliceResultsAction $createCellResultsAction
-    ) {
-        $this->getPaginatedCellArtsByTagTask = $getPaginatedCellArtsByTagTask;
-        $this->getTagBySeoNameTask = $getTagBySeoNameTask;
-        $this->createCellSliceResultsAction = $createCellResultsAction;
+    public function __construct(private readonly GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask, private readonly GetTagBySeoNameTask $getTagBySeoNameTask, private readonly CreateCellSliceResultsAction $createCellSliceResultsAction)
+    {
     }
 
     /**
-     * @param string $tag
      * @return array{GetCellTaggedResultDto, PaginationDto}
+     *
      * @throws NotFoundRelativeArts
      * @throws NotFoundTagException
      * @throws UnknownProperties
@@ -47,7 +36,4 @@ class GetTaggedCellPicturesSliceAction extends Action
         $paginator = $this->getPaginatedCellArtsByTagTask->run($tagInfo->id);
         return $this->createCellSliceResultsAction->run($locale, $paginator);
     }
-
 }
-
-

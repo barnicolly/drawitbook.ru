@@ -8,8 +8,10 @@ use Illuminate\Support\Collection;
 
 class PaginatorFactory
 {
-
-    public const DEFAULT_PER_PAGE = 25;
+    /**
+     * @var int
+     */
+    final public const DEFAULT_PER_PAGE = 25;
 
     public static function createFromAnother(LengthAwarePaginator $paginator, Collection $items): LengthAwarePaginator
     {
@@ -24,12 +26,11 @@ class PaginatorFactory
 
     public static function create(
         Collection $items,
-        $perPage = self::DEFAULT_PER_PAGE,
-        $page = null,
-        $options = []
+        ?int $perPage = self::DEFAULT_PER_PAGE,
+        ?int $page = null,
+        ?array $options = []
     ): LengthAwarePaginator {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
-
 }

@@ -2,6 +2,7 @@
 
 namespace App\Containers\Tag\Actions;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsWithCountArtTask;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Route\RouteService;
@@ -9,19 +10,12 @@ use Illuminate\Support\Facades\Cache;
 
 class GetListPopularTagsWithCountArtsAction extends Action
 {
-
-    private RouteService $routeService;
-    private GetPictureTagsWithCountArtTask $getPictureTagsWithCountArtTask;
-
-    public function __construct(RouteService $routeService, GetPictureTagsWithCountArtTask $getPictureTagsWithCountArtTask)
+    public function __construct(private readonly RouteService $routeService, private readonly GetPictureTagsWithCountArtTask $getPictureTagsWithCountArtTask)
     {
-        $this->routeService = $routeService;
-        $this->getPictureTagsWithCountArtTask = $getPictureTagsWithCountArtTask;
     }
 
     /**
-     * @return array
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(): array
     {
@@ -47,14 +41,9 @@ class GetListPopularTagsWithCountArtsAction extends Action
             $results = Cache::remember(
                 $cacheName,
                 config('cache.expiration'),
-                function () use ($limit, $locale) {
-                    return $this->getPictureTagsWithCountArtTask->run($limit, $locale);
-                }
+                fn (): array => $this->getPictureTagsWithCountArtTask->run($limit, $locale)
             );
         }
         return $results;
     }
-
 }
-
-

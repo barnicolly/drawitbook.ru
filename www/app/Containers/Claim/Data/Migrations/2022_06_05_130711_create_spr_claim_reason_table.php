@@ -4,16 +4,13 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
-        Schema::create('spr_claim_reason', function (Blueprint $table) {
+        Schema::create('spr_claim_reason', static function (Blueprint $table): void {
             $table->id();
             $table->string('reason', 50)->nullable(false);
         });
@@ -21,8 +18,6 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {

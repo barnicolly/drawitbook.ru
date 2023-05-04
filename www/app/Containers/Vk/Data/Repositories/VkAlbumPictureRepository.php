@@ -7,7 +7,6 @@ use App\Ship\Parents\Repositories\Repository;
 
 class VkAlbumPictureRepository extends Repository
 {
-
     public function model(): string
     {
         return VkAlbumPictureModel::class;

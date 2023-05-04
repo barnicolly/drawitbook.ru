@@ -5,6 +5,8 @@ namespace App\Containers\User\Models;
 use App\Containers\User\Data\Factories\UserModelFactory;
 use App\Ship\Parents\Models\UserModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Containers\Authorization\Models\Role;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int $id
@@ -15,12 +17,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class User extends UserModel
 {
-
     use HasFactory;
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'name', 'email', 'password',
@@ -29,7 +30,7 @@ class User extends UserModel
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password', 'remember_token',
@@ -38,7 +39,7 @@ class User extends UserModel
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -49,12 +50,15 @@ class User extends UserModel
         return UserModelFactory::new();
     }
 
-    public function roles()
+    /**
+     * @return BelongsToMany<Role>
+     */
+    public function roles(): BelongsToMany
     {
-        return $this->belongsToMany('App\Containers\Authorization\Models\Role', 'user_role', 'user_id', 'role_id');
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
     }
 
-    public function hasAnyRole($roles)
+    public function hasAnyRole(array|string $roles): bool
     {
         if (is_array($roles)) {
             foreach ($roles as $role) {
@@ -62,19 +66,14 @@ class User extends UserModel
                     return true;
                 }
             }
-        } else {
-            if ($this->hasRole($roles)) {
-                return true;
-            }
+        } elseif ($this->hasRole($roles)) {
+            return true;
         }
         return false;
     }
 
-    public function hasRole($role)
+    public function hasRole(string $role): bool
     {
-        if ($this->roles()->where('name', $role)->first()) {
-            return true;
-        }
-        return false;
+        return (bool) $this->roles()->where('name', $role)->first();
     }
 }

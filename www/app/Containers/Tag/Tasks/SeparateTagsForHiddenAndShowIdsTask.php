@@ -8,9 +8,7 @@ use App\Ship\Parents\Tasks\Task;
 
 class SeparateTagsForHiddenAndShowIdsTask extends Task
 {
-
     /**
-     * @param array $artTags
      * @return array{array,array}
      */
     public function run(array $artTags): array
@@ -29,5 +27,3 @@ class SeparateTagsForHiddenAndShowIdsTask extends Task
         return [$shown, $hidden];
     }
 }
-
-

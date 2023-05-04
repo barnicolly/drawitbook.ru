@@ -9,7 +9,7 @@ class TagSeoDto extends Dto
 {
     public LangEnum $locale;
 
-    public ?string $slug;
+    public ?string $slug = null;
 
-    public ?string $name;
+    public ?string $name = null;
 }

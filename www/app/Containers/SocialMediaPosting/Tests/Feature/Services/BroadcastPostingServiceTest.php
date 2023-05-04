@@ -2,6 +2,7 @@
 
 namespace App\Containers\SocialMediaPosting\Tests\Feature\Services;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException;
 use App\Containers\SocialMediaPosting\Models\SocialMediaPostingHistoryModel;
@@ -17,14 +18,14 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class BroadcastPostingServiceTest extends TestCase
 {
-    use CreateSocialMediaPostingHistoryTrait, CreatePictureWithRelationsTrait, CreateTagTrait;
+    use CreateSocialMediaPostingHistoryTrait;
+    use CreatePictureWithRelationsTrait;
+    use CreateTagTrait;
 
     public function testExpectNotFoundPictureIdForPostingException(): void
     {
         $mock = $this->createMock(VkWallPostingStrategy::class);
-        $this->app->bind(VkWallPostingStrategy::class, function () use ($mock) {
-            return $mock;
-        });
+        $this->app->bind(VkWallPostingStrategy::class, static fn (): MockObject&VkWallPostingStrategy => $mock);
 
         $this->expectException(NotFoundPictureIdForPostingException::class);
         $command = app(BroadcastPostingService::class);
@@ -46,7 +47,7 @@ class BroadcastPostingServiceTest extends TestCase
 
         $mock = $this->createMock(VkWallPostingStrategy::class);
         $strategyParams = [];
-        $this->app->bind(VkWallPostingStrategy::class, function ($app, $params) use ($mock, &$strategyParams) {
+        $this->app->bind(VkWallPostingStrategy::class, static function ($app, $params) use ($mock, &$strategyParams): MockObject&VkWallPostingStrategy {
             $strategyParams = $params;
             return $mock;
         });
@@ -62,5 +63,4 @@ class BroadcastPostingServiceTest extends TestCase
         self::assertSame([$tagNotHiddenVk->name], $strategyParams['tags']);
         self::assertSame(formArtFsPath($pictureFile->path), $strategyParams['artPath']);
     }
-
 }

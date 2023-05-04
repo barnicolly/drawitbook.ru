@@ -17,32 +17,13 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class SearchPageAction extends Action
 {
-    private RouteService $routeService;
-    private GetPopularTagsAction $getPopularTagsAction;
-    private SearchPicturesAction $searchPicturesAction;
-    private GetDefaultShareImageTask $getDefaultShareImageTask;
-    private GetInterestingArtsAction $getInterestingArtsAction;
-    private CreateCellResultsAction $createCellResultsAction;
-
-    public function __construct(
-        RouteService $routeService,
-        GetPopularTagsAction $getPopularTagsAction,
-        SearchPicturesAction $searchPicturesAction,
-        GetDefaultShareImageTask $getDefaultShareImageTask,
-        GetInterestingArtsAction $getInterestingArtsAction,
-        CreateCellResultsAction $createCellResultsAction
-    ) {
-        $this->routeService = $routeService;
-        $this->getPopularTagsAction = $getPopularTagsAction;
-        $this->searchPicturesAction = $searchPicturesAction;
-        $this->getDefaultShareImageTask = $getDefaultShareImageTask;
-        $this->getInterestingArtsAction = $getInterestingArtsAction;
-        $this->createCellResultsAction = $createCellResultsAction;
+    public function __construct(private readonly RouteService $routeService, private readonly GetPopularTagsAction $getPopularTagsAction, private readonly SearchPicturesAction $searchPicturesAction, private readonly GetDefaultShareImageTask $getDefaultShareImageTask, private readonly GetInterestingArtsAction $getInterestingArtsAction, private readonly CreateCellResultsAction $createCellResultsAction)
+    {
     }
 
     /**
-     * @param SearchDto $searchDto
      * @return array{array, PageMetaDto}
+     *
      * @throws UnknownProperties
      * @throws NotFoundRelativeArts
      * @throws RepositoryException
@@ -69,16 +50,13 @@ class SearchPageAction extends Action
 
     private function getAlternateLinks(): array
     {
-        $links = [];
-        $links[] = [
+        return [[
             'lang' => LangEnum::RU,
             'href' => $this->routeService->getRouteSearch([], true, LangEnum::RU),
-        ];
-        $links[] = [
+        ], [
             'lang' => LangEnum::EN,
             'href' => $this->routeService->getRouteSearch([], true, LangEnum::EN),
-        ];
-        return $links;
+        ]];
     }
 
     private function formTitleAndDescriptionSearch(): array
@@ -86,7 +64,4 @@ class SearchPageAction extends Action
         $title = __('seo.search.title');
         return [$title];
     }
-
 }
-
-

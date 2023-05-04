@@ -15,15 +15,11 @@ use Spatie\Sitemap\Tags\Url;
 
 class CreateSitemapTask extends Task
 {
-
-    private RouteService $routeService;
-
-    public function __construct(RouteService $routeService)
+    public function __construct(private readonly RouteService $routeService)
     {
-        $this->routeService = $routeService;
     }
 
-    public function run()
+    public function run(): void
     {
         $sitemap = Sitemap::create();
         $locales = config('translator.available_locales');
@@ -67,7 +63,6 @@ class CreateSitemapTask extends Task
                     }
                     $sitemap->add($url);
                 }
-
             }
         }
         $sitemap->writeToFile(public_path('sitemaps/sitemap.xml'));

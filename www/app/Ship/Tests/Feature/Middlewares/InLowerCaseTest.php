@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class InLowerCaseTest extends MiddlewareTestCase
 {
-
     private string $url = '/ru/dummy-test-route';
     private string $correctWord = 'абстрактность';
 
@@ -28,7 +27,7 @@ class InLowerCaseTest extends MiddlewareTestCase
         $this->assertCalledNextMiddleware(new InLowerCase(), $request, true);
     }
 
-    public function provider(): array
+    public static function provider(): array
     {
         return [
             [
@@ -42,8 +41,6 @@ class InLowerCaseTest extends MiddlewareTestCase
 
     /**
      * @dataProvider provider
-     *
-     * @param string $word
      */
     public function testHasRedirect(string $word): void
     {
@@ -55,8 +52,6 @@ class InLowerCaseTest extends MiddlewareTestCase
 
     /**
      * @dataProvider provider
-     *
-     * @param string $word
      */
     public function testNotCallNextCallback(string $word): void
     {

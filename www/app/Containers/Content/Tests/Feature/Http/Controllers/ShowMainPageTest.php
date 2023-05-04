@@ -11,11 +11,8 @@ use App\Ship\Services\Route\RouteService;
  */
 class ShowMainPageTest extends TestCase
 {
-
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testHomePageResponseCode200(string $locale): void
     {
@@ -26,8 +23,6 @@ class ShowMainPageTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testHasAlternate(string $locale): void
     {

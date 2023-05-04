@@ -19,12 +19,7 @@ use Throwable;
 
 class ArtController extends HttpController
 {
-
     /**
-     * @param ArtSetVkPostingRequest $request
-     * @param PictureSetVkPostingFlagTask $task
-     * @return JsonResponse
-     *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\SetVkPostingOnTest
      */
     public function setVkPostingOn(
@@ -41,10 +36,6 @@ class ArtController extends HttpController
     }
 
     /**
-     * @param ArtSetVkPostingRequest $request
-     * @param PictureUnsetVkPostingFlagTask $task
-     * @return JsonResponse
-     *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\SetVkPostingOffTest
      */
     public function setVkPostingOff(
@@ -61,10 +52,6 @@ class ArtController extends HttpController
     }
 
     /**
-     * @param GetSettingsModalRequest $request
-     * @param GetSettingsModalAction $action
-     * @return JsonResponse
-     *
      * @see  \App\Containers\Admin\Tests\Feature\Http\Controllers\GetSettingsModalTest
      */
     public function getSettingsModal(GetSettingsModalRequest $request, GetSettingsModalAction $action): JsonResponse
@@ -80,10 +67,6 @@ class ArtController extends HttpController
     }
 
     /**
-     * @param AttachPictureOnAlbumRequest $request
-     * @param AttachPictureOnAlbumAction $action
-     * @return JsonResponse
-     *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\AttachPictureOnAlbumTest
      */
     public function attachPictureOnAlbum(AttachPictureOnAlbumRequest $request, AttachPictureOnAlbumAction $action): JsonResponse
@@ -98,10 +81,6 @@ class ArtController extends HttpController
     }
 
     /**
-     * @param DetachPictureFromAlbumRequest $request
-     * @param DetachPictureFromAlbumAction $action
-     * @return JsonResponse
-     *
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\AttachPictureOnAlbumTest
      */
     public function detachPictureFromAlbum(DetachPictureFromAlbumRequest $request, DetachPictureFromAlbumAction $action): JsonResponse

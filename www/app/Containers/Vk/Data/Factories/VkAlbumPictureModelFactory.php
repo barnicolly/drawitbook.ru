@@ -7,20 +7,21 @@ use App\Containers\Vk\Enums\VkAlbumPictureColumnsEnum;
 use App\Containers\Vk\Models\VkAlbumModel;
 use App\Containers\Vk\Models\VkAlbumPictureModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 
 class VkAlbumPictureModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
-     * @var string
+     * @var class-string<Model>
      */
     protected $model = VkAlbumPictureModel::class;
 
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array{vk_album_id: Factory<VkAlbumModel>, out_vk_image_id: int, picture_id: Factory<PictureModel>}
      */
     public function definition(): array
     {
@@ -31,4 +32,3 @@ class VkAlbumPictureModelFactory extends Factory
         ];
     }
 }
-

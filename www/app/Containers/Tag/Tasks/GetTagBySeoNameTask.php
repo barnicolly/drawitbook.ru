@@ -8,22 +8,16 @@ use App\Containers\Tag\Data\Dto\TagDto;
 use App\Containers\Tag\Data\Repositories\TagRepository;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
+use Prettus\Repository\Exceptions\RepositoryException;
 
 class GetTagBySeoNameTask extends Task
 {
-
-    protected TagRepository $repository;
-
-    public function __construct(TagRepository $repository)
+    public function __construct(protected TagRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
-     * @param string $tagSeoName
-     * @param string $locale
-     * @return array|null
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(string $tagSeoName, string $locale): ?TagDto
     {
@@ -40,5 +34,3 @@ class GetTagBySeoNameTask extends Task
         return TagDto::fromModel($result, $locale);
     }
 }
-
-

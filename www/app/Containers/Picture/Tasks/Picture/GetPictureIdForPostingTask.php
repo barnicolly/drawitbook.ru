@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class GetPictureIdForPostingTask extends Task
 {
-
     /**
-     * @return int
      * @throws NotFoundPictureIdForPostingException
      */
     public function run(): int
@@ -21,9 +19,9 @@ class GetPictureIdForPostingTask extends Task
         $pictureIds = PictureModel::flagged(FlagsEnum::PICTURE_IN_VK_POSTING)->select([PictureColumnsEnum::tId])->get()->pluck(PictureColumnsEnum::ID)->toArray();
         if (!blank($pictureIds)) {
             $pictureIdsString = implode(',', $pictureIds);
-            //TODO-misha переписать на query;
+            // TODO-misha переписать на query;
             $results = DB::select(
-                DB::raw(
+                (string) DB::raw(
                     "select picture.id,
   IF(lastPostingDate.dayDiff IS NULL,
      IF((select DATEDIFF(NOW(), MAX(social_media_posting_history.created_at)) as dayDiff
@@ -45,7 +43,7 @@ from picture
                DATEDIFF(NOW(), MAX(social_media_posting_history.created_at)) as dayDiff
              from social_media_posting_history
              group by picture_id) as lastPostingDate on picture.id = lastPostingDate.picture_id
-where picture.id in ($pictureIdsString)
+where picture.id in ({$pictureIdsString})
       and (lastPostingDate.dayDiff > 10 or lastPostingDate.dayDiff is null)
 group by picture.id
 order by dayDiff DESC
@@ -59,5 +57,3 @@ limit 1"
         throw new NotFoundPictureIdForPostingException();
     }
 }
-
-

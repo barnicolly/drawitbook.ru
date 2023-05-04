@@ -11,55 +11,40 @@ use Symfony\Component\Finder\Finder;
 
 class ConsoleServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
+    public function register(): void
     {
-        //
-
     }
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
-        //
         $modules = Module::all();
         foreach ($modules as $module) {
             $moduleName = $module->getName();
-            $namespace = "App\Containers\\" . $moduleName;
+            $namespace = 'App\\Containers\\' . $moduleName;
             $this->loadCommands($moduleName, $namespace);
         }
     }
 
-    protected function loadCommands(string $moduleName, string $namespace)
+    protected function loadCommands(string $moduleName, string $namespace): void
     {
         $paths = module_path($moduleName, 'Console');
         $paths = array_unique(Arr::wrap($paths));
 
-        $paths = array_filter($paths, function ($path) {
-            return is_dir($path);
-        });
+        $paths = array_filter($paths, static fn ($path): bool => is_dir($path));
         if (empty($paths)) {
             return;
         }
         foreach ((new Finder)->in($paths)->files() as $command) {
             $relativePath = $command->getRelativePath();
-            $filename = ($relativePath ? $relativePath . '\\': '') . $command->getFilename();
-            $class = $namespace.'\\Console\\'.$filename;
+            $filename = ($relativePath ? $relativePath . '\\' : '') . $command->getFilename();
+            $class = $namespace . '\\Console\\' . $filename;
             $command = str_replace(
                 ['/', '.php'],
                 ['\\', ''],
                 $class
             );
             if (is_subclass_of($command, Command::class)) {
-                Artisan::starting(function ($artisan) use ($command) {
+                Artisan::starting(static function ($artisan) use ($command): void {
                     $artisan->resolve($command);
                 });
             }

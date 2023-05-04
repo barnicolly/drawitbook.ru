@@ -11,7 +11,6 @@ use Throwable;
 
 class TagAjaxController extends HttpController
 {
-
     /**
      * @see \App\Containers\Tag\Tests\Feature\Http\Controllers\TagAjaxControllerTest::testGetListPopularTagsWithCountArtsOk()
      */
@@ -26,9 +25,8 @@ class TagAjaxController extends HttpController
             );
             return JsonResource::make($resultDto)
                 ->response();
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             abort(500);
         }
     }
-
 }

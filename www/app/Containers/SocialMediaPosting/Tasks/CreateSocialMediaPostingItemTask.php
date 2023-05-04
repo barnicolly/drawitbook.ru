@@ -8,18 +8,10 @@ use App\Ship\Parents\Tasks\Task;
 
 class CreateSocialMediaPostingItemTask extends Task
 {
-
-    protected SocialMediaPostingHistoryRepository $repository;
-
-    public function __construct(SocialMediaPostingHistoryRepository $repository)
+    public function __construct(protected SocialMediaPostingHistoryRepository $repository)
     {
-        $this->repository = $repository;
     }
 
-    /**
-     * @param int $artIdForPosting
-     * @return SocialMediaPostingHistoryModel
-     */
     public function run(int $artIdForPosting): SocialMediaPostingHistoryModel
     {
         $historyVkPostingRecord = new SocialMediaPostingHistoryModel();
@@ -28,5 +20,3 @@ class CreateSocialMediaPostingItemTask extends Task
         return $historyVkPostingRecord;
     }
 }
-
-

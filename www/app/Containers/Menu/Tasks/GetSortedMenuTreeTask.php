@@ -7,14 +7,8 @@ use App\Ship\Services\Route\RouteService;
 
 class GetSortedMenuTreeTask extends Task
 {
-
-    private RouteService $routeService;
-    private GetAllMenuTask $getAllMenuTask;
-
-    public function __construct(RouteService $routeService, GetAllMenuTask $getAllMenuTask)
+    public function __construct(private readonly RouteService $routeService, private readonly GetAllMenuTask $getAllMenuTask)
     {
-        $this->routeService = $routeService;
-        $this->getAllMenuTask = $getAllMenuTask;
     }
 
     public function run(string $locale): array
@@ -34,7 +28,7 @@ class GetSortedMenuTreeTask extends Task
                 $result[$columnId] = [];
             }
             $info = [
-                'link' => $slug ? $this->routeService->getRouteArtsCellTagged($slug): '',
+                'link' => $slug ? $this->routeService->getRouteArtsCellTagged($slug) : '',
                 'title' => $title,
                 'id' => $levelId,
             ];
@@ -68,5 +62,3 @@ class GetSortedMenuTreeTask extends Task
         return $result;
     }
 }
-
-

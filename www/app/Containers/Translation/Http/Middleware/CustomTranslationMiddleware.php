@@ -1,14 +1,26 @@
 <?php
+
 namespace App\Containers\Translation\Http\Middleware;
 
 use Closure;
+use Illuminate\Config\Repository as Config;
+use Illuminate\Foundation\Application;
+use Illuminate\View\Factory as ViewFactory;
 use Waavi\Translation\Middleware\TranslationMiddleware;
+use Waavi\Translation\Repositories\LanguageRepository;
+use Waavi\Translation\UriLocalizer;
 
 class CustomTranslationMiddleware extends TranslationMiddleware
 {
+    public UriLocalizer $uriLocalizer;
+    public Config $config;
+    public LanguageRepository $languageRepository;
+    public Application $app;
+    public ViewFactory $viewFactory;
 
     public function handle($request, Closure $next, $segment = 0)
     {
+        $sessionLocale = null;
         // Ignores all non GET requests:
         if ($request->method() !== 'GET') {
             return $next($request);
@@ -23,20 +35,20 @@ class CustomTranslationMiddleware extends TranslationMiddleware
             return $next($request);
         }
 
-        $currentUrl    = $request->getUri();
-        $uriLocale     = $this->uriLocalizer->getLocaleFromUrl($currentUrl, $segment);
+        $currentUrl = $request->getUri();
+        $uriLocale = $this->uriLocalizer->getLocaleFromUrl($currentUrl, $segment);
         $defaultLocale = $this->config->get('app.locale');
 
         // If a locale was set in the url:
         if ($uriLocale) {
-            $currentLanguage     = $this->languageRepository->findByLocale($uriLocale);
+            $currentLanguage = $this->languageRepository->findByLocale($uriLocale);
             $selectableLanguages = $this->languageRepository->allExcept($uriLocale);
-            $altLocalizedUrls    = [];
+            $altLocalizedUrls = [];
             foreach ($selectableLanguages as $lang) {
                 $altLocalizedUrls[] = [
                     'locale' => $lang->locale,
-                    'name'   => $lang->name,
-                    'url'    => $this->uriLocalizer->localize($currentUrl, $lang->locale, $segment),
+                    'name' => $lang->name,
+                    'url' => $this->uriLocalizer->localize($currentUrl, $lang->locale, $segment),
                 ];
             }
 
@@ -56,10 +68,8 @@ class CustomTranslationMiddleware extends TranslationMiddleware
         }
 
         // If no locale was set in the url, check the session locale
-        if ($request->hasSession() && $sessionLocale = $request->session()->get('waavi.translation.locale')) {
-            if ($this->languageRepository->isValidLocale($sessionLocale)) {
-                return redirect()->to($this->uriLocalizer->localize($currentUrl, $sessionLocale, $segment), 301);
-            }
+        if ($request->hasSession() && $sessionLocale = $request->session()->get('waavi.translation.locale') && $this->languageRepository->isValidLocale($sessionLocale)) {
+            return redirect()->to($this->uriLocalizer->localize($currentUrl, $sessionLocale, $segment), 301);
         }
 
         // If no locale was set in the url, check the browser's locale:

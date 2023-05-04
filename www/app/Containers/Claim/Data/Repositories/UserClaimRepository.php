@@ -7,7 +7,6 @@ use App\Ship\Parents\Repositories\Repository;
 
 class UserClaimRepository extends Repository
 {
-
     public function model(): string
     {
         return UserClaimModel::class;

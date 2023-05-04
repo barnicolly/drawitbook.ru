@@ -2,6 +2,7 @@
 
 namespace App\Ship\Parents\Tests\Traits;
 
+use Session;
 use App\Containers\Authorization\Enums\RoleEnum;
 use App\Containers\Authorization\Models\Role;
 use App\Containers\User\Models\User;
@@ -9,28 +10,18 @@ use Illuminate\Testing\TestResponse;
 
 trait RequestsTrait
 {
-
-    /**
-     * Make ajax POST request
-     * @param $uri
-     * @param array $data
-     * @return TestResponse
-     */
-    protected function ajaxPost($uri, array $data = []): TestResponse
+    protected function ajaxPost(string $uri, array $data = []): TestResponse
     {
-        \Session::start();
+        Session::start();
         $data = array_merge($data, [
-            "_token" => csrf_token(),
+            '_token' => csrf_token(),
         ]);
         return $this->post($uri, $data, [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ]);
     }
 
-    /**
-     * Make ajax GET request
-     */
-    protected function ajaxGet($uri): TestResponse
+    protected function ajaxGet(string $uri): TestResponse
     {
         return $this->get(
             $uri,

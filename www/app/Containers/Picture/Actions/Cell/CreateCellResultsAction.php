@@ -10,21 +10,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class CreateCellResultsAction extends Action
 {
-
-    private TranslationService $translationService;
-
-    public function __construct(TranslationService $translationService)
+    public function __construct(private readonly TranslationService $translationService)
     {
-        $this->translationService = $translationService;
     }
 
     /**
-     * @param string $locale
-     * @param LengthAwarePaginator $paginator
-     * @return array
+     * @return array{arts: mixed[], paginationData: PaginationDto, leftArtsText: (string | null)}
      */
     public function run(string $locale, LengthAwarePaginator $paginator): array
     {
+        $viewData = [];
         $paginationData = PaginationDto::createFromPaginator($paginator);
 
         $relativeArts = $paginator->getCollection()->toArray();
@@ -37,7 +32,4 @@ class CreateCellResultsAction extends Action
             : null;
         return $viewData;
     }
-
 }
-
-

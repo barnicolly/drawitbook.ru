@@ -2,6 +2,7 @@
 
 namespace App\Containers\Search\Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Search\Http\Controllers\SearchController;
 use App\Containers\Search\Services\SearchService;
@@ -14,13 +15,11 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class ShowSearchIndexPageTest extends TestCase
 {
-
-    use CreateTagTrait, CreatePictureWithRelationsTrait;
+    use CreateTagTrait;
+    use CreatePictureWithRelationsTrait;
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testSearchOk(string $locale): void
     {
@@ -41,9 +40,7 @@ class ShowSearchIndexPageTest extends TestCase
             ->willReturn($pictureIds);
         $mock->method('setLimit')
             ->willReturnSelf();
-        $this->app->bind(SearchService::class, function () use ($mock) {
-            return $mock;
-        });
+        $this->app->bind(SearchService::class, static fn (): MockObject&SearchService => $mock);
 
         $response = $this->get($url);
 
@@ -71,9 +68,7 @@ class ShowSearchIndexPageTest extends TestCase
             ->willReturn($pictureIds);
         $mock->method('setLimit')
             ->willReturnSelf();
-        $this->app->bind(SearchService::class, function () use ($mock) {
-            return $mock;
-        });
+        $this->app->bind(SearchService::class, static fn (): MockObject&SearchService => $mock);
 
         $response = $this->get($url);
 

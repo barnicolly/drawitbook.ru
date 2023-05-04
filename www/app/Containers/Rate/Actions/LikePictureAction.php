@@ -2,6 +2,7 @@
 
 namespace App\Containers\Rate\Actions;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Rate\Tasks\CreateLikeTask;
 use App\Containers\Rate\Tasks\DeleteLikeByIdTask;
 use App\Containers\Rate\Tasks\GetLikeByPictureIdTask;
@@ -10,32 +11,12 @@ use App\Ship\Parents\Actions\Action;
 
 class LikePictureAction extends Action
 {
-
-    private CreateLikeTask $createLikeTask;
-    private GetLikeByPictureIdTask $getLikeByPictureIdTask;
-    private DeleteLikeByIdTask $deleteLikeByIdTask;
-
-    /**
-     * @param CreateLikeTask $createLikeTask
-     * @param GetLikeByPictureIdTask $getLikeByPictureIdTask
-     * @param DeleteLikeByIdTask $deleteLikeByIdTask
-     */
-    public function __construct(
-        CreateLikeTask $createLikeTask,
-        GetLikeByPictureIdTask $getLikeByPictureIdTask,
-        DeleteLikeByIdTask $deleteLikeByIdTask
-    ) {
-        $this->createLikeTask = $createLikeTask;
-        $this->getLikeByPictureIdTask = $getLikeByPictureIdTask;
-        $this->deleteLikeByIdTask = $deleteLikeByIdTask;
+    public function __construct(private readonly CreateLikeTask $createLikeTask, private readonly GetLikeByPictureIdTask $getLikeByPictureIdTask, private readonly DeleteLikeByIdTask $deleteLikeByIdTask)
+    {
     }
 
     /**
-     * @param int $pictureId
-     * @param bool $turnOn
-     * @param UserDto $userDto
-     * @return void
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(int $pictureId, bool $turnOn, UserDto $userDto): void
     {
@@ -44,13 +25,8 @@ class LikePictureAction extends Action
             if ($turnOn) {
                 $this->createLikeTask->run($pictureId, $userDto);
             }
-        } else {
-            if (!$turnOn) {
-                $this->deleteLikeByIdTask->run($activity->id);
-            }
+        } elseif (!$turnOn) {
+            $this->deleteLikeByIdTask->run($activity->id);
         }
     }
-
 }
-
-

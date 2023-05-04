@@ -5,29 +5,23 @@ namespace App\Containers\Tag\Data\Factories;
 use App\Containers\Tag\Enums\SprTagsColumnsEnum;
 use App\Containers\Tag\Models\SprTagsModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use JetBrains\PhpStorm\ArrayShape;
 
 class SprTagsModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
-     * @var string
+     * @var class-string<Model>
      */
     protected $model = SprTagsModel::class;
 
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array{name: string, name_en: string, seo: string, slug_en: string}
      */
-    #[ArrayShape([
-        SprTagsColumnsEnum::NAME => "string",
-        SprTagsColumnsEnum::NAME_EN => "string",
-        SprTagsColumnsEnum::SEO => "string",
-        SprTagsColumnsEnum::SLUG_EN => "string",
-    ])]
     public function definition(): array
     {
         $name = $this->faker->unique()->text(15);
@@ -40,4 +34,3 @@ class SprTagsModelFactory extends Factory
         ];
     }
 }
-

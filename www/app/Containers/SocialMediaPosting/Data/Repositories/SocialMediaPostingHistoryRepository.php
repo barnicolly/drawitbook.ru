@@ -7,7 +7,6 @@ use App\Ship\Parents\Repositories\Repository;
 
 class SocialMediaPostingHistoryRepository extends Repository
 {
-
     public function model(): string
     {
         return SocialMediaPostingHistoryModel::class;

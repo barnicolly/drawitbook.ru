@@ -2,6 +2,7 @@
 
 namespace App\Containers\Rate\Tasks;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Rate\Data\Criteria\WhereLikesIpCriteria;
 use App\Containers\Rate\Data\Criteria\WhereLikesPictureIdCriteria;
 use App\Containers\Rate\Data\Criteria\WhereLikesUserIdCriteria;
@@ -12,19 +13,12 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetLikeByPictureIdTask extends Task
 {
-
-    protected LikesRepository $repository;
-
-    public function __construct(LikesRepository $repository)
+    public function __construct(protected LikesRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
-     * @param int $pictureId
-     * @param UserDto $user
-     * @return LikesModel|null
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(int $pictureId, UserDto $user): ?LikesModel
     {
@@ -36,5 +30,3 @@ class GetLikeByPictureIdTask extends Task
         return $this->repository->first();
     }
 }
-
-

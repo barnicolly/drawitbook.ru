@@ -2,6 +2,7 @@
 
 namespace App\Containers\Claim\Tasks;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Claim\Data\Criteria\WhereUserClaimIpCriteria;
 use App\Containers\Claim\Data\Criteria\WhereUserClaimPictureIdCriteria;
 use App\Containers\Claim\Data\Criteria\WhereUserClaimReasonIdCriteria;
@@ -13,20 +14,12 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetUserClaimByPictureIdTask extends Task
 {
-
-    protected UserClaimRepository $repository;
-
-    public function __construct(UserClaimRepository $repository)
+    public function __construct(protected UserClaimRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
-     * @param int $pictureId
-     * @param int $reasonId
-     * @param UserDto $user
-     * @return UserClaimModel|null
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(int $pictureId, int $reasonId, UserDto $user): ?UserClaimModel
     {
@@ -39,5 +32,3 @@ class GetUserClaimByPictureIdTask extends Task
         return $this->repository->first();
     }
 }
-
-

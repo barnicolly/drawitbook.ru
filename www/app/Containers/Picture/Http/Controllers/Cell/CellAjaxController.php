@@ -15,12 +15,7 @@ use Throwable;
 
 class CellAjaxController extends AjaxController
 {
-
     /**
-     * @param string $tag
-     * @param CellTaggedArtsSliceAjaxRequest $request
-     * @param GetTaggedCellPicturesSliceAction $action
-     * @return JsonResponse
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellAjaxControllerTest
      */
     public function slice(
@@ -40,5 +35,4 @@ class CellAjaxController extends AjaxController
             abort(500);
         }
     }
-
 }

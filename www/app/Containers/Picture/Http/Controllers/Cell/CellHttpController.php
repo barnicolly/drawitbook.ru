@@ -2,6 +2,8 @@
 
 namespace App\Containers\Picture\Http\Controllers\Cell;
 
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Picture\Actions\Cell\GetCellPicturesIndexAction;
 use App\Containers\Picture\Actions\Cell\GetTaggedCellPicturesAction;
 use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
@@ -16,19 +18,12 @@ use Throwable;
 
 class CellHttpController extends HttpController
 {
-
-    private RouteService $routeService;
-
-    public function __construct(
-        RouteService $routeService,
-    ) {
-        $this->routeService = $routeService;
+    public function __construct(private readonly RouteService $routeService)
+    {
     }
 
     /**
-     * @param GetCellPicturesIndexAction $action
-     * @return Response
-     * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
+     * @throws UnknownProperties
      *
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellHttpControllerIndexTest
      */
@@ -46,11 +41,7 @@ class CellHttpController extends HttpController
     }
 
     /**
-     * @param string $tag
-     * @param GetTaggedCellPicturesAction $action
-     * @param FindRedirectTagSlugByLocaleTask $findRedirectTagSlugByLocaleTask
-     * @return Response|RedirectResponse
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      *
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellHttpControllerTaggedTest
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Cell\CellHttpControllerTaggedTestRu
@@ -81,5 +72,4 @@ class CellHttpController extends HttpController
             throw $e;
         }
     }
-
 }

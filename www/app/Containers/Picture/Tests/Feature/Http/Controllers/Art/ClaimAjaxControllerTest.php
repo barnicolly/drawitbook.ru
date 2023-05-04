@@ -12,12 +12,11 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class ClaimAjaxControllerTest extends TestCase
 {
-    use CreatePictureWithRelationsTrait, CreateClaimTrait;
+    use CreatePictureWithRelationsTrait;
+    use CreateClaimTrait;
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testResponseCode200(string $locale): void
     {
@@ -41,8 +40,6 @@ class ClaimAjaxControllerTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testResponseCodeIfExistSameClaim200(string $locale): void
     {
@@ -66,8 +63,6 @@ class ClaimAjaxControllerTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testNotFoundPicture(string $locale): void
     {
@@ -87,8 +82,6 @@ class ClaimAjaxControllerTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testUndefinedClaimReason(string $locale): void
     {
@@ -104,5 +97,4 @@ class ClaimAjaxControllerTest extends TestCase
         $response->assertUnprocessable()
             ->assertJsonValidationErrorFor('reason');
     }
-
 }

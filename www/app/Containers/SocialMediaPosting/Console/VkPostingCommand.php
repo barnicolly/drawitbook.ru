@@ -2,6 +2,9 @@
 
 namespace App\Containers\SocialMediaPosting\Console;
 
+use App\Containers\Picture\Exceptions\NotFoundPicture;
+use App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException;
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\SocialMediaPosting\Services\BroadcastPostingService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -19,7 +22,7 @@ class VkPostingCommand extends Command
      */
     protected $description = 'Постинг изображения в ВК';
 
-    private BroadcastPostingService $service;
+    private readonly BroadcastPostingService $service;
 
     /**
      * @return void
@@ -31,10 +34,9 @@ class VkPostingCommand extends Command
     }
 
     /**
-     * @return void
-     * @throws \App\Containers\Picture\Exceptions\NotFoundPicture
-     * @throws \App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws NotFoundPicture
+     * @throws NotFoundPictureIdForPostingException
+     * @throws RepositoryException
      */
     public function handle(): void
     {

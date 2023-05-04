@@ -2,15 +2,13 @@
 
 namespace App\Containers\Vk\Services\Api;
 
+use Exception;
+use GuzzleHttp\Client;
+
 class PhotoService
 {
-
-    protected $instance;
-
-    public function __construct(VkApi $api)
+    public function __construct(protected VkApi $instance)
     {
-        //TODO-misha добавить exceptions;
-        $this->instance = $api;
     }
 
     public function saveOnAlbum(string $filePath, int $albumId): ?int
@@ -27,9 +25,8 @@ class PhotoService
         $response = $this->instance->api->request('photos.save', $data);
         if ($response) {
             return $response['response'][0]['id'];
-        } else {
-            throw new \Exception();
         }
+        throw new Exception();
     }
 
     public function timeout(): void
@@ -60,7 +57,7 @@ class PhotoService
         try {
             $response = $this->instance->api->request('photos.get', $data);
             return $response['response']['items'][0]['id'];
-        } catch (\Exception $e) {
+        } catch (Exception) {
             return null;
         }
     }
@@ -80,8 +77,9 @@ class PhotoService
             if ($response) {
                 return $response['response'][0];
             }
-        } catch (\Exception $e) {
-            return [];
+            return null;
+        } catch (Exception) {
+            return null;
         }
     }
 
@@ -94,7 +92,7 @@ class PhotoService
         $response = $this->instance->api->request('photos.delete', $data);
     }
 
-    private function getWallUploadServer()
+    private function getWallUploadServer(): string
     {
         $response = $this->instance->api->request(
             'photos.getWallUploadServer',
@@ -103,23 +101,18 @@ class PhotoService
         return $response['response']['upload_url'];
     }
 
-    private function getAlbumUploadServer(int $albumId)
+    private function getAlbumUploadServer(int $albumId): string
     {
         $data = [];
         $data['album_id'] = $albumId;
-        $data = array_merge(
-            $data,
-            [
-                'group_id' => $this->instance->groupId,
-            ]
-        );
+        $data = [...$data, 'group_id' => $this->instance->groupId];
         $response = $this->instance->api->request('photos.getUploadServer', $data);
         return $response['response']['upload_url'];
     }
 
-    private function upload(string $uploadUrl, string $filePath)
+    private function upload(string $uploadUrl, string $filePath): array
     {
-        $client = new \GuzzleHttp\Client();
+        $client = new Client();
         $res = $client->post(
             $uploadUrl,
             [
@@ -131,7 +124,6 @@ class PhotoService
                 ],
             ]
         );
-        return json_decode($res->getBody()->getContents(), true);
+        return json_decode($res->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
     }
-
 }

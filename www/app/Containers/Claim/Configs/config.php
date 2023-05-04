@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'Claim'
+    'name' => 'Claim',
 ];

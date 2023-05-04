@@ -4,23 +4,22 @@ namespace App\Containers\Authorization\Data\Factories;
 
 use App\Containers\Authorization\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use JetBrains\PhpStorm\ArrayShape;
+use Illuminate\Database\Eloquent\Model;
 
 class RoleModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
-     * @var string
+     * @var class-string<Model>
      */
     protected $model = Role::class;
 
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array{name: string, description: string}
      */
-    #[ArrayShape(['name' => "string", 'description' => "string"])]
     public function definition(): array
     {
         return [
@@ -29,4 +28,3 @@ class RoleModelFactory extends Factory
         ];
     }
 }
-

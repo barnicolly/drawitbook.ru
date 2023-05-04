@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 trait CreateClaimTrait
 {
-
     public function createUserClaim(
         PictureModel $picture,
         SprClaimReasonModel $reason,
@@ -21,7 +20,7 @@ trait CreateClaimTrait
         $data = array_merge($data, [
             UserClaimColumnsEnum::PICTURE_ID => $picture->id,
             UserClaimColumnsEnum::REASON_ID => $reason->id,
-            UserClaimColumnsEnum::IP => DB::raw("inet_aton($ip)"),
+            UserClaimColumnsEnum::IP => DB::raw("inet_aton({$ip})"),
         ]);
         return UserClaimModel::factory()->create($data);
     }

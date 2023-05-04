@@ -2,6 +2,7 @@
 
 namespace App\Containers\Picture\Tasks\PictureTag;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Picture\Data\Criteria\PictureTag\JoinTagCriteria;
 use App\Containers\Picture\Data\Criteria\PictureTag\WhereNotTagIdsCriteria;
 use App\Containers\Picture\Data\Criteria\PictureTag\WherePictureIdCriteria;
@@ -12,20 +13,12 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
 {
-
-    protected PictureTagRepository $repository;
-    private GetHiddenVkTagsIdsTask $getHiddenVkTagsIdsTask;
-
-    public function __construct(PictureTagRepository $repository, GetHiddenVkTagsIdsTask $getHiddenVkTagsIdsTask)
+    public function __construct(protected PictureTagRepository $repository, private readonly GetHiddenVkTagsIdsTask $getHiddenVkTagsIdsTask)
     {
-        $this->repository = $repository;
-        $this->getHiddenVkTagsIdsTask = $getHiddenVkTagsIdsTask;
     }
 
     /**
-     * @param int $artId
-     * @return array
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(int $artId): array
     {
@@ -38,5 +31,3 @@ class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
             ->toArray();
     }
 }
-
-

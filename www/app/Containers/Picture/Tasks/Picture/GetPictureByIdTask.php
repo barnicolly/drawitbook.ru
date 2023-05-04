@@ -10,28 +10,19 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class GetPictureByIdTask extends Task
 {
-
-    protected PictureRepository $repository;
-
-    public function __construct(PictureRepository $repository)
+    public function __construct(protected PictureRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
-     * @param int $id
-     * @return array|null
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
      * @throws NotFoundPicture
      */
     public function run(int $id): ?PictureModel
     {
         try {
             return $this->repository->find($id);
-        } catch (ModelNotFoundException $exception) {
+        } catch (ModelNotFoundException) {
             throw new NotFoundPicture();
         }
     }
 }
-
-

@@ -7,7 +7,6 @@ use App\Ship\Parents\Repositories\Repository;
 
 class LikesRepository extends Repository
 {
-
     public function model(): string
     {
         return LikesModel::class;

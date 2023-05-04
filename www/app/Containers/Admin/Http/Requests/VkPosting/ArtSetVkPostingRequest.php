@@ -15,6 +15,9 @@ class ArtSetVkPostingRequest extends BaseFormRequest
         return true;
     }
 
+    /**
+     * @return array{id: string}
+     */
     public function rules(): array
     {
         $pictureTable = PictureColumnsEnum::TABlE;
@@ -23,6 +26,9 @@ class ArtSetVkPostingRequest extends BaseFormRequest
         ];
     }
 
+    /**
+     * @return array{id: string}
+     */
     public function filters(): array
     {
         return [

@@ -7,15 +7,11 @@ use Illuminate\Database\Migrations\Migration;
 return new class extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
-        if (Schema::hasColumn('picture', 'description'))
-        {
-            Schema::table('picture', function (Blueprint $table)
-            {
+        if (Schema::hasColumn('picture', 'description')) {
+            Schema::table('picture', static function (Blueprint $table): void {
                 $table->dropColumn('description');
             });
         }
@@ -23,8 +19,6 @@ return new class extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {

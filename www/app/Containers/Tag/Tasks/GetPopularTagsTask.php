@@ -2,6 +2,7 @@
 
 namespace App\Containers\Tag\Tasks;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Tag\Data\Criteria\WhereTagSlugEnIsNotNullCriteria;
 use App\Containers\Tag\Data\Repositories\TagRepository;
 use App\Containers\Tag\Models\SprTagsModel;
@@ -12,18 +13,14 @@ use Illuminate\Support\Collection;
 
 class GetPopularTagsTask extends Task
 {
-
-    protected TagRepository $repository;
-
-    public function __construct(TagRepository $repository)
+    public function __construct(protected TagRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
-     * @param string $locale
      * @return Collection<SprTagsModel>
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     *
+     * @throws RepositoryException
      */
     public function run(string $locale): Collection
     {
@@ -33,5 +30,3 @@ class GetPopularTagsTask extends Task
         return $this->repository->flagged(FlagsEnum::TAG_IS_POPULAR)->get();
     }
 }
-
-

@@ -11,7 +11,6 @@ use App\Containers\Tag\Models\SprTagsModel;
 
 trait CreatePictureWithRelationsTrait
 {
-
     /**
      * @return array{PictureModel, PictureExtensionsModel}
      */

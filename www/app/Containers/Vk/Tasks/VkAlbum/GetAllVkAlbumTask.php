@@ -8,17 +8,10 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetAllVkAlbumTask extends Task
 {
-
-    protected VkAlbumRepository $repository;
-
-    public function __construct(VkAlbumRepository $repository)
+    public function __construct(protected VkAlbumRepository $repository)
     {
-        $this->repository = $repository;
     }
 
-    /**
-     * @return array
-     */
     public function run(): array
     {
         $result = $this->repository->all()
@@ -26,5 +19,3 @@ class GetAllVkAlbumTask extends Task
         return VkAlbumModel::mapToArray($result);
     }
 }
-
-

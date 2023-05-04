@@ -7,7 +7,6 @@ use App\Ship\Parents\Repositories\Repository;
 
 class CategoryRepository extends Repository
 {
-
     public function model(): string
     {
         return CategoryModel::class;

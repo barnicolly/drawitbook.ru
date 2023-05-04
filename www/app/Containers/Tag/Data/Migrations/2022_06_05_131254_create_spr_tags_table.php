@@ -7,12 +7,10 @@ use Illuminate\Database\Migrations\Migration;
 return new class extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
-        Schema::create('spr_tags', function (Blueprint $table) {
+        Schema::create('spr_tags', static function (Blueprint $table): void {
             $table->id();
             $table->string('name', 255)->index()->nullable(false);
             $table->string('name_en', 255)->nullable(true);
@@ -26,8 +24,6 @@ return new class extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {

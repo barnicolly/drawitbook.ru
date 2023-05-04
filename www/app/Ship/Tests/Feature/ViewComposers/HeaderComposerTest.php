@@ -2,6 +2,8 @@
 
 namespace App\Ship\Tests\Feature\ViewComposers;
 
+use Illuminate\Testing\TestView;
+use Illuminate\View\View;
 use App\Containers\Menu\Enums\MenuLevelsColumnsEnum;
 use App\Containers\Menu\Tests\Traits\CreateMenuLevelTrait;
 use App\Containers\Tag\Models\SprTagsModel;
@@ -13,14 +15,13 @@ use Illuminate\Support\Facades\Cache;
 
 class HeaderComposerTest extends TestCase
 {
-
-    use CreateMenuLevelTrait, CreateTagTrait;
+    use CreateMenuLevelTrait;
+    use CreateTagTrait;
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     * @param string $locale
-     * @see HeaderComposer
      *
+     * @see HeaderComposer
      */
     public function testViewHasKeys(string $locale): void
     {
@@ -54,12 +55,12 @@ class HeaderComposerTest extends TestCase
 
         $view = $this->view('layouts.public.header.index');
 
-        /** @var \Illuminate\View\View $innerView */
+        /** @var View $innerView */
         $innerView = $this->getProtectedProperty($view, 'view');
         $innerViewData = $innerView->getData();
 
         $view->assertViewHas('groups');
 
-        $tagCollections->each(fn(SprTagsModel $tag) => $view->assertSee($tag->name, false));
+        $tagCollections->each(static fn (SprTagsModel $tag): TestView => $view->assertSee($tag->name, false));
     }
 }

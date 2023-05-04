@@ -8,5 +8,5 @@ class UserDto extends Dto
 {
     public string $ip;
 
-    public ?int $id;
+    public ?int $id = null;
 }

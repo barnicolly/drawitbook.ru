@@ -9,34 +9,28 @@ use Tests\TestCase as BaseTestCase;
 
 abstract class MiddlewareTestCase extends BaseTestCase
 {
-
     /**
-     * @param string $url
-     * @param array $middlewares
      * @return void
      */
     protected function createTestRouteWithMiddlewares(string $url, array $middlewares): void
     {
-        Route::get($url, function () {
-            return 'Ok';
-        }
+        Route::get(
+            $url,
+            static fn (): string => 'Ok'
         )->middleware($middlewares);
-        Route::post($url, function () {
-            return 'Ok';
-        }
+        Route::post(
+            $url,
+            static fn (): string => 'Ok'
         )->middleware($middlewares);
     }
 
     /**
-     * @param MiddlewareContract $middleware
-     * @param Request $request
-     * @param bool $expectedCalledStatus
      * @return void
      */
     protected function assertCalledNextMiddleware(MiddlewareContract $middleware, Request $request, bool $expectedCalledStatus): void
     {
         $called = false;
-        $next = function (Request $request) use (&$called) {
+        $next = static function (Request $request) use (&$called): void {
             $called = true;
         };
         $middleware->handle($request, $next);

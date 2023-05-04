@@ -10,33 +10,31 @@ use Illuminate\Support\Facades\Cache;
 
 class GetDefaultShareImageTask extends Task
 {
-    private GetArtByIdWithFilesAction $getArtByIdWithFilesAction;
+    /**
+     * @var string
+     */
+    private const CACHE_NAME = 'seo.default_share_image';
 
-    public function __construct(GetArtByIdWithFilesAction $getArtByIdWithFilesAction)
+    public function __construct(private readonly GetArtByIdWithFilesAction $getArtByIdWithFilesAction)
     {
-        $this->getArtByIdWithFilesAction = $getArtByIdWithFilesAction;
     }
 
-    /**
-     * @return ShareImageDto|null
-     */
     public function run(): ?ShareImageDto
     {
-        $cacheName = 'seo.default_share_image';
-        $result = Cache::get($cacheName);
+        $result = Cache::get(self::CACHE_NAME);
         if (!$result) {
             $result = Cache::remember(
-                $cacheName,
+                self::CACHE_NAME,
                 config('cache.expiration'),
-                function () {
+                function (): ?ShareImageDto {
                     try {
                         $picture = $this->getArtByIdWithFilesAction->run(205);
                         return new ShareImageDto(
                             relativePath: $picture->images->primary->relative_path,
-                            width:        $picture->images->primary->width,
-                            height:       $picture->images->primary->height
+                            width: $picture->images->primary->width,
+                            height: $picture->images->primary->height
                         );
-                    } catch (NotFoundPicture $e) {
+                    } catch (NotFoundPicture) {
                         return null;
                     }
                 }
@@ -45,5 +43,3 @@ class GetDefaultShareImageTask extends Task
         return $result;
     }
 }
-
-

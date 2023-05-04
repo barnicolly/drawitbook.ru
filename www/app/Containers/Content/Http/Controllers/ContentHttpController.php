@@ -2,17 +2,15 @@
 
 namespace App\Containers\Content\Http\Controllers;
 
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 use App\Containers\Content\Actions\MainPageAction;
 use App\Ship\Parents\Controllers\HttpController;
 use Illuminate\Http\Response;
 
 class ContentHttpController extends HttpController
 {
-
     /**
-     * @param MainPageAction $action
-     * @return Response
-     * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
+     * @throws UnknownProperties
      *
      * @see \App\Containers\Content\Tests\Feature\Http\Controllers\ShowMainPageTest
      */
@@ -23,5 +21,4 @@ class ContentHttpController extends HttpController
             ->setShareImage($pageMetaDto->shareImage);
         return response()->view('content::mainPage.index', $viewData);
     }
-
 }

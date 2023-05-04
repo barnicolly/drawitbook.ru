@@ -19,6 +19,7 @@ use Spatie\ModelFlags\Models\Flag;
  * @property int $id
  *
  * @method static PictureModelFactory factory
+ *
  * @property PictureExtensionsModel[] | Collection extensions
  * @property SprTagsModel[] | Collection tags
  * @property Flag[] | Collection flags

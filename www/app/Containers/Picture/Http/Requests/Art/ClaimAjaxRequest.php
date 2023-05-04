@@ -22,6 +22,9 @@ class ClaimAjaxRequest extends BaseFormRequest
         $this->merge(['id' => $this->route('id')]);
     }
 
+    /**
+     * @return array{id: string, reason: string[]}
+     */
     public function rules(): array
     {
         $pictureTable = PictureColumnsEnum::TABlE;
@@ -39,6 +42,4 @@ class ClaimAjaxRequest extends BaseFormRequest
     {
         return [];
     }
-
-
 }

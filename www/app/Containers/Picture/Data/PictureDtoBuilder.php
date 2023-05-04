@@ -15,28 +15,23 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class PictureDtoBuilder extends Task
 {
-    private PictureModel $art;
+    private ?string $alt = null;
 
-    private ?string $alt;
+    private ?PictureFilesDto $images = null;
 
-    private ?PictureFilesDto $images;
+    private ?array $flags = null;
 
-    private ?array $flags;
+    private ?array $tags = null;
 
-    private ?array $tags;
-
-    public function __construct(PictureModel $art)
+    public function __construct(private readonly PictureModel $art)
     {
-        $this->art = $art;
-        $this->images = null;
-        $this->alt = null;
-        $this->flags = null;
-        $this->tags = null;
     }
 
     /**
      * @param Collection<PictureExtensionsModel>|null $files
+     *
      * @return $this
+     *
      * @throws UnknownProperties
      */
     public function setFiles(?Collection $files): self
@@ -56,10 +51,6 @@ class PictureDtoBuilder extends Task
         return $this;
     }
 
-    /**
-     * @param Collection $flags
-     * @return PictureDtoBuilder
-     */
     public function setFlags(Collection $flags): self
     {
         $this->flags = $this->formFlags($flags);
@@ -79,12 +70,11 @@ class PictureDtoBuilder extends Task
 
     /**
      * @param Collection<SprTagsModel> $artTags
-     * @return PictureDtoBuilder
      */
     public function setTags(Collection $artTags): self
     {
         $this->tags = $artTags
-            ->map(fn (SprTagsModel $tag) => TagDto::fromModel($tag))
+            ->map(static fn (SprTagsModel $tag): TagDto => TagDto::fromModel($tag))
             ->toArray();
         $this->alt = $this->setArtAltForDto($this->tags);
         return $this;
@@ -92,7 +82,6 @@ class PictureDtoBuilder extends Task
 
     /**
      * @param array<TagDto> $tags
-     * @return string
      */
     private function setArtAltForDto(array $tags): string
     {
@@ -100,23 +89,16 @@ class PictureDtoBuilder extends Task
         if (!empty($tags)) {
             $tags = collect($tags);
             $localizedTags = $tags
-                ->map(fn(TagDto $dto) => $dto->name)
+                ->map(static fn (TagDto $dto): string => $dto->name)
                 ->toArray();
-            $result .= " ➣ " . implode(' ➣ ', $localizedTags);
+            $result .= ' ➣ ' . implode(' ➣ ', $localizedTags);
         }
         return $result;
     }
 
-    /**
-     * @param Collection $flags
-     * @return array
-     */
     private function formFlags(Collection $flags): array
     {
-//        todo-misha вынести имя колонки флага;
+        //        todo-misha вынести имя колонки флага;
         return $flags->pluck('name')->toArray();
     }
-
 }
-
-

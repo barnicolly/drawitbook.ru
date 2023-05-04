@@ -7,7 +7,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class PaginationDto extends Dto
 {
-
     public int $page;
 
     public bool $hasMore;

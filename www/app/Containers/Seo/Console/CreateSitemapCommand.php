@@ -21,22 +21,7 @@ class CreateSitemapCommand extends Command
      */
     protected $description = 'Generate the sitemap';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
+    public function handle(): void
     {
         app(CreateSitemapTask::class)->run();
     }

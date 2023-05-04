@@ -9,20 +9,15 @@ use Illuminate\Support\Collection;
 
 class FormPicturesDtoTask extends Task
 {
-
     public function run(Collection $arts): array
     {
         return $arts
-            ->map(function (PictureModel $picture) {
-                return (new PictureDtoBuilder($picture))
-                    ->setFiles($picture->extensions)
-                    ->setFlags($picture->flags)
-                    ->setTags($picture->tags)
-                    ->build()
-                    ->toArray();
-            })
+            ->map(static fn (PictureModel $picture): array => (new PictureDtoBuilder($picture))
+                ->setFiles($picture->extensions)
+                ->setFlags($picture->flags)
+                ->setTags($picture->tags)
+                ->build()
+                ->toArray())
             ->toArray();
     }
 }
-
-

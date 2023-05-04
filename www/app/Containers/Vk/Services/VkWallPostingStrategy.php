@@ -2,6 +2,7 @@
 
 namespace App\Containers\Vk\Services;
 
+use Exception;
 use App\Containers\SocialMediaPosting\Contracts\SocialMediaPostingContract;
 use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Services\Api\VkApi;
@@ -10,22 +11,17 @@ use App\Containers\Vk\Tasks\FormHashTagsTask;
 
 class VkWallPostingStrategy implements SocialMediaPostingContract
 {
-    private array $tags;
-    private string $artPath;
+    private readonly VkApi $apiInstance;
 
-    private VkApi $apiInstance;
-
-    private PhotoService $photoService;
-    private WallService $wallService;
+    private readonly PhotoService $photoService;
+    private readonly WallService $wallService;
 
     private string $url = 'https://drawitbook.com/ru';
 
-    private FormHashTagsTask $formHashTagsTask;
+    private readonly FormHashTagsTask $formHashTagsTask;
 
-    public function __construct(array $tags, string $artPath)
+    public function __construct(private readonly array $tags, private readonly string $artPath)
     {
-        $this->tags = $tags;
-        $this->artPath = $artPath;
         $apiInstance = (new VkApi());
         $this->apiInstance = $apiInstance;
         $this->photoService = (new PhotoService($apiInstance));
@@ -44,7 +40,7 @@ class VkWallPostingStrategy implements SocialMediaPostingContract
         $uploadedPhoto = $this->photoService->saveWallPhoto($this->artPath);
         $postId = $this->createPost($uploadedPhoto['owner_id'], $uploadedPhoto['id'], $hashTags);
         if (empty($postId)) {
-            throw new \Exception();
+            throw new Exception();
         }
         $lastWallPhotoId = $this->photoService->getLastOnWall();
         if ($lastWallPhotoId) {
@@ -80,4 +76,3 @@ class VkWallPostingStrategy implements SocialMediaPostingContract
         return 'photo-' . $this->apiInstance->groupId . '_' . $photoId;
     }
 }
-

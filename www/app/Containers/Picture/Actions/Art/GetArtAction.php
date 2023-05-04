@@ -15,30 +15,11 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetArtAction extends Action
 {
-
-    private GetPopularTagsAction $getPopularTagsAction;
-    private GetRelativeArtsAction $getRelativeArtsAction;
-    private SeoService $seoService;
-    private RouteService $routeService;
-    private GetArtByIdAction $getArtByIdAction;
-
-    public function __construct(
-        GetPopularTagsAction $getPopularTagsAction,
-        GetRelativeArtsAction $getRelativeArtsAction,
-        SeoService $seoService,
-        RouteService $routeService,
-        GetArtByIdAction $getArtByIdAction,
-    ) {
-        $this->getPopularTagsAction = $getPopularTagsAction;
-        $this->getRelativeArtsAction = $getRelativeArtsAction;
-        $this->seoService = $seoService;
-        $this->routeService = $routeService;
-        $this->getArtByIdAction = $getArtByIdAction;
+    public function __construct(private readonly GetPopularTagsAction $getPopularTagsAction, private readonly GetRelativeArtsAction $getRelativeArtsAction, private readonly SeoService $seoService, private readonly RouteService $routeService, private readonly GetArtByIdAction $getArtByIdAction)
+    {
     }
 
     /**
-     * @param int $artId
-     * @return array
      * @throws NotFoundPicture
      * @throws RepositoryException
      * @throws UnknownProperties
@@ -57,31 +38,25 @@ class GetArtAction extends Action
         $image = $art['images']['primary'];
         $shareImage = new ShareImageDto(
             relativePath: getArtsFolder() . $image['path'],
-            width:        $image['width'],
-            height:       $image['height']
+            width: $image['width'],
+            height: $image['height']
         );
         $pageMetaDto = new PageMetaDto(
-            title:       $title,
+            title: $title,
             description: $description,
-            shareImage:  $shareImage
+            shareImage: $shareImage
         );
         return [$viewData, $pageMetaDto];
     }
 
     private function getAlternateLinks(int $id): array
     {
-        $links = [];
-        $links[] = [
+        return [[
             'lang' => LangEnum::RU,
             'href' => $this->routeService->getRouteArt($id, true, LangEnum::RU),
-        ];
-        $links[] = [
+        ], [
             'lang' => LangEnum::EN,
             'href' => $this->routeService->getRouteArt($id, true, LangEnum::EN),
-        ];
-        return $links;
+        ]];
     }
-
 }
-
-

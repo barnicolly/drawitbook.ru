@@ -2,6 +2,7 @@
 
 namespace App\Containers\Admin\Actions;
 
+use Exception;
 use App\Containers\Picture\Actions\Art\GetArtByIdWithFilesAction;
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsNamesWithoutHiddenVkByPictureIdTask;
 use App\Containers\Vk\Services\Api\PhotoService;
@@ -12,35 +13,12 @@ use App\Ship\Parents\Actions\Action;
 
 class AttachPictureOnAlbumAction extends Action
 {
-    private PhotoService $apiPhotoService;
-    private GetVkAlbumByIdTask $getVkAlbumByIdTask;
-    private CreateVkAlbumPictureTask $createVkAlbumPictureTask;
-    private GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask;
-    private GetArtByIdWithFilesAction $getArtByIdWithFilesAction;
-    private FormHashTagsTask $formHashTagsTask;
-
-    public function __construct(
-        PhotoService $apiPhotoService,
-        GetVkAlbumByIdTask $getVkAlbumByIdTask,
-        CreateVkAlbumPictureTask $createVkAlbumPictureTask,
-        GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask,
-        GetArtByIdWithFilesAction $getArtByIdWithFilesAction,
-        FormHashTagsTask $formHashTagsTask
-    ) {
-        $this->apiPhotoService = $apiPhotoService;
-        $this->getVkAlbumByIdTask = $getVkAlbumByIdTask;
-        $this->createVkAlbumPictureTask = $createVkAlbumPictureTask;
-        $this->getPictureTagsNamesWithoutHiddenVkByPictureIdTask = $getPictureTagsNamesWithoutHiddenVkByPictureIdTask;
-        $this->getArtByIdWithFilesAction = $getArtByIdWithFilesAction;
-        $this->formHashTagsTask = $formHashTagsTask;
+    public function __construct(private readonly PhotoService $apiPhotoService, private readonly GetVkAlbumByIdTask $getVkAlbumByIdTask, private readonly CreateVkAlbumPictureTask $createVkAlbumPictureTask, private readonly GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask, private readonly GetArtByIdWithFilesAction $getArtByIdWithFilesAction, private readonly FormHashTagsTask $formHashTagsTask)
+    {
     }
 
     /**
-     * @param int $artId
-     * @param int $vkAlbumId
-     * @return void
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function run(int $artId, int $vkAlbumId): void
     {
@@ -55,17 +33,10 @@ class AttachPictureOnAlbumAction extends Action
     private function postPhotoInAlbum(int $albumId, ?string $albumShareLink, string $path, array $tags): ?int
     {
         $photoId = $this->apiPhotoService->saveOnAlbum($path, $albumId);
-        if ($albumShareLink) {
-            $url = $albumShareLink;
-        } else {
-            $url = 'https://drawitbook.com/ru';
-        }
+        $url = $albumShareLink ?: 'https://drawitbook.com/ru';
         $hashTags = $this->formHashTagsTask->run($tags);
         $this->apiPhotoService->timeout();
-        $this->apiPhotoService->edit($photoId, ['caption' => $hashTags . "\n\n" . ' Больше рисунков ► ' . $url], true);
+        $this->apiPhotoService->edit($photoId, ['caption' => $hashTags . "\n\n" . ' Больше рисунков ► ' . $url]);
         return $photoId;
     }
-
 }
-
-

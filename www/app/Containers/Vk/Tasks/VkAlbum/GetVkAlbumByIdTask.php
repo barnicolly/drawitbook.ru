@@ -10,27 +10,19 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class GetVkAlbumByIdTask extends Task
 {
-
-    protected VkAlbumRepository $repository;
-
-    public function __construct(VkAlbumRepository $repository)
+    public function __construct(protected VkAlbumRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
-     * @param int $id
-     * @return VkAlbumModel
      * @throws NotFoundVkAlbumException
      */
     public function run(int $id): VkAlbumModel
     {
         try {
             return $this->repository->find($id);
-        } catch (ModelNotFoundException $exception) {
+        } catch (ModelNotFoundException) {
             throw new NotFoundVkAlbumException();
         }
     }
 }
-
-

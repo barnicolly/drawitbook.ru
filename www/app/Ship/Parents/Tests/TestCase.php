@@ -40,7 +40,7 @@ abstract class TestCase extends BaseTestCase
         Cache::clear();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         if ($this->useTransactionsForTruncateTables) {
             DB::rollBack();
@@ -70,12 +70,11 @@ abstract class TestCase extends BaseTestCase
         app(DatabaseSeeder::class)->call(TranslatorLanguagesSeeder::class);
     }
 
-    final protected function getProtectedProperty($object, string $property)
+    final protected function getProtectedProperty(object $object, string $property): mixed
     {
         $reflection = new ReflectionClass($object);
         $reflectionProperty = $reflection->getProperty($property);
         $reflectionProperty->setAccessible(true);
         return $reflectionProperty->getValue($object);
     }
-
 }

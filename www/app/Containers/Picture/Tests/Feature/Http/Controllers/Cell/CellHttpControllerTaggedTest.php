@@ -18,14 +18,11 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class CellHttpControllerTaggedTest extends TestCase
 {
-
     use CreatePictureWithRelationsTrait;
     use CreateTagTrait;
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testCellCategoryOk(string $locale): void
     {
@@ -44,18 +41,16 @@ class CellHttpControllerTaggedTest extends TestCase
 
         $response->assertOk();
         /** @var PictureExtensionsModel $firstExtension */
-        $firstExtension = $pictures->first()->extensions()->first();
+        $firstExtension = $pictures->first()?->extensions()->first();
         $path = asset(getArtsFolder() . $firstExtension->path);
         $response->assertSee(
-            "<meta property=\"og:image\" content=\"$path\">",
+            "<meta property=\"og:image\" content=\"{$path}\">",
             false
         );
     }
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testCellCategoryNotFound(string $locale): void
     {
@@ -70,8 +65,6 @@ class CellHttpControllerTaggedTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testHasRedirects(string $locale): void
     {
@@ -90,8 +83,6 @@ class CellHttpControllerTaggedTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testHasRedirectsIfUndefinedLang(string $locale): void
     {
@@ -113,8 +104,6 @@ class CellHttpControllerTaggedTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testHasAlternativeLink(string $locale): void
     {
@@ -134,7 +123,7 @@ class CellHttpControllerTaggedTest extends TestCase
             $alternativeLang
         );
         $response->assertSee(
-            "<link rel=\"alternate\" href=\"$alternativeUrl\" hreflang=\"{$alternativeLang}\">",
+            "<link rel=\"alternate\" href=\"{$alternativeUrl}\" hreflang=\"{$alternativeLang}\">",
             false
         );
     }
@@ -164,9 +153,9 @@ class CellHttpControllerTaggedTest extends TestCase
         $url = $this->routeService->getRouteArtsCellTagged($tag->slug_en);
         $response = $this->get($url);
 
-        $response->assertSee("<title>Pixel arts «{$tag->name_en}» ☆ $countPictures arts</title>", false);
+        $response->assertSee("<title>Pixel arts «{$tag->name_en}» ☆ {$countPictures} arts</title>", false);
         $response->assertSee(
-            "<meta name=\"description\" content=\"Pixel arts ✎ {$tag->name_en} ➣ $countPictures arts ➣ Black/white and colored schemes of pixel arts from light and simple to complex.\">",
+            "<meta name=\"description\" content=\"Pixel arts ✎ {$tag->name_en} ➣ {$countPictures} arts ➣ Black/white and colored schemes of pixel arts from light and simple to complex.\">",
             false
         );
     }

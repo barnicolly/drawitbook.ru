@@ -18,13 +18,15 @@ class ConsoleKernel extends LaravelConsoleKernel
      * Define the application's command schedule.
      *
      * Пример linux: crontab -e; * * * * * php /var/www/deployer/data/repo/drawitbook.com/current/www/artisan schedule:run >/dev/null 2>&1
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     *
+     * @param Schedule $schedule
+     *
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-//        $schedule->command('sitemap:generate')
-//            ->weeklyOn(1, '8:00');
+        //        $schedule->command('sitemap:generate')
+        //            ->weeklyOn(1, '8:00');
 
         $schedule->command('vk:posting')
             ->hourlyAt(2)
@@ -38,7 +40,7 @@ class ConsoleKernel extends LaravelConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require app_path('Ship/Commands/Routes.php');
     }

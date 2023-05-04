@@ -14,8 +14,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $spr_tag_id
  * @property string $custom_name_ru
  * @property string $custom_name_en
- * @property int $show_ru
- * @property int $show_en
  *
  * @method static CategoryModelFactory factory
  */

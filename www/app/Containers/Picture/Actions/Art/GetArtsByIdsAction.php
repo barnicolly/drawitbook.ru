@@ -8,28 +8,14 @@ use App\Ship\Parents\Actions\Action;
 
 class GetArtsByIdsAction extends Action
 {
-
-    private GetPicturesByIdsTask $getPicturesByIdsTask;
-    private FormPicturesDtoTask $formPicturesDtoTask;
-
-    public function __construct(GetPicturesByIdsTask $getPicturesByIdsTask, FormPicturesDtoTask $formPicturesDtoTask)
+    public function __construct(private readonly GetPicturesByIdsTask $getPicturesByIdsTask, private readonly FormPicturesDtoTask $formPicturesDtoTask)
     {
-        $this->getPicturesByIdsTask = $getPicturesByIdsTask;
-        $this->formPicturesDtoTask = $formPicturesDtoTask;
     }
 
-    /**
-     * @param array $ids
-     * @param bool $withHiddenTags
-     * @return array
-     */
     public function run(array $ids, bool $withHiddenTags = false): array
     {
         $arts = $this->getPicturesByIdsTask->run($ids, $withHiddenTags);
-//        todo-misha заменить на коллекцию;
+        //        todo-misha заменить на коллекцию;
         return $this->formPicturesDtoTask->run($arts);
     }
-
 }
-
-

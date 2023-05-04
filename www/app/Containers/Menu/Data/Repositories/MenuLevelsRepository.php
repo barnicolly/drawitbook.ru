@@ -7,7 +7,6 @@ use App\Ship\Parents\Repositories\Repository;
 
 class MenuLevelsRepository extends Repository
 {
-
     public function model(): string
     {
         return MenuLevelsModel::class;

@@ -11,12 +11,7 @@ use Throwable;
 
 class RateAjaxController extends HttpController
 {
-
     /**
-     * @param RateAjaxRequest $request
-     * @param SetLikePictureAction $action
-     * @return JsonResponse
-     *
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\RateAjaxControllerLikeTest
      */
     public function like(RateAjaxRequest $request, SetLikePictureAction $action): JsonResponse
@@ -30,5 +25,4 @@ class RateAjaxController extends HttpController
         }
         return response()->json();
     }
-
 }

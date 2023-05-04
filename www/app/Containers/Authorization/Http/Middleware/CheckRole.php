@@ -1,5 +1,8 @@
 <?php
+
 namespace App\Containers\Authorization\Http\Middleware;
+
+use Illuminate\Http\Request;
 use Closure;
 
 class CheckRole
@@ -7,20 +10,20 @@ class CheckRole
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
         if ($request->user() === null) {
-            return response("Unauthorized", 401);
+            return response('Unauthorized', 401);
         }
         $actions = $request->route()->getAction();
-        $roles = isset($actions['roles']) ? $actions['roles'] : null;
+        $roles = $actions['roles'] ?? null;
         if ($request->user()->hasAnyRole($roles) || !$roles) {
             return $next($request);
         }
-        return response("Insufficient permissions", 403);
+        return response('Insufficient permissions', 403);
     }
 }

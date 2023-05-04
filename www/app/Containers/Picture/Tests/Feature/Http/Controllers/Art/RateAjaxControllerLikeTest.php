@@ -12,12 +12,11 @@ use App\Ship\Parents\Tests\TestCase;
  */
 class RateAjaxControllerLikeTest extends TestCase
 {
-    use CreatePictureWithRelationsTrait, CreateLikesTrait;
+    use CreatePictureWithRelationsTrait;
+    use CreateLikesTrait;
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testLikeWithoutExistLikeRecordResponseOk(string $locale): void
     {
@@ -39,8 +38,6 @@ class RateAjaxControllerLikeTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testLikeNotExistPictureOk(string $locale): void
     {
@@ -58,8 +55,6 @@ class RateAjaxControllerLikeTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testOffLikeWithExistLikeRecord(string $locale): void
     {
@@ -79,8 +74,6 @@ class RateAjaxControllerLikeTest extends TestCase
 
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages
-     *
-     * @param string $locale
      */
     public function testUndefinedOffStatus(string $locale): void
     {
@@ -96,5 +89,4 @@ class RateAjaxControllerLikeTest extends TestCase
         $response->assertUnprocessable()
             ->assertJsonValidationErrorFor('off');
     }
-
 }

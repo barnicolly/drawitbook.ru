@@ -5,23 +5,22 @@ namespace App\Containers\Claim\Data\Factories;
 use App\Containers\Claim\Enums\SprClaimReasonColumnsEnum;
 use App\Containers\Claim\Models\SprClaimReasonModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use JetBrains\PhpStorm\ArrayShape;
+use Illuminate\Database\Eloquent\Model;
 
 class SprClaimReasonModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
-     * @var string
+     * @var class-string<Model>
      */
     protected $model = SprClaimReasonModel::class;
 
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array{reason: string}
      */
-    #[ArrayShape([SprClaimReasonColumnsEnum::REASON => "string"])]
     public function definition(): array
     {
         return [
@@ -29,4 +28,3 @@ class SprClaimReasonModelFactory extends Factory
         ];
     }
 }
-

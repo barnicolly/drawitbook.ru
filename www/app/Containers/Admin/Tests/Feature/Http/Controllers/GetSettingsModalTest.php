@@ -67,5 +67,4 @@ class GetSettingsModalTest extends TestCase
 
         $response->assertForbidden();
     }
-
 }

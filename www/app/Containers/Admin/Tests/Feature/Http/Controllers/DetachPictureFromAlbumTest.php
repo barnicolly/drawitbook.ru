@@ -2,6 +2,7 @@
 
 namespace App\Containers\Admin\Tests\Feature\Http\Controllers;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Admin\Http\Controllers\ArtController;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Vk\Enums\VkAlbumPictureColumnsEnum;
@@ -17,15 +18,14 @@ use Illuminate\Support\Collection;
  */
 class DetachPictureFromAlbumTest extends TestCase
 {
-    use CreatePictureWithRelationsTrait, CreateVkAlbumTrait;
+    use CreatePictureWithRelationsTrait;
+    use CreateVkAlbumTrait;
 
     protected function setUp(): void
     {
         parent::setUp();
         $mock = $this->createMock(VkApi::class);
-        $this->app->bind(VkApi::class, function () use ($mock) {
-            return $mock;
-        });
+        $this->app->bind(VkApi::class, static fn (): MockObject&VkApi => $mock);
     }
 
     private function formUrl(int $pictureId): string
@@ -43,9 +43,7 @@ class DetachPictureFromAlbumTest extends TestCase
 
         $mock = $this->createMock(PhotoService::class);
         $mock->method('delete');
-        $this->app->bind(PhotoService::class, function () use ($mock) {
-            return $mock;
-        });
+        $this->app->bind(PhotoService::class, static fn (): MockObject&PhotoService => $mock);
 
         /** @var VkAlbumPictureModel $vkAlbumPictureForDelete */
         $vkAlbumPictureForDelete = $vkAlbumPictures->shift();
@@ -118,5 +116,4 @@ class DetachPictureFromAlbumTest extends TestCase
 
         $response->assertForbidden();
     }
-
 }

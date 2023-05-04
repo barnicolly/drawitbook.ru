@@ -2,6 +2,7 @@
 
 namespace App\Containers\Picture\Tasks\PictureTag;
 
+use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Picture\Data\Criteria\PictureTag\JoinTagCriteria;
 use App\Containers\Picture\Data\Criteria\PictureTag\WhereNotTagIdsCriteria;
 use App\Containers\Picture\Data\Repositories\PictureTagRepository;
@@ -16,21 +17,12 @@ use Illuminate\Support\Facades\DB;
 
 class GetPictureTagsWithCountArtTask extends Task
 {
-
-    protected PictureTagRepository $repository;
-    private GetHiddenTagsIdsTask $getHiddenTagsIdsTask;
-
-    public function __construct(PictureTagRepository $repository, GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
+    public function __construct(protected PictureTagRepository $repository, private readonly GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
     {
-        $this->repository = $repository;
-        $this->getHiddenTagsIdsTask = $getHiddenTagsIdsTask;
     }
 
     /**
-     * @param int $limit
-     * @param string $locale
-     * @return array
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function run(int $limit, string $locale): array
     {
@@ -48,16 +40,12 @@ class GetPictureTagsWithCountArtTask extends Task
         if ($locale === LangEnum::EN) {
             $this->repository->pushCriteria(new WhereTagSlugEnIsNotNullCriteria());
         }
-        $this->repository->scopeQuery(function ($model) {
-            return $model
-                ->groupBy(SprTagsColumnsEnum::tId)
-                ->orderBy('count', 'desc');
-        });
+        $this->repository->scopeQuery(static fn ($model) => $model
+            ->groupBy(SprTagsColumnsEnum::tId)
+            ->orderBy('count', 'desc'));
         return $this->repository->pushCriteria(new WhereNotTagIdsCriteria($tagsHiddenIds))
             ->pushCriteria(new JoinTagCriteria())
             ->take($limit)
             ->get($columns->toArray())->toArray();
     }
 }
-
-

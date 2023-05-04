@@ -4,16 +4,13 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
-        Schema::create('menu_levels', function (Blueprint $table) {
+        Schema::create('menu_levels', static function (Blueprint $table): void {
             $table->id();
             $table->integer('spr_tag_id')->index()->nullable(true);
             $table->integer('parent_level_id')->index()->nullable(true);
@@ -27,8 +24,6 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {
