@@ -4,7 +4,6 @@ namespace App\Containers\Picture\Tasks\Picture;
 
 use App\Containers\Picture\Data\Repositories\PictureRepository;
 use App\Containers\Picture\Enums\PictureColumnsEnum;
-use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
 use App\Containers\Tag\Enums\TagsColumnsEnum;
 use App\Containers\Tag\Tasks\GetHiddenTagsIdsTask;
 use App\Containers\Translation\Enums\LangEnum;
