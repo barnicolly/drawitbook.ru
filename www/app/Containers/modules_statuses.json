@@ -14,5 +14,6 @@
     "Authentication": true,
     "Menu": true,
     "SocialMediaPosting": true,
-    "Category": true
+    "Category": true,
+    "Image": true
 }

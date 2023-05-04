@@ -1,0 +1,13 @@
+{
+    "name": "Image",
+    "alias": "image",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Containers\\Image\\Providers\\ImageServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

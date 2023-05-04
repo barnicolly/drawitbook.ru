@@ -2,16 +2,17 @@
 
 namespace App\Containers\Picture\Models;
 
+use App\Containers\Image\Enums\ImageEntitiesColumnsEnum;
+use App\Containers\Image\Models\ImagesModel;
 use App\Containers\Picture\Data\Factories\PictureModelFactory;
 use App\Containers\Picture\Enums\PictureColumnsEnum;
-use App\Containers\Picture\Enums\PictureExtensionsColumnsEnum;
 use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
 use App\Containers\Tag\Models\SprTagsModel;
 use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Spatie\ModelFlags\Models\Concerns\HasFlags;
 use Spatie\ModelFlags\Models\Flag;
 
@@ -31,12 +32,14 @@ class PictureModel extends CoreModel
 
     protected $table = PictureColumnsEnum::TABlE;
 
-    public function extensions(): HasMany
+    public function extensions(): MorphToMany
     {
-        return $this->hasMany(
-            PictureExtensionsModel::class,
-            PictureExtensionsColumnsEnum::PICTURE_ID,
-            PictureColumnsEnum::ID
+        return $this->morphToMany(
+            ImagesModel::class,
+            'entity',
+            ImageEntitiesColumnsEnum::TABlE,
+            null,
+            ImageEntitiesColumnsEnum::IMAGE_ID
         );
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Containers\Picture\Data\Dto;
 
-use App\Containers\Picture\Models\PictureExtensionsModel;
+use App\Containers\Image\Models\ImagesModel;
 use App\Ship\Parents\Dto\Dto;
 
 class PictureFileDto extends Dto
@@ -19,7 +19,7 @@ class PictureFileDto extends Dto
 
     public string $fs_path;
 
-    public static function fromModel(PictureExtensionsModel $file): self
+    public static function fromModel(ImagesModel $file): self
     {
         return new self(
             path: $file->path,
