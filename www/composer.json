@@ -39,7 +39,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "wikimedia/composer-merge-plugin": true,
-            "phpro/grumphp": true
+            "phpro/grumphp": true,
+            "phpro/grumphp-shim": true
         }
     },
     "extra": {
