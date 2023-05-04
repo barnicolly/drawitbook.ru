@@ -39,7 +39,7 @@ class GetAllMenuTask extends Task
                     }
                 }
             )
-            ->leftJoin(TagsColumnsEnum::TABlE, TagsColumnsEnum::tId, '=', MenuLevelsColumnsEnum::tSPR_TAG_ID)
+            ->leftJoin(TagsColumnsEnum::TABlE, TagsColumnsEnum::tID, '=', MenuLevelsColumnsEnum::tSPR_TAG_ID)
             ->orderBy(MenuLevelsColumnsEnum::tPARENT_LEVEL_ID, 'asc')
             ->getQuery()
             ->get()

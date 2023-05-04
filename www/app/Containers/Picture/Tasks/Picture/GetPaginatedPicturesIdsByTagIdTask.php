@@ -19,7 +19,7 @@ class GetPaginatedPicturesIdsByTagIdTask extends Task
     {
         return $this->repository
             ->whereHas('tags', static function (BuilderContract $q) use ($tagId): void {
-                $q->where(TagsColumnsEnum::tId, $tagId);
+                $q->where(TagsColumnsEnum::tID, $tagId);
             })
             ->paginate($perPage, [PictureColumnsEnum::ID]);
     }

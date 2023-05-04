@@ -79,9 +79,9 @@ class CreateSitemapTask extends Task
         ];
         $result = $query
             ->select($select)
-            ->join(PictureTagsColumnsEnum::TABlE, PictureTagsColumnsEnum::tTAG_ID, '=', TagsColumnsEnum::tId)
+            ->join(PictureTagsColumnsEnum::TABlE, PictureTagsColumnsEnum::tTAG_ID, '=', TagsColumnsEnum::tID)
             ->join(PictureColumnsEnum::TABlE, PictureColumnsEnum::tId, '=', PictureTagsColumnsEnum::tPICTURE_ID)
-            ->groupBy(TagsColumnsEnum::tId)
+            ->groupBy(TagsColumnsEnum::tID)
             ->getQuery()
             ->get()
             ->toArray();

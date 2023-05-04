@@ -33,7 +33,7 @@ class GetPicturesByIdsTask extends Task
                     if (!$withHiddenTags) {
                         $tagsHiddenIds = $this->getHiddenTagsIdsTask->run();
                         if ($tagsHiddenIds) {
-                            $q->whereNotIn(PictureTagsColumnsEnum::tTAG_ID, $tagsHiddenIds);
+                            $q->whereNotIn(TagsColumnsEnum::tID, $tagsHiddenIds);
                         }
                     }
                 },

@@ -5,9 +5,9 @@ namespace App\Containers\Picture\Tests\Traits;
 use App\Containers\Image\Enums\ImageEntitiesColumnsEnum;
 use App\Containers\Image\Models\ImageEntitiesModel;
 use App\Containers\Image\Models\ImagesModel;
-use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
 use App\Containers\Picture\Models\PictureModel;
-use App\Containers\Picture\Models\PictureTagsModel;
+use App\Containers\Tag\Enums\TagEntitiesColumnsEnum;
+use App\Containers\Tag\Models\TagEntitiesModel;
 use App\Containers\Tag\Models\TagsModel;
 
 trait CreatePictureWithRelationsTrait
@@ -38,12 +38,13 @@ trait CreatePictureWithRelationsTrait
         return $imageEntity->image;
     }
 
-    public function createPictureTag(PictureModel $picture, TagsModel $tag): PictureTagsModel
+    public function createPictureTag(PictureModel $picture, TagsModel $tag): TagEntitiesModel
     {
-        return PictureTagsModel::factory()->create(
+        return TagEntitiesModel::factory()->create(
             [
-                PictureTagsColumnsEnum::PICTURE_ID => $picture->id,
-                PictureTagsColumnsEnum::TAG_ID => $tag->id,
+                TagEntitiesColumnsEnum::ENTITY_TYPE => $picture->getMorphClass(),
+                TagEntitiesColumnsEnum::ENTITY_ID => $picture->id,
+                TagEntitiesColumnsEnum::TAG_ID => $tag->id,
             ]
         );
     }

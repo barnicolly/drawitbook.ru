@@ -41,7 +41,7 @@ class GetPictureTagsWithCountArtTask extends Task
             $this->repository->pushCriteria(new WhereTagSlugEnIsNotNullCriteria());
         }
         $this->repository->scopeQuery(static fn ($model) => $model
-            ->groupBy(TagsColumnsEnum::tId)
+            ->groupBy(TagsColumnsEnum::tID)
             ->orderBy('count', 'desc'));
         return $this->repository->pushCriteria(new WhereNotTagIdsCriteria($tagsHiddenIds))
             ->pushCriteria(new JoinTagCriteria())

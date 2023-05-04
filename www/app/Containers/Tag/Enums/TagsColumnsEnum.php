@@ -35,7 +35,7 @@ final class TagsColumnsEnum extends Enum
     /**
      * @var string
      */
-    public const tId = self::TABlE . '.' . self::ID;
+    public const tID = self::TABlE . '.' . self::ID;
     /**
      * @var string
      */

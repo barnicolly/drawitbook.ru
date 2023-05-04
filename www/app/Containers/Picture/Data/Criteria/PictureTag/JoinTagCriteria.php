@@ -18,6 +18,6 @@ class JoinTagCriteria extends Criteria
      */
     public function apply($model, PrettusRepositoryInterface $repository): Builder
     {
-        return $model->join(TagsColumnsEnum::TABlE, TagsColumnsEnum::tId, '=', PictureTagsColumnsEnum::tTAG_ID);
+        return $model->join(TagsColumnsEnum::TABlE, TagsColumnsEnum::tID, '=', PictureTagsColumnsEnum::tTAG_ID);
     }
 }

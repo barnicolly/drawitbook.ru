@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('spr_tags', static function (Blueprint $table): void {
-            $table->id();
+            $table->integer('id')->autoIncrement();
             $table->string('name', 255)->index()->nullable(false);
             $table->string('name_en', 255)->nullable(true);
             $table->tinyInteger('hidden')->nullable(false)->default(0);

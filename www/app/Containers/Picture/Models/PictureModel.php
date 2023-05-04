@@ -6,7 +6,7 @@ use App\Containers\Image\Enums\ImageEntitiesColumnsEnum;
 use App\Containers\Image\Models\ImagesModel;
 use App\Containers\Picture\Data\Factories\PictureModelFactory;
 use App\Containers\Picture\Enums\PictureColumnsEnum;
-use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
+use App\Containers\Tag\Enums\TagEntitiesColumnsEnum;
 use App\Containers\Tag\Models\TagsModel;
 use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Database\Eloquent\Collection;
@@ -45,11 +45,12 @@ class PictureModel extends CoreModel
 
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(
+        return $this->morphToMany(
             TagsModel::class,
-            PictureTagsColumnsEnum::TABlE,
-            PictureTagsColumnsEnum::PICTURE_ID,
-            PictureTagsColumnsEnum::TAG_ID,
+            'entity',
+            TagEntitiesColumnsEnum::TABlE,
+            null,
+            TagEntitiesColumnsEnum::TAG_ID
         );
     }
 

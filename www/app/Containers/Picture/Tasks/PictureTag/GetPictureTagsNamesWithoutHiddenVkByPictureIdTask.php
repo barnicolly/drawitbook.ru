@@ -2,6 +2,9 @@
 
 namespace App\Containers\Picture\Tasks\PictureTag;
 
+use App\Containers\Picture\Enums\PictureColumnsEnum;
+use App\Containers\Tag\Models\TagsModel;
+use Illuminate\Contracts\Database\Query\Builder as BuilderContract;
 use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Picture\Data\Criteria\PictureTag\JoinTagCriteria;
 use App\Containers\Picture\Data\Criteria\PictureTag\WhereNotTagIdsCriteria;
@@ -13,20 +16,26 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
 {
-    public function __construct(protected PictureTagRepository $repository, private readonly GetHiddenVkTagsIdsTask $getHiddenVkTagsIdsTask)
-    {
+    public function __construct(
+        private readonly GetHiddenVkTagsIdsTask $getHiddenVkTagsIdsTask
+    ) {
     }
 
-    /**
-     * @throws RepositoryException
-     */
     public function run(int $artId): array
     {
+//        todo-misha переписать;
         $hiddenVkTagIds = $this->getHiddenVkTagsIdsTask->run();
-        $this->repository->pushCriteria(new WherePictureIdCriteria($artId))
-            ->pushCriteria(new WhereNotTagIdsCriteria($hiddenVkTagIds))
-            ->pushCriteria(new JoinTagCriteria());
-        return $this->repository->get([TagsColumnsEnum::tNAME])
+
+        return TagsModel
+            ::with(
+                [
+                    'pictures' => function (BuilderContract $q) use ($artId): void {
+                        $q->where(PictureColumnsEnum::tId, '=', $artId);
+                    },
+                ]
+            )
+            ->whereNotIn(TagsColumnsEnum::tID, $hiddenVkTagIds)
+            ->get([TagsColumnsEnum::tID, TagsColumnsEnum::tNAME])
             ->pluck(TagsColumnsEnum::NAME)
             ->toArray();
     }

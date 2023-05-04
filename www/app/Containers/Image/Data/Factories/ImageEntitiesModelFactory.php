@@ -2,6 +2,7 @@
 
 namespace App\Containers\Image\Data\Factories;
 
+use App\Containers\Image\Enums\ImageEntitiesColumnsEnum;
 use App\Containers\Image\Models\ImageEntitiesModel;
 use App\Containers\Image\Models\ImagesModel;
 use App\Containers\Picture\Models\PictureModel;
@@ -28,9 +29,9 @@ class ImageEntitiesModelFactory extends Factory
     public function definition(): array
     {
         return [
-            'image_id' => ImagesModel::factory(),
-            'entity_id' => PictureModel::factory(),
-            'entity_type' => array_search(PictureModel::class, Relation::$morphMap, true),
+            ImageEntitiesColumnsEnum::IMAGE_ID => ImagesModel::factory(),
+            ImageEntitiesColumnsEnum::ENTITY_ID => PictureModel::factory(),
+            ImageEntitiesColumnsEnum::ENTITY_TYPE => array_search(PictureModel::class, Relation::$morphMap, true),
         ];
     }
 }
