@@ -7,7 +7,6 @@ use App\Containers\Category\Enums\CategoryColumnsEnum;
 use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-
 /**
  * @property int $id
  * @property int $parent_id

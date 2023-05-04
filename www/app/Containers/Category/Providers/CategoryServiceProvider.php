@@ -4,7 +4,6 @@ namespace App\Containers\Category\Providers;
 
 use Config;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
 class CategoryServiceProvider extends ServiceProvider
 {
@@ -50,7 +49,8 @@ class CategoryServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Configs/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Configs/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Configs/config.php'),
+            $this->moduleNameLower
         );
     }
 
@@ -64,7 +64,7 @@ class CategoryServiceProvider extends ServiceProvider
         $sourcePath = module_path($this->moduleName, 'Http/Views');
 
         $this->publishes([
-            $sourcePath => $viewPath
+            $sourcePath => $viewPath,
         ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);

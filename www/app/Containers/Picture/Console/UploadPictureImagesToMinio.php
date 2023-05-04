@@ -34,12 +34,11 @@ class UploadPictureImagesToMinio extends Command
                     $pathInfo['basename']
                 );
                 if ($file === false) {
-                    echo "F";
+                    echo 'F';
                 } else {
                     echo '.';
                 }
             }
-
         }
     }
 }
