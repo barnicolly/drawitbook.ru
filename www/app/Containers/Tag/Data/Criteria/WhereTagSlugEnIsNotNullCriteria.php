@@ -2,7 +2,7 @@
 
 namespace App\Containers\Tag\Data\Criteria;
 
-use App\Containers\Tag\Enums\SprTagsColumnsEnum;
+use App\Containers\Tag\Enums\TagsColumnsEnum;
 use App\Ship\Parents\Criterias\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
@@ -17,6 +17,6 @@ class WhereTagSlugEnIsNotNullCriteria extends Criteria
      */
     public function apply($model, PrettusRepositoryInterface $repository): Builder
     {
-        return $model->whereNotNull(SprTagsColumnsEnum::tSLUG_EN);
+        return $model->whereNotNull(TagsColumnsEnum::tSLUG_EN);
     }
 }

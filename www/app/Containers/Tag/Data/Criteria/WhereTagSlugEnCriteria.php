@@ -2,7 +2,7 @@
 
 namespace App\Containers\Tag\Data\Criteria;
 
-use App\Containers\Tag\Enums\SprTagsColumnsEnum;
+use App\Containers\Tag\Enums\TagsColumnsEnum;
 use App\Ship\Parents\Criterias\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
@@ -21,6 +21,6 @@ class WhereTagSlugEnCriteria extends Criteria
      */
     public function apply($model, PrettusRepositoryInterface $repository): Builder
     {
-        return $model->where(SprTagsColumnsEnum::tSLUG_EN, '=', $this->tagSeoName);
+        return $model->where(TagsColumnsEnum::tSLUG_EN, '=', $this->tagSeoName);
     }
 }

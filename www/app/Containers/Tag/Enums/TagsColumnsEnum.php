@@ -4,12 +4,12 @@ namespace App\Containers\Tag\Enums;
 
 use BenSampo\Enum\Enum;
 
-final class SprTagsColumnsEnum extends Enum
+final class TagsColumnsEnum extends Enum
 {
     /**
      * @var string
      */
-    public const TABlE = 'spr_tags';
+    public const TABlE = 'tags';
 
     /**
      * @var string

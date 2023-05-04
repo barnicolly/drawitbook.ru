@@ -6,7 +6,7 @@ use Illuminate\Testing\TestView;
 use Illuminate\View\View;
 use App\Containers\Menu\Enums\MenuLevelsColumnsEnum;
 use App\Containers\Menu\Tests\Traits\CreateMenuLevelTrait;
-use App\Containers\Tag\Models\SprTagsModel;
+use App\Containers\Tag\Models\TagsModel;
 use App\Containers\Tag\Tests\Traits\CreateTagTrait;
 use App\Ship\Parents\Tests\TestCase;
 use App\Ship\ViewComposers\HeaderComposer;
@@ -61,6 +61,6 @@ class HeaderComposerTest extends TestCase
 
         $view->assertViewHas('groups');
 
-        $tagCollections->each(static fn (SprTagsModel $tag): TestView => $view->assertSee($tag->name, false));
+        $tagCollections->each(static fn (TagsModel $tag): TestView => $view->assertSee($tag->name, false));
     }
 }

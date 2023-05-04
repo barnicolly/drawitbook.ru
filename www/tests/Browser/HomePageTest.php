@@ -2,7 +2,7 @@
 
 namespace Tests\Browser;
 
-use App\Containers\Tag\Models\SprTagsModel;
+use App\Containers\Tag\Models\TagsModel;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\MasonryComponent;
 use Tests\Browser\Pages\HomePage;
@@ -22,8 +22,8 @@ class HomePageTest extends DuskTestCase
 
     public function testHomePageClickTagCloud(): void
     {
-        /** @var SprTagsModel $tag */
-        $tag = SprTagsModel::where('seo', 'medved')->first();
+        /** @var TagsModel $tag */
+        $tag = TagsModel::where('seo', 'medved')->first();
 
         $this->browse(function (Browser $browser) use ($tag) {
             $browser->visit(new HomePage());

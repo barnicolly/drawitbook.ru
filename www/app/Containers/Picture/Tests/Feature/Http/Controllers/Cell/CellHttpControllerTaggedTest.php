@@ -6,7 +6,7 @@ use App\Containers\Image\Models\ImagesModel;
 use App\Containers\Picture\Http\Controllers\Cell\CellHttpController;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Tag\Data\Dto\TagDto;
-use App\Containers\Tag\Enums\SprTagsColumnsEnum;
+use App\Containers\Tag\Enums\TagsColumnsEnum;
 use App\Containers\Tag\Tests\Traits\CreateTagTrait;
 use App\Containers\Translation\Enums\LangEnum;
 use Illuminate\Support\Collection;
@@ -133,7 +133,7 @@ class CellHttpControllerTaggedTest extends TestCase
     public function testEnNoRedirect(): void
     {
         $this->app->setLocale(LangEnum::EN);
-        $tag = $this->createTag([SprTagsColumnsEnum::SLUG_EN => null, SprTagsColumnsEnum::NAME_EN => null]);
+        $tag = $this->createTag([TagsColumnsEnum::SLUG_EN => null, TagsColumnsEnum::NAME_EN => null]);
 
         $response = $this->get($this->routeService->getRouteArtsCellTagged($tag->seo));
 
@@ -165,7 +165,7 @@ class CellHttpControllerTaggedTest extends TestCase
     public function testRuHasNotAlternate(): void
     {
         $this->app->setLocale(LangEnum::RU);
-        $tag = $this->createTag([SprTagsColumnsEnum::SLUG_EN => null, SprTagsColumnsEnum::NAME_EN => null]);
+        $tag = $this->createTag([TagsColumnsEnum::SLUG_EN => null, TagsColumnsEnum::NAME_EN => null]);
         [$picture] = $this->createPictureWithFile();
         $this->createPictureTag($picture, $tag);
 

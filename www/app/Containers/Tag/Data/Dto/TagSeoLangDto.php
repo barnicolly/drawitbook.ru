@@ -2,7 +2,7 @@
 
 namespace App\Containers\Tag\Data\Dto;
 
-use App\Containers\Tag\Models\SprTagsModel;
+use App\Containers\Tag\Models\TagsModel;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Dto\Dto;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
@@ -16,7 +16,7 @@ class TagSeoLangDto extends Dto
     /**
      * @throws UnknownProperties
      */
-    public static function fromModel(SprTagsModel $model, string $locale): self
+    public static function fromModel(TagsModel $model, string $locale): self
     {
         $alternativeLang = $locale === LangEnum::RU ? LangEnum::EN : LangEnum::RU;
 

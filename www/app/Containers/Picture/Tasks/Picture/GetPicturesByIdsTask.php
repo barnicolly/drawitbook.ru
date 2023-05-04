@@ -5,7 +5,7 @@ namespace App\Containers\Picture\Tasks\Picture;
 use App\Containers\Picture\Data\Repositories\PictureRepository;
 use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
-use App\Containers\Tag\Enums\SprTagsColumnsEnum;
+use App\Containers\Tag\Enums\TagsColumnsEnum;
 use App\Containers\Tag\Tasks\GetHiddenTagsIdsTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
@@ -28,7 +28,7 @@ class GetPicturesByIdsTask extends Task
                 'tags.flags',
                 'tags' => function (BuilderContract $q) use ($locale, $withHiddenTags): void {
                     if ($locale === LangEnum::EN) {
-                        $q->whereNotNull(SprTagsColumnsEnum::SLUG_EN);
+                        $q->whereNotNull(TagsColumnsEnum::SLUG_EN);
                     }
                     if (!$withHiddenTags) {
                         $tagsHiddenIds = $this->getHiddenTagsIdsTask->run();

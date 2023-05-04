@@ -2,12 +2,12 @@
 
 namespace App\Containers\Tag\Tests\Traits;
 
-use App\Containers\Tag\Models\SprTagsModel;
+use App\Containers\Tag\Models\TagsModel;
 
 trait CreateTagTrait
 {
-    public function createTag(array $overrideData = []): SprTagsModel
+    public function createTag(array $overrideData = []): TagsModel
     {
-        return SprTagsModel::factory()->create($overrideData);
+        return TagsModel::factory()->create($overrideData);
     }
 }

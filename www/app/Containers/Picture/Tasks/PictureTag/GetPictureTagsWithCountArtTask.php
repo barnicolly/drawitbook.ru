@@ -8,7 +8,7 @@ use App\Containers\Picture\Data\Criteria\PictureTag\WhereNotTagIdsCriteria;
 use App\Containers\Picture\Data\Repositories\PictureTagRepository;
 use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
 use App\Containers\Tag\Data\Criteria\WhereTagSlugEnIsNotNullCriteria;
-use App\Containers\Tag\Enums\SprTagsColumnsEnum;
+use App\Containers\Tag\Enums\TagsColumnsEnum;
 use App\Containers\Tag\Tasks\GetHiddenTagsIdsTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
@@ -31,17 +31,17 @@ class GetPictureTagsWithCountArtTask extends Task
         $columns = new Collection();
         $columns->push(DB::raw('count("' . PictureTagsColumnsEnum::tId . '") as count'));
         if ($locale === LangEnum::EN) {
-            $columns->push(SprTagsColumnsEnum::tNAME_EN . ' as name');
-            $columns->push(SprTagsColumnsEnum::tSLUG_EN . ' as seo');
+            $columns->push(TagsColumnsEnum::tNAME_EN . ' as name');
+            $columns->push(TagsColumnsEnum::tSLUG_EN . ' as seo');
         } else {
-            $columns->push(SprTagsColumnsEnum::tNAME);
-            $columns->push(SprTagsColumnsEnum::tSEO);
+            $columns->push(TagsColumnsEnum::tNAME);
+            $columns->push(TagsColumnsEnum::tSEO);
         }
         if ($locale === LangEnum::EN) {
             $this->repository->pushCriteria(new WhereTagSlugEnIsNotNullCriteria());
         }
         $this->repository->scopeQuery(static fn ($model) => $model
-            ->groupBy(SprTagsColumnsEnum::tId)
+            ->groupBy(TagsColumnsEnum::tId)
             ->orderBy('count', 'desc'));
         return $this->repository->pushCriteria(new WhereNotTagIdsCriteria($tagsHiddenIds))
             ->pushCriteria(new JoinTagCriteria())

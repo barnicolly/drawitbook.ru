@@ -8,7 +8,7 @@ use App\Containers\Image\Models\ImagesModel;
 use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Picture\Models\PictureTagsModel;
-use App\Containers\Tag\Models\SprTagsModel;
+use App\Containers\Tag\Models\TagsModel;
 
 trait CreatePictureWithRelationsTrait
 {
@@ -38,7 +38,7 @@ trait CreatePictureWithRelationsTrait
         return $imageEntity->image;
     }
 
-    public function createPictureTag(PictureModel $picture, SprTagsModel $tag): PictureTagsModel
+    public function createPictureTag(PictureModel $picture, TagsModel $tag): PictureTagsModel
     {
         return PictureTagsModel::factory()->create(
             [

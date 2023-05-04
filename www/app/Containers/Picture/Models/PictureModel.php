@@ -7,7 +7,7 @@ use App\Containers\Image\Models\ImagesModel;
 use App\Containers\Picture\Data\Factories\PictureModelFactory;
 use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
-use App\Containers\Tag\Models\SprTagsModel;
+use App\Containers\Tag\Models\TagsModel;
 use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,7 +22,7 @@ use Spatie\ModelFlags\Models\Flag;
  * @method static PictureModelFactory factory
  *
  * @property ImagesModel[] | Collection extensions
- * @property SprTagsModel[] | Collection tags
+ * @property TagsModel[] | Collection tags
  * @property Flag[] | Collection flags
  */
 class PictureModel extends CoreModel
@@ -46,7 +46,7 @@ class PictureModel extends CoreModel
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(
-            SprTagsModel::class,
+            TagsModel::class,
             PictureTagsColumnsEnum::TABlE,
             PictureTagsColumnsEnum::PICTURE_ID,
             PictureTagsColumnsEnum::TAG_ID,

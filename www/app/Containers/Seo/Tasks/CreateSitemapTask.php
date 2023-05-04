@@ -4,8 +4,8 @@ namespace App\Containers\Seo\Tasks;
 
 use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
-use App\Containers\Tag\Enums\SprTagsColumnsEnum;
-use App\Containers\Tag\Models\SprTagsModel;
+use App\Containers\Tag\Enums\TagsColumnsEnum;
+use App\Containers\Tag\Models\TagsModel;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
 use App\Ship\Services\Route\RouteService;
@@ -73,18 +73,18 @@ class CreateSitemapTask extends Task
 
     private function getTagsForSitemap(): array
     {
-        $query = SprTagsModel::query();
+        $query = TagsModel::query();
         $select = [
-            SprTagsColumnsEnum::TABlE . '.*',
+            TagsColumnsEnum::TABlE . '.*',
         ];
         $result = $query
             ->select($select)
-            ->join(PictureTagsColumnsEnum::TABlE, PictureTagsColumnsEnum::tTAG_ID, '=', SprTagsColumnsEnum::tId)
+            ->join(PictureTagsColumnsEnum::TABlE, PictureTagsColumnsEnum::tTAG_ID, '=', TagsColumnsEnum::tId)
             ->join(PictureColumnsEnum::TABlE, PictureColumnsEnum::tId, '=', PictureTagsColumnsEnum::tPICTURE_ID)
-            ->groupBy(SprTagsColumnsEnum::tId)
+            ->groupBy(TagsColumnsEnum::tId)
             ->getQuery()
             ->get()
             ->toArray();
-        return SprTagsModel::mapToArray($result);
+        return TagsModel::mapToArray($result);
     }
 }

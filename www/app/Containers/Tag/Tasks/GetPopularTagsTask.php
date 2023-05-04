@@ -5,7 +5,7 @@ namespace App\Containers\Tag\Tasks;
 use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Tag\Data\Criteria\WhereTagSlugEnIsNotNullCriteria;
 use App\Containers\Tag\Data\Repositories\TagRepository;
-use App\Containers\Tag\Models\SprTagsModel;
+use App\Containers\Tag\Models\TagsModel;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tasks\Task;
@@ -18,7 +18,7 @@ class GetPopularTagsTask extends Task
     }
 
     /**
-     * @return Collection<SprTagsModel>
+     * @return Collection<TagsModel>
      *
      * @throws RepositoryException
      */

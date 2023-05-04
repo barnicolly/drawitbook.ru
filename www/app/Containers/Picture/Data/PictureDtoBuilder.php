@@ -8,7 +8,7 @@ use App\Containers\Picture\Data\Dto\PictureFileDto;
 use App\Containers\Picture\Data\Dto\PictureFilesDto;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Tag\Data\Dto\TagDto;
-use App\Containers\Tag\Models\SprTagsModel;
+use App\Containers\Tag\Models\TagsModel;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
@@ -69,12 +69,12 @@ class PictureDtoBuilder extends Task
     }
 
     /**
-     * @param Collection<SprTagsModel> $artTags
+     * @param Collection<TagsModel> $artTags
      */
     public function setTags(Collection $artTags): self
     {
         $this->tags = $artTags
-            ->map(static fn (SprTagsModel $tag): TagDto => TagDto::fromModel($tag))
+            ->map(static fn (TagsModel $tag): TagDto => TagDto::fromModel($tag))
             ->toArray();
         $this->alt = $this->setArtAltForDto($this->tags);
         return $this;

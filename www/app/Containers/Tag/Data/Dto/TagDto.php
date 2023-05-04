@@ -2,7 +2,7 @@
 
 namespace App\Containers\Tag\Data\Dto;
 
-use App\Containers\Tag\Models\SprTagsModel;
+use App\Containers\Tag\Models\TagsModel;
 use App\Ship\Parents\Dto\Dto;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Collection;
@@ -24,7 +24,7 @@ final class TagDto extends Dto
 
     public TagSeoLangDto $seo_lang;
 
-    public static function fromModel(SprTagsModel $model, string $locale = null): self
+    public static function fromModel(TagsModel $model, string $locale = null): self
     {
         $locale ??= app()->getLocale();
         $seoLang = TagSeoLangDto::fromModel($model, $locale);

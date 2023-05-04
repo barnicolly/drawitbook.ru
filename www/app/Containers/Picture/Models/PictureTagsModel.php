@@ -4,8 +4,8 @@ namespace App\Containers\Picture\Models;
 
 use App\Containers\Picture\Data\Factories\PictureTagsModelFactory;
 use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
-use App\Containers\Tag\Enums\SprTagsColumnsEnum;
-use App\Containers\Tag\Models\SprTagsModel;
+use App\Containers\Tag\Enums\TagsColumnsEnum;
+use App\Containers\Tag\Models\TagsModel;
 use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @method static PictureTagsModelFactory factory()
  *
- * @property SprTagsModel tag
+ * @property TagsModel tag
  */
 class PictureTagsModel extends CoreModel
 {
@@ -35,8 +35,8 @@ class PictureTagsModel extends CoreModel
     public function tag(): HasOne
     {
         return $this->hasOne(
-            SprTagsModel::class,
-            SprTagsColumnsEnum::ID,
+            TagsModel::class,
+            TagsColumnsEnum::ID,
             PictureTagsColumnsEnum::TAG_ID
         );
     }

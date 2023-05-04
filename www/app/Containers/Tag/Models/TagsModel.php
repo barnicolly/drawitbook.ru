@@ -2,8 +2,8 @@
 
 namespace App\Containers\Tag\Models;
 
-use App\Containers\Tag\Data\Factories\SprTagsModelFactory;
-use App\Containers\Tag\Enums\SprTagsColumnsEnum;
+use App\Containers\Tag\Data\Factories\TagsModelFactory;
+use App\Containers\Tag\Enums\TagsColumnsEnum;
 use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,23 +18,23 @@ use Spatie\ModelFlags\Models\Flag;
  * @property string $slug_en
  * @property Flag[] | Collection flags
  *
- * @method static SprTagsModelFactory factory()
+ * @method static TagsModelFactory factory()
  */
-class SprTagsModel extends CoreModel
+class TagsModel extends CoreModel
 {
     use HasFactory;
     use HasFlags;
 
-    protected $table = SprTagsColumnsEnum::TABlE;
+    protected $table = TagsColumnsEnum::TABlE;
 
     public $timestamps = false;
 
     protected $fillable = [
-        SprTagsColumnsEnum::NAME,
+        TagsColumnsEnum::NAME,
     ];
 
-    protected static function newFactory(): SprTagsModelFactory
+    protected static function newFactory(): TagsModelFactory
     {
-        return SprTagsModelFactory::new();
+        return TagsModelFactory::new();
     }
 }
