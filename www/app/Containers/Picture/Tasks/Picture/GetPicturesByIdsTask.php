@@ -21,21 +21,21 @@ class GetPicturesByIdsTask extends Task
     {
         $locale = app()->getLocale();
         return PictureModel::with([
-                'flags',
-                'extensions',
-                'tags.flags',
-                'tags' => function (BuilderContract $q) use ($locale, $withHiddenTags): void {
-                    if ($locale === LangEnum::EN) {
-                        $q->whereNotNull(TagsColumnsEnum::SLUG_EN);
+            'flags',
+            'extensions',
+            'tags.flags',
+            'tags' => function (BuilderContract $q) use ($locale, $withHiddenTags): void {
+                if ($locale === LangEnum::EN) {
+                    $q->whereNotNull(TagsColumnsEnum::SLUG_EN);
+                }
+                if (!$withHiddenTags) {
+                    $tagsHiddenIds = $this->getHiddenTagsIdsTask->run();
+                    if ($tagsHiddenIds) {
+                        $q->whereNotIn(TagsColumnsEnum::tID, $tagsHiddenIds);
                     }
-                    if (!$withHiddenTags) {
-                        $tagsHiddenIds = $this->getHiddenTagsIdsTask->run();
-                        if ($tagsHiddenIds) {
-                            $q->whereNotIn(TagsColumnsEnum::tID, $tagsHiddenIds);
-                        }
-                    }
-                },
-            ])
+                }
+            },
+        ])
             ->whereIn(PictureColumnsEnum::ID, $ids)
             ->get();
     }

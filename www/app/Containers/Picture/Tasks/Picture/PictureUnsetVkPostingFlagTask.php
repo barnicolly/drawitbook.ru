@@ -9,7 +9,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class PictureUnsetVkPostingFlagTask extends Task
 {
-
     /**
      * @throws ValidatorException
      */

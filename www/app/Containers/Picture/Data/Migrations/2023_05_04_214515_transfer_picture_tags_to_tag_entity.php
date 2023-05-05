@@ -24,10 +24,10 @@ return new class extends Migration {
     {
         $results = DB::select(
             (string) DB::raw(
-                "select picture_tags.id
+                'select picture_tags.id
              from picture_tags
                       left join tags on picture_tags.tag_id = tags.id
-             where tags.id is null"
+             where tags.id is null'
             )->getValue(DB::connection()->getQueryGrammar())
         );
         if ($results) {

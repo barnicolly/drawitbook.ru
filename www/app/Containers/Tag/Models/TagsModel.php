@@ -2,7 +2,6 @@
 
 namespace App\Containers\Tag\Models;
 
-use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Tag\Data\Factories\TagsModelFactory;
 use App\Containers\Tag\Enums\TagEntitiesColumnsEnum;
@@ -52,5 +51,4 @@ class TagsModel extends CoreModel
             TagEntitiesColumnsEnum::ENTITY_ID,
         );
     }
-
 }

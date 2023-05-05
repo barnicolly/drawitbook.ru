@@ -11,12 +11,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class GetPaginatedPicturesIdsByTagIdTask extends Task
 {
-
     public function run(int $tagId, int $perPage): LengthAwarePaginator
     {
         return PictureModel::whereHas('tags', static function (BuilderContract $q) use ($tagId): void {
-                $q->where(TagsColumnsEnum::tID, $tagId);
-            })
+            $q->where(TagsColumnsEnum::tID, $tagId);
+        })
             ->paginate($perPage, [PictureColumnsEnum::ID]);
     }
 }

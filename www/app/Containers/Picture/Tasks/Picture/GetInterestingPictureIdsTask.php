@@ -9,7 +9,6 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetInterestingPictureIdsTask extends Task
 {
-
     public function run(int $excludeId, int $limit): array
     {
         return PictureModel::take($limit)

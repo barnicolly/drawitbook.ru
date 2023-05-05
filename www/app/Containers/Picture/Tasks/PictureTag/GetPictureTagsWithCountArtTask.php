@@ -33,7 +33,7 @@ class GetPictureTagsWithCountArtTask extends Task
             $columns->push(TagsColumnsEnum::tSEO);
         }
         return TagsModel::withCount('pictures')
-            ->when($locale === LangEnum::EN, function(Builder $query){
+            ->when($locale === LangEnum::EN, static function (Builder $query): void {
                 $query->whereNotNull(TagsColumnsEnum::tSLUG_EN);
             })
             ->whereNotIn(TagsColumnsEnum::tID, $tagsHiddenIds)
