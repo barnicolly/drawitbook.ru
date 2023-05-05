@@ -2,8 +2,8 @@
 
 namespace App\Containers\Picture\Tasks\Picture;
 
-use App\Containers\Picture\Data\Repositories\PictureRepository;
 use App\Containers\Picture\Enums\PictureColumnsEnum;
+use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Tag\Enums\TagsColumnsEnum;
 use App\Containers\Tag\Tasks\GetHiddenTagsIdsTask;
 use App\Containers\Translation\Enums\LangEnum;
@@ -13,15 +13,14 @@ use Illuminate\Support\Collection;
 
 class GetPicturesByIdsTask extends Task
 {
-    public function __construct(protected PictureRepository $repository, private readonly GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
+    public function __construct(private readonly GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
     {
     }
 
     public function run(array $ids, bool $withHiddenTags): Collection
     {
         $locale = app()->getLocale();
-        return $this->repository
-            ->with([
+        return PictureModel::with([
                 'flags',
                 'extensions',
                 'tags.flags',
@@ -37,6 +36,7 @@ class GetPicturesByIdsTask extends Task
                     }
                 },
             ])
-            ->findWhereIn(PictureColumnsEnum::ID, $ids);
+            ->whereIn(PictureColumnsEnum::ID, $ids)
+            ->get();
     }
 }
