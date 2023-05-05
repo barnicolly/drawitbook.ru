@@ -2,22 +2,18 @@
 
 namespace App\Containers\Picture\Tasks\PictureTag;
 
+use App\Containers\Tag\Models\TagsModel;
+use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Exceptions\RepositoryException;
-use App\Containers\Picture\Data\Criteria\PictureTag\JoinTagCriteria;
-use App\Containers\Picture\Data\Criteria\PictureTag\WhereNotTagIdsCriteria;
-use App\Containers\Picture\Data\Repositories\PictureTagRepository;
-use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
-use App\Containers\Tag\Data\Criteria\WhereTagSlugEnIsNotNullCriteria;
 use App\Containers\Tag\Enums\TagsColumnsEnum;
 use App\Containers\Tag\Tasks\GetHiddenTagsIdsTask;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class GetPictureTagsWithCountArtTask extends Task
 {
-    public function __construct(protected PictureTagRepository $repository, private readonly GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
+    public function __construct(private readonly GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
     {
     }
 
@@ -27,9 +23,8 @@ class GetPictureTagsWithCountArtTask extends Task
     public function run(int $limit, string $locale): array
     {
         $tagsHiddenIds = $this->getHiddenTagsIdsTask->run();
-
         $columns = new Collection();
-        $columns->push(DB::raw('count("' . PictureTagsColumnsEnum::tId . '") as count'));
+        $columns->push(TagsColumnsEnum::tID);
         if ($locale === LangEnum::EN) {
             $columns->push(TagsColumnsEnum::tNAME_EN . ' as name');
             $columns->push(TagsColumnsEnum::tSLUG_EN . ' as seo');
@@ -37,15 +32,16 @@ class GetPictureTagsWithCountArtTask extends Task
             $columns->push(TagsColumnsEnum::tNAME);
             $columns->push(TagsColumnsEnum::tSEO);
         }
-        if ($locale === LangEnum::EN) {
-            $this->repository->pushCriteria(new WhereTagSlugEnIsNotNullCriteria());
-        }
-        $this->repository->scopeQuery(static fn ($model) => $model
+        return TagsModel::withCount('pictures')
+            ->when($locale === LangEnum::EN, function(Builder $query){
+                $query->whereNotNull(TagsColumnsEnum::tSLUG_EN);
+            })
+            ->whereNotIn(TagsColumnsEnum::tID, $tagsHiddenIds)
             ->groupBy(TagsColumnsEnum::tID)
-            ->orderBy('count', 'desc'));
-        return $this->repository->pushCriteria(new WhereNotTagIdsCriteria($tagsHiddenIds))
-            ->pushCriteria(new JoinTagCriteria())
+            ->orderBy('pictures_count', 'desc')
             ->take($limit)
-            ->get($columns->toArray())->toArray();
+            ->addSelect($columns->toArray())
+            ->get()
+            ->toArray();
     }
 }

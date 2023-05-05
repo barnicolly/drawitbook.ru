@@ -26,7 +26,7 @@ class GetListPopularTagsWithCountArtsAction extends Action
             $responseList[] = [
                 'link' => $this->routeService->getRouteArtsCellTagged($tag['seo']),
                 'text' => $tag['name'],
-                'weight' => $tag['count'],
+                'weight' => $tag['pictures_count'],
             ];
         }
         return $responseList;
