@@ -2,10 +2,6 @@
 
 namespace App\Containers\Seo\Tasks;
 
-use App\Containers\Picture\Enums\PictureColumnsEnum;
-use App\Containers\Picture\Enums\PictureTagsColumnsEnum;
-use App\Containers\Tag\Enums\TagsColumnsEnum;
-use App\Containers\Tag\Models\TagsModel;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
 use App\Ship\Services\Route\RouteService;
@@ -73,18 +69,7 @@ class CreateSitemapTask extends Task
 
     private function getTagsForSitemap(): array
     {
-        $query = TagsModel::query();
-        $select = [
-            TagsColumnsEnum::TABlE . '.*',
-        ];
-        $result = $query
-            ->select($select)
-            ->join(PictureTagsColumnsEnum::TABlE, PictureTagsColumnsEnum::tTAG_ID, '=', TagsColumnsEnum::tID)
-            ->join(PictureColumnsEnum::TABlE, PictureColumnsEnum::tId, '=', PictureTagsColumnsEnum::tPICTURE_ID)
-            ->groupBy(TagsColumnsEnum::tID)
-            ->getQuery()
-            ->get()
-            ->toArray();
-        return TagsModel::mapToArray($result);
+//        todo-misha восстановить;
+        return [];
     }
 }
