@@ -10,11 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('vk_album', static function (Blueprint $table): void {
-            $table->integer('id')->autoIncrement();
-            $table->integer('album_id')->nullable(false);
-            $table->string('description', 255)->nullable(false);
-            $table->string('share', 255)->nullable(true);
+        Schema::table('vk_album_picture', static function (Blueprint $table): void {
+            $table->foreign('vk_album_id')->references('id')->on('vk_album');
+            $table->foreign('picture_id')->references('id')->on('picture');
         });
     }
 
