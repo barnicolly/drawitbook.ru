@@ -10,5 +10,11 @@
                 <foreignKey table="picture" column="id" />
             </column>
         </table>
+        <table name="flags">
+            <column name="flaggable_id">
+                <foreignKey table="picture" column="id" />
+                <foreignKey table="tags" column="id" />
+            </column>
+        </table>
     </tables>
 </schemaMeta>

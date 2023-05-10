@@ -18,7 +18,7 @@ class GetSortedMenuTreeTask extends Task
         $result = [];
         foreach ($items as $item) {
             $levelId = $item['id'];
-            $parentLevelId = $item['parent_level_id'];
+            $parentLevelId = $item['parent_level_id'] ?? 0;
             $columnId = $parentLevelId
                 ? $relationItemIdWithColumn[$parentLevelId]
                 : $relationItemIdWithColumn[$levelId];

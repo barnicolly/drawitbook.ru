@@ -31,7 +31,7 @@ class MenuLevelsModelFactory extends Factory
             MenuLevelsColumnsEnum::SHOW_EN => 1,
             MenuLevelsColumnsEnum::SHOW_RU => 1,
             MenuLevelsColumnsEnum::SPR_TAG_ID => TagsModel::factory(),
-            MenuLevelsColumnsEnum::PARENT_LEVEL_ID => 0,
+            MenuLevelsColumnsEnum::PARENT_LEVEL_ID => null,
             MenuLevelsColumnsEnum::COLUMN => null,
         ];
     }
