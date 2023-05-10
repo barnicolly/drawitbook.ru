@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Containers\Rate\Tasks;
+namespace App\Containers\Like\Tasks;
 
 use Prettus\Repository\Exceptions\RepositoryException;
-use App\Containers\Rate\Data\Criteria\WhereLikesIpCriteria;
-use App\Containers\Rate\Data\Criteria\WhereLikesPictureIdCriteria;
-use App\Containers\Rate\Data\Criteria\WhereLikesUserIdCriteria;
-use App\Containers\Rate\Data\Repositories\LikesRepository;
-use App\Containers\Rate\Models\LikesModel;
+use App\Containers\Like\Data\Criteria\WhereLikesIpCriteria;
+use App\Containers\Like\Data\Criteria\WhereLikesPictureIdCriteria;
+use App\Containers\Like\Data\Criteria\WhereLikesUserIdCriteria;
+use App\Containers\Like\Data\Repositories\LikesRepository;
+use App\Containers\Like\Models\LikesModel;
 use App\Containers\User\Data\Dto\UserDto;
 use App\Ship\Parents\Tasks\Task;
 

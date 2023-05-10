@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Containers\Rate\Data\Factories;
+namespace App\Containers\Like\Data\Factories;
 
-use App\Containers\Rate\Enums\LikesColumnsEnum;
-use App\Containers\Rate\Models\LikesModel;
+use App\Containers\Like\Enums\LikesColumnsEnum;
+use App\Containers\Like\Models\LikesModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 

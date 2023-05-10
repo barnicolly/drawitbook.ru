@@ -4,7 +4,7 @@ namespace App\Containers\Picture\Actions\Rate;
 
 use Prettus\Repository\Exceptions\RepositoryException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
-use App\Containers\Rate\Actions\LikePictureAction;
+use App\Containers\Like\Actions\LikePictureAction;
 use App\Containers\User\Data\Dto\UserDto;
 use App\Containers\User\Tasks\GetUserIpFromRequestTask;
 use App\Ship\Parents\Actions\Action;

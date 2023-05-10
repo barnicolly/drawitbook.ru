@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Containers\Rate\Actions;
+namespace App\Containers\Like\Actions;
 
 use Prettus\Repository\Exceptions\RepositoryException;
-use App\Containers\Rate\Tasks\CreateLikeTask;
-use App\Containers\Rate\Tasks\DeleteLikeByIdTask;
-use App\Containers\Rate\Tasks\GetLikeByPictureIdTask;
+use App\Containers\Like\Tasks\CreateLikeTask;
+use App\Containers\Like\Tasks\DeleteLikeByIdTask;
+use App\Containers\Like\Tasks\GetLikeByPictureIdTask;
 use App\Containers\User\Data\Dto\UserDto;
 use App\Ship\Parents\Actions\Action;
 

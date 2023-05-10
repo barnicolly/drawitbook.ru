@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Rate\Tasks;
+namespace App\Containers\Like\Tasks;
 
-use App\Containers\Rate\Models\LikesModel;
+use App\Containers\Like\Models\LikesModel;
 use App\Containers\User\Data\Dto\UserDto;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Facades\DB;

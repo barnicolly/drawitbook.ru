@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Containers\Rate\Providers;
+namespace App\Containers\Like\Providers;
 
 use Config;
 use Illuminate\Support\ServiceProvider;
 
-class RateServiceProvider extends ServiceProvider
+class LikeServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'Rate';
+    protected $moduleName = 'Like';
 
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'rate';
+    protected $moduleNameLower = 'like';
 
     public function boot(): void
     {

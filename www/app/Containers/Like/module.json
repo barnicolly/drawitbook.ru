@@ -1,11 +1,11 @@
 {
-    "name": "Rate",
-    "alias": "rate",
+    "name": "Like",
+    "alias": "like",
     "description": "",
     "keywords": [],
     "priority": 0,
     "providers": [
-        "App\\Containers\\Rate\\Providers\\RateServiceProvider"
+        "App\\Containers\\Like\\Providers\\LikeServiceProvider"
     ],
     "aliases": {},
     "files": [],

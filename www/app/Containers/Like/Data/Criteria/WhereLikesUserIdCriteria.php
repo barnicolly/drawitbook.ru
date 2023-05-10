@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Containers\Rate\Data\Criteria;
+namespace App\Containers\Like\Data\Criteria;
 
-use App\Containers\Rate\Enums\LikesColumnsEnum;
+use App\Containers\Like\Enums\LikesColumnsEnum;
 use App\Ship\Parents\Criterias\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
-class WhereLikesIpCriteria extends Criteria
+class WhereLikesUserIdCriteria extends Criteria
 {
-    public function __construct(private readonly string $ip)
+    public function __construct(private readonly int $userId)
     {
     }
 
@@ -21,6 +21,6 @@ class WhereLikesIpCriteria extends Criteria
      */
     public function apply($model, PrettusRepositoryInterface $repository): Builder
     {
-        return $model->whereRaw('INET_NTOA(' . LikesColumnsEnum::IP . ") = {$this->ip}");
+        return $model->where(LikesColumnsEnum::USER_ID, '=', $this->userId);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Containers\Rate\Tests\Traits;
+namespace App\Containers\Like\Tests\Traits;
 
 use App\Containers\Picture\Models\PictureModel;
-use App\Containers\Rate\Enums\LikesColumnsEnum;
-use App\Containers\Rate\Models\LikesModel;
+use App\Containers\Like\Enums\LikesColumnsEnum;
+use App\Containers\Like\Models\LikesModel;
 use App\Containers\User\Tasks\GetUserIpFromRequestTask;
 use Illuminate\Support\Facades\DB;
 

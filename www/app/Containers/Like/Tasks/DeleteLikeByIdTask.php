@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Rate\Tasks;
+namespace App\Containers\Like\Tasks;
 
-use App\Containers\Rate\Data\Repositories\LikesRepository;
+use App\Containers\Like\Data\Repositories\LikesRepository;
 use App\Ship\Parents\Tasks\Task;
 
 class DeleteLikeByIdTask extends Task

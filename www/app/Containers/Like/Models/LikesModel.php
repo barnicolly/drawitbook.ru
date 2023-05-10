@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Containers\Rate\Models;
+namespace App\Containers\Like\Models;
 
-use App\Containers\Rate\Data\Factories\LikesModelFactory;
-use App\Containers\Rate\Enums\LikesColumnsEnum;
+use App\Containers\Like\Data\Factories\LikesModelFactory;
+use App\Containers\Like\Enums\LikesColumnsEnum;
 use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -6,7 +6,7 @@
     "Claim": true,
     "User": true,
     "Tag": true,
-    "Rate": true,
+    "Like": true,
     "Admin": true,
     "Vk": true,
     "Seo": true,

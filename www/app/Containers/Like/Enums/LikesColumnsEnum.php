@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Rate\Enums;
+namespace App\Containers\Like\Enums;
 
 use BenSampo\Enum\Enum;
 

@@ -3,8 +3,8 @@
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Art;
 
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
-use App\Containers\Rate\Models\LikesModel;
-use App\Containers\Rate\Tests\Traits\CreateLikesTrait;
+use App\Containers\Like\Models\LikesModel;
+use App\Containers\Like\Tests\Traits\CreateLikesTrait;
 use App\Ship\Parents\Tests\TestCase;
 
 /**
