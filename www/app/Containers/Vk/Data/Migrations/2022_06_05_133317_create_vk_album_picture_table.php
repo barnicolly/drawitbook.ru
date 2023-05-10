@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('vk_album_picture', static function (Blueprint $table): void {
-            $table->id();
+            $table->integer('id')->autoIncrement();
             $table->integer('vk_album_id')->nullable(false)->index();
             $table->integer('picture_id')->nullable(false)->index();
             $table->integer('out_vk_image_id')->nullable(false);

@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('menu_levels', static function (Blueprint $table): void {
-            $table->id();
+            $table->integer('id')->autoIncrement();
             $table->integer('spr_tag_id')->index()->nullable(true);
             $table->integer('parent_level_id')->index()->nullable(true);
             $table->string('custom_name_ru', 255)->index()->nullable(true);

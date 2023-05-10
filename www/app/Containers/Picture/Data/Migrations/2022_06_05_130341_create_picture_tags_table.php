@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('picture_tags', static function (Blueprint $table): void {
-            $table->id();
+            $table->integer('id')->autoIncrement();
             $table->integer('picture_id')->nullable(false)->index();
             $table->integer('tag_id')->nullable(false)->index();
         });

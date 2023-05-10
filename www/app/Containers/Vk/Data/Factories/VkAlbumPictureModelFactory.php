@@ -26,9 +26,9 @@ class VkAlbumPictureModelFactory extends Factory
     public function definition(): array
     {
         return [
-            VkAlbumPictureColumnsEnum::VK_ALBUM_ID => VkAlbumModel::factory(),
+            VkAlbumPictureColumnsEnum::VK_ALBUM_ID => VkAlbumModel::factory()->create()->id,
             VkAlbumPictureColumnsEnum::OUT_VK_IMAGE_ID => $this->faker->randomDigit(),
-            VkAlbumPictureColumnsEnum::PICTURE_ID => PictureModel::factory(),
+            VkAlbumPictureColumnsEnum::PICTURE_ID => PictureModel::factory()->create()->id,
         ];
     }
 }

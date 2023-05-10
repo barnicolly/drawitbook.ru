@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('user_claim', static function (Blueprint $table): void {
-            $table->id();
+            $table->integer('id')->autoIncrement();
             $table->integer('user_id')->nullable(true)->index();
             $table->integer('ip')->unsigned()->index()->nullable(false);
             $table->integer('picture_id')->nullable(false)->index();
