@@ -1,0 +1,41 @@
+version: '3'
+
+networks:
+  schemaspy:
+  draw_network:
+      external: true
+
+services:
+
+    schemaspy:
+        build:
+            context: ./schemaspy
+        volumes:
+            - ./data/schemaspy/output:/output
+            - ./schemaspy/config:/config
+        command: [
+            "-configFile",
+            "/config/schemaspy.properties",
+            "-imageformat",
+            "svg",
+            "-meta",
+            "/config/schemameta.xml",
+            "-nopages",
+            "-noimplied",
+            "-gv",
+            "/usr",
+            "-hq"
+        ]
+        networks:
+            - draw_network
+            - schemaspy
+
+    nginx:
+        build:
+            context: ./nginx
+        volumes:
+            - ./data/schemaspy/output:/var/www/html/public
+        ports:
+            - "8113:80"
+        networks:
+            - schemaspy

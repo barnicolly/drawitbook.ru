@@ -1,0 +1,14 @@
+<schemaMeta xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schemaspy.org/xsd/6/schemameta.xsd" >
+    <tables>
+        <table name="tag_entities">
+            <column name="entity_id">
+                <foreignKey table="picture" column="id" />
+            </column>
+        </table>
+        <table name="image_entities">
+            <column name="entity_id">
+                <foreignKey table="picture" column="id" />
+            </column>
+        </table>
+    </tables>
+</schemaMeta>
