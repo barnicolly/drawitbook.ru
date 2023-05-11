@@ -28,7 +28,7 @@ return (new PhpCsFixer\Config())->setRules([
     'phpdoc_var_without_name' => false,
     'phpdoc_no_empty_return' => false,
     'phpdoc_to_comment' => false,
-    'phpdoc_align' => false,
+    'phpdoc_align' => ['align' => 'left'],
     'phpdoc_types_order' => false,
     'phpdoc_summary' => false,
 ])
