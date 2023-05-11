@@ -21,8 +21,6 @@ class JsonResource extends LaravelJsonResource
     /**
      * Transform the resource collection into an array.
      *
-     * @param Request $request
-     *
      * @return array|Arrayable|JsonSerializable
      */
     public function toArray(Request $request)

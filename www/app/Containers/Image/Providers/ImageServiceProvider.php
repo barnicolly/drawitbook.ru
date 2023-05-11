@@ -7,14 +7,8 @@ use Config;
 
 class ImageServiceProvider extends ServiceProvider
 {
-    /**
-     * @var string $moduleName
-     */
     protected string $moduleName = 'Image';
 
-    /**
-     * @var string $moduleNameLower
-     */
     protected string $moduleNameLower = 'image';
 
     public function boot(): void

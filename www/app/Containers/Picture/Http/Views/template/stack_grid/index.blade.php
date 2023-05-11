@@ -16,7 +16,6 @@
     </div>
     <?php
     /** @var \App\Ship\Dto\PaginationDto $paginationData */
-
     ?>
     @if (isset($paginationData))
         @if ($paginationData->left)

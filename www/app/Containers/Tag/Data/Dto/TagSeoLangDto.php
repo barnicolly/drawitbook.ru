@@ -29,7 +29,9 @@ class TagSeoLangDto extends Dto
             );
         } else {
             $current = new TagSeoDto(
-                locale: LangEnum::fromValue($locale), slug: $model->slug_en, name: $model->name_en
+                locale: LangEnum::fromValue($locale),
+                slug: $model->slug_en,
+                name: $model->name_en
             );
             $alternative = new TagSeoDto(
                 locale: LangEnum::fromValue($alternativeLang),

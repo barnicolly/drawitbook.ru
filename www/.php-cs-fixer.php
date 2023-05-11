@@ -24,7 +24,7 @@ return (new PhpCsFixer\Config())->setRules([
     'increment_style' => false,
     'single_quote' => ['strings_containing_single_quote_chars' => false],
 //    https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/master/doc/rules/index.rst#phpdoc
-    'no_superfluous_phpdoc_tags' => false,
+    'no_superfluous_phpdoc_tags' => ['allow_mixed' => true],
     'phpdoc_var_without_name' => false,
     'phpdoc_no_empty_return' => false,
     'phpdoc_to_comment' => false,

@@ -9,9 +9,6 @@ use Tests\TestCase as BaseTestCase;
 
 abstract class MiddlewareTestCase extends BaseTestCase
 {
-    /**
-     * @return void
-     */
     protected function createTestRouteWithMiddlewares(string $url, array $middlewares): void
     {
         Route::get(
@@ -24,9 +21,6 @@ abstract class MiddlewareTestCase extends BaseTestCase
         )->middleware($middlewares);
     }
 
-    /**
-     * @return void
-     */
     protected function assertCalledNextMiddleware(
         MiddlewareContract $middleware,
         Request $request,

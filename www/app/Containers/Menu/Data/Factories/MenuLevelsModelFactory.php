@@ -2,7 +2,6 @@
 
 namespace App\Containers\Menu\Data\Factories;
 
-use App\Containers\Tag\Data\Factories\TagsModelFactory;
 use App\Containers\Menu\Enums\MenuLevelsColumnsEnum;
 use App\Containers\Menu\Models\MenuLevelsModel;
 use App\Containers\Tag\Models\TagsModel;
@@ -20,8 +19,6 @@ class MenuLevelsModelFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {

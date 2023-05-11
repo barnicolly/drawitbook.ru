@@ -12,9 +12,6 @@ class ArtDto extends Dto
 
     public ?array $flags;
 
-    /**
-     * @var PictureFilesDto|null $images
-     */
     public ?PictureFilesDto $images = null;
 
     //    /**

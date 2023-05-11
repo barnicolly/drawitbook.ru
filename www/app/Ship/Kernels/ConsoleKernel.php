@@ -19,8 +19,6 @@ class ConsoleKernel extends LaravelConsoleKernel
      *
      * Пример linux: crontab -e; * * * * * php /var/www/deployer/data/repo/drawitbook.com/current/www/artisan schedule:run >/dev/null 2>&1
      *
-     * @param Schedule $schedule
-     *
      * @return void
      */
     protected function schedule(Schedule $schedule)

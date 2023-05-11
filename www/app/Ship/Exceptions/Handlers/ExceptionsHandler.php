@@ -33,9 +33,6 @@ class ExceptionsHandler extends LaravelExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param Request $request
-     * @param Throwable $exception
-     *
-     * @return Response
      *
      * @throws Throwable
      */
