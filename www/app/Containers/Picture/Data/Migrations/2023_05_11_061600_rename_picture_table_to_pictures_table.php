@@ -9,7 +9,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::rename('pictures', 'pictures');
+        Schema::rename('picture', 'pictures');
     }
 
     /**
