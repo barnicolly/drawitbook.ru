@@ -39,7 +39,7 @@ class PictureModel extends CoreModel
             'entity',
             ImageEntitiesColumnsEnum::TABlE,
             null,
-            ImageEntitiesColumnsEnum::IMAGE_ID
+            ImageEntitiesColumnsEnum::IMAGE_ID,
         );
     }
 
@@ -50,7 +50,7 @@ class PictureModel extends CoreModel
             'entity',
             TagEntitiesColumnsEnum::TABlE,
             null,
-            TagEntitiesColumnsEnum::TAG_ID
+            TagEntitiesColumnsEnum::TAG_ID,
         );
     }
 

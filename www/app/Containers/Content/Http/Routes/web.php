@@ -14,8 +14,8 @@ foreach (config('translator.available_locales') as $prefix) {
                     Route::get('/', (new ContentHttpController())->showMainPage(...))
                         ->middleware(['lower_case', 'no_get'])
                         ->name($prefix . '_home');
-                }
+                },
             );
-        }
+        },
     );
 }

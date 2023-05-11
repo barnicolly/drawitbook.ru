@@ -9,7 +9,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('user_role', static function (Blueprint $table) : void {
+        Schema::create('user_role', static function (Blueprint $table): void {
             $table->integer('id')->autoIncrement();
             $table->integer('user_id');
             $table->integer('role_id');

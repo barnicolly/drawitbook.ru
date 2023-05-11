@@ -28,7 +28,7 @@ trait RequestsTrait
             [
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
                 'Accept' => 'application/json',
-            ]
+            ],
         );
     }
 

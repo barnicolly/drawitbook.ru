@@ -39,21 +39,21 @@ class TranslationServiceProvider extends ServiceProvider
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Configs/config.php'),
-            $this->moduleNameLower
+            $this->moduleNameLower,
         );
         $this->publishes([
             module_path($this->moduleName, 'Configs/localization-js.php') => config_path('localization-js.php'),
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Configs/localization-js.php'),
-            'localization-js'
+            'localization-js',
         );
         $this->publishes([
             module_path($this->moduleName, 'Configs/translator.php') => config_path('translator.php'),
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Configs/translator.php'),
-            'translator'
+            'translator',
         );
     }
 

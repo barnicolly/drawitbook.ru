@@ -16,7 +16,7 @@ class ArtHttpController extends HttpController
      */
     public function index(
         int $artId,
-        GetArtAction $action
+        GetArtAction $action,
     ): Response {
         try {
             [$viewData, $pageMetaDto] = $action->run($artId);

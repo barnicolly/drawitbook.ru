@@ -41,7 +41,7 @@ class ConsoleServiceProvider extends ServiceProvider
             $command = str_replace(
                 ['/', '.php'],
                 ['\\', ''],
-                $class
+                $class,
             );
             if (is_subclass_of($command, Command::class)) {
                 Artisan::starting(static function ($artisan) use ($command): void {

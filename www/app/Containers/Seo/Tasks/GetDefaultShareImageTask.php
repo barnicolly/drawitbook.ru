@@ -37,7 +37,7 @@ class GetDefaultShareImageTask extends Task
                     } catch (NotFoundPicture) {
                         return null;
                     }
-                }
+                },
             );
         }
         return $result;

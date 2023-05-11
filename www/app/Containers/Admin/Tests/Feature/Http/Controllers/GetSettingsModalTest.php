@@ -32,7 +32,7 @@ class GetSettingsModalTest extends TestCase
                     'data' => [
                         'html',
                     ],
-                ]
+                ],
             );
     }
 

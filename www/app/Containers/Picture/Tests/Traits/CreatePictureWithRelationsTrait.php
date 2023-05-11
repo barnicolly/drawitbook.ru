@@ -33,7 +33,7 @@ trait CreatePictureWithRelationsTrait
             [
                 ImageEntitiesColumnsEnum::ENTITY_TYPE => $picture->getMorphClass(),
                 ImageEntitiesColumnsEnum::ENTITY_ID => $picture->id,
-            ]
+            ],
         );
         return $imageEntity->image;
     }
@@ -45,7 +45,7 @@ trait CreatePictureWithRelationsTrait
                 TagEntitiesColumnsEnum::ENTITY_TYPE => $picture->getMorphClass(),
                 TagEntitiesColumnsEnum::ENTITY_ID => $picture->id,
                 TagEntitiesColumnsEnum::TAG_ID => $tag->id,
-            ]
+            ],
         );
     }
 }

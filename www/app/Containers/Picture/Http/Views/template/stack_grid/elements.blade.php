@@ -1,4 +1,6 @@
-<?php use App\Containers\Translation\Enums\LangEnum;
+<?php
+
+use App\Containers\Translation\Enums\LangEnum;
 
 $adPostfix = $page ?? 1;
 $showAds = app()->getLocale() === LangEnum::RU;
@@ -18,9 +20,10 @@ $showAds = app()->getLocale() === LangEnum::RU;
             </div>
         </div>
     @endif
-    <?php $viewData = [
-        'art' => $art,
-    ]; ?>
+        <?php
+        $viewData = [
+            'art' => $art,
+        ]; ?>
     @include('picture::template.stack_grid.art.index', $viewData)
 @endforeach
 @if (count($arts) > 21 && $showAds)

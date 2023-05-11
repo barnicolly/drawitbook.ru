@@ -28,11 +28,13 @@ foreach (config('translator.available_locales') as $prefix) {
                             'middleware' => ['ajax'],
                         ],
                         static function () use ($prefix): void {
-                            Route::get('/search/slice', (new SearchController())->slice(...))->name($prefix . '_search.slice');
-                        }
+                            Route::get('/search/slice', (new SearchController())->slice(...))->name(
+                                $prefix . '_search.slice',
+                            );
+                        },
                     );
-                }
+                },
             );
-        }
+        },
     );
 }

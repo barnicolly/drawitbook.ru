@@ -40,7 +40,7 @@ abstract class BaseFormRequest extends FormRequest
                     [
                         'errors' => $validator->errors(),
                     ],
-                    Response::HTTP_UNPROCESSABLE_ENTITY
+                    Response::HTTP_UNPROCESSABLE_ENTITY,
                 )
             );
         }

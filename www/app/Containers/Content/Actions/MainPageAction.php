@@ -11,8 +11,10 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class MainPageAction extends Action
 {
-    public function __construct(private readonly RouteService $routeService, private readonly GetDefaultShareImageTask $getDefaultShareImageTask)
-    {
+    public function __construct(
+        private readonly RouteService $routeService,
+        private readonly GetDefaultShareImageTask $getDefaultShareImageTask,
+    ) {
     }
 
     /**
@@ -37,13 +39,16 @@ class MainPageAction extends Action
 
     private function getAlternateLinks(): array
     {
-        return [[
-            'lang' => LangEnum::RU,
-            'href' => $this->routeService->getRouteHome([], true, LangEnum::RU),
-        ], [
-            'lang' => LangEnum::EN,
-            'href' => $this->routeService->getRouteHome([], true, LangEnum::EN),
-        ]];
+        return [
+            [
+                'lang' => LangEnum::RU,
+                'href' => $this->routeService->getRouteHome([], true, LangEnum::RU),
+            ],
+            [
+                'lang' => LangEnum::EN,
+                'href' => $this->routeService->getRouteHome([], true, LangEnum::EN),
+            ],
+        ];
     }
 
     private function formTitleAndDescriptionHome(): array

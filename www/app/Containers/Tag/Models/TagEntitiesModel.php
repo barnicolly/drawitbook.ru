@@ -37,7 +37,7 @@ class TagEntitiesModel extends CoreModel
         return $this->hasOne(
             TagsModel::class,
             TagsColumnsEnum::ID,
-            TagEntitiesColumnsEnum::TAG_ID
+            TagEntitiesColumnsEnum::TAG_ID,
         );
     }
 }

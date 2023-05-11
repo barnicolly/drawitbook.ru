@@ -52,7 +52,7 @@ class SearchService
                     [
                         'hidden_tag' => 3,
                         'tag' => 8,
-                    ]
+                    ],
                 )
                 ->from(['drawItBookSearchByTag'])
                 ->limit($this->limit);
@@ -88,7 +88,7 @@ class SearchService
             $exploded = explode(' ', (string) $query);
             $exploded = array_filter(
                 $exploded,
-                static fn ($item): bool => $item !== ''
+                static fn ($item): bool => $item !== '',
             );
             $result->match('query', implode('||', $exploded), true);
         }

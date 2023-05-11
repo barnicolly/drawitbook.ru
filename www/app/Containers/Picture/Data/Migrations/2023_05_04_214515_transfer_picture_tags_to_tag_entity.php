@@ -27,8 +27,8 @@ return new class extends Migration {
                 'select picture_tags.id
              from picture_tags
                       left join tags on picture_tags.tag_id = tags.id
-             where tags.id is null'
-            )->getValue(DB::connection()->getQueryGrammar())
+             where tags.id is null',
+            )->getValue(DB::connection()->getQueryGrammar()),
         );
         if ($results) {
             foreach ($results as $item) {

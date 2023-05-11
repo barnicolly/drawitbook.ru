@@ -10,6 +10,6 @@ foreach (config('translator.available_locales') as $prefix) {
         ],
         static function (): void {
             Route::get('/tag/list', (new TagAjaxController())->getListPopularTagsWithCountArts(...));
-        }
+        },
     );
 }

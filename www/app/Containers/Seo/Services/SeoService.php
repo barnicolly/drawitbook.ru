@@ -33,7 +33,8 @@ class SeoService
     private function createCategoryTitle(string $category, string $subcategory, int $countResults): string
     {
         $countPostfix = $this->formCategoryCountPostfix($countResults);
-        return implode(' ', [$category, frenchQuotes($subcategory)]) . ($countPostfix !== '' ? ' ☆ ' : '') . $countPostfix;
+        return implode(' ', [$category, frenchQuotes($subcategory)],
+            ) . ($countPostfix !== '' ? ' ☆ ' : '') . $countPostfix;
     }
 
     private function createCategoryDescription(string $category, string $subcategory, int $countResults): string

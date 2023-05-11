@@ -68,7 +68,9 @@ class CustomTranslationMiddleware extends TranslationMiddleware
         }
 
         // If no locale was set in the url, check the session locale
-        if ($request->hasSession() && $sessionLocale = $request->session()->get('waavi.translation.locale') && $this->languageRepository->isValidLocale($sessionLocale)) {
+        if ($request->hasSession() && $sessionLocale = $request->session()
+                    ->get('waavi.translation.locale') && $this->languageRepository->isValidLocale($sessionLocale)
+        ) {
             return redirect()->to($this->uriLocalizer->localize($currentUrl, $sessionLocale, $segment), 301);
         }
 

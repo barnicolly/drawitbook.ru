@@ -11,8 +11,10 @@ use App\Ship\Parents\Actions\Action;
 
 class GetSettingsModalAction extends Action
 {
-    public function __construct(private readonly GetAllVkAlbumTask $getAllVkAlbumTask, private readonly GetVkAlbumPicturesByVkAlbumIdsAndPictureIdTask $getVkAlbumPicturesByVkAlbumIdsAndPictureIdTask)
-    {
+    public function __construct(
+        private readonly GetAllVkAlbumTask $getAllVkAlbumTask,
+        private readonly GetVkAlbumPicturesByVkAlbumIdsAndPictureIdTask $getVkAlbumPicturesByVkAlbumIdsAndPictureIdTask,
+    ) {
     }
 
     /**

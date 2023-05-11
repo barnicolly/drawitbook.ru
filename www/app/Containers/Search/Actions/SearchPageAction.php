@@ -17,8 +17,14 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class SearchPageAction extends Action
 {
-    public function __construct(private readonly RouteService $routeService, private readonly GetPopularTagsAction $getPopularTagsAction, private readonly SearchPicturesAction $searchPicturesAction, private readonly GetDefaultShareImageTask $getDefaultShareImageTask, private readonly GetInterestingArtsAction $getInterestingArtsAction, private readonly CreateCellResultsAction $createCellResultsAction)
-    {
+    public function __construct(
+        private readonly RouteService $routeService,
+        private readonly GetPopularTagsAction $getPopularTagsAction,
+        private readonly SearchPicturesAction $searchPicturesAction,
+        private readonly GetDefaultShareImageTask $getDefaultShareImageTask,
+        private readonly GetInterestingArtsAction $getInterestingArtsAction,
+        private readonly CreateCellResultsAction $createCellResultsAction,
+    ) {
     }
 
     /**
@@ -50,13 +56,16 @@ class SearchPageAction extends Action
 
     private function getAlternateLinks(): array
     {
-        return [[
-            'lang' => LangEnum::RU,
-            'href' => $this->routeService->getRouteSearch([], true, LangEnum::RU),
-        ], [
-            'lang' => LangEnum::EN,
-            'href' => $this->routeService->getRouteSearch([], true, LangEnum::EN),
-        ]];
+        return [
+            [
+                'lang' => LangEnum::RU,
+                'href' => $this->routeService->getRouteSearch([], true, LangEnum::RU),
+            ],
+            [
+                'lang' => LangEnum::EN,
+                'href' => $this->routeService->getRouteSearch([], true, LangEnum::EN),
+            ],
+        ];
     }
 
     private function formTitleAndDescriptionSearch(): array

@@ -54,7 +54,10 @@ class CreateSitemapTask extends Task
                             $slug = $alternateLocale === LangEnum::RU
                                 ? $tag['seo']
                                 : $tag['slug_en'];
-                            $url->addAlternate($this->routeService->getRouteArtsCellTagged($slug, true, $alternateLocale), $alternateLocale);
+                            $url->addAlternate(
+                                $this->routeService->getRouteArtsCellTagged($slug, true, $alternateLocale),
+                                $alternateLocale,
+                            );
                         }
                     }
                     $sitemap->add($url);

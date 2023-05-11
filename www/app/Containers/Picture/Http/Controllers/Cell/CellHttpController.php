@@ -49,7 +49,7 @@ class CellHttpController extends HttpController
     public function tagged(
         string $tag,
         GetTaggedCellPicturesAction $action,
-        FindRedirectTagSlugByLocaleTask $findRedirectTagSlugByLocaleTask
+        FindRedirectTagSlugByLocaleTask $findRedirectTagSlugByLocaleTask,
     ): Response|RedirectResponse {
         try {
             [$viewData, $pageMetaDto] = $action->run($tag);

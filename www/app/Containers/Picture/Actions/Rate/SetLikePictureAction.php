@@ -11,8 +11,10 @@ use App\Ship\Parents\Actions\Action;
 
 class SetLikePictureAction extends Action
 {
-    public function __construct(private readonly GetUserIpFromRequestTask $getUserIpFromRequestTask, private readonly LikePictureAction $likePictureAction)
-    {
+    public function __construct(
+        private readonly GetUserIpFromRequestTask $getUserIpFromRequestTask,
+        private readonly LikePictureAction $likePictureAction,
+    ) {
     }
 
     /**

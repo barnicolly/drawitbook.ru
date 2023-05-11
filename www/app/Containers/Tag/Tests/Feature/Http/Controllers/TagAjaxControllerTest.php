@@ -32,7 +32,7 @@ class TagAjaxControllerTest extends TestCase
                     'data' => [
                         'cloudItems',
                     ],
-                ]
+                ],
             );
     }
 }

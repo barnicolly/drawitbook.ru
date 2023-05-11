@@ -13,8 +13,14 @@ use App\Ship\Parents\Actions\Action;
 
 class AttachPictureOnAlbumAction extends Action
 {
-    public function __construct(private readonly PhotoService $apiPhotoService, private readonly GetVkAlbumByIdTask $getVkAlbumByIdTask, private readonly CreateVkAlbumPictureTask $createVkAlbumPictureTask, private readonly GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask, private readonly GetArtByIdWithFilesAction $getArtByIdWithFilesAction, private readonly FormHashTagsTask $formHashTagsTask)
-    {
+    public function __construct(
+        private readonly PhotoService $apiPhotoService,
+        private readonly GetVkAlbumByIdTask $getVkAlbumByIdTask,
+        private readonly CreateVkAlbumPictureTask $createVkAlbumPictureTask,
+        private readonly GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask,
+        private readonly GetArtByIdWithFilesAction $getArtByIdWithFilesAction,
+        private readonly FormHashTagsTask $formHashTagsTask,
+    ) {
     }
 
     /**

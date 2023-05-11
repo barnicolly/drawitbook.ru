@@ -18,7 +18,7 @@ trait CreateVkAlbumTrait
         return VkAlbumPictureModel::factory()->create(
             [
                 VkAlbumPictureColumnsEnum::VK_ALBUM_ID => $vkAlbum->id,
-            ]
+            ],
         );
     }
 }

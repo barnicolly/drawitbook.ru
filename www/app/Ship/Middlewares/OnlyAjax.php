@@ -11,7 +11,7 @@ class OnlyAjax implements MiddlewareContract
     /**
      * Handle an incoming request.
      *
-     * @param  Request $request
+     * @param Request $request
      */
     public function handle($request, Closure $next): mixed
     {

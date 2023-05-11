@@ -36,7 +36,7 @@ class UserServiceProvider extends ServiceProvider
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Configs/config.php'),
-            $this->moduleNameLower
+            $this->moduleNameLower,
         );
     }
 

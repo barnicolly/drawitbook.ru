@@ -14,7 +14,7 @@ trait CreateClaimTrait
     public function createUserClaim(
         PictureModel $picture,
         SprClaimReasonModel $reason,
-        array $data = []
+        array $data = [],
     ): UserClaimModel {
         $ip = app(GetUserIpFromRequestTask::class)->run();
         $data = array_merge($data, [

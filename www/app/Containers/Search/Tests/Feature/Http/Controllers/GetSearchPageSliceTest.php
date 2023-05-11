@@ -57,7 +57,7 @@ class GetSearchPageSliceTest extends TestCase
                             'left',
                         ],
                     ],
-                ]
+                ],
             );
         $result = $response->decodeResponseJson();
         self::assertSame($page, Arr::get($result, 'meta.pagination.page'));

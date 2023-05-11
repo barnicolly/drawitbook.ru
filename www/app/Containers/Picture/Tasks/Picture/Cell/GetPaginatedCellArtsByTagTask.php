@@ -12,8 +12,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class GetPaginatedCellArtsByTagTask extends Task
 {
-    public function __construct(private readonly GetArtsByIdsAction $getArtsByIdsAction, private readonly GetPaginatedPicturesIdsByTagIdTask $getPaginatedPicturesIdsByTagIdTask)
-    {
+    public function __construct(
+        private readonly GetArtsByIdsAction $getArtsByIdsAction,
+        private readonly GetPaginatedPicturesIdsByTagIdTask $getPaginatedPicturesIdsByTagIdTask,
+    ) {
     }
 
     public function run(int $tagId): LengthAwarePaginator

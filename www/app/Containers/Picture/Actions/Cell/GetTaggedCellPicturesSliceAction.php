@@ -14,8 +14,11 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetTaggedCellPicturesSliceAction extends Action
 {
-    public function __construct(private readonly GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask, private readonly GetTagBySeoNameTask $getTagBySeoNameTask, private readonly CreateCellSliceResultsAction $createCellSliceResultsAction)
-    {
+    public function __construct(
+        private readonly GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask,
+        private readonly GetTagBySeoNameTask $getTagBySeoNameTask,
+        private readonly CreateCellSliceResultsAction $createCellSliceResultsAction,
+    ) {
     }
 
     /**

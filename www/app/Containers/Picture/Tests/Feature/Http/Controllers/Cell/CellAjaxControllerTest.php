@@ -47,7 +47,7 @@ class CellAjaxControllerTest extends TestCase
                             'left',
                         ],
                     ],
-                ]
+                ],
             );
         $result = $response->decodeResponseJson();
         self::assertSame($page, Arr::get($result, 'meta.pagination.page'));

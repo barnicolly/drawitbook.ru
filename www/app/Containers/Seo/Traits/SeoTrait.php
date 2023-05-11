@@ -15,7 +15,7 @@ trait SeoTrait
         string $title,
         ?string $description = null,
         ?string $keywords = null,
-        ?string $robots = null
+        ?string $robots = null,
     ): self {
         $meta = $this->setTitle($title);
         if ($description) {

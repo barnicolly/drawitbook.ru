@@ -8,8 +8,10 @@ use App\Ship\Parents\Actions\Action;
 
 class GetArtsByIdsAction extends Action
 {
-    public function __construct(private readonly GetPicturesByIdsTask $getPicturesByIdsTask, private readonly FormPicturesDtoTask $formPicturesDtoTask)
-    {
+    public function __construct(
+        private readonly GetPicturesByIdsTask $getPicturesByIdsTask,
+        private readonly FormPicturesDtoTask $formPicturesDtoTask,
+    ) {
     }
 
     public function run(array $ids, bool $withHiddenTags = false): array

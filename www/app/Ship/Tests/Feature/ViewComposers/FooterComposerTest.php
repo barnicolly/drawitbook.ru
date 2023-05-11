@@ -33,24 +33,24 @@ class FooterComposerTest extends TestCase
         $subTag1 = $this->createTag();
         $subTag2 = $this->createTag();
         $menuItemParent1 = $this->createMenuLevel(
-            [MenuLevelsColumnsEnum::SPR_TAG_ID => $parentTag1, MenuLevelsColumnsEnum::COLUMN => 1]
+            [MenuLevelsColumnsEnum::SPR_TAG_ID => $parentTag1, MenuLevelsColumnsEnum::COLUMN => 1],
         );
         $this->createMenuLevel(
             [
                 MenuLevelsColumnsEnum::SPR_TAG_ID => $subTag1,
                 MenuLevelsColumnsEnum::COLUMN => 1,
                 MenuLevelsColumnsEnum::PARENT_LEVEL_ID => $menuItemParent1,
-            ]
+            ],
         );
         $menuItemParent2 = $this->createMenuLevel(
-            [MenuLevelsColumnsEnum::SPR_TAG_ID => $parentTag2->id, MenuLevelsColumnsEnum::COLUMN => 2]
+            [MenuLevelsColumnsEnum::SPR_TAG_ID => $parentTag2->id, MenuLevelsColumnsEnum::COLUMN => 2],
         );
         $this->createMenuLevel(
             [
                 MenuLevelsColumnsEnum::SPR_TAG_ID => $subTag2,
                 MenuLevelsColumnsEnum::COLUMN => 1,
                 MenuLevelsColumnsEnum::PARENT_LEVEL_ID => $menuItemParent2,
-            ]
+            ],
         );
         $tagCollections = new Collection([$parentTag1, $parentTag2, $subTag1, $subTag2]);
 

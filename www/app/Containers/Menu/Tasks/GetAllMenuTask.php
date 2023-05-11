@@ -23,9 +23,19 @@ class GetAllMenuTask extends Task
             MenuLevelsColumnsEnum::tCOLUMN,
         ];
         if ($locale === LangEnum::EN) {
-            $select = [...$select, TagsColumnsEnum::tNAME_EN . ' as name', TagsColumnsEnum::tSLUG_EN . ' as seo', MenuLevelsColumnsEnum::tCUSTOM_NAME_EN . ' as customName'];
+            $select = [
+                ...$select,
+                TagsColumnsEnum::tNAME_EN . ' as name',
+                TagsColumnsEnum::tSLUG_EN . ' as seo',
+                MenuLevelsColumnsEnum::tCUSTOM_NAME_EN . ' as customName',
+            ];
         } else {
-            $select = [...$select, TagsColumnsEnum::tNAME, TagsColumnsEnum::tSEO, MenuLevelsColumnsEnum::tCUSTOM_NAME_RU . ' as customName'];
+            $select = [
+                ...$select,
+                TagsColumnsEnum::tNAME,
+                TagsColumnsEnum::tSEO,
+                MenuLevelsColumnsEnum::tCUSTOM_NAME_RU . ' as customName',
+            ];
         }
         $result = $this->repository->getModel()
             ->select($select)
@@ -37,7 +47,7 @@ class GetAllMenuTask extends Task
                     if ($locale === LangEnum::RU) {
                         $query->where(MenuLevelsColumnsEnum::tSHOW_RU, 1);
                     }
-                }
+                },
             )
             ->leftJoin(TagsColumnsEnum::TABlE, TagsColumnsEnum::tID, '=', MenuLevelsColumnsEnum::tSPR_TAG_ID)
             ->orderBy(MenuLevelsColumnsEnum::tPARENT_LEVEL_ID, 'asc')

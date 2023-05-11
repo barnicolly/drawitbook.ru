@@ -25,11 +25,11 @@ foreach (config('translator.available_locales') as $prefix) {
                                 ->name($prefix . '_arts.cell');
                             Route::get('/{tag}', [CellHttpController::class, 'tagged'])
                                 ->name($prefix . '_arts.cell.tagged');
-                        }
+                        },
                     );
                     Route::get('/{tag}/slice', (new CellAjaxController())->slice(...))
                         ->middleware('ajax');
-                }
+                },
             );
             Route::group(
                 [
@@ -46,7 +46,7 @@ foreach (config('translator.available_locales') as $prefix) {
                         ],
                         static function (): void {
                             Route::post('/{id}/like', (new RateAjaxController())->like(...));
-                        }
+                        },
                     );
                     Route::group(
                         [
@@ -54,10 +54,10 @@ foreach (config('translator.available_locales') as $prefix) {
                         ],
                         static function (): void {
                             Route::post('/{id}/claim', (new ClaimAjaxController())->register(...));
-                        }
+                        },
                     );
-                }
+                },
             );
-        }
+        },
     );
 }

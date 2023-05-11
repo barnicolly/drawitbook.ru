@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
             [
                 'tag' => TagsModel::class,
                 'art' => PictureModel::class,
-            ]
+            ],
         );
 
         if (config('app.forceHttps') === true) {

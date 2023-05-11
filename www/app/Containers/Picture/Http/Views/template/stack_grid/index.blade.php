@@ -12,10 +12,11 @@
          data-page="{{ $page ?? 1 }}"
          itemscope=""
          itemtype="http://schema.org/SiteNavigationElement">
-            @include('picture::template.stack_grid.elements')
+        @include('picture::template.stack_grid.elements')
     </div>
     <?php
     /** @var \App\Ship\Dto\PaginationDto $paginationData */
+
     ?>
     @if (isset($paginationData))
         @if ($paginationData->left)

@@ -1,5 +1,3 @@
-root = true
-
 [*]
 charset = utf-8
 end_of_line = lf
@@ -77,10 +75,10 @@ ij_php_call_parameters_wrap = on_every_item
 ij_php_catch_on_new_line = false
 ij_php_category_weight = 28
 ij_php_class_brace_style = next_line
-ij_php_comma_after_last_argument = false
+ij_php_comma_after_last_argument = true
 ij_php_comma_after_last_array_element = true
 ij_php_comma_after_last_closure_use_var = false
-ij_php_comma_after_last_parameter = false
+ij_php_comma_after_last_parameter = true
 ij_php_concat_spaces = true
 ij_php_copyright_weight = 28
 ij_php_deprecated_weight = 28

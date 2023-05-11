@@ -10,8 +10,12 @@ use Prettus\Repository\Exceptions\RepositoryException;
 
 class GetRelativeArtsAction extends Action
 {
-    public function __construct(private readonly SearchService $searchService, private readonly GetInterestingPictureIdsTask $getInterestingPictureIdsTask, private readonly SeparateTagsForHiddenAndShowIdsTask $separateTagsForHiddenAndShowIdsTask, private readonly GetArtsByIdsAction $getArtsByIdsAction)
-    {
+    public function __construct(
+        private readonly SearchService $searchService,
+        private readonly GetInterestingPictureIdsTask $getInterestingPictureIdsTask,
+        private readonly SeparateTagsForHiddenAndShowIdsTask $separateTagsForHiddenAndShowIdsTask,
+        private readonly GetArtsByIdsAction $getArtsByIdsAction,
+    ) {
     }
 
     /**

@@ -12,8 +12,11 @@ use App\Ship\Parents\Actions\Action;
 
 class CreateUserClaimIfNotExistAction extends Action
 {
-    public function __construct(private readonly GetUserClaimByPictureIdTask $getUserClaimByPictureIdTask, private readonly CreateUserClaimTask $createUserClaimTask, private readonly GetUserIpFromRequestTask $getUserIpFromRequestTask)
-    {
+    public function __construct(
+        private readonly GetUserClaimByPictureIdTask $getUserClaimByPictureIdTask,
+        private readonly CreateUserClaimTask $createUserClaimTask,
+        private readonly GetUserIpFromRequestTask $getUserIpFromRequestTask,
+    ) {
     }
 
     /**

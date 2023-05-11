@@ -11,8 +11,12 @@ use App\Ship\Parents\Actions\Action;
 
 class DetachPictureFromAlbumAction extends Action
 {
-    public function __construct(private readonly PhotoService $apiPhotoService, private readonly GetVkAlbumByIdTask $getVkAlbumByIdTask, private readonly GetVkAlbumPictureByVkAlbumIdAndPictureIdTask $getVkAlbumPictureByVkAlbumIdAndPictureIdTask, private readonly DeleteVkAlbumPictureByIdTask $deleteVkAlbumPictureByIdTask)
-    {
+    public function __construct(
+        private readonly PhotoService $apiPhotoService,
+        private readonly GetVkAlbumByIdTask $getVkAlbumByIdTask,
+        private readonly GetVkAlbumPictureByVkAlbumIdAndPictureIdTask $getVkAlbumPictureByVkAlbumIdAndPictureIdTask,
+        private readonly DeleteVkAlbumPictureByIdTask $deleteVkAlbumPictureByIdTask,
+    ) {
     }
 
     /**

@@ -15,8 +15,13 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetArtAction extends Action
 {
-    public function __construct(private readonly GetPopularTagsAction $getPopularTagsAction, private readonly GetRelativeArtsAction $getRelativeArtsAction, private readonly SeoService $seoService, private readonly RouteService $routeService, private readonly GetArtByIdAction $getArtByIdAction)
-    {
+    public function __construct(
+        private readonly GetPopularTagsAction $getPopularTagsAction,
+        private readonly GetRelativeArtsAction $getRelativeArtsAction,
+        private readonly SeoService $seoService,
+        private readonly RouteService $routeService,
+        private readonly GetArtByIdAction $getArtByIdAction,
+    ) {
     }
 
     /**
@@ -51,12 +56,15 @@ class GetArtAction extends Action
 
     private function getAlternateLinks(int $id): array
     {
-        return [[
-            'lang' => LangEnum::RU,
-            'href' => $this->routeService->getRouteArt($id, true, LangEnum::RU),
-        ], [
-            'lang' => LangEnum::EN,
-            'href' => $this->routeService->getRouteArt($id, true, LangEnum::EN),
-        ]];
+        return [
+            [
+                'lang' => LangEnum::RU,
+                'href' => $this->routeService->getRouteArt($id, true, LangEnum::RU),
+            ],
+            [
+                'lang' => LangEnum::EN,
+                'href' => $this->routeService->getRouteArt($id, true, LangEnum::EN),
+            ],
+        ];
     }
 }

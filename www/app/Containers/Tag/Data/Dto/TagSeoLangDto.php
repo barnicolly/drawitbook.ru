@@ -22,10 +22,20 @@ class TagSeoLangDto extends Dto
 
         if ($locale === LangEnum::RU) {
             $current = new TagSeoDto(locale: LangEnum::fromValue($locale), slug: $model->seo, name: $model->name);
-            $alternative = new TagSeoDto(locale: LangEnum::fromValue($alternativeLang), slug: $model->slug_en, name: $model->name_en);
+            $alternative = new TagSeoDto(
+                locale: LangEnum::fromValue($alternativeLang),
+                slug: $model->slug_en,
+                name: $model->name_en
+            );
         } else {
-            $current = new TagSeoDto(locale: LangEnum::fromValue($locale), slug: $model->slug_en, name: $model->name_en);
-            $alternative = new TagSeoDto(locale: LangEnum::fromValue($alternativeLang), slug: $model->seo, name: $model->name);
+            $current = new TagSeoDto(
+                locale: LangEnum::fromValue($locale), slug: $model->slug_en, name: $model->name_en
+            );
+            $alternative = new TagSeoDto(
+                locale: LangEnum::fromValue($alternativeLang),
+                slug: $model->seo,
+                name: $model->name
+            );
         }
         return new self(current: $current, alternative: $alternative);
     }

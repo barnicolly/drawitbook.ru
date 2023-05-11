@@ -17,5 +17,5 @@ Route::group(
         Route::get('password/reset/{token}', (new LoginController())->dump(...));
         Route::post('password/reset', (new LoginController())->dump(...));
         Route::get('/logout', (new LoginController())->logout(...));
-    }
+    },
 );

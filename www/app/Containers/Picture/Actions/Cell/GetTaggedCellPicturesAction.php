@@ -22,8 +22,14 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetTaggedCellPicturesAction extends Action
 {
-    public function __construct(private readonly RouteService $routeService, private readonly SeoService $seoService, private readonly FormCellPageAlternativeLocaleLinksTask $formCellPageAlternativeLocaleLinksTask, private readonly GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask, private readonly GetTagBySeoNameTask $getTagBySeoNameTask, private readonly CreateCellResultsAction $createCellResultsAction)
-    {
+    public function __construct(
+        private readonly RouteService $routeService,
+        private readonly SeoService $seoService,
+        private readonly FormCellPageAlternativeLocaleLinksTask $formCellPageAlternativeLocaleLinksTask,
+        private readonly GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask,
+        private readonly GetTagBySeoNameTask $getTagBySeoNameTask,
+        private readonly CreateCellResultsAction $createCellResultsAction,
+    ) {
     }
 
     /**
@@ -54,7 +60,7 @@ class GetTaggedCellPicturesAction extends Action
         $viewData['alternateLinks'] = count($alternateLinks) > 1 ? $alternateLinks : [];
         [$title, $description] = $this->seoService->formCellTaggedTitleAndDescription(
             $paginationData->total,
-            $tagName
+            $tagName,
         );
         $pageMetaDto = new PageMetaDto(title: $title, description: $description);
         $firstArt = Arr::first($viewData['arts']);
@@ -69,7 +75,7 @@ class GetTaggedCellPicturesAction extends Action
         }
         $breadCrumbs = new Collection();
         $breadCrumbs->push(
-            new BreadcrumbDto(title: __('breadcrumbs.pixel_arts'), url: $this->routeService->getRouteArtsCell())
+            new BreadcrumbDto(title: __('breadcrumbs.pixel_arts'), url: $this->routeService->getRouteArtsCell()),
         );
         $breadCrumbs->push(new BreadcrumbDto(title: Str::ucfirst($tagName)));
         $viewData['breadcrumbs'] = $breadCrumbs;

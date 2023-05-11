@@ -16,7 +16,8 @@ class GetPictureIdForPostingTask extends Task
      */
     public function run(): int
     {
-        $pictureIds = PictureModel::flagged(FlagsEnum::PICTURE_IN_VK_POSTING)->select([PictureColumnsEnum::tId])->get()->pluck(PictureColumnsEnum::ID)->toArray();
+        $pictureIds = PictureModel::flagged(FlagsEnum::PICTURE_IN_VK_POSTING)->select([PictureColumnsEnum::tId])
+            ->get()->pluck(PictureColumnsEnum::ID)->toArray();
         if (!blank($pictureIds)) {
             $pictureIdsString = implode(',', $pictureIds);
             // TODO-misha переписать на query;
@@ -47,8 +48,8 @@ where pictures.id in ({$pictureIdsString})
       and (lastPostingDate.dayDiff > 10 or lastPostingDate.dayDiff is null)
 group by pictures.id
 order by dayDiff DESC
-limit 1"
-                )->getValue(DB::connection()->getQueryGrammar())
+limit 1",
+                )->getValue(DB::connection()->getQueryGrammar()),
             );
             if ($results) {
                 return $results[0]->id;

@@ -1,5 +1,6 @@
 <figure class="fullscreen-image" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
     <?php
+
     $primaryImage = $art['images']['primary'];
     $optimizedImage = $art['images']['optimized'] ?? [];
     $artUrlPath = formArtUrlPath($primaryImage['path']); ?>
@@ -11,7 +12,8 @@
                  style="padding-top:{{ (int) ($primaryImage['height'] / $primaryImage['width'] * 100) }}%;">
                 <picture>
                     @if (!empty($optimizedImage))
-                        <?php $optimizedImagePath = formArtUrlPath($optimizedImage['path']); ?>
+                            <?php
+                            $optimizedImagePath = formArtUrlPath($optimizedImage['path']); ?>
                         <source type="image/webp" data-srcset="{{ $optimizedImagePath }}"/>
                     @endif
                     <source type="{{ $primaryImage['mime_type'] }}"

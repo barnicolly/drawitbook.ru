@@ -31,7 +31,7 @@ class CreateCellSliceResultsAction extends Action
         if ($paginationData->hasMore) {
             $countLeftArtsText = $this->translationService->getPluralForm(
                 $paginationData->left,
-                LangEnum::fromValue($locale)
+                LangEnum::fromValue($locale),
             );
         }
         $getCellTaggedResultDto = new GetCellTaggedResultDto(

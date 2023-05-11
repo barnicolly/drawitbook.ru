@@ -21,7 +21,7 @@ class CellAjaxController extends AjaxController
     public function slice(
         string $tag,
         CellTaggedArtsSliceAjaxRequest $request,
-        GetTaggedCellPicturesSliceAction $action
+        GetTaggedCellPicturesSliceAction $action,
     ): JsonResponse {
         try {
             [$getCellTaggedResultDto, $paginationMetaDto] = $action->run($tag);

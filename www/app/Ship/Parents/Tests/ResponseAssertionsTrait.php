@@ -35,7 +35,7 @@ trait ResponseAssertionsTrait
             Assert::assertSame(
                 count($unusedMiddlewares) + count($extraMiddlewares),
                 0,
-                "Route `{$routeName}` " . $messages
+                "Route `{$routeName}` " . $messages,
             );
         } else {
             $unusedMiddlewares = array_diff($middlewares, $usedMiddlewares);
@@ -44,8 +44,8 @@ trait ResponseAssertionsTrait
                 $unusedMiddlewares,
                 "Route `{$routeName}` does not use expected `" . implode(
                     ', ',
-                    $unusedMiddlewares
-                ) . '` middleware(s)'
+                    $unusedMiddlewares,
+                ) . '` middleware(s)',
             );
         }
     }

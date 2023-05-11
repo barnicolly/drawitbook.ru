@@ -15,8 +15,12 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GetCellPicturesIndexAction extends Action
 {
-    public function __construct(private readonly SeoService $seoService, private readonly RouteService $routeService, private readonly GetDefaultShareImageTask $getDefaultShareImageTask, private readonly GetInterestingArtsAction $getInterestingArtsAction)
-    {
+    public function __construct(
+        private readonly SeoService $seoService,
+        private readonly RouteService $routeService,
+        private readonly GetDefaultShareImageTask $getDefaultShareImageTask,
+        private readonly GetInterestingArtsAction $getInterestingArtsAction,
+    ) {
     }
 
     /**
@@ -35,7 +39,7 @@ class GetCellPicturesIndexAction extends Action
         );
         $breadCrumbs = new Collection();
         $breadCrumbs->push(
-            new BreadcrumbDto(title: __('breadcrumbs.pixel_arts'))
+            new BreadcrumbDto(title: __('breadcrumbs.pixel_arts')),
         );
         $alternateLinks = $this->getAlternateLinks();
         $viewData = [
@@ -48,12 +52,15 @@ class GetCellPicturesIndexAction extends Action
 
     private function getAlternateLinks(): array
     {
-        return [[
-            'lang' => LangEnum::RU,
-            'href' => $this->routeService->getRouteArtsCell([], true, LangEnum::RU),
-        ], [
-            'lang' => LangEnum::EN,
-            'href' => $this->routeService->getRouteArtsCell([], true, LangEnum::EN),
-        ]];
+        return [
+            [
+                'lang' => LangEnum::RU,
+                'href' => $this->routeService->getRouteArtsCell([], true, LangEnum::RU),
+            ],
+            [
+                'lang' => LangEnum::EN,
+                'href' => $this->routeService->getRouteArtsCell([], true, LangEnum::EN),
+            ],
+        ];
     }
 }

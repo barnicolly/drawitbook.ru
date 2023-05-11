@@ -16,19 +16,22 @@ abstract class MiddlewareTestCase extends BaseTestCase
     {
         Route::get(
             $url,
-            static fn (): string => 'Ok'
+            static fn (): string => 'Ok',
         )->middleware($middlewares);
         Route::post(
             $url,
-            static fn (): string => 'Ok'
+            static fn (): string => 'Ok',
         )->middleware($middlewares);
     }
 
     /**
      * @return void
      */
-    protected function assertCalledNextMiddleware(MiddlewareContract $middleware, Request $request, bool $expectedCalledStatus): void
-    {
+    protected function assertCalledNextMiddleware(
+        MiddlewareContract $middleware,
+        Request $request,
+        bool $expectedCalledStatus,
+    ): void {
         $called = false;
         $next = static function (Request $request) use (&$called): void {
             $called = true;

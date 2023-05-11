@@ -21,7 +21,7 @@
                     <li class="breadcrumb-item active" itemprop="itemListElement" itemscope
                         itemtype="https://schema.org/ListItem">
                         <span itemprop="name"> {{ $breadcrumb->title }}</span>
-                        <meta itemprop="position" content="{{ ++$loop->index }}" />
+                        <meta itemprop="position" content="{{ ++$loop->index }}"/>
                     </li>
                 @endif
             @endforeach

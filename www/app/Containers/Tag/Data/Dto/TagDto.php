@@ -29,11 +29,11 @@ final class TagDto extends Dto
         $locale ??= app()->getLocale();
         $seoLang = TagSeoLangDto::fromModel($model, $locale);
         $link = $seoLang->current->slug
-        ? app(RouteService::class)->getRouteArtsCellTagged($seoLang->current->slug)
-        : null;
+            ? app(RouteService::class)->getRouteArtsCellTagged($seoLang->current->slug)
+            : null;
         $tagName = $seoLang->current->name
-             ? mbUcfirst($seoLang->current->name)
-        : null;
+            ? mbUcfirst($seoLang->current->name)
+            : null;
         if ($tagName) {
             $prefix = __('common.pixel_arts');
             $linkTitle = "{$prefix} «{$tagName}»";

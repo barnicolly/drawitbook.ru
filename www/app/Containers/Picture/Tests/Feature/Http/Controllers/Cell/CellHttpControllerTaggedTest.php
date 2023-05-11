@@ -47,7 +47,7 @@ class CellHttpControllerTaggedTest extends TestCase
         $path = asset(getArtsFolder() . $image->path);
         $response->assertSee(
             "<meta property=\"og:image\" content=\"{$path}\">",
-            false
+            false,
         );
     }
 
@@ -122,11 +122,11 @@ class CellHttpControllerTaggedTest extends TestCase
         $alternativeUrl = $this->routeService->getRouteArtsCellTagged(
             $tagDto->seo_lang->alternative->slug,
             true,
-            $alternativeLang
+            $alternativeLang,
         );
         $response->assertSee(
             "<link rel=\"alternate\" href=\"{$alternativeUrl}\" hreflang=\"{$alternativeLang}\">",
-            false
+            false,
         );
     }
 
@@ -158,7 +158,7 @@ class CellHttpControllerTaggedTest extends TestCase
         $response->assertSee("<title>Pixel arts «{$tag->name_en}» ☆ {$countPictures} arts</title>", false);
         $response->assertSee(
             "<meta name=\"description\" content=\"Pixel arts ✎ {$tag->name_en} ➣ {$countPictures} arts ➣ Black/white and colored schemes of pixel arts from light and simple to complex.\">",
-            false
+            false,
         );
     }
 
@@ -193,7 +193,7 @@ class CellHttpControllerTaggedTest extends TestCase
         $response->assertSee("<title>Рисунки по клеточкам «{$tag->name}» ☆ {$countPictures} рисунка</title>", false);
         $response->assertSee(
             "<meta name=\"description\" content=\"Рисунки по клеточкам ✎ {$tag->name} ➣ {$countPictures} рисунка ➣ Схемы чёрно-белых и цветных рисунков от легких и простых до сложных.\">",
-            false
+            false,
         );
     }
 }

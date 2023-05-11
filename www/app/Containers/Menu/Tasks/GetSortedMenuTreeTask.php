@@ -7,8 +7,10 @@ use App\Ship\Services\Route\RouteService;
 
 class GetSortedMenuTreeTask extends Task
 {
-    public function __construct(private readonly RouteService $routeService, private readonly GetAllMenuTask $getAllMenuTask)
-    {
+    public function __construct(
+        private readonly RouteService $routeService,
+        private readonly GetAllMenuTask $getAllMenuTask,
+    ) {
     }
 
     public function run(string $locale): array

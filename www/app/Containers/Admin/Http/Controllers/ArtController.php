@@ -24,7 +24,7 @@ class ArtController extends HttpController
      */
     public function setVkPostingOn(
         ArtSetVkPostingRequest $request,
-        PictureSetVkPostingFlagTask $task
+        PictureSetVkPostingFlagTask $task,
     ): JsonResponse {
         try {
             $task->run($request->id);
@@ -40,7 +40,7 @@ class ArtController extends HttpController
      */
     public function setVkPostingOff(
         ArtSetVkPostingRequest $request,
-        PictureUnsetVkPostingFlagTask $task
+        PictureUnsetVkPostingFlagTask $task,
     ): JsonResponse {
         try {
             $task->run($request->id);
@@ -69,8 +69,10 @@ class ArtController extends HttpController
     /**
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\AttachPictureOnAlbumTest
      */
-    public function attachPictureOnAlbum(AttachPictureOnAlbumRequest $request, AttachPictureOnAlbumAction $action): JsonResponse
-    {
+    public function attachPictureOnAlbum(
+        AttachPictureOnAlbumRequest $request,
+        AttachPictureOnAlbumAction $action,
+    ): JsonResponse {
         try {
             $action->run($request->id, $request->album_id);
         } catch (Throwable $e) {
@@ -83,8 +85,10 @@ class ArtController extends HttpController
     /**
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\AttachPictureOnAlbumTest
      */
-    public function detachPictureFromAlbum(DetachPictureFromAlbumRequest $request, DetachPictureFromAlbumAction $action): JsonResponse
-    {
+    public function detachPictureFromAlbum(
+        DetachPictureFromAlbumRequest $request,
+        DetachPictureFromAlbumAction $action,
+    ): JsonResponse {
         try {
             $action->run($request->id, $request->album_id);
         } catch (Throwable $e) {

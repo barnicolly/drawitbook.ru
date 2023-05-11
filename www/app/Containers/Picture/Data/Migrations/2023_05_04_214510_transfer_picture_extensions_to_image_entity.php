@@ -17,7 +17,7 @@ return new class extends Migration {
                     'height' => $pictureExtension->height,
                     'ext' => $pictureExtension->ext,
                     'mime_type' => $pictureExtension->mime_type,
-                ]
+                ],
             );
             DB::table('image_entities')
                 ->insert([

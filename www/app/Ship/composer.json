@@ -1,7 +1,7 @@
 {
-  "require": {
-      "nwidart/laravel-modules": "8.2",
-      "prettus/l5-repository": "^2.8.0"
-  },
-  "require-dev": {}
+    "require": {
+        "nwidart/laravel-modules": "8.2",
+        "prettus/l5-repository": "^2.8.0"
+    },
+    "require-dev": {}
 }

@@ -32,11 +32,11 @@ class ShipServiceProvider extends ServiceProvider
             [
                 app_path('Ship/Configs/modules.php') => config_path('modules.php'),
             ],
-            'config'
+            'config',
         );
         $this->mergeConfigFrom(
             app_path('Ship/Configs/modules.php'),
-            'modules'
+            'modules',
         );
     }
 }

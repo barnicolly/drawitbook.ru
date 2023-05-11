@@ -30,7 +30,7 @@ class VkAlbumModel extends CoreModel
         return $this->hasMany(
             VkAlbumPictureModel::class,
             VkAlbumPictureColumnsEnum::VK_ALBUM_ID,
-            VkAlbumColumnsEnum::ID
+            VkAlbumColumnsEnum::ID,
         );
     }
 

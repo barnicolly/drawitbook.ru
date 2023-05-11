@@ -12,7 +12,7 @@ use App\Ship\Parents\Tasks\Task;
 class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
 {
     public function __construct(
-        private readonly GetHiddenVkTagsIdsTask $getHiddenVkTagsIdsTask
+        private readonly GetHiddenVkTagsIdsTask $getHiddenVkTagsIdsTask,
     ) {
     }
 
@@ -26,7 +26,7 @@ class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
                 'pictures' => static function (BuilderContract $q) use ($artId): void {
                     $q->where(PictureColumnsEnum::tId, '=', $artId);
                 },
-            ]
+            ],
         )
             ->whereNotIn(TagsColumnsEnum::tID, $hiddenVkTagIds)
             ->get([TagsColumnsEnum::tID, TagsColumnsEnum::tNAME])

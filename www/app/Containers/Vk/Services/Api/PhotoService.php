@@ -41,7 +41,7 @@ class PhotoService
                 'owner_id' => '-' . $this->instance->groupId,
                 'photo_id' => $photoId,
             ],
-            $data
+            $data,
         );
         $response = $this->instance->api->request('photos.edit', $data);
     }
@@ -96,7 +96,7 @@ class PhotoService
     {
         $response = $this->instance->api->request(
             'photos.getWallUploadServer',
-            ['group_id' => $this->instance->groupId]
+            ['group_id' => $this->instance->groupId],
         );
         return $response['response']['upload_url'];
     }
@@ -122,7 +122,7 @@ class PhotoService
                         'contents' => fopen($filePath, 'r'),
                     ],
                 ],
-            ]
+            ],
         );
         return json_decode($res->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
     }

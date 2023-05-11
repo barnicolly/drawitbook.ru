@@ -33,23 +33,23 @@ class SeoServiceProvider extends ServiceProvider
     {
         $this->publishes([
             module_path($this->moduleName, 'Configs/config.php') => config_path(
-                $this->moduleNameLower . '.php'
+                $this->moduleNameLower . '.php',
             ),
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Configs/config.php'),
-            $this->moduleNameLower
+            $this->moduleNameLower,
         );
 
         $this->publishes([
             module_path($this->moduleName, 'Configs/breadcrumbs.php') => config_path(
-                'breadcrumbs.php'
+                'breadcrumbs.php',
             ),
         ], 'config');
 
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Configs/breadcrumbs.php'),
-            'breadcrumbs'
+            'breadcrumbs',
         );
 
         $this->publishes([
@@ -58,7 +58,7 @@ class SeoServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Configs/seotools.php'),
-            'seotools'
+            'seotools',
         );
     }
 

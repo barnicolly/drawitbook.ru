@@ -17,7 +17,7 @@ class WallService
                 'owner_id' => '-' . $this->instance->groupId,
                 'post_id' => $postId,
             ],
-            $data
+            $data,
         );
         try {
             $response = $this->instance->api->request('wall.edit', $data);
@@ -33,7 +33,7 @@ class WallService
                 'from_group' => 1,
                 'close_comments' => 1,
             ],
-            $data
+            $data,
         );
         $response = $this->instance->api->request('wall.post', $data);
         if ($response) {

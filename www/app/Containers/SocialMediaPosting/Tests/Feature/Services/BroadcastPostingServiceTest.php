@@ -47,10 +47,13 @@ class BroadcastPostingServiceTest extends TestCase
 
         $mock = $this->createMock(VkWallPostingStrategy::class);
         $strategyParams = [];
-        $this->app->bind(VkWallPostingStrategy::class, static function ($app, $params) use ($mock, &$strategyParams): MockObject&VkWallPostingStrategy {
-            $strategyParams = $params;
-            return $mock;
-        });
+        $this->app->bind(
+            VkWallPostingStrategy::class,
+            static function ($app, $params) use ($mock, &$strategyParams): MockObject&VkWallPostingStrategy {
+                $strategyParams = $params;
+                return $mock;
+            },
+        );
 
         $command = app(BroadcastPostingService::class);
         $command->broadcast();
