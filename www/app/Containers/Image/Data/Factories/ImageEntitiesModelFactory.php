@@ -24,7 +24,7 @@ class ImageEntitiesModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array{entity_id: Factory<PictureModel>, entity_type: class-string<PictureModel>}
+     * @return array
      */
     public function definition(): array
     {

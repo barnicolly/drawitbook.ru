@@ -21,7 +21,7 @@ class MenuLevelsModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array{custom_name_en: null, custom_name_ru: null, show_en: int, show_ru: int, spr_tag_id: TagsModelFactory, parent_level_id: int, column: null}
+     * @return array
      */
     public function definition(): array
     {

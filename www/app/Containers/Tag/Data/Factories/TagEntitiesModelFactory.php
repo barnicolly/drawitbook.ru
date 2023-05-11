@@ -24,7 +24,7 @@ class TagEntitiesModelFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array{picture_id: int, tag_id: int}
+     * @return array
      */
     public function definition(): array
     {

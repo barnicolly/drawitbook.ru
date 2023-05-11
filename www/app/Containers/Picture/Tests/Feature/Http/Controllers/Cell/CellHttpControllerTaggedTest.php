@@ -31,9 +31,11 @@ class CellHttpControllerTaggedTest extends TestCase
         $tagDto = TagDto::fromModel($tag, $locale);
 
         $pictures = new Collection();
+        $images = new Collection();
         for ($index = 1; $index < 30; $index++) {
-            [$picture] = $this->createPictureWithFile();
+            [$picture, $image] = $this->createPictureWithFile();
             $pictures->push($picture);
+            $images->push($image);
             $this->createPictureTag($picture, $tag);
         }
 
@@ -41,7 +43,7 @@ class CellHttpControllerTaggedTest extends TestCase
 
         $response->assertOk();
         /** @var ImagesModel $image */
-        $image = $pictures->first()?->extensions()->first();
+        $image = $images->first();
         $path = asset(getArtsFolder() . $image->path);
         $response->assertSee(
             "<meta property=\"og:image\" content=\"{$path}\">",

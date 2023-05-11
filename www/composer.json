@@ -90,7 +90,7 @@
             "php artisan ide-helper:meta",
             "php artisan ide-helper:models -N"
         ],
-        "code-quality": [
+        "phpstan": [
             "php -d xdebug.mode=off ./vendor/bin/phpstan analyse --memory-limit=2G"
         ],
         "phprector": [
