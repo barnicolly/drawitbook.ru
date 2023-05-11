@@ -9,7 +9,7 @@ final class PictureColumnsEnum extends Enum
     /**
      * @var string
      */
-    public const TABlE = 'picture';
+    public const TABlE = 'pictures';
 
     /**
      * @var string

@@ -22,7 +22,7 @@ class GetPictureIdForPostingTask extends Task
             // TODO-misha переписать на query;
             $results = DB::select(
                 (string) DB::raw(
-                    "select picture.id,
+                    "select pictures.id,
   IF(lastPostingDate.dayDiff IS NULL,
      IF((select DATEDIFF(NOW(), MAX(social_media_posting_history.created_at)) as dayDiff
          from social_media_posting_history
@@ -35,17 +35,17 @@ class GetPictureIdForPostingTask extends Task
                                   limit 1) + 1),
      lastPostingDate.dayDiff
   ) as dayDiff
-from picture
+from pictures
   left join (select picture_id,
                MAX(social_media_posting_history.created_at) as dateTime,
                COUNT(social_media_posting_history.id),
                NOW(),
                DATEDIFF(NOW(), MAX(social_media_posting_history.created_at)) as dayDiff
              from social_media_posting_history
-             group by picture_id) as lastPostingDate on picture.id = lastPostingDate.picture_id
-where picture.id in ({$pictureIdsString})
+             group by picture_id) as lastPostingDate on pictures.id = lastPostingDate.picture_id
+where pictures.id in ({$pictureIdsString})
       and (lastPostingDate.dayDiff > 10 or lastPostingDate.dayDiff is null)
-group by picture.id
+group by pictures.id
 order by dayDiff DESC
 limit 1"
                 )->getValue(DB::connection()->getQueryGrammar())
