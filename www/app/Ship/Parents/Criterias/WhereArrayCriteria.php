@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Containers\Vk\Data\Criteria\VkAlbumPicture;
+namespace App\Ship\Parents\Criterias;
 
-use App\Containers\Vk\Enums\VkAlbumPictureColumnsEnum;
-use App\Ship\Parents\Criterias\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
-class WhereVkAlbumPictureVkAlbumIdsCriteria extends Criteria
+class WhereArrayCriteria extends Criteria
 {
-    public function __construct(private readonly array $vkAlbumIds)
+    public function __construct(private readonly string $field, private readonly array $array)
     {
     }
 
@@ -21,6 +19,6 @@ class WhereVkAlbumPictureVkAlbumIdsCriteria extends Criteria
      */
     public function apply($model, PrettusRepositoryInterface $repository): Builder
     {
-        return $model->whereIn(VkAlbumPictureColumnsEnum::VK_ALBUM_ID, $this->vkAlbumIds);
+        return $model->whereIn($this->field, $this->array);
     }
 }

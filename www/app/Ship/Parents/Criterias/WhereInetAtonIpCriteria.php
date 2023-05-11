@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Containers\Tag\Data\Criteria;
+namespace App\Ship\Parents\Criterias;
 
-use App\Containers\Tag\Enums\TagsColumnsEnum;
-use App\Ship\Parents\Criterias\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
-class WhereTagSlugEnIsNotNullCriteria extends Criteria
+class WhereInetAtonIpCriteria extends Criteria
 {
+    public function __construct(private readonly string $field, private readonly string $ip)
+    {
+    }
+
     /**
      * @param Builder $model
      * @param PrettusRepositoryInterface $repository
@@ -17,6 +19,6 @@ class WhereTagSlugEnIsNotNullCriteria extends Criteria
      */
     public function apply($model, PrettusRepositoryInterface $repository): Builder
     {
-        return $model->whereNotNull(TagsColumnsEnum::tSLUG_EN);
+        return $model->whereRaw($this->field . " = inet_aton({$this->ip})");
     }
 }

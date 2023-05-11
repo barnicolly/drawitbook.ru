@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Containers\Claim\Data\Criteria;
+namespace App\Ship\Parents\Criterias;
 
-use App\Containers\Claim\Enums\UserClaimColumnsEnum;
-use App\Ship\Parents\Criterias\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
-class WhereUserClaimIpCriteria extends Criteria
+class WhereStringCriteria extends Criteria
 {
-    public function __construct(private readonly string $ip)
+    public function __construct(private readonly string $field, private readonly string $value)
     {
     }
 
@@ -21,6 +19,6 @@ class WhereUserClaimIpCriteria extends Criteria
      */
     public function apply($model, PrettusRepositoryInterface $repository): Builder
     {
-        return $model->whereRaw(UserClaimColumnsEnum::IP . " = inet_aton({$this->ip})");
+        return $model->where($this->field, '=', $this->value);
     }
 }

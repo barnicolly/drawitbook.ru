@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Containers\Like\Data\Criteria;
+namespace App\Ship\Parents\Criterias;
 
-use App\Containers\Like\Enums\LikesColumnsEnum;
-use App\Ship\Parents\Criterias\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
-class WhereLikesPictureIdCriteria extends Criteria
+class WhereIntCriteria extends Criteria
 {
-    public function __construct(private readonly int $pictureId)
+    public function __construct(private readonly string $field, private readonly int $value)
     {
     }
 
@@ -21,6 +19,6 @@ class WhereLikesPictureIdCriteria extends Criteria
      */
     public function apply($model, PrettusRepositoryInterface $repository): Builder
     {
-        return $model->where(LikesColumnsEnum::PICTURE_ID, '=', $this->pictureId);
+        return $model->where($this->field, '=', $this->value);
     }
 }

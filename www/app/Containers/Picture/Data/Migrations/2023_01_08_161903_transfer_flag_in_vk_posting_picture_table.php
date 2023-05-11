@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        $pictures = PictureModel::where('in_vk_posting', 1)->get();
+        $pictures = DB::table('picture')->where('in_vk_posting', 1)->get();
         if (!blank($pictures)) {
             $pictures->each(static function (PictureModel $picture): void {
                 $picture->flag(FlagsEnum::PICTURE_IN_VK_POSTING);
