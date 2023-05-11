@@ -8,6 +8,7 @@ return (new PhpCsFixer\Config())->setRules([
     '@PSR12' => true,
     '@PHP82Migration' => true,
     '@PhpCsFixer' => true,
+    '@PHPUnit100Migration:risky' => true,
     'array_syntax' => ['syntax' => 'short'],
     'no_blank_lines_after_class_opening' => false,
     'global_namespace_import' => ['import_classes' => true, 'import_constants' => false, 'import_functions' => false],
