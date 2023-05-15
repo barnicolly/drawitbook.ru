@@ -25,8 +25,43 @@ class CreateElasticSearchIndexTask extends Task
      */
     public function run(string $index): void
     {
+        $body = '{
+            "mappings": {
+                "properties": {
+                   "tags_ru": {
+                       "type": "nested",
+                       "properties" : {
+                            "name" : {
+                              "type" : "text",
+                              "fields" : {
+                                "keyword" : {
+                                  "type" : "keyword",
+                                  "ignore_above" : 256
+                                }
+                              }
+                            }
+                        }
+                    },
+                    "tags_en": {
+                       "type": "nested",
+                       "properties" : {
+                            "name" : {
+                              "type" : "text",
+                              "fields" : {
+                                "keyword" : {
+                                  "type" : "keyword",
+                                  "ignore_above" : 256
+                                }
+                              }
+                            }
+                       }
+                    }
+                }
+            }
+        }';
         $params = [
-            'index' => $index
+            'index' => $index,
+            'body' => $body,
         ];
         $this->elasticsearch->indices()->create($params);
     }

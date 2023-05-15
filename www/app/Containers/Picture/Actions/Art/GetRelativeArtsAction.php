@@ -6,7 +6,6 @@ use App\Containers\Picture\Tasks\Picture\GetInterestingPictureIdsTask;
 use App\Containers\Search\Services\SearchService;
 use App\Containers\Tag\Tasks\SeparateTagsForHiddenAndShowIdsTask;
 use App\Ship\Parents\Actions\Action;
-use Prettus\Repository\Exceptions\RepositoryException;
 
 class GetRelativeArtsAction extends Action
 {
@@ -18,9 +17,6 @@ class GetRelativeArtsAction extends Action
     ) {
     }
 
-    /**
-     * @throws RepositoryException
-     */
     public function run(array $artTags, int $artId): array
     {
         [$shown, $hidden] = $this->separateTagsForHiddenAndShowIdsTask->run($artTags);

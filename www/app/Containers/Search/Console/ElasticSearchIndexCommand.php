@@ -29,7 +29,7 @@ class ElasticSearchIndexCommand extends Command
     }
 
     //curl -X GET "elasticsearch:9200/_cat/indices/*?v=true&s=index&pretty"
-    //curl -X GET "elasticsearch:9200/tags?pretty"
+    //curl -X GET "elasticsearch:9200/pictures?pretty"
     private function index(): void
     {
         $index = (new PictureModel())->getSearchIndex();

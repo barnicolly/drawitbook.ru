@@ -19,7 +19,7 @@ class SearchPicturesAction extends Action
 
     public function run(SearchDto $searchDto): LengthAwarePaginator
     {
-        $relativeArtIds = app(SearchInElasticSearchTask::class)->run($searchDto->query, new PictureModel());
+        $relativeArtIds = app(SearchInElasticSearchTask::class)->run($searchDto->query, new PictureModel(), app()->getLocale());
         $paginator = PaginatorFactory::create(collect($relativeArtIds));
         if ($paginator->isNotEmpty()) {
             $relativeArtIds = $paginator->getCollection()->toArray();

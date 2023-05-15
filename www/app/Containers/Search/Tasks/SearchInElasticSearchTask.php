@@ -3,6 +3,7 @@
 namespace App\Containers\Search\Tasks;
 
 use App\Containers\Search\Contracts\SearchContract;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
@@ -12,6 +13,7 @@ use Illuminate\Support\Arr;
 
 class SearchInElasticSearchTask extends Task
 {
+    private int $limit = 1000;
 
     private Client $elasticsearch;
 
@@ -24,14 +26,14 @@ class SearchInElasticSearchTask extends Task
      * @throws ServerResponseException
      * @throws ClientResponseException
      */
-    public function run(string $query, SearchContract $model): ?array
+    public function run(string $query, SearchContract $model, string $locale): ?array
     {
         /** @var Elasticsearch $items */
         $items = $this->elasticsearch
             ->search([
                 'index' => $model->getSearchIndex(),
                 'type' => $model->getSearchType(),
-                'body' => $this->formQuery($query, $query),
+                'body' => $this->formQuery($query, $locale),
             ]);
         $items = $items->asArray();
         if ($items !== []) {
@@ -40,9 +42,25 @@ class SearchInElasticSearchTask extends Task
         return null;
     }
 
-    private function formQuery(string $query, string $suggestQuery): array
+    private function formQuery(string $query, string $locale): array
     {
-        $string = "{\"query\":{\"query_string\":{\"fields\":[\"tags_ru\"],\"query\":\"{$query}\",\"analyzer\":\"simple\",\"default_operator\":\"AND\"}},\"suggest\":{\"suggester\":{\"text\":\"{$suggestQuery}\",\"term\":{\"field\":\"tags_ru\"}}}}";
+        $field = $locale === LangEnum::RU ? 'tags_ru' : 'tags_en';
+        $string = '{
+          "size": %d,
+          "query": {
+            "nested": {
+              "path": "%s",
+              "query": {
+                "bool": {
+                  "must": [
+                    { "match": {"%s.name": "%s"}}
+                  ]
+                }
+              }
+            }
+          }
+        }';
+        $string = sprintf($string, $this->limit, $field, $field, $query);
         return json_decode($string, true);
     }
 }
