@@ -23,16 +23,11 @@ class SearchController extends HttpController
      */
     public function index(SearchArtsHttpRequest $request, SearchPageAction $action): Response
     {
-        try {
-            $searchDto = new SearchDto($request->input());
-            [$viewData, $pageMetaDto] = $action->run($searchDto);
-            $this->setMeta($pageMetaDto->title)
-                ->setRobots('noindex, follow');
-            return response()->view('search::index', $viewData);
-        } catch (Throwable $e) {
-            Log::error($e);
-            throw $e;
-        }
+        $searchDto = new SearchDto($request->input());
+        [$viewData, $pageMetaDto] = $action->run($searchDto);
+        $this->setMeta($pageMetaDto->title)
+            ->setRobots('noindex, follow');
+        return response()->view('search::index', $viewData);
     }
 
     /**
