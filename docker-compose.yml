@@ -101,6 +101,25 @@ services:
             "
         networks:
             - network
+    elasticsearch:
+        build:
+            context: .
+            dockerfile: docker/dev/elasticsearch/Dockerfile
+        volumes:
+            - ./docker/dev/data/elasticsearch:/usr/share/elasticsearch/data
+        environment:
+            - discovery.type=single-node
+            - bootstrap.memory_lock=true
+            - xpack.security.enabled=false
+            - cluster.routing.allocation.disk.threshold_enabled=false
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        ports:
+            - "${ELASTICSEARCH_HOST_HTTP_PORT}:9200"
+            - "${ELASTICSEARCH_HOST_TRANSPORT_PORT}:9300"
+        depends_on:
+            - fpm
+        networks:
+            - network
 
 networks:
     network:
