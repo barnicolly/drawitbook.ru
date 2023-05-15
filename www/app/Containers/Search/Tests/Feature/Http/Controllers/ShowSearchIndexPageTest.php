@@ -2,6 +2,7 @@
 
 namespace App\Containers\Search\Tests\Feature\Http\Controllers;
 
+use App\Containers\Search\Tasks\SearchInElasticSearchTask;
 use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Search\Http\Controllers\SearchController;
@@ -35,12 +36,10 @@ class ShowSearchIndexPageTest extends TestCase
             $this->createPictureTag($picture, $tag);
             $pictureIds[] = $picture->id;
         }
-        $mock = $this->createMock(SearchService::class);
-        $mock->method('searchByQuery')
+        $mock = $this->createMock(SearchInElasticSearchTask::class);
+        $mock->method('run')
             ->willReturn($pictureIds);
-        $mock->method('setLimit')
-            ->willReturnSelf();
-        $this->app->bind(SearchService::class, static fn (): MockObject&SearchService => $mock);
+        $this->app->bind(SearchInElasticSearchTask::class, static fn (): MockObject&SearchInElasticSearchTask => $mock);
 
         $response = $this->get($url);
 
@@ -63,12 +62,10 @@ class ShowSearchIndexPageTest extends TestCase
             $this->createPictureTag($picture, $tag);
             $pictureIds[] = $picture->id;
         }
-        $mock = $this->createMock(SearchService::class);
-        $mock->method('searchByQuery')
+        $mock = $this->createMock(SearchInElasticSearchTask::class);
+        $mock->method('run')
             ->willReturn($pictureIds);
-        $mock->method('setLimit')
-            ->willReturnSelf();
-        $this->app->bind(SearchService::class, static fn (): MockObject&SearchService => $mock);
+        $this->app->bind(SearchInElasticSearchTask::class, static fn (): MockObject&SearchInElasticSearchTask => $mock);
 
         $response = $this->get($url);
 

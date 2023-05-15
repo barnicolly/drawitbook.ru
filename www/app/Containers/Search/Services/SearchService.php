@@ -3,7 +3,6 @@
 namespace App\Containers\Search\Services;
 
 use Exception;
-use App\Containers\Translation\Enums\LangEnum;
 use Foolz\SphinxQL\Drivers\Mysqli\Connection;
 use Foolz\SphinxQL\SphinxQL;
 
@@ -16,30 +15,6 @@ class SearchService
     {
         $this->connection = new Connection();
         $this->connection->setParams(['host' => config('app.search_host_sphinx'), 'port' => 9306]);
-    }
-
-    public function setLimit(int $limit): SearchService
-    {
-        $this->limit = $limit;
-        return $this;
-    }
-
-    public function searchByQuery(string $query): array
-    {
-        try {
-            $locale = app()->getLocale();
-            $filters = [
-                'query' => $query,
-            ];
-            $index = $locale === LangEnum::RU ? 'drawitbookByQuery' : 'drawitbookByQueryEn';
-            $result = $this->searchByString($filters, $index);
-            if (!empty($result)) {
-                return array_column($result, 'id');
-            }
-            return [];
-        } catch (Exception) {
-            return [];
-        }
     }
 
     public function searchRelatedPicturesIds(array $shown, array $hidden = [], int $excludeQuestionId = 0): array
@@ -74,25 +49,5 @@ class SearchService
         } catch (Exception) {
             return [];
         }
-    }
-
-    private function searchByString(array $filters, string $index): array
-    {
-        $result = (new SphinxQL($this->connection))
-            ->select('id', 'query', 'weight() AS weight')
-            ->from([$index])
-            ->limit($this->limit);
-
-        $query = $filters['query'] ?? '';
-        if ($query) {
-            $exploded = explode(' ', (string) $query);
-            $exploded = array_filter(
-                $exploded,
-                static fn ($item): bool => $item !== '',
-            );
-            $result->match('query', implode('||', $exploded), true);
-        }
-        return $result->execute()
-            ->fetchAllAssoc();
     }
 }

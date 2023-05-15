@@ -2,10 +2,10 @@
 
 namespace App\Containers\Search\Tests\Feature\Http\Controllers;
 
+use App\Containers\Search\Tasks\SearchInElasticSearchTask;
 use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Search\Http\Controllers\SearchController;
-use App\Containers\Search\Services\SearchService;
 use App\Containers\Tag\Tests\Traits\CreateTagTrait;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tests\TestCase;
@@ -33,12 +33,10 @@ class GetSearchPageSliceTest extends TestCase
             $this->createPictureTag($picture, $tag);
             $pictureIds[] = $picture->id;
         }
-        $mock = $this->createMock(SearchService::class);
-        $mock->method('searchByQuery')
+        $mock = $this->createMock(SearchInElasticSearchTask::class);
+        $mock->method('run')
             ->willReturn($pictureIds);
-        $mock->method('setLimit')
-            ->willReturnSelf();
-        $this->app->bind(SearchService::class, static fn (): MockObject&SearchService => $mock);
+        $this->app->bind(SearchInElasticSearchTask::class, static fn (): MockObject&SearchInElasticSearchTask => $mock);
 
         $response = $this->ajaxGet($url);
 

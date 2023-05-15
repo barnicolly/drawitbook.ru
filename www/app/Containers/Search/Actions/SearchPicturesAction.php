@@ -13,13 +13,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class SearchPicturesAction extends Action
 {
     public function __construct(
+        private readonly SearchInElasticSearchTask $searchInElasticSearchTask,
         private readonly GetArtsByIdsAction $getArtsByIdsAction,
     ) {
     }
 
     public function run(SearchDto $searchDto): LengthAwarePaginator
     {
-        $relativeArtIds = app(SearchInElasticSearchTask::class)->run($searchDto->query, new PictureModel(), app()->getLocale());
+        $relativeArtIds = $this->searchInElasticSearchTask->run($searchDto->query, new PictureModel(), app()->getLocale());
         $paginator = PaginatorFactory::create(collect($relativeArtIds));
         if ($paginator->isNotEmpty()) {
             $relativeArtIds = $paginator->getCollection()->toArray();
