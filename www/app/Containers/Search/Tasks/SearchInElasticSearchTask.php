@@ -10,6 +10,7 @@ use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
 use Elastic\Elasticsearch\Response\Elasticsearch;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class SearchInElasticSearchTask extends Task
 {
@@ -45,22 +46,36 @@ class SearchInElasticSearchTask extends Task
     private function formQuery(string $query, string $locale): array
     {
         $field = $locale === LangEnum::RU ? 'tags_ru' : 'tags_en';
-        $string = '{
-          "size": %d,
-          "query": {
-            "nested": {
-              "path": "%s",
-              "query": {
+        $words = preg_split("/\s/", $query, -1, PREG_SPLIT_NO_EMPTY);
+        $query = implode(' ', $words);
+        if (count($words) === 1) {
+            $query = Str::start($query, '*');
+            $query = Str::finish($query, '*');
+            $subQuery = '{
+                "wildcard": {
+                    "%s.name": "%s"
+                }
+            }';
+        } else {
+            $subQuery = '{
                 "bool": {
                   "must": [
                     { "match": {"%s.name": "%s"}}
                   ]
                 }
-              }
+            }';
+        }
+        $subQuery = sprintf($subQuery, $field, $query);
+        $string = '{
+          "size": %d,
+          "query": {
+            "nested": {
+              "path": "%s",
+              "query": %s
             }
           }
         }';
-        $string = sprintf($string, $this->limit, $field, $field, $query);
+        $string = sprintf($string, $this->limit, $field, $subQuery);
         return json_decode($string, true);
     }
 }
