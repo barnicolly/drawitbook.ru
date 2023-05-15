@@ -6,6 +6,8 @@ use App\Containers\Image\Enums\ImageEntitiesColumnsEnum;
 use App\Containers\Image\Models\ImagesModel;
 use App\Containers\Picture\Data\Factories\PictureModelFactory;
 use App\Containers\Picture\Enums\PictureColumnsEnum;
+use App\Containers\Search\Contracts\SearchContract;
+use App\Containers\Search\Traits\Searchable;
 use App\Containers\Tag\Enums\TagEntitiesColumnsEnum;
 use App\Containers\Tag\Models\TagsModel;
 use App\Ship\Parents\Models\CoreModel;
@@ -25,10 +27,11 @@ use Spatie\ModelFlags\Models\Flag;
  * @property TagsModel[] | Collection tags
  * @property Flag[] | Collection flags
  */
-class PictureModel extends CoreModel
+class PictureModel extends CoreModel implements SearchContract
 {
     use HasFactory;
     use HasFlags;
+    use Searchable;
 
     protected $table = PictureColumnsEnum::TABlE;
 
@@ -57,5 +60,11 @@ class PictureModel extends CoreModel
     protected static function newFactory(): PictureModelFactory
     {
         return PictureModelFactory::new();
+    }
+
+    public function toSearchArray(): array
+    {
+        $tags = $this->tags->pluck('name')->toArray();
+        return ['tags_ru' => implode(' ', $tags)];
     }
 }
