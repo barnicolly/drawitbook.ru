@@ -11,7 +11,6 @@ return [
 
     'manifest' => $manifest,
 
-    'search_host_sphinx' => env('SEARCH_HOST', 'http://localhost'),
     'vk_key' => env('VK_KEY', 'example'),
     'forceHttps' => env('FORCE_HTTPS', false),
     /*

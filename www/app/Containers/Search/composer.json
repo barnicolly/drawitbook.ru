@@ -1,6 +1,6 @@
 {
     "require": {
-        "foolz/sphinxql-query-builder": "^3"
+        "elasticsearch/elasticsearch": "8.7.1"
     },
     "require-dev": {}
 }
