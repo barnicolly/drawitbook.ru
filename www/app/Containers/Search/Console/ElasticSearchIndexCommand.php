@@ -35,7 +35,43 @@ class ElasticSearchIndexCommand extends Command
         $index = (new PictureModel())->getSearchIndex();
         app(DeleteElasticSearchIndexTask::class)->run($index);
         $this->info("Deleted index - $index");
-        app(CreateElasticSearchIndexTask::class)->run($index);
+
+        $body = '{
+            "mappings": {
+                "properties": {
+                   "tags": {
+                       "type": "nested",
+                       "properties" : {
+                             "id" : {
+                               "type" : "long"
+                             },
+                            "name" : {
+                              "type" : "text",
+                              "fields" : {
+                                "keyword" : {
+                                  "type" : "keyword",
+                                  "ignore_above" : 256
+                                }
+                              }
+                            },
+                            "name_en" : {
+                              "type" : "text",
+                              "fields" : {
+                                "keyword" : {
+                                  "type" : "keyword",
+                                  "ignore_above" : 256
+                                }
+                              }
+                            },
+                             "rating" : {
+                                  "type" : "long"
+                                }
+                        }
+                    }
+                }
+            }
+        }';
+        app(CreateElasticSearchIndexTask::class)->run($index, $body);
         $this->info("Created index - $index");
         $pictures = PictureModel::query()->with('tags')->get();
         $this->info('Indexing. This might take a while...');

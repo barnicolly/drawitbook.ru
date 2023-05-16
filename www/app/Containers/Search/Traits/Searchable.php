@@ -2,11 +2,14 @@
 
 namespace App\Containers\Search\Traits;
 
+use Illuminate\Support\Str;
+
 trait Searchable
 {
     public function getSearchIndex(): string
     {
-        return $this->getTable();
+        $projectIndex = Str::lower(config('app.name')) . '.' . $this->getTable();
+        return Str::replace('.', '-', $projectIndex);
     }
 
     public function getSearchType(): string

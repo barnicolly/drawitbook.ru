@@ -23,43 +23,8 @@ class CreateElasticSearchIndexTask extends Task
      * @throws ClientResponseException
      * @throws MissingParameterException
      */
-    public function run(string $index): void
+    public function run(string $index, ?string $body = null): void
     {
-        $body = '{
-            "mappings": {
-                "properties": {
-                   "tags": {
-                       "type": "nested",
-                       "properties" : {
-                             "id" : {
-                               "type" : "long"
-                             },
-                            "name" : {
-                              "type" : "text",
-                              "fields" : {
-                                "keyword" : {
-                                  "type" : "keyword",
-                                  "ignore_above" : 256
-                                }
-                              }
-                            },
-                            "name_en" : {
-                              "type" : "text",
-                              "fields" : {
-                                "keyword" : {
-                                  "type" : "keyword",
-                                  "ignore_above" : 256
-                                }
-                              }
-                            },
-                             "rating" : {
-                                  "type" : "long"
-                                }
-                        }
-                    }
-                }
-            }
-        }';
         $params = [
             'index' => $index,
             'body' => $body,
