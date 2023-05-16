@@ -9,8 +9,8 @@ use App\Containers\Picture\Enums\PictureColumnsEnum;
 use App\Containers\Search\Contracts\SearchContract;
 use App\Containers\Search\Traits\Searchable;
 use App\Containers\Tag\Enums\TagEntitiesColumnsEnum;
-use App\Containers\Tag\Enums\TagsColumnsEnum;
 use App\Containers\Tag\Models\TagsModel;
+use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Models\CoreModel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -65,18 +65,16 @@ class PictureModel extends CoreModel implements SearchContract
 
     public function toSearchArray(): array
     {
-        $tagsRu = $this->tags
-            ->pluck(TagsColumnsEnum::NAME)->map(fn ($item) => [
-                'name' => $item,
-            ])
-            ->filter()
-            ->toArray();
-        $tagsEn = $this->tags
-            ->pluck(TagsColumnsEnum::NAME_EN)->map(fn ($item) => [
-                'name' => $item,
-            ])
-            ->filter()
-            ->toArray();
-        return ['tags_ru' => $tagsRu, 'tags_en' => $tagsEn];
+        $tags = [];
+        $this->tags->load('flags');
+        /** @var TagsModel $tag */
+        foreach ($this->tags as $tag) {
+            $tags[] = [
+                'id' => $tag->id,
+                'name' => $tag->name,
+                'rating' => $tag->hasFlag(FlagsEnum::TAG_HIDDEN) ? 3: 8,
+            ];
+        }
+        return ['tags' => $tags];
     }
 }

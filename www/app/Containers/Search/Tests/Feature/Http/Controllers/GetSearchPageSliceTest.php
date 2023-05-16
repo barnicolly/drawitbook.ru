@@ -75,7 +75,11 @@ class GetSearchPageSliceTest extends TestCase
 
         $response = $this->ajaxGet($url);
 
-        $response->assertNotFound();
+        $response->assertOk();
+        $result = $response->decodeResponseJson();
+        self::assertSame($page, Arr::get($result, 'meta.pagination.page'));
+        self::assertSame(0, Arr::get($result, 'meta.pagination.total'));
+        self::assertFalse(Arr::get($result, 'meta.pagination.hasMore'));
     }
 
     public function testSearchSliceEmptyQuery(): void

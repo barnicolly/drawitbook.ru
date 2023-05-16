@@ -2,31 +2,32 @@
 
 namespace App\Containers\Picture\Actions\Art;
 
+use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Picture\Tasks\Picture\GetInterestingPictureIdsTask;
-use App\Containers\Search\Services\SearchService;
-use App\Containers\Tag\Tasks\SeparateTagsForHiddenAndShowIdsTask;
+use App\Containers\Search\Tasks\SearchInElasticSearchTask;
+use App\Containers\Tag\Enums\TagsColumnsEnum;
+use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Actions\Action;
 
 class GetRelativeArtsAction extends Action
 {
     public function __construct(
-        private readonly SearchService $searchService,
         private readonly GetInterestingPictureIdsTask $getInterestingPictureIdsTask,
-        private readonly SeparateTagsForHiddenAndShowIdsTask $separateTagsForHiddenAndShowIdsTask,
         private readonly GetArtsByIdsAction $getArtsByIdsAction,
     ) {
     }
 
     public function run(array $artTags, int $artId): array
     {
-        [$shown, $hidden] = $this->separateTagsForHiddenAndShowIdsTask->run($artTags);
-        $arts = [];
-        if ($shown || $hidden) {
-            $artIds = $this->searchService->searchRelatedPicturesIds($shown, $hidden, $artId);
+        $names = \Arr::pluck($artTags, app()->getLocale() === LangEnum::RU ? TagsColumnsEnum::NAME: TagsColumnsEnum::NAME_EN);
+        if ($names) {
+            $artIds = app(SearchInElasticSearchTask::class)->run(implode(' ', $names), new PictureModel(), app()->getLocale(), 16);
+            $artIds = array_diff($artIds, [$artId]);
         }
         if (empty($artIds)) {
             $artIds = $this->getInterestingPictureIdsTask->run($artId, 10);
         }
+        $arts = [];
         if (!empty($artIds)) {
             $arts = $this->getArtsByIdsAction->run($artIds);
         }

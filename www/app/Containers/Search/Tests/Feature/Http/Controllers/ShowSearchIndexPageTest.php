@@ -6,7 +6,6 @@ use App\Containers\Search\Tasks\SearchInElasticSearchTask;
 use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Search\Http\Controllers\SearchController;
-use App\Containers\Search\Services\SearchService;
 use App\Containers\Tag\Tests\Traits\CreateTagTrait;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tests\TestCase;

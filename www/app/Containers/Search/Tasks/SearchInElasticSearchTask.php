@@ -14,8 +14,6 @@ use Illuminate\Support\Str;
 
 class SearchInElasticSearchTask extends Task
 {
-    private int $limit = 1000;
-
     private Client $elasticsearch;
 
     public function __construct(Client $elasticsearch)
@@ -27,14 +25,14 @@ class SearchInElasticSearchTask extends Task
      * @throws ServerResponseException
      * @throws ClientResponseException
      */
-    public function run(string $query, SearchContract $model, string $locale): ?array
+    public function run(string $query, SearchContract $model, string $locale, ?int $limit = null): ?array
     {
         /** @var Elasticsearch $items */
         $items = $this->elasticsearch
             ->search([
                 'index' => $model->getSearchIndex(),
                 'type' => $model->getSearchType(),
-                'body' => $this->formQuery($query, $locale),
+                'body' => $this->formQuery($query, $locale, $limit ?? 1000),
             ]);
         $items = $items->asArray();
         if ($items !== []) {
@@ -43,39 +41,49 @@ class SearchInElasticSearchTask extends Task
         return null;
     }
 
-    private function formQuery(string $query, string $locale): array
+    private function formQuery(string $query, string $locale, int $limit): array
     {
-        $field = $locale === LangEnum::RU ? 'tags_ru' : 'tags_en';
+        $path = 'tags';
+        $field = $locale === LangEnum::RU ? 'name' : 'name_en';
         $words = preg_split("/\s/", $query, -1, PREG_SPLIT_NO_EMPTY);
-        $query = implode(' ', $words);
-        if (count($words) === 1) {
-            $query = Str::start($query, '*');
-            $query = Str::finish($query, '*');
-            $subQuery = '{
-                "wildcard": {
-                    "%s.name": "%s"
-                }
-            }';
-        } else {
+            $queries = Arr::map($words, function ($word) use ($path, $field) {
+                $word = Str::start($word, '*');
+                $word = Str::finish($word, '*');
+                $match = '{ "wildcard": {"%s.%s": "%s"}}';
+                return sprintf($match, $path, $field, $word);
+            });
+
+            $query = implode(',', $queries);
             $subQuery = '{
                 "bool": {
-                  "must": [
-                    { "match": {"%s.name": "%s"}}
-                  ]
+                  "should": [
+                       %s
+                  ],
+                  "minimum_should_match": 1
                 }
             }';
-        }
-        $subQuery = sprintf($subQuery, $field, $query);
+            $subQuery = sprintf($subQuery, $query);
         $string = '{
           "size": %d,
           "query": {
             "nested": {
               "path": "%s",
-              "query": %s
+              "query": {
+                "function_score": {
+                    "query": %s,
+                    "functions": [
+                        {
+                          "field_value_factor": {
+                            "field": "%s.rating"
+                          }
+                        }
+                      ]
+                }
+              }
             }
           }
         }';
-        $string = sprintf($string, $this->limit, $field, $subQuery);
+        $string = sprintf($string, $limit, $path, $subQuery, $path);
         return json_decode($string, true);
     }
 }

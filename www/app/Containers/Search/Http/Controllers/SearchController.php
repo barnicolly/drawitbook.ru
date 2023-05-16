@@ -13,7 +13,6 @@ use App\Ship\Parents\Resources\JsonResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class SearchController extends HttpController
@@ -41,8 +40,6 @@ class SearchController extends HttpController
             return JsonResource::make($getCellTaggedResultDto)
                 ->withPaginationMeta($paginationMetaDto)
                 ->response();
-        } catch (NotFoundRelativeArts $e) {
-            throw new NotFoundHttpException();
         } catch (Throwable $e) {
             Log::error($e);
             throw $e;

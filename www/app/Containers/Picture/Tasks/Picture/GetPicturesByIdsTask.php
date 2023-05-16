@@ -37,6 +37,9 @@ class GetPicturesByIdsTask extends Task
             },
         ])
             ->whereIn(PictureColumnsEnum::ID, $ids)
-            ->get();
+            ->get()
+            ->sortBy(function (PictureModel $model) use ($ids) {
+                return array_search($model->getKey(), $ids);
+            });
     }
 }

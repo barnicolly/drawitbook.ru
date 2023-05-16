@@ -28,9 +28,12 @@ class CreateElasticSearchIndexTask extends Task
         $body = '{
             "mappings": {
                 "properties": {
-                   "tags_ru": {
+                   "tags": {
                        "type": "nested",
                        "properties" : {
+                             "id" : {
+                               "type" : "long"
+                             },
                             "name" : {
                               "type" : "text",
                               "fields" : {
@@ -39,22 +42,20 @@ class CreateElasticSearchIndexTask extends Task
                                   "ignore_above" : 256
                                 }
                               }
-                            }
+                            },
+                            "name_en" : {
+                              "type" : "text",
+                              "fields" : {
+                                "keyword" : {
+                                  "type" : "keyword",
+                                  "ignore_above" : 256
+                                }
+                              }
+                            },
+                             "rating" : {
+                                  "type" : "long"
+                                }
                         }
-                    },
-                    "tags_en": {
-                       "type": "nested",
-                       "properties" : {
-                            "name" : {
-                              "type" : "text",
-                              "fields" : {
-                                "keyword" : {
-                                  "type" : "keyword",
-                                  "ignore_above" : 256
-                                }
-                              }
-                            }
-                       }
                     }
                 }
             }
