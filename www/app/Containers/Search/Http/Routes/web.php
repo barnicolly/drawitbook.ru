@@ -31,6 +31,9 @@ foreach (config('translator.available_locales') as $prefix) {
                             Route::get('/search/slice', (new SearchController())->slice(...))->name(
                                 $prefix . '_search.slice',
                             );
+                            Route::get('/search/autocomplete', (new SearchController())->autocomplete(...))->name(
+                                $prefix . '_search.autocomplete',
+                            );
                         },
                     );
                 },

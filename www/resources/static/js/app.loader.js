@@ -17,6 +17,7 @@ import { isMobileOrTablet } from '@js/helpers/screen';
 import Lang from '@js/translations';
 
 import { getLocale } from '@js/helpers/navigation';
+import { loadAutocomplete } from "@js/loaders/autocomplete.loader";
 
 new SentryInstance();
 
@@ -39,6 +40,7 @@ if (locale === 'en') {
 loadLazyloadImg();
 loadStackGrid();
 loadJQcloud();
+loadAutocomplete();
 initAds();
 
 initHeaderMenu($('.header__menu'));

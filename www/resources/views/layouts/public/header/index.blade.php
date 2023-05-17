@@ -11,15 +11,18 @@
             </a>
         </div>
         <div class="header__search">
-            <form class="search-form"
+            <form class="search-form autoComplete_wrapper"
                   role="search"
                   method="get"
                   action="{{ Router::route('search') }}">
-                <input class="search-form__input"
-                       type="search"
-                       name="query"
-                       placeholder="{!! __('pages.layout.header.search.placeholder') !!}"
-                       value="{{ $searchQuery ?? '' }}">
+                <input
+                    class="search-form__input"
+                    id="autoComplete"
+                    type="search"
+                    name="query"
+                    dir="ltr" spellcheck="false" autocorrect="off" autocomplete="off" autocapitalize="off"
+                    placeholder="{!! __('pages.layout.header.search.placeholder') !!}"
+                    value="{{ $searchQuery ?? '' }}">
                 <button class="search-form__btn" type="submit">
                     <svg role="img" width="20" height="20" viewBox="0 0 20 20">
                         <use xlink:href="{{ getUrlFromManifest('icons/sprite.svg') . '#loupe' }}"></use>
@@ -31,7 +34,8 @@
             <div class="container">
                 <ul class="menu">
                     <li class="menu__item">
-                        <a class="menu__link header__link" href="{{ Router::route('home') }}" rel="nofollow" itemprop="url">
+                        <a class="menu__link header__link" href="{{ Router::route('home') }}" rel="nofollow"
+                           itemprop="url">
                             {!! __('pages.layout.header.menu.home') !!}
                         </a>
                     </li>

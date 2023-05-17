@@ -2,9 +2,10 @@
 
 namespace App\Containers\Search\Http\Controllers;
 
-use App\Containers\Picture\Exceptions\NotFoundRelativeArts;
+use App\Containers\Picture\Tasks\PictureTag\GetTagsNamesTask;
 use App\Containers\Search\Actions\SearchPageAction;
 use App\Containers\Search\Actions\SearchPageSliceAction;
+use App\Containers\Search\Data\Dto\GetAutocompleteTagsResultDto;
 use App\Containers\Search\Data\Dto\SearchDto;
 use App\Containers\Search\Http\Requests\SearchArtsHttpRequest;
 use App\Containers\Search\Http\Requests\SearchArtsSliceAjaxRequest;
@@ -44,5 +45,16 @@ class SearchController extends HttpController
             Log::error($e);
             throw $e;
         }
+    }
+
+    public function autocomplete(GetTagsNamesTask $task): JsonResponse
+    {
+        $resultDto = new GetAutocompleteTagsResultDto(
+            [
+                'items' => $task->run(app()->getLocale()),
+            ]
+        );
+        return JsonResource::make($resultDto)
+            ->response();
     }
 }

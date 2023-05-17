@@ -47,6 +47,7 @@
     },
     "dependencies": {
         "@sentry/browser": "^5.25.0",
+        "@tarekraafat/autocomplete.js": "^10.2.7",
         "animate.css": "3.7.2",
         "bootstrap": "^4.5.2",
         "hc-sticky": "^2.2.3",

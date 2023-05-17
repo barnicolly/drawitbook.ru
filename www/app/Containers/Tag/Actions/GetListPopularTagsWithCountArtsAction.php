@@ -2,7 +2,6 @@
 
 namespace App\Containers\Tag\Actions;
 
-use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Picture\Tasks\PictureTag\GetPictureTagsWithCountArtTask;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Route\RouteService;
@@ -16,9 +15,6 @@ class GetListPopularTagsWithCountArtsAction extends Action
     ) {
     }
 
-    /**
-     * @throws RepositoryException
-     */
     public function run(): array
     {
         $locale = app()->getLocale();
