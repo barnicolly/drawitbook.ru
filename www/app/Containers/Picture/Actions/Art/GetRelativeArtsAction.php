@@ -19,7 +19,7 @@ class GetRelativeArtsAction extends Action
 
     public function run(array $artTags, int $artId): array
     {
-        $names = \Arr::pluck($artTags, app()->getLocale() === LangEnum::RU ? TagsColumnsEnum::NAME: TagsColumnsEnum::NAME_EN);
+        $names = array_column($artTags, 'name');
         if ($names) {
             $artIds = app(SearchInElasticSearchTask::class)->run(implode(' ', $names), new PictureModel(), app()->getLocale(), 16);
             $artIds = array_diff($artIds, [$artId]);

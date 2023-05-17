@@ -43,6 +43,7 @@ class SearchInElasticSearchTask extends Task
 
     private function formQuery(string $query, string $locale, int $limit): array
     {
+        $query = Str::lower($query);
         $path = 'tags';
         $field = $locale === LangEnum::RU ? 'name' : 'name_en';
         $words = preg_split("/\s/", $query, -1, PREG_SPLIT_NO_EMPTY);
