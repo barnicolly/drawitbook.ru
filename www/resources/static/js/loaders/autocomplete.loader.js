@@ -17,6 +17,9 @@ export function loadAutocomplete() {
                             return res.data.items;
                         },
                     },
+                    resultsList: {
+                        maxResults: 15,
+                    },
                     resultItem: {
                         highlight: true
                     },

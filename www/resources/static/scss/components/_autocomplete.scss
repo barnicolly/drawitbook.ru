@@ -6,4 +6,8 @@
     input {
         width: 100%;
     }
+
+    > ul {
+        max-height: 300px;
+    }
 }
