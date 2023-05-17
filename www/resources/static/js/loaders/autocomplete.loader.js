@@ -33,7 +33,8 @@ export function loadAutocomplete() {
 
                 autoCompleteJS.input.addEventListener("selection", function (event) {
                     const feedback = event.detail;
-                    $autocompleteContainers.val(feedback.selection.value).change()
+                    $autocompleteContainers.val(feedback.selection.value).change();
+                    $autocompleteContainers.closest('form').submit();
                 });
             });
         });
