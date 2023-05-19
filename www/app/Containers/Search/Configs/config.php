@@ -2,5 +2,5 @@
 
 return [
     'name' => 'Search',
-    'hosts' => explode(',', env('ELASTICSEARCH_HOSTS')),
+    'hosts' => explode(',', (string) env('ELASTICSEARCH_HOSTS')),
 ];

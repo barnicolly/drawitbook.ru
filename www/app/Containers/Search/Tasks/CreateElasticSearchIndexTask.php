@@ -11,11 +11,8 @@ use Elastic\Elasticsearch\Exception\ServerResponseException;
 class CreateElasticSearchIndexTask extends Task
 {
 
-    private Client $elasticsearch;
-
-    public function __construct(Client $elasticsearch)
+    public function __construct(private readonly Client $elasticsearch)
     {
-        $this->elasticsearch = $elasticsearch;
     }
 
     /**

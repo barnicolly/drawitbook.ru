@@ -35,11 +35,9 @@ class SearchServiceProvider extends ServiceProvider
 
     private function bindSearchClient(): void
     {
-        $this->app->bind(Client::class, function ($app) {
-            return ClientBuilder::create()
-                ->setHosts(config('search.hosts'))
-                ->build();
-        });
+        $this->app->bind(Client::class, static fn($app): Client => ClientBuilder::create()
+            ->setHosts(config('search.hosts'))
+            ->build());
     }
 
     protected function registerConfig(): void

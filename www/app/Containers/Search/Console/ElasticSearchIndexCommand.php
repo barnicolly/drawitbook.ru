@@ -20,9 +20,6 @@ class ElasticSearchIndexCommand extends Command
      */
     protected $description = 'Индексирование моделей для поиска';
 
-    /**
-     * @return void
-     */
     public function handle(): void
     {
         $this->index();
@@ -34,7 +31,7 @@ class ElasticSearchIndexCommand extends Command
     {
         $index = (new PictureModel())->getSearchIndex();
         app(DeleteElasticSearchIndexTask::class)->run($index);
-        $this->info("Deleted index - $index");
+        $this->info("Deleted index - {$index}");
 
         $body = '{
             "mappings": {
@@ -72,7 +69,7 @@ class ElasticSearchIndexCommand extends Command
             }
         }';
         app(CreateElasticSearchIndexTask::class)->run($index, $body);
-        $this->info("Created index - $index");
+        $this->info("Created index - {$index}");
         $pictures = PictureModel::query()->with('tags')->get();
         $this->info('Indexing. This might take a while...');
         $bar = $this->output->createProgressBar(count($pictures));

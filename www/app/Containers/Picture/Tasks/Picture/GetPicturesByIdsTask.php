@@ -38,8 +38,6 @@ class GetPicturesByIdsTask extends Task
         ])
             ->whereIn(PictureColumnsEnum::ID, $ids)
             ->get()
-            ->sortBy(function (PictureModel $model) use ($ids) {
-                return array_search($model->getKey(), $ids);
-            });
+            ->sortBy(static fn(PictureModel $model): int|string|false => array_search($model->getKey(), $ids, true));
     }
 }

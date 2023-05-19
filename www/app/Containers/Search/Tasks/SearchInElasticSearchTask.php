@@ -14,11 +14,8 @@ use Illuminate\Support\Str;
 
 class SearchInElasticSearchTask extends Task
 {
-    private Client $elasticsearch;
-
-    public function __construct(Client $elasticsearch)
+    public function __construct(private readonly Client $elasticsearch)
     {
-        $this->elasticsearch = $elasticsearch;
     }
 
     /**
@@ -46,8 +43,8 @@ class SearchInElasticSearchTask extends Task
         $query = Str::lower($query);
         $path = 'tags';
         $field = $locale === LangEnum::RU ? 'name' : 'name_en';
-        $words = preg_split("/\s/", $query, -1, PREG_SPLIT_NO_EMPTY);
-            $queries = Arr::map($words, function ($word) use ($path, $field) {
+        $words = preg_split("#\s#", $query, -1, PREG_SPLIT_NO_EMPTY);
+            $queries = Arr::map($words, static function ($word) use ($path, $field) : string {
                 $word = Str::start($word, '*');
                 $word = Str::finish($word, '*');
                 $match = '{ "wildcard": {"%s.%s": "%s"}}';
@@ -85,6 +82,6 @@ class SearchInElasticSearchTask extends Task
           }
         }';
         $string = sprintf($string, $limit, $path, $subQuery, $path);
-        return json_decode($string, true);
+        return json_decode($string, true, 512, JSON_THROW_ON_ERROR);
     }
 }
