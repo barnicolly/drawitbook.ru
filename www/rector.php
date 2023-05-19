@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\Array_\CallableThisArrayToAnonymousFunctionRector;
 use Rector\CodeQuality\Rector\Concat\JoinStringConcatRector;
 use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
@@ -22,6 +23,7 @@ use Rector\RemovingStatic\Rector\ClassMethod\LocallyCalledStaticMethodToNonStati
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\ClassMethod\AddConstructorParentCallRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\ArrayShapeFromConstantArrayReturnRector;
 use Rector\Visibility\Rector\ClassMethod\ExplicitPublicClassMethodRector;
 
 /**
@@ -32,6 +34,10 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->parallel(300);
     // применение FQN для импорта классов (выносит конструкции в use, оставляя название класса)
     $rectorConfig->importNames();
+
+    $rectorConfig->cacheClass(FileCacheStorage::class);
+
+    $rectorConfig->cacheDirectory('./cache/rector');
 
     // Проверяемые директории
     $rectorConfig->paths([
@@ -71,6 +77,7 @@ return static function (RectorConfig $rectorConfig): void {
         JoinStringConcatRector::class,
         RandomFunctionRector::class,
         AddLiteralSeparatorToNumberRector::class,
+        ArrayShapeFromConstantArrayReturnRector::class,
 
         //--- исключения для RemovingStatic
         LocallyCalledStaticMethodToNonStaticRector::class => [
