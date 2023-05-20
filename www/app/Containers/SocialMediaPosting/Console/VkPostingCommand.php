@@ -2,9 +2,6 @@
 
 namespace App\Containers\SocialMediaPosting\Console;
 
-use App\Containers\Picture\Exceptions\NotFoundPicture;
-use App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException;
-use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\SocialMediaPosting\Services\BroadcastPostingService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -33,11 +30,6 @@ class VkPostingCommand extends Command
         $this->service = app(BroadcastPostingService::class);
     }
 
-    /**
-     * @throws NotFoundPicture
-     * @throws NotFoundPictureIdForPostingException
-     * @throws RepositoryException
-     */
     public function handle(): void
     {
         try {

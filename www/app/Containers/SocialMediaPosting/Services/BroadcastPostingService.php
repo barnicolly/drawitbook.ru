@@ -38,8 +38,8 @@ class BroadcastPostingService
         $pictureIdForPosting = $this->getPictureIdForPostingTask->run();
         $picture = $this->getArtByIdWithFilesAction->run($pictureIdForPosting);
         $tags = $this->getPictureTagsNamesWithoutHiddenVkByPictureIdTask->run($pictureIdForPosting);
-        $pictureFsPath = $picture->images->primary->fs_path;
-        $postingStrategy = app()->make(VkWallPostingStrategy::class, ['tags' => $tags, 'artPath' => $pictureFsPath]);
+        $pictureUrlPath = $picture->images->primary->url;
+        $postingStrategy = app()->make(VkWallPostingStrategy::class, ['tags' => $tags, 'artPath' => $pictureUrlPath]);
         $postingStrategy->post();
         $this->createSocialMediaPostingItemTask->run($pictureIdForPosting);
     }

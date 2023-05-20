@@ -2,6 +2,7 @@
 
 namespace App\Ship\Kernels;
 
+use App\Containers\SocialMediaPosting\Console\VkPostingCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as LaravelConsoleKernel;
 
@@ -26,7 +27,7 @@ class ConsoleKernel extends LaravelConsoleKernel
         //        $schedule->command('sitemap:generate')
         //            ->weeklyOn(1, '8:00');
 
-        $schedule->command('vk:posting')
+        $schedule->command(VkPostingCommand::class)
             ->hourlyAt(2)
             ->unlessBetween('1:00', '5:00');
     }

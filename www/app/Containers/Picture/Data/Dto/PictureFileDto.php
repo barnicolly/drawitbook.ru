@@ -17,13 +17,13 @@ class PictureFileDto extends Dto
 
     public string $mime_type;
 
-    public string $fs_path;
+    public string $url;
 
     public static function fromModel(ImagesModel $file): self
     {
         return new self(
             path: $file->path,
-            fs_path: formArtFsPath($file->path),
+            url: formArtFsPath($file->path),
             relative_path: getArtsFolder() . $file->path,
             height: $file->id,
             width: $file->id,

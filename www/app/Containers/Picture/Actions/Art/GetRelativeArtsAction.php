@@ -5,8 +5,6 @@ namespace App\Containers\Picture\Actions\Art;
 use App\Containers\Picture\Models\PictureModel;
 use App\Containers\Picture\Tasks\Picture\GetInterestingPictureIdsTask;
 use App\Containers\Search\Tasks\SearchInElasticSearchTask;
-use App\Containers\Tag\Enums\TagsColumnsEnum;
-use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Actions\Action;
 
 class GetRelativeArtsAction extends Action

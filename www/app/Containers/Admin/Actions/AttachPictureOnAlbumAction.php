@@ -30,7 +30,7 @@ class AttachPictureOnAlbumAction extends Action
     {
         $vkAlbum = $this->getVkAlbumByIdTask->run($vkAlbumId);
         $art = $this->getArtByIdWithFilesAction->run($artId);
-        $artFsPath = $art->images->primary->fs_path;
+        $artFsPath = $art->images->primary->url;
         $tags = $this->getPictureTagsNamesWithoutHiddenVkByPictureIdTask->run($artId);
         $photoId = $this->postPhotoInAlbum($vkAlbum->album_id, $vkAlbum->share, $artFsPath, $tags);
         $this->createVkAlbumPictureTask->run($artId, $vkAlbum->id, $photoId);

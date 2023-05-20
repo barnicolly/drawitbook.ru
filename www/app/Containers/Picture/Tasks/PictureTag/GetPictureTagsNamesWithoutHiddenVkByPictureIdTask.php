@@ -18,16 +18,15 @@ class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
 
     public function run(int $artId): array
     {
-        //        todo-misha переписать;
         $hiddenVkTagIds = $this->getHiddenVkTagsIdsTask->run();
 
-        return TagsModel::with(
-            [
-                'pictures' => static function (BuilderContract $q) use ($artId): void {
-                    $q->where(PictureColumnsEnum::tId, '=', $artId);
+        return TagsModel::query()
+            ->whereHas(
+                'pictures',
+                static function (BuilderContract $q) use ($artId): BuilderContract {
+                    return $q->where(PictureColumnsEnum::tId, '=', $artId);
                 },
-            ],
-        )
+            )
             ->whereNotIn(TagsColumnsEnum::tID, $hiddenVkTagIds)
             ->get([TagsColumnsEnum::tID, TagsColumnsEnum::tNAME])
             ->pluck(TagsColumnsEnum::NAME)

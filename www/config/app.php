@@ -10,8 +10,6 @@ return [
 
 
     'manifest' => $manifest,
-
-    'vk_key' => env('VK_KEY', 'example'),
     'forceHttps' => env('FORCE_HTTPS', false),
     /*
     |--------------------------------------------------------------------------

@@ -35,6 +35,6 @@ if (!function_exists('formArtFsPath')) {
     function formArtFsPath(string $artRelativePath): string
     {
         $artFolder = getArtsFolder();
-        return public_path("{$artFolder}{$artRelativePath}");
+        return url("{$artFolder}{$artRelativePath}");
     }
 }
