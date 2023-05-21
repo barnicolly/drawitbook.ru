@@ -16,6 +16,7 @@
         "laravel/ui": "^4",
         "league/flysystem-aws-s3-v3": "^3.13",
         "mik009/sanitizer": "^1.4",
+        "sentry/sentry-laravel": "^3.4",
         "spatie/data-transfer-object": "^3.9",
         "spatie/laravel-model-flags": "^1.2",
         "spatie/laravel-sitemap": "^6",
