@@ -3641,16 +3641,16 @@
         },
         {
             "name": "mik009/translation",
-            "version": "2.8",
+            "version": "2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barnicolly/translation.git",
-                "reference": "86fbf98ad268ce96227b70aed01c6204f24111b9"
+                "reference": "d620571111d4ade531d4ff857f16867d4886c0e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barnicolly/translation/zipball/86fbf98ad268ce96227b70aed01c6204f24111b9",
-                "reference": "86fbf98ad268ce96227b70aed01c6204f24111b9",
+                "url": "https://api.github.com/repos/barnicolly/translation/zipball/d620571111d4ade531d4ff857f16867d4886c0e0",
+                "reference": "d620571111d4ade531d4ff857f16867d4886c0e0",
                 "shasum": ""
             },
             "require": {
@@ -3698,9 +3698,9 @@
                 "waavi"
             ],
             "support": {
-                "source": "https://github.com/barnicolly/translation/tree/2.8"
+                "source": "https://github.com/barnicolly/translation/tree/2.9"
             },
-            "time": "2023-03-01T18:26:16+00:00"
+            "time": "2023-05-21T14:37:54+00:00"
         },
         {
             "name": "monolog/monolog",
