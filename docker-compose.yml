@@ -105,6 +105,9 @@ services:
         build:
             context: .
             dockerfile: docker/dev/elasticsearch/Dockerfile
+            labels:
+                dev: true
+        image: 'dev/drawitbook_com/elasticsearch'
         volumes:
             - ./docker/dev/data/elasticsearch:/usr/share/elasticsearch/data
         environment:
