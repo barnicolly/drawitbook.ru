@@ -10,6 +10,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.2",
+        "barnicolly/laravel-model-search": "^0.1.3",
         "bensampo/laravel-enum": "^6",
         "htmlmin/htmlmin": "dev-master#347d577",
         "laravel/framework": "^10",
@@ -84,6 +85,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/barnicolly/sanitizer.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/barnicolly/laravel-model-search.git"
         }
     ],
     "scripts": {

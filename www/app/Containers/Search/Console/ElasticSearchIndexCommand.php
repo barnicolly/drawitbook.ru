@@ -3,9 +3,9 @@
 namespace App\Containers\Search\Console;
 
 use App\Containers\Picture\Models\PictureModel;
-use App\Containers\Search\Tasks\CreateElasticSearchIndexTask;
-use App\Containers\Search\Tasks\FillElasticSearchIndexTask;
-use App\Containers\Search\Tasks\DeleteElasticSearchIndexTask;
+use Barnicolly\ModelSearch\Tasks\ElasticSearchCreateIndexTask;
+use Barnicolly\ModelSearch\Tasks\ElasticSearchDeleteIndexTask;
+use Barnicolly\ModelSearch\Tasks\ElasticSearchIndexModelTask;
 use Illuminate\Console\Command;
 
 class ElasticSearchIndexCommand extends Command
@@ -30,7 +30,7 @@ class ElasticSearchIndexCommand extends Command
     private function index(): void
     {
         $index = (new PictureModel())->getSearchIndex();
-        app(DeleteElasticSearchIndexTask::class)->run($index);
+        app(ElasticSearchDeleteIndexTask::class)->run($index);
         $this->info("Deleted index - {$index}");
 
         $body = '{
@@ -68,7 +68,7 @@ class ElasticSearchIndexCommand extends Command
                 }
             }
         }';
-        app(CreateElasticSearchIndexTask::class)->run($index, $body);
+        app(ElasticSearchCreateIndexTask::class)->run($index, $body);
         $this->info("Created index - {$index}");
         $pictures = PictureModel::query()->with('tags')->get();
         $this->info('Indexing. This might take a while...');
@@ -76,7 +76,7 @@ class ElasticSearchIndexCommand extends Command
 
         $bar->start();
         foreach ($pictures as $picture) {
-            app(FillElasticSearchIndexTask::class)->run($picture);
+            app(ElasticSearchIndexModelTask::class)->run($picture);
             $bar->advance();
         }
         $bar->finish();

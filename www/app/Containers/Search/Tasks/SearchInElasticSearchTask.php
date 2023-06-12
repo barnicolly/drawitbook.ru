@@ -2,9 +2,9 @@
 
 namespace App\Containers\Search\Tasks;
 
-use App\Containers\Search\Contracts\SearchContract;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
+use Barnicolly\ModelSearch\Contracts\SearchContract;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
@@ -28,7 +28,6 @@ class SearchInElasticSearchTask extends Task
         $items = $this->elasticsearch
             ->search([
                 'index' => $model->getSearchIndex(),
-                'type' => $model->getSearchType(),
                 'body' => $this->formQuery($query, $locale, $limit ?? 1000),
             ]);
         $items = $items->asArray();

@@ -30,14 +30,6 @@ class SearchServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->register(RouteServiceProvider::class);
-        $this->bindSearchClient();
-    }
-
-    private function bindSearchClient(): void
-    {
-        $this->app->bind(Client::class, static fn($app): Client => ClientBuilder::create()
-            ->setHosts(config('search.hosts'))
-            ->build());
     }
 
     protected function registerConfig(): void
