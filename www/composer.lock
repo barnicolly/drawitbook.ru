@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2d5b1cc77a525e49cce8fb5554daf28",
+    "content-hash": "d2c319226bae384ada2b8bc469a25c23",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -277,16 +277,16 @@
         },
         {
             "name": "barnicolly/laravel-model-search",
-            "version": "v0.1.3",
+            "version": "v0.1.5",
             "source": {
                 "type": "git",
                 "url": "git@github.com:barnicolly/laravel-model-search.git",
-                "reference": "00ae9c2ebbd5b25f92b9bc007c35babf9f9eca81"
+                "reference": "1ee3ed66da410149b37f94547e243fb8a1e4dfb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barnicolly/laravel-model-search/zipball/00ae9c2ebbd5b25f92b9bc007c35babf9f9eca81",
-                "reference": "00ae9c2ebbd5b25f92b9bc007c35babf9f9eca81",
+                "url": "https://api.github.com/repos/barnicolly/laravel-model-search/zipball/1ee3ed66da410149b37f94547e243fb8a1e4dfb3",
+                "reference": "1ee3ed66da410149b37f94547e243fb8a1e4dfb3",
                 "shasum": ""
             },
             "require": {
@@ -341,10 +341,10 @@
                 "package"
             ],
             "support": {
-                "source": "https://github.com/barnicolly/laravel-model-search/tree/v0.1.3",
+                "source": "https://github.com/barnicolly/laravel-model-search/tree/v0.1.5",
                 "issues": "https://github.com/barnicolly/laravel-model-search/issues"
             },
-            "time": "2023-06-12T15:11:57+00:00"
+            "time": "2023-06-14T06:30:47+00:00"
         },
         {
             "name": "bensampo/laravel-enum",
