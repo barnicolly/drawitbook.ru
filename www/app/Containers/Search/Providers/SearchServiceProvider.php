@@ -3,8 +3,6 @@
 namespace App\Containers\Search\Providers;
 
 use Config;
-use Elastic\Elasticsearch\Client;
-use Elastic\Elasticsearch\ClientBuilder;
 use Illuminate\Support\ServiceProvider;
 
 class SearchServiceProvider extends ServiceProvider

@@ -42,16 +42,16 @@ class SearchInElasticSearchTask extends Task
         $query = Str::lower($query);
         $path = 'tags';
         $field = $locale === LangEnum::RU ? 'name' : 'name_en';
-        $words = preg_split("#\s#", $query, -1, PREG_SPLIT_NO_EMPTY);
-            $queries = Arr::map($words, static function ($word) use ($path, $field) : string {
-                $word = Str::start($word, '*');
-                $word = Str::finish($word, '*');
-                $match = '{ "wildcard": {"%s.%s": "%s"}}';
-                return sprintf($match, $path, $field, $word);
-            });
+        $words = preg_split('#\\s#', $query, -1, PREG_SPLIT_NO_EMPTY);
+        $queries = Arr::map($words, static function ($word) use ($path, $field): string {
+            $word = Str::start($word, '*');
+            $word = Str::finish($word, '*');
+            $match = '{ "wildcard": {"%s.%s": "%s"}}';
+            return sprintf($match, $path, $field, $word);
+        });
 
-            $query = implode(',', $queries);
-            $subQuery = '{
+        $query = implode(',', $queries);
+        $subQuery = '{
                 "bool": {
                   "should": [
                        %s
@@ -59,7 +59,7 @@ class SearchInElasticSearchTask extends Task
                   "minimum_should_match": 1
                 }
             }';
-            $subQuery = sprintf($subQuery, $query);
+        $subQuery = sprintf($subQuery, $query);
         $string = '{
           "size": %d,
           "query": {

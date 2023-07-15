@@ -73,7 +73,7 @@ class PictureModel extends CoreModel implements SearchContract
                 'id' => $tag->id,
                 'name' => $tag->name,
                 'name_en' => $tag->name_en,
-                'rating' => $tag->hasFlag(FlagsEnum::TAG_HIDDEN) ? 3: 8,
+                'rating' => $tag->hasFlag(FlagsEnum::TAG_HIDDEN) ? 3 : 8,
             ];
         }
         return ['tags' => $tags];

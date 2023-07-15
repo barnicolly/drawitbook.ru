@@ -39,6 +39,6 @@ class AutocompleteAjaxControllerTest extends TestCase
                 ],
             );
         $result = $response->decodeResponseJson()['data']['items'];
-        $this->assertEqualsCanonicalizing([$locale === LangEnum::RU ? $tag->name: $tag->name_en], $result);
+        $this->assertEqualsCanonicalizing([$locale === LangEnum::RU ? $tag->name : $tag->name_en], $result);
     }
 }
