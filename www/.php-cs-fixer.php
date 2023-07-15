@@ -33,5 +33,6 @@ return (new PhpCsFixer\Config())->setRules([
     'phpdoc_types_order' => false,
     'phpdoc_summary' => false,
 ])
+    ->setCacheFile(__DIR__.'/cache/php-cs-fixer/.php-cs-fixer.cache')
     ->setRiskyAllowed(true)
     ->setFinder($finder);
