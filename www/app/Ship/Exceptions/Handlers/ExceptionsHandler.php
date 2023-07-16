@@ -31,7 +31,7 @@ class ExceptionsHandler extends LaravelExceptionHandler
 
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
+        $this->reportable(static function (Throwable $e) : void {
             if (app()->bound('sentry')) {
                 app('sentry')->captureException($e);
             }

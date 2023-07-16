@@ -23,9 +23,7 @@ class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
         return TagsModel::query()
             ->whereHas(
                 'pictures',
-                static function (BuilderContract $q) use ($artId): BuilderContract {
-                    return $q->where(PictureColumnsEnum::tId, '=', $artId);
-                },
+                static fn(BuilderContract $q): BuilderContract => $q->where(PictureColumnsEnum::tId, '=', $artId),
             )
             ->whereNotIn(TagsColumnsEnum::tID, $hiddenVkTagIds)
             ->get([TagsColumnsEnum::tID, TagsColumnsEnum::tNAME])
