@@ -1,0 +1,41 @@
+name: Code Analysis
+
+on: [push]
+
+jobs:
+    code_analysis:
+        strategy:
+            fail-fast: false
+            matrix:
+                actions:
+#                    - в тестовом режиме
+#                        name: 'Php Code Sniffer'
+#                        run: cd www && composer ecs:sniffer --ansi
+                    -
+                        name: 'PhpStan'
+                        run: cd www && composer phpstan --ansi
+
+
+        name: ${{ matrix.actions.name }}
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v3
+
+            -   uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.2
+                    coverage: none
+
+            -   name: Copy .env
+                run: |
+                    cd www && cp .env.example .env
+
+            -   name: Add HTTP basic auth credentials
+                run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/www/auth.json
+
+            -   name: Composer install
+                run: |
+                    cd www && composer install
+
+            -   run: ${{ matrix.actions.run }}

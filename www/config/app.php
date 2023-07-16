@@ -9,7 +9,7 @@ if (file_exists($buildAssetsPath)) {
 return [
 
 
-    'manifest' => $manifest,
+    'manifest' => $manifest ?? null,
     'forceHttps' => env('FORCE_HTTPS', false),
     /*
     |--------------------------------------------------------------------------
