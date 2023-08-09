@@ -21,8 +21,6 @@ final class ConsoleKernel extends LaravelConsoleKernel
      * Define the application's command schedule.
      *
      * Пример linux: crontab -e; * * * * * php /var/www/deployer/data/repo/drawitbook.com/current/www/artisan schedule:run >/dev/null 2>&1
-     *
-     * @return void
      */
     protected function schedule(Schedule $schedule): void
     {
@@ -36,8 +34,6 @@ final class ConsoleKernel extends LaravelConsoleKernel
 
     /**
      * Register the commands for the application.
-     *
-     * @return void
      */
     protected function commands(): void
     {

@@ -35,7 +35,7 @@ final class GetSearchPageSliceTest extends TestCase
             $this->createPictureTag($picture, $tag);
             $pictureIds[] = $picture->id;
         }
-        $this->mock(SearchInElasticSearchTask::class, static function (MockInterface $mock) use ($pictureIds) : void {
+        $this->mock(SearchInElasticSearchTask::class, static function (MockInterface $mock) use ($pictureIds): void {
             $mock
                 ->shouldReceive('run')
                 ->andReturn($pictureIds);

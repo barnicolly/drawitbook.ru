@@ -51,8 +51,6 @@ trait RequestCastsTrait
     /**
      * Cast an attribute to a native PHP type.
      *
-     * @param string $key
-     *
      * @return mixed
      */
     protected function castAttribute(string $key, mixed $value)
@@ -122,8 +120,6 @@ trait RequestCastsTrait
 
     /**
      * Get the type of cast for a model attribute.
-     *
-     * @param string $key
      */
     protected function getCastType(string $key): string
     {
