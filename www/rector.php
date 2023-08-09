@@ -24,6 +24,7 @@ use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\ClassMethod\AddConstructorParentCallRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ArrayShapeFromConstantArrayReturnRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 use Rector\Visibility\Rector\ClassMethod\ExplicitPublicClassMethodRector;
 
 /**
@@ -50,6 +51,8 @@ return static function (RectorConfig $rectorConfig): void {
         AddConstructorParentCallRector::class,
 //        Visibility https://github.com/rectorphp/rector/blob/main/docs/rector_rules_overview.md#visibility
         ExplicitPublicClassMethodRector::class,
+
+        DeclareStrictTypesRector::class,
     ]);
 
     $rectorConfig->sets([
@@ -62,7 +65,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->skip([
         //-- исключения файлов и директорий
         // blade, может поломать его
-        __DIR__ . '/app/*/*.blade',
+        __DIR__ . '/app/*/*.blade.php',
         __DIR__ . '/app/Ship/Configs',
 
         //--- исключения для LevelSetList::UP_TO_PHP_82
