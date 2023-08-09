@@ -13,6 +13,8 @@ parameters:
     ignoreErrors:
         - '#^Parameter \#1 \$artisan of method Illuminate\\Foundation\\Console\\Kernel\:\:setArtisan\(\) expects Illuminate\\Console\\Application, null given\.$#'
         - '#^Call to an undefined method App\\Containers\\Tag\\Data\\Repositories\\TagRepository\:\:flagged\(\)\.$#'
+        - '#^Parameter \#1 \$message of static method Illuminate\\Log\\Logger\:\:error\(\) expects array\|Illuminate\\Contracts\\Support\\Arrayable\|Illuminate\\Contracts\\Support\\Jsonable\|Illuminate\\Support\\Stringable\|string, Throwable given\.$#'
+        - '#^Call to an undefined method Mockery\\ExpectationInterface\|Mockery\\HigherOrderMessage\:\:andReturn\(\)\.$#'
         -
             message: '#^Dead catch \- Throwable is never thrown in the try block\.$#'
             path: app/Ship/Parents/Tests/Optimization/ClearTestPropertiesAfterTestTrait.php

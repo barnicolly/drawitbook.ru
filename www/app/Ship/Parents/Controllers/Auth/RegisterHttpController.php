@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-final class RegisterHttpController extends HttpController
+class RegisterHttpController extends HttpController
 {
     /*
     |--------------------------------------------------------------------------

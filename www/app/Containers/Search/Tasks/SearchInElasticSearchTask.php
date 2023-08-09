@@ -44,6 +44,7 @@ class SearchInElasticSearchTask extends Task
         $query = Str::lower($query);
         $path = 'tags';
         $field = $locale === LangEnum::RU ? 'name' : 'name_en';
+        /** @var array $words */
         $words = preg_split('#\\s#', $query, -1, PREG_SPLIT_NO_EMPTY);
         $queries = Arr::map($words, static function ($word) use ($path, $field): string {
             $word = Str::start($word, '*');

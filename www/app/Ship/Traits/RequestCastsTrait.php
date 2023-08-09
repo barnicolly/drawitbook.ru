@@ -54,7 +54,7 @@ trait RequestCastsTrait
      *
      * @return mixed
      */
-    protected function castAttribute($key, $value)
+    protected function castAttribute(string $key, mixed $value)
     {
         if (is_null($value)) {
             return null;
@@ -112,8 +112,9 @@ trait RequestCastsTrait
         throw new RuntimeException($class . ' должен быть имплементирован от Cast');
     }
 
-    private function getCastableClass($key): Cast
+    private function getCastableClass(string $key): Cast
     {
+        /** @var Cast $castType */
         $castType = $this->getCasts()[$key];
         return new $castType();
     }
@@ -125,7 +126,7 @@ trait RequestCastsTrait
      *
      * @return string
      */
-    protected function getCastType($key)
+    protected function getCastType(string $key): string
     {
         return trim(strtolower($this->getCasts()[$key]));
     }
