@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Menu\Tasks;
 
 use App\Containers\Menu\Data\Repositories\MenuLevelsRepository;

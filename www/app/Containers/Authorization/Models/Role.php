@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Authorization\Models;
 
 use App\Containers\Authorization\Data\Factories\RoleModelFactory;

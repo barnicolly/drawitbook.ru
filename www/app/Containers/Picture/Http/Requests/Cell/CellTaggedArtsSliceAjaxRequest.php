@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Picture\Http\Requests\Cell;
 
 use App\Ship\Parents\Requests\BaseFormRequest;
@@ -9,6 +11,11 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  */
 class CellTaggedArtsSliceAjaxRequest extends BaseFormRequest
 {
+
+    protected array $casts = [
+        'page' => 'int',
+    ];
+
     public function authorize(): bool
     {
         return true;
@@ -25,10 +32,5 @@ class CellTaggedArtsSliceAjaxRequest extends BaseFormRequest
                 'integer',
             ],
         ];
-    }
-
-    public function filters(): array
-    {
-        return [];
     }
 }

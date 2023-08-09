@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Ship\Services\File;
 
 use Illuminate\Support\Str;

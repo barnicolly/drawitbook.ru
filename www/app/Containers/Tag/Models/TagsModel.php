@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Tag\Models;
 
 use App\Containers\Picture\Models\PictureModel;

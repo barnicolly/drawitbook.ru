@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Ship\Exceptions\Handlers;
 
-use Exception;
 use Illuminate\Foundation\Exceptions\Handler as LaravelExceptionHandler;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +32,7 @@ class ExceptionsHandler extends LaravelExceptionHandler
 
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
+        $this->reportable(static function (Throwable $e) : void {
             if (app()->bound('sentry')) {
                 app('sentry')->captureException($e);
             }

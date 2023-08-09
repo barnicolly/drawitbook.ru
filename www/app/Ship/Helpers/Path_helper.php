@@ -1,7 +1,8 @@
 <?php
 
-use App\Ship\Services\File\FileService;
+declare(strict_types=1);
 
+use App\Ship\Services\File\FileService;
 if (!function_exists('buildUrl')) {
     function buildUrl(string $path): string
     {
@@ -9,7 +10,6 @@ if (!function_exists('buildUrl')) {
         return asset($uri);
     }
 }
-
 if (!function_exists('getUrlFromManifest')) {
     function getUrlFromManifest(string $path): string
     {
@@ -23,14 +23,12 @@ if (!function_exists('getArtsFolder')) {
         return 'content/arts/';
     }
 }
-
 if (!function_exists('formArtUrlPath')) {
     function formArtUrlPath(string $artRelativePath): string
     {
         return app(FileService::class)->formArtUrlPath($artRelativePath);
     }
 }
-
 if (!function_exists('formArtFsPath')) {
     function formArtFsPath(string $artRelativePath): string
     {

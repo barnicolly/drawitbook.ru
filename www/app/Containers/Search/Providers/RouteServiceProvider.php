@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Search\Providers;
 
 use Illuminate\Support\Facades\Route;

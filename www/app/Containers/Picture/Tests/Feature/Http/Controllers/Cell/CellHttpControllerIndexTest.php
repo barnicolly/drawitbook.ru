@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Cell;
 
 use App\Containers\Picture\Http\Controllers\Cell\CellHttpController;

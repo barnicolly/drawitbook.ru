@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Claim\Models;
 
 use App\Containers\Claim\Data\Factories\UserClaimModelFactory;

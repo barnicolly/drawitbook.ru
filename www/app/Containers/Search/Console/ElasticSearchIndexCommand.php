@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Search\Console;
 
 use App\Containers\Picture\Models\PictureModel;

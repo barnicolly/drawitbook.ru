@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Claim\Tasks;
 
 use App\Containers\Claim\Data\Repositories\UserClaimRepository;

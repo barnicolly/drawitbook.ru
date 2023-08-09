@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Translation\Enums;
 
 use BenSampo\Enum\Enum;

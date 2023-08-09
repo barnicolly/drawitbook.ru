@@ -1,7 +1,8 @@
 <?php
 
-use App\Containers\Search\Http\Controllers\SearchController;
+declare(strict_types=1);
 
+use App\Containers\Search\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +13,6 @@ use App\Containers\Search\Http\Controllers\SearchController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 foreach (config('translator.available_locales') as $prefix) {
     Route::group(
         ['prefix' => $prefix],

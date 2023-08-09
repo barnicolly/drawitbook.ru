@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\SocialMediaPosting\Enums;
 
 use BenSampo\Enum\Enum;

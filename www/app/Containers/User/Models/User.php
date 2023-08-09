@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\User\Models;
 
 use App\Containers\User\Data\Factories\UserModelFactory;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Image\Providers;
 
 use Illuminate\Support\ServiceProvider;

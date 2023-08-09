@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Vk\Tasks\VkAlbumPicture;
 
 use App\Containers\Vk\Data\Repositories\VkAlbumPictureRepository;

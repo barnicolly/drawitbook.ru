@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Like\Data\Factories;
 
 use App\Containers\Like\Enums\LikesColumnsEnum;

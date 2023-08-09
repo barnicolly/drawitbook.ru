@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsManager;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
-
 return [
     /*
     |--------------------------------------------------------------------------

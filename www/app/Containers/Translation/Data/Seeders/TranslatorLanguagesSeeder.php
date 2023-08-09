@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Translation\Data\Seeders;
 
 use App\Containers\Translation\Enums\LangEnum;

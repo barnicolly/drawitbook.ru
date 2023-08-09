@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Tag\Http\Controllers;
 
 use App\Containers\Tag\Actions\GetListPopularTagsWithCountArtsAction;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Tag\Data\Dto;
 
 use App\Containers\Tag\Models\TagsModel;

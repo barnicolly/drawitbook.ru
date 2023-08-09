@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Picture\Tasks\Picture\Cell;
 
 use App\Containers\Tag\Data\Dto\TagDto;
@@ -16,12 +18,12 @@ class FormCellPageAlternativeLocaleLinksTask extends Task
     {
         $forFormAlternateLinks = [];
         $forFormAlternateLinks[] = [
-            'lang' => $tag->seo_lang->current->locale,
+            'lang' => $tag->seo_lang->current->locale->value,
             'tag' => $tag->seo_lang->current->slug,
         ];
         if (!empty($tag->seo_lang->alternative->slug)) {
             $forFormAlternateLinks[] = [
-                'lang' => $tag->seo_lang->alternative->locale,
+                'lang' => $tag->seo_lang->alternative->locale->value,
                 'tag' => $tag->seo_lang->alternative->slug,
             ];
             $alternateLinks = $this->getTaggedAlternateLinks($forFormAlternateLinks);

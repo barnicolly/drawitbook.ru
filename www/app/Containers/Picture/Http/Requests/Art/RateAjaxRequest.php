@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Picture\Http\Requests\Art;
 
 use Illuminate\Validation\Rules\In;
@@ -13,6 +15,12 @@ use Illuminate\Validation\Rule;
  */
 class RateAjaxRequest extends BaseFormRequest
 {
+
+    protected array $casts = [
+        'id' => 'int',
+        'off' => 'string',
+    ];
+
     public function authorize(): bool
     {
         return true;
@@ -36,10 +44,5 @@ class RateAjaxRequest extends BaseFormRequest
                 Rule::in(['true', 'false']),
             ],
         ];
-    }
-
-    public function filters(): array
-    {
-        return [];
     }
 }

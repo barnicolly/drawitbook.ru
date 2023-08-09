@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Tag\Data\Factories;
 
 use App\Containers\Tag\Enums\TagsColumnsEnum;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Picture\Models;
 
 use App\Containers\Image\Enums\ImageEntitiesColumnsEnum;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Vk\Services\Api;
 
 use ATehnix\VkClient\Client;

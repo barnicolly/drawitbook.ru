@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\SocialMediaPosting\Services;
 
 use App\Containers\Picture\Actions\Art\GetArtByIdWithFilesAction;

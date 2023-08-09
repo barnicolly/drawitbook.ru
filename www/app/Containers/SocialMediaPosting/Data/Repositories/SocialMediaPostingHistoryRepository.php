@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\SocialMediaPosting\Data\Repositories;
 
 use App\Containers\SocialMediaPosting\Models\SocialMediaPostingHistoryModel;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Picture\Http\Requests\Art;
 
 use App\Containers\Claim\Enums\SprClaimReasonColumnsEnum;
@@ -12,6 +14,11 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  */
 class ClaimAjaxRequest extends BaseFormRequest
 {
+    protected array $casts = [
+        'id' => 'int',
+        'reason' => 'int',
+    ];
+
     public function authorize(): bool
     {
         return true;
@@ -36,10 +43,5 @@ class ClaimAjaxRequest extends BaseFormRequest
                 "exists:{$sprClaimReasonTable},id",
             ],
         ];
-    }
-
-    public function filters(): array
-    {
-        return [];
     }
 }

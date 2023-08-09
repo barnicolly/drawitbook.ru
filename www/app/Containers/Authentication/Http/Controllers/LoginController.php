@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Authentication\Http\Controllers;
 
 use App\Ship\Parents\Controllers\Auth\LoginHttpController as parentLoginController;

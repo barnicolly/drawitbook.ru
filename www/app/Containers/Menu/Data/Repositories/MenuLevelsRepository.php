@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Menu\Data\Repositories;
 
 use App\Containers\Menu\Models\MenuLevelsModel;

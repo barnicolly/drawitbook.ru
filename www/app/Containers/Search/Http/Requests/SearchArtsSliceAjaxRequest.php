@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Search\Http\Requests;
 
 use App\Ship\Parents\Requests\BaseFormRequest;
@@ -10,6 +12,12 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  */
 class SearchArtsSliceAjaxRequest extends BaseFormRequest
 {
+
+    protected array $casts = [
+        'page' => 'int',
+        'query' => 'string',
+    ];
+
     public function authorize(): bool
     {
         return true;

@@ -1,7 +1,8 @@
 <?php
 
-use App\Containers\Authentication\Http\Controllers\LoginController;
+declare(strict_types=1);
 
+use App\Containers\Authentication\Http\Controllers\LoginController;
 Route::group(
     [
         'middleware' => 'web',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Picture\Data;
 
 use App\Containers\Image\Models\ImagesModel;

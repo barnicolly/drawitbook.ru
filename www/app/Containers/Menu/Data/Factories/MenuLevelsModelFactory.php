@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Menu\Data\Factories;
 
 use App\Containers\Menu\Enums\MenuLevelsColumnsEnum;

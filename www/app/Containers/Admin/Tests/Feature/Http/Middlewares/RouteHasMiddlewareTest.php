@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Admin\Tests\Feature\Http\Middlewares;
 
 use App\Ship\Parents\Tests\TestCase;

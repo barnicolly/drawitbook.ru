@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\SocialMediaPosting\Tasks;
 
 use App\Containers\SocialMediaPosting\Data\Repositories\SocialMediaPostingHistoryRepository;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Seo\Traits;
 
 use App\Containers\Seo\Data\Dto\ShareImageDto;

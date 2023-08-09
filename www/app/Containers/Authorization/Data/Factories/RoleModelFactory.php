@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Authorization\Data\Factories;
 
 use App\Containers\Authorization\Models\Role;

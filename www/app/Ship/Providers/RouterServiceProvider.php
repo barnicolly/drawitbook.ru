@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Ship\Providers;
 
 use App\Ship\Services\Route\RouteService;

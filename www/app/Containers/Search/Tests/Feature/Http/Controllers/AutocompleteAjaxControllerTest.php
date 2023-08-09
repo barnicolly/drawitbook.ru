@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Search\Tests\Feature\Http\Controllers;
 
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;

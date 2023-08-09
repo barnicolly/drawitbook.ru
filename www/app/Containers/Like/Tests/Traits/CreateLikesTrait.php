@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Like\Tests\Traits;
 
 use App\Containers\Picture\Models\PictureModel;

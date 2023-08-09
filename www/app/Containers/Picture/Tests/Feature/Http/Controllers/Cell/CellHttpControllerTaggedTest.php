@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Picture\Tests\Feature\Http\Controllers\Cell;
 
 use App\Containers\Image\Models\ImagesModel;
@@ -118,7 +120,7 @@ class CellHttpControllerTaggedTest extends TestCase
         $url = $this->routeService->getRouteArtsCellTagged($tagDto->seo_lang->current->slug);
         $response = $this->get($url);
 
-        $alternativeLang = $tagDto->seo_lang->alternative->locale;
+        $alternativeLang = $tagDto->seo_lang->alternative->locale->value;
         $alternativeUrl = $this->routeService->getRouteArtsCellTagged(
             $tagDto->seo_lang->alternative->slug,
             true,

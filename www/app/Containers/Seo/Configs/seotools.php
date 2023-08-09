@@ -1,8 +1,10 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @see https://github.com/artesaos/seotools
  */
-
 return [
     'meta' => [
         // The default configurations to be used by the meta generator.

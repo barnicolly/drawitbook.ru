@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Containers\Picture\Http\Controllers\Art\ArtHttpController;
 use App\Containers\Picture\Http\Controllers\Art\ClaimAjaxController;
 use App\Containers\Picture\Http\Controllers\Art\RateAjaxController;
 use App\Containers\Picture\Http\Controllers\Cell\CellAjaxController;
 use App\Containers\Picture\Http\Controllers\Cell\CellHttpController;
-
 foreach (config('translator.available_locales') as $prefix) {
     Route::group(
         ['prefix' => $prefix],

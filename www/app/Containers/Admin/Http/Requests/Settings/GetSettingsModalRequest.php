@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Admin\Http\Requests\Settings;
 
 use App\Containers\Picture\Enums\PictureColumnsEnum;
@@ -10,6 +12,11 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  */
 class GetSettingsModalRequest extends BaseFormRequest
 {
+
+    protected array $casts = [
+        'id' => 'int',
+    ];
+
     public function authorize(): bool
     {
         return true;
@@ -28,16 +35,6 @@ class GetSettingsModalRequest extends BaseFormRequest
         $pictureTable = PictureColumnsEnum::TABlE;
         return [
             'id' => "required|integer|exists:{$pictureTable},id",
-        ];
-    }
-
-    /**
-     * @return array{id: string}
-     */
-    public function filters(): array
-    {
-        return [
-            'id' => 'cast:integer',
         ];
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Claim\Tests\Traits;
 
 use App\Containers\Claim\Enums\UserClaimColumnsEnum;

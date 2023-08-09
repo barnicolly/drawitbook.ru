@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\SocialMediaPosting\Console;
 
 use App\Containers\SocialMediaPosting\Services\BroadcastPostingService;

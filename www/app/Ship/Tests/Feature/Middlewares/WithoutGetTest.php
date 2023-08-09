@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Ship\Tests\Feature\Middlewares;
 
 use App\Containers\Translation\Enums\LangEnum;

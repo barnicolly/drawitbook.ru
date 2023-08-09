@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Ship\Services\Route;
 
 class RouteService
@@ -28,7 +30,7 @@ class RouteService
         return $this->postProcessing($url);
     }
 
-    public function getRouteArtsCellTagged(string $tag, bool $absolute = true, string $lang = null): string
+    public function getRouteArtsCellTagged(string $tag, bool $absolute = true, ?string $lang = null): string
     {
         $url = $this->route('arts.cell.tagged', ['tag' => $tag], $absolute, $lang);
         return $this->postProcessing($url);

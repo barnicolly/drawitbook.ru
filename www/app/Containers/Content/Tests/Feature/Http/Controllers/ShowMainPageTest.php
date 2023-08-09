@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Content\Tests\Feature\Http\Controllers;
 
 use App\Containers\Content\Http\Controllers\ContentHttpController;

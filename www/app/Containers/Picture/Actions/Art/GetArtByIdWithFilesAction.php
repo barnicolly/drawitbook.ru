@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Picture\Actions\Art;
 
 use App\Containers\Picture\Data\Dto\ArtDto;

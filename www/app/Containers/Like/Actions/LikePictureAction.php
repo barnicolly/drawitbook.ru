@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Like\Actions;
 
 use Prettus\Repository\Exceptions\RepositoryException;

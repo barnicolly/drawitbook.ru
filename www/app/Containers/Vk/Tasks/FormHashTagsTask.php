@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Containers\Vk\Tasks;
 
 use App\Ship\Parents\Tasks\Task;
