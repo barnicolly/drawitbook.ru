@@ -27,7 +27,7 @@ final class BroadcastPostingServiceTest extends TestCase
 
     public function testExpectNotFoundPictureIdForPostingException(): void
     {
-        $this->mock(VkWallPostingStrategy::class, function (MockInterface $mock) {
+        $this->mock(VkWallPostingStrategy::class, static function (MockInterface $mock) : void {
             $mock
                 ->shouldReceive('run')
                 ->andReturn([]);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Ship\Traits;
 
 use App\Ship\Contracts\Cast;
@@ -50,7 +52,6 @@ trait RequestCastsTrait
      * Cast an attribute to a native PHP type.
      *
      * @param string $key
-     * @param mixed $value
      *
      * @return mixed
      */
@@ -123,12 +124,10 @@ trait RequestCastsTrait
      * Get the type of cast for a model attribute.
      *
      * @param string $key
-     *
-     * @return string
      */
     protected function getCastType(string $key): string
     {
-        return trim(strtolower($this->getCasts()[$key]));
+        return trim(strtolower((string) $this->getCasts()[$key]));
     }
 
     /**
@@ -141,6 +140,6 @@ trait RequestCastsTrait
      */
     public function fromJson($value, $asObject = false)
     {
-        return json_decode($value, !$asObject);
+        return json_decode($value, !$asObject, 512, JSON_THROW_ON_ERROR);
     }
 }
