@@ -24,7 +24,7 @@ final class ConsoleKernel extends LaravelConsoleKernel
      *
      * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
         //        $schedule->command('sitemap:generate')
         //            ->weeklyOn(1, '8:00');
@@ -39,7 +39,7 @@ final class ConsoleKernel extends LaravelConsoleKernel
      *
      * @return void
      */
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__ . '/Commands');
 

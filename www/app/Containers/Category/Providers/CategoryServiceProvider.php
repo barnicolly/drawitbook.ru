@@ -40,10 +40,8 @@ final class CategoryServiceProvider extends ServiceProvider
 
     /**
      * Register config.
-     *
-     * @return void
      */
-    protected function registerConfig()
+    protected function registerConfig(): void
     {
         $this->publishes([
             module_path($this->moduleName, 'Configs/config.php') => config_path($this->moduleNameLower . '.php'),

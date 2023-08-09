@@ -18,13 +18,13 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 /**
  * @see \App\Containers\SocialMediaPosting\Tests\Feature\Services\BroadcastPostingServiceTest
  */
-final class BroadcastPostingService
+final readonly class BroadcastPostingService
 {
     public function __construct(
-        private readonly GetPictureIdForPostingTask $getPictureIdForPostingTask,
-        private readonly CreateSocialMediaPostingItemTask $createSocialMediaPostingItemTask,
-        private readonly GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask,
-        private readonly GetArtByIdWithFilesAction $getArtByIdWithFilesAction,
+        private GetPictureIdForPostingTask $getPictureIdForPostingTask,
+        private CreateSocialMediaPostingItemTask $createSocialMediaPostingItemTask,
+        private GetPictureTagsNamesWithoutHiddenVkByPictureIdTask $getPictureTagsNamesWithoutHiddenVkByPictureIdTask,
+        private GetArtByIdWithFilesAction $getArtByIdWithFilesAction,
     ) {
     }
 

@@ -40,7 +40,7 @@ final class ArtHttpControllerTest extends TestCase
         $tagNotHidden = $this->createTag();
         $this->createPictureTag($picture, $tagNotHidden);
 
-        $this->mock(FileService::class, function (MockInterface $mock) use ($file) {
+        $this->mock(FileService::class, static function (MockInterface $mock) use ($file) : void {
             $mock
                 ->shouldReceive('formArtUrlPath')
                 ->andReturn($file->path);
