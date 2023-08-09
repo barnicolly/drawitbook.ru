@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Containers\Search\Http\Controllers\SearchController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

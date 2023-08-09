@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Containers\Content\Http\Controllers\ContentHttpController;
+
 foreach (config('translator.available_locales') as $prefix) {
     Route::group(
         ['prefix' => $prefix],

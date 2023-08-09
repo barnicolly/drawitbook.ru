@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-
 use App\Containers\Admin\Http\Controllers\ArtController;
 use App\Containers\Authorization\Enums\RoleEnum;
+
 Route::group(
     [
         'middleware' => ['web', 'roles'],

@@ -12,7 +12,6 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  */
 final class GetSettingsModalRequest extends BaseFormRequest
 {
-
     protected array $casts = [
         'id' => 'int',
     ];

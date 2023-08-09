@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class SearchArtsHttpRequest extends BaseFormRequest
 {
-
     protected array $casts = [
         'query' => 'string',
     ];

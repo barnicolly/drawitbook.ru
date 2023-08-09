@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Ship\Services\File\FileService;
+
 if (!function_exists('buildUrl')) {
     function buildUrl(string $path): string
     {

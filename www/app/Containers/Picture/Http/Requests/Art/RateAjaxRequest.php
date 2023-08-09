@@ -15,7 +15,6 @@ use Illuminate\Validation\Rule;
  */
 final class RateAjaxRequest extends BaseFormRequest
 {
-
     protected array $casts = [
         'id' => 'int',
         'off' => 'string',

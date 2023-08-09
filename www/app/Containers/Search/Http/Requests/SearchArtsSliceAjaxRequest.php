@@ -12,7 +12,6 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  */
 final class SearchArtsSliceAjaxRequest extends BaseFormRequest
 {
-
     protected array $casts = [
         'page' => 'int',
         'query' => 'string',

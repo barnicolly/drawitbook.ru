@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Containers\Tag\Models\TagsModel;
 use App\Ship\Enums\FlagsEnum;
 use Illuminate\Database\Migrations\Migration;
+
 return new class extends Migration {
     /**
      * Run the migrations.

@@ -7,17 +7,15 @@ use RuntimeException;
 
 /**
  * Расширяем класс Request. Добавляем возможность приводить аттрибуты к нужным типам прямо в нем
+ *
  * @see https://laravel.com/docs/7.x/eloquent-mutators#attribute-casting
  */
 trait RequestCastsTrait
 {
-
     protected array $casts = [];
 
     /**
      * Приводи
-     * @param array $requestData
-     * @return array
      */
     protected function casts(array $requestData): array
     {
@@ -42,8 +40,6 @@ trait RequestCastsTrait
 
     /**
      * Get the casts array.
-     *
-     * @return array
      */
     public function getCasts(): array
     {
@@ -55,6 +51,7 @@ trait RequestCastsTrait
      *
      * @param string $key
      * @param mixed $value
+     *
      * @return mixed
      */
     protected function castAttribute($key, $value)
@@ -125,6 +122,7 @@ trait RequestCastsTrait
      * Get the type of cast for a model attribute.
      *
      * @param string $key
+     *
      * @return string
      */
     protected function getCastType($key)
@@ -137,6 +135,7 @@ trait RequestCastsTrait
      *
      * @param string $value
      * @param bool $asObject
+     *
      * @return mixed
      */
     public function fromJson($value, $asObject = false)

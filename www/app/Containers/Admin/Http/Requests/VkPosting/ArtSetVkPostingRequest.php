@@ -12,7 +12,6 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  */
 final class ArtSetVkPostingRequest extends BaseFormRequest
 {
-
     protected array $casts = [
         'id' => 'int',
     ];

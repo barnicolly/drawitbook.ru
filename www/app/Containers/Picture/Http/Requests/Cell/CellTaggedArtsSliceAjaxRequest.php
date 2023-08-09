@@ -11,7 +11,6 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  */
 final class CellTaggedArtsSliceAjaxRequest extends BaseFormRequest
 {
-
     protected array $casts = [
         'page' => 'int',
     ];

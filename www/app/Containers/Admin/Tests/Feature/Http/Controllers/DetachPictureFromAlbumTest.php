@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Containers\Admin\Tests\Feature\Http\Controllers;
 
 use Mockery\MockInterface;
-use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Admin\Http\Controllers\ArtController;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Vk\Enums\VkAlbumPictureColumnsEnum;
