@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Ship\Parents\Requests;
 
+use App\Ship\Traits\RequestCastsTrait;
 use Elegant\Sanitizer\Laravel\SanitizesInput;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -12,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class BaseFormRequest extends FormRequest
 {
     use SanitizesInput;
+    use RequestCastsTrait;
 
     /**
      * For more sanitizer rule check https://github.com/Waavi/Sanitizer
@@ -25,6 +29,12 @@ abstract class BaseFormRequest extends FormRequest
     abstract public function rules(): array;
 
     abstract public function authorize(): bool;
+
+    public function all($keys = null): array
+    {
+        $requestData = parent::all($keys);
+        return $this->casts($requestData);
+    }
 
     public function withValidator(mixed $validator): void
     {
