@@ -7,7 +7,7 @@ namespace App\Ship\ViewComposers;
 use App\Containers\Menu\Actions\GetCachedMenuTreeAction;
 use Illuminate\View\View;
 
-class HeaderComposer
+final class HeaderComposer
 {
     public function __construct(private readonly GetCachedMenuTreeAction $getCachedMenuTreeAction)
     {

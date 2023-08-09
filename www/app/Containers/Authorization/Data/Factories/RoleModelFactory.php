@@ -8,7 +8,7 @@ use App\Containers\Authorization\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class RoleModelFactory extends Factory
+final class RoleModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

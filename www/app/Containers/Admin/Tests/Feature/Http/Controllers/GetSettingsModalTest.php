@@ -11,7 +11,7 @@ use App\Ship\Parents\Tests\TestCase;
 /**
  * @see ArtController::getSettingsModal()
  */
-class GetSettingsModalTest extends TestCase
+final class GetSettingsModalTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
 

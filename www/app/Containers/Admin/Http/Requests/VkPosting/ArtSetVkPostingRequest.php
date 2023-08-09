@@ -10,7 +10,7 @@ use App\Ship\Parents\Requests\BaseFormRequest;
 /**
  * @property int $id
  */
-class ArtSetVkPostingRequest extends BaseFormRequest
+final class ArtSetVkPostingRequest extends BaseFormRequest
 {
 
     protected array $casts = [

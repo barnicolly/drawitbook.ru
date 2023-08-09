@@ -12,7 +12,7 @@ use App\Ship\Factories\PaginatorFactory;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class GetPaginatedCellArtsByTagTask extends Task
+final class GetPaginatedCellArtsByTagTask extends Task
 {
     public function __construct(
         private readonly GetArtsByIdsAction $getArtsByIdsAction,

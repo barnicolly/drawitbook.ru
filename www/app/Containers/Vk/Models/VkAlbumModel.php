@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @method static VkAlbumModelFactory factory
  */
-class VkAlbumModel extends CoreModel
+final class VkAlbumModel extends CoreModel
 {
     use HasFactory;
 

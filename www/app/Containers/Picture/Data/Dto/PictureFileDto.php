@@ -7,7 +7,7 @@ namespace App\Containers\Picture\Data\Dto;
 use App\Containers\Image\Models\ImagesModel;
 use App\Ship\Parents\Dto\Dto;
 
-class PictureFileDto extends Dto
+final class PictureFileDto extends Dto
 {
     public int $width;
 

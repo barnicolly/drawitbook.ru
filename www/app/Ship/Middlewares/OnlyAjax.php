@@ -8,7 +8,7 @@ use App\Ship\Parents\Contracts\MiddlewareContract;
 use Closure;
 use Illuminate\Http\Request;
 
-class OnlyAjax implements MiddlewareContract
+final class OnlyAjax implements MiddlewareContract
 {
     /**
      * Handle an incoming request.

@@ -8,7 +8,7 @@ use App\Containers\Menu\Actions\GetCachedMenuTreeAction;
 use App\Containers\Translation\Enums\LangEnum;
 use Illuminate\View\View;
 
-class FooterComposer
+final class FooterComposer
 {
     public function __construct(private readonly GetCachedMenuTreeAction $getCachedMenuTreeAction)
     {

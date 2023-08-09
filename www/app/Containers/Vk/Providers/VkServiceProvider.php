@@ -9,7 +9,7 @@ use App\Containers\Vk\Services\Api\PhotoService;
 use App\Containers\Vk\Services\Api\VkApi;
 use Illuminate\Support\ServiceProvider;
 
-class VkServiceProvider extends ServiceProvider
+final class VkServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

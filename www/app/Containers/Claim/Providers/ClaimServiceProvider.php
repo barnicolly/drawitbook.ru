@@ -7,7 +7,7 @@ namespace App\Containers\Claim\Providers;
 use Config;
 use Illuminate\Support\ServiceProvider;
 
-class ClaimServiceProvider extends ServiceProvider
+final class ClaimServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

@@ -7,7 +7,7 @@ namespace App\Containers\Seo\Console;
 use App\Containers\Seo\Tasks\CreateSitemapTask;
 use Illuminate\Console\Command;
 
-class CreateSitemapCommand extends Command
+final class CreateSitemapCommand extends Command
 {
     /**
      * The name and signature of the console command.

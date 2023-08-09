@@ -25,7 +25,7 @@ use Spatie\ModelFlags\Models\Flag;
  *
  * @method static TagsModelFactory factory()
  */
-class TagsModel extends CoreModel
+final class TagsModel extends CoreModel
 {
     use HasFactory;
     use HasFlags;

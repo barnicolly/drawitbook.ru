@@ -7,7 +7,7 @@ namespace App\Ship\ViewComposers;
 use App\Containers\Seo\Traits\SeoTrait;
 use Illuminate\View\View;
 
-class Error500Composer
+final class Error500Composer
 {
     use SeoTrait;
 

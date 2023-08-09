@@ -10,7 +10,7 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  * @property int $page
  * @property string $query
  */
-class SearchArtsSliceAjaxRequest extends BaseFormRequest
+final class SearchArtsSliceAjaxRequest extends BaseFormRequest
 {
 
     protected array $casts = [

@@ -10,7 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 
-class RegisterController extends parentRegisterController
+final class RegisterController extends parentRegisterController
 {
     public function showRegistrationForm(): Redirector|View|RedirectResponse|Application
     {

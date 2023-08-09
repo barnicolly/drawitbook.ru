@@ -18,7 +18,7 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 /**
  * @see \App\Containers\SocialMediaPosting\Tests\Feature\Services\BroadcastPostingServiceTest
  */
-class BroadcastPostingService
+final class BroadcastPostingService
 {
     public function __construct(
         private readonly GetPictureIdForPostingTask $getPictureIdForPostingTask,

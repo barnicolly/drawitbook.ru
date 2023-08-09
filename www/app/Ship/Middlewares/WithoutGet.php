@@ -8,7 +8,7 @@ use App\Ship\Parents\Contracts\MiddlewareContract;
 use Closure;
 use Illuminate\Http\Request;
 
-class WithoutGet implements MiddlewareContract
+final class WithoutGet implements MiddlewareContract
 {
     /**
      * Handle an incoming request.

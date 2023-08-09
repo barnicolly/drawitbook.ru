@@ -7,7 +7,7 @@ namespace App\Ship\ViewComposers;
 use App\Containers\Seo\Traits\SeoTrait;
 use Illuminate\View\View;
 
-class Error404Composer
+final class Error404Composer
 {
     use SeoTrait;
 

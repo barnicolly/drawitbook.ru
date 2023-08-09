@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @method static ImagesModelFactory factory()
  */
-class ImagesModel extends CoreModel
+final class ImagesModel extends CoreModel
 {
     use HasFactory;
 

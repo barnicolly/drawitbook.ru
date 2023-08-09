@@ -8,7 +8,7 @@ use App\Containers\Menu\Tasks\GetSortedMenuTreeTask;
 use App\Ship\Parents\Actions\Action;
 use Illuminate\Support\Facades\Cache;
 
-class GetCachedMenuTreeAction extends Action
+final class GetCachedMenuTreeAction extends Action
 {
     public GetSortedMenuTreeTask $getDataTask;
 

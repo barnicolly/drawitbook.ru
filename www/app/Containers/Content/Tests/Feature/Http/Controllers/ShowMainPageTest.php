@@ -11,7 +11,7 @@ use App\Ship\Services\Route\RouteService;
 /**
  * @see ContentHttpController::showMainPage()
  */
-class ShowMainPageTest extends TestCase
+final class ShowMainPageTest extends TestCase
 {
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages

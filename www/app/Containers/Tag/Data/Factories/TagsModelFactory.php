@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class TagsModelFactory extends Factory
+final class TagsModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

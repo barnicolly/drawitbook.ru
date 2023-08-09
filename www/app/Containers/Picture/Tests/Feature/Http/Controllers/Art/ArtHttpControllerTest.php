@@ -15,7 +15,7 @@ use App\Ship\Parents\Tests\TestCase;
 /**
  * @see \App\Containers\Picture\Http\Controllers\Art\ArtHttpController::index()
  */
-class ArtHttpControllerTest extends TestCase
+final class ArtHttpControllerTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
     use CreateTagTrait;

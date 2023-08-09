@@ -9,7 +9,7 @@ use App\Containers\Picture\Models\PictureModel;
 use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tasks\Task;
 
-class PictureUnsetVkPostingFlagTask extends Task
+final class PictureUnsetVkPostingFlagTask extends Task
 {
     /**
      * @throws ValidatorException

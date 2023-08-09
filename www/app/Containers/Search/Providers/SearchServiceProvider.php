@@ -7,7 +7,7 @@ namespace App\Containers\Search\Providers;
 use Config;
 use Illuminate\Support\ServiceProvider;
 
-class SearchServiceProvider extends ServiceProvider
+final class SearchServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

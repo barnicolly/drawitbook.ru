@@ -7,7 +7,7 @@ namespace App\Containers\Picture\Providers;
 use Config;
 use Illuminate\Support\ServiceProvider;
 
-class PictureServiceProvider extends ServiceProvider
+final class PictureServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

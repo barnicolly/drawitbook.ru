@@ -7,7 +7,7 @@ namespace App\Containers\Image\Providers;
 use Illuminate\Support\ServiceProvider;
 use Config;
 
-class ImageServiceProvider extends ServiceProvider
+final class ImageServiceProvider extends ServiceProvider
 {
     protected string $moduleName = 'Image';
 

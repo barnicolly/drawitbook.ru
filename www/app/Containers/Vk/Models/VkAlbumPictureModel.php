@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @method static VkAlbumPictureModelFactory factory
  */
-class VkAlbumPictureModel extends CoreModel
+final class VkAlbumPictureModel extends CoreModel
 {
     use HasFactory;
 

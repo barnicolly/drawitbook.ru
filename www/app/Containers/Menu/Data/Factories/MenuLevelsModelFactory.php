@@ -10,7 +10,7 @@ use App\Containers\Tag\Models\TagsModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class MenuLevelsModelFactory extends Factory
+final class MenuLevelsModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

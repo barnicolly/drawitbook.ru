@@ -18,7 +18,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class SearchController extends HttpController
+final class SearchController extends HttpController
 {
     /**
      * @see \App\Containers\Search\Tests\Feature\Http\Controllers\ShowSearchIndexPageTest

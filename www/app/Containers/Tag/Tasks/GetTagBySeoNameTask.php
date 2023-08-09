@@ -11,7 +11,7 @@ use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Database\Eloquent\Builder;
 
-class GetTagBySeoNameTask extends Task
+final class GetTagBySeoNameTask extends Task
 {
     public function run(string $tagSeoName, string $locale): ?TagDto
     {

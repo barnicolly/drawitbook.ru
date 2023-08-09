@@ -11,7 +11,7 @@ use App\Containers\Like\Tasks\GetLikeByPictureIdTask;
 use App\Containers\User\Data\Dto\UserDto;
 use App\Ship\Parents\Actions\Action;
 
-class LikePictureAction extends Action
+final class LikePictureAction extends Action
 {
     public function __construct(
         private readonly CreateLikeTask $createLikeTask,

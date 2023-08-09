@@ -10,7 +10,7 @@ use App\Containers\Seo\Data\Dto\ShareImageDto;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Facades\Cache;
 
-class GetDefaultShareImageTask extends Task
+final class GetDefaultShareImageTask extends Task
 {
     /**
      * @var string

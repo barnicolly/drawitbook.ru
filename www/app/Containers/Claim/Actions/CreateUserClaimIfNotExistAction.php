@@ -12,7 +12,7 @@ use App\Containers\User\Data\Dto\UserDto;
 use App\Containers\User\Tasks\GetUserIpFromRequestTask;
 use App\Ship\Parents\Actions\Action;
 
-class CreateUserClaimIfNotExistAction extends Action
+final class CreateUserClaimIfNotExistAction extends Action
 {
     public function __construct(
         private readonly GetUserClaimByPictureIdTask $getUserClaimByPictureIdTask,

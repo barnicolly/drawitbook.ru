@@ -11,7 +11,7 @@ use App\Containers\User\Data\Dto\UserDto;
 use App\Containers\User\Tasks\GetUserIpFromRequestTask;
 use App\Ship\Parents\Actions\Action;
 
-class SetLikePictureAction extends Action
+final class SetLikePictureAction extends Action
 {
     public function __construct(
         private readonly GetUserIpFromRequestTask $getUserIpFromRequestTask,

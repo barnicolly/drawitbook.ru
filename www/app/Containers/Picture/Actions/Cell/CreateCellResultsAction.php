@@ -10,7 +10,7 @@ use App\Ship\Dto\PaginationDto;
 use App\Ship\Parents\Actions\Action;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class CreateCellResultsAction extends Action
+final class CreateCellResultsAction extends Action
 {
     public function __construct(private readonly TranslationService $translationService)
     {

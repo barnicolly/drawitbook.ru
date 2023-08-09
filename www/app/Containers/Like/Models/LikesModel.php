@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @method static LikesModelFactory factory()
  */
-class LikesModel extends CoreModel
+final class LikesModel extends CoreModel
 {
     use HasFactory;
 

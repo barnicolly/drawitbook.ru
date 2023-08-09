@@ -7,7 +7,7 @@ namespace App\Containers\Vk\Data\Repositories;
 use App\Containers\Vk\Models\VkAlbumModel;
 use App\Ship\Parents\Repositories\Repository;
 
-class VkAlbumRepository extends Repository
+final class VkAlbumRepository extends Repository
 {
     public function model(): string
     {

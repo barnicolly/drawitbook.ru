@@ -10,7 +10,7 @@ use App\Containers\User\Data\Dto\UserDto;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Facades\DB;
 
-class CreateUserClaimTask extends Task
+final class CreateUserClaimTask extends Task
 {
     public function __construct(protected UserClaimRepository $repository)
     {

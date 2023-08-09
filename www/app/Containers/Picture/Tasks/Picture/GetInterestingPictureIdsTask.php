@@ -9,7 +9,7 @@ use App\Containers\Picture\Models\PictureModel;
 use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tasks\Task;
 
-class GetInterestingPictureIdsTask extends Task
+final class GetInterestingPictureIdsTask extends Task
 {
     public function run(int $excludeId, int $limit): array
     {

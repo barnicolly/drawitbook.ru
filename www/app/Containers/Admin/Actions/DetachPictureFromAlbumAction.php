@@ -11,7 +11,7 @@ use App\Containers\Vk\Tasks\VkAlbumPicture\DeleteVkAlbumPictureByIdTask;
 use App\Containers\Vk\Tasks\VkAlbumPicture\GetVkAlbumPictureByVkAlbumIdAndPictureIdTask;
 use App\Ship\Parents\Actions\Action;
 
-class DetachPictureFromAlbumAction extends Action
+final class DetachPictureFromAlbumAction extends Action
 {
     public function __construct(
         private readonly PhotoService $apiPhotoService,

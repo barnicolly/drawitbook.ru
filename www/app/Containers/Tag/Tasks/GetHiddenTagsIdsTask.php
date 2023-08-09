@@ -9,7 +9,7 @@ use App\Containers\Tag\Enums\TagsColumnsEnum;
 use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tasks\Task;
 
-class GetHiddenTagsIdsTask extends Task
+final class GetHiddenTagsIdsTask extends Task
 {
     public function __construct(protected TagRepository $repository)
     {

@@ -8,7 +8,7 @@ use App\Ship\Parents\Contracts\MiddlewareContract;
 use Closure;
 use Illuminate\Http\Request;
 
-class InLowerCase implements MiddlewareContract
+final class InLowerCase implements MiddlewareContract
 {
     /**
      * Handle an incoming request.

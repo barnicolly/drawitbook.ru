@@ -8,7 +8,7 @@ use App\Containers\Picture\Tasks\Picture\GetInterestingPictureIdsTask;
 use App\Ship\Parents\Actions\Action;
 use Prettus\Repository\Exceptions\RepositoryException;
 
-class GetInterestingArtsAction extends Action
+final class GetInterestingArtsAction extends Action
 {
     public function __construct(
         private readonly GetInterestingPictureIdsTask $getInterestingPictureIdsTask,

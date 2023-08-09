@@ -6,7 +6,7 @@ namespace App\Containers\Seo\Data\Dto;
 
 use App\Ship\Parents\Dto\Dto;
 
-class BreadcrumbDto extends Dto
+final class BreadcrumbDto extends Dto
 {
     public string $title;
 

@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
 use Prettus\Repository\Exceptions\RepositoryException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class GetTaggedCellPicturesAction extends Action
+final class GetTaggedCellPicturesAction extends Action
 {
     public function __construct(
         private readonly RouteService $routeService,

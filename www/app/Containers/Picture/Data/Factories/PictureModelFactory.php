@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<PictureModel>
  */
-class PictureModelFactory extends Factory
+final class PictureModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

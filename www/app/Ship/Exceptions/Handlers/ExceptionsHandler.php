@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
-class ExceptionsHandler extends LaravelExceptionHandler
+final class ExceptionsHandler extends LaravelExceptionHandler
 {
     /**
      * A list of the exception types that are not reported.

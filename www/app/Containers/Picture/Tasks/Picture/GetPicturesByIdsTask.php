@@ -13,7 +13,7 @@ use App\Ship\Parents\Tasks\Task;
 use Illuminate\Contracts\Database\Query\Builder as BuilderContract;
 use Illuminate\Support\Collection;
 
-class GetPicturesByIdsTask extends Task
+final class GetPicturesByIdsTask extends Task
 {
     public function __construct(private readonly GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
     {

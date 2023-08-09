@@ -9,7 +9,7 @@ use App\Containers\Vk\Models\VkAlbumModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class VkAlbumModelFactory extends Factory
+final class VkAlbumModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

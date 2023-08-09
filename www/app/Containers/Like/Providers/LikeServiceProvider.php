@@ -7,7 +7,7 @@ namespace App\Containers\Like\Providers;
 use Config;
 use Illuminate\Support\ServiceProvider;
 
-class LikeServiceProvider extends ServiceProvider
+final class LikeServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

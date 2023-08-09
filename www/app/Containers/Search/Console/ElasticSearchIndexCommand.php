@@ -10,7 +10,7 @@ use Barnicolly\ModelSearch\Tasks\ElasticSearchDeleteIndexTask;
 use Barnicolly\ModelSearch\Tasks\ElasticSearchIndexModelTask;
 use Illuminate\Console\Command;
 
-class ElasticSearchIndexCommand extends Command
+final class ElasticSearchIndexCommand extends Command
 {
     /**
      * @var string

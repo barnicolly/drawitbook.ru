@@ -18,7 +18,7 @@ use App\Ship\Parents\Tests\TestCase;
 /**
  * @see CellHttpController::tagged()
  */
-class CellHttpControllerTaggedTest extends TestCase
+final class CellHttpControllerTaggedTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
     use CreateTagTrait;

@@ -9,7 +9,7 @@ use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Dto\Dto;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class TagSeoLangDto extends Dto
+final class TagSeoLangDto extends Dto
 {
     public TagSeoDto $current;
 

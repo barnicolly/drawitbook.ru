@@ -12,7 +12,7 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  * @property int $id
  * @property int $album_id
  */
-class AttachPictureOnAlbumRequest extends BaseFormRequest
+final class AttachPictureOnAlbumRequest extends BaseFormRequest
 {
     protected array $casts = [
         'id' => 'int',

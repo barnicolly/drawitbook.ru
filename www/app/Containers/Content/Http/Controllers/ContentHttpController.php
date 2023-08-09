@@ -9,7 +9,7 @@ use App\Containers\Content\Actions\MainPageAction;
 use App\Ship\Parents\Controllers\HttpController;
 use Illuminate\Http\Response;
 
-class ContentHttpController extends HttpController
+final class ContentHttpController extends HttpController
 {
     /**
      * @throws UnknownProperties

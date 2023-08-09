@@ -12,7 +12,7 @@ use App\Ship\Parents\Tests\TestCase;
 /**
  * @see \App\Containers\Picture\Http\Controllers\Art\ClaimAjaxController::register()
  */
-class ClaimAjaxControllerTest extends TestCase
+final class ClaimAjaxControllerTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
     use CreateClaimTrait;

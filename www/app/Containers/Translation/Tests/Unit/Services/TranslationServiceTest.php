@@ -8,7 +8,7 @@ use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 use App\Ship\Parents\Tests\TestCase;
 
-class TranslationServiceTest extends TestCase
+final class TranslationServiceTest extends TestCase
 {
     public static function providerTestGetPluralForm(): array
     {

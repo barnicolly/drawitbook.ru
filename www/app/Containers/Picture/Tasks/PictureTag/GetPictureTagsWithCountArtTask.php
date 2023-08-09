@@ -13,7 +13,7 @@ use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
 
-class GetPictureTagsWithCountArtTask extends Task
+final class GetPictureTagsWithCountArtTask extends Task
 {
     public function __construct(private readonly GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
     {

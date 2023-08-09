@@ -12,7 +12,7 @@ use App\Ship\Factories\PaginatorFactory;
 use App\Ship\Parents\Actions\Action;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class SearchPicturesAction extends Action
+final class SearchPicturesAction extends Action
 {
     public function __construct(
         private readonly SearchInElasticSearchTask $searchInElasticSearchTask,

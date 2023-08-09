@@ -7,7 +7,7 @@ namespace App\Containers\Menu\Tasks;
 use App\Ship\Parents\Tasks\Task;
 use App\Ship\Services\Route\RouteService;
 
-class GetSortedMenuTreeTask extends Task
+final class GetSortedMenuTreeTask extends Task
 {
     public function __construct(
         private readonly RouteService $routeService,

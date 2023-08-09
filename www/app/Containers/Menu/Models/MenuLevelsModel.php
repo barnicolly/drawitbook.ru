@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @method static MenuLevelsModelFactory factory
  */
-class MenuLevelsModel extends CoreModel
+final class MenuLevelsModel extends CoreModel
 {
     use HasFactory;
 

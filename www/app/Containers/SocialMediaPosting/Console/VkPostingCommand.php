@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class VkPostingCommand extends Command
+final class VkPostingCommand extends Command
 {
     /**
      * @var string

@@ -8,7 +8,7 @@ use App\Containers\Tag\Data\Dto\TagDto;
 use App\Ship\Parents\Tasks\Task;
 use App\Ship\Services\Route\RouteService;
 
-class FormCellPageAlternativeLocaleLinksTask extends Task
+final class FormCellPageAlternativeLocaleLinksTask extends Task
 {
     public function __construct(private readonly RouteService $routeService)
     {

@@ -11,7 +11,7 @@ use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Facades\Module;
 use Symfony\Component\Finder\Finder;
 
-class ConsoleServiceProvider extends ServiceProvider
+final class ConsoleServiceProvider extends ServiceProvider
 {
     public function register(): void
     {

@@ -18,7 +18,7 @@ use Illuminate\Support\Collection;
 /**
  * @see ArtController::detachPictureFromAlbum()
  */
-class DetachPictureFromAlbumTest extends TestCase
+final class DetachPictureFromAlbumTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
     use CreateVkAlbumTrait;

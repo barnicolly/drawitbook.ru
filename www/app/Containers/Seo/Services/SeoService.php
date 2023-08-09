@@ -7,7 +7,7 @@ namespace App\Containers\Seo\Services;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Containers\Translation\Services\TranslationService;
 
-class SeoService
+final class SeoService
 {
     public function formTitleAndDescriptionShowArt(int $artId): array
     {

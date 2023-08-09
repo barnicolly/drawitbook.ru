@@ -7,7 +7,7 @@ namespace App\Ship\Dto;
 use App\Ship\Parents\Dto\Dto;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class PaginationDto extends Dto
+final class PaginationDto extends Dto
 {
     public int $page;
 

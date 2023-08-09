@@ -9,7 +9,7 @@ use App\Containers\Picture\Models\PictureModel;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
 
-class FormPicturesDtoTask extends Task
+final class FormPicturesDtoTask extends Task
 {
     public function run(Collection $arts): array
     {

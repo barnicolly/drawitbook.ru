@@ -18,7 +18,7 @@ use App\Ship\Parents\Tests\TestCase;
 /**
  * @see BroadcastPostingService
  */
-class BroadcastPostingServiceTest extends TestCase
+final class BroadcastPostingServiceTest extends TestCase
 {
     use CreateSocialMediaPostingHistoryTrait;
     use CreatePictureWithRelationsTrait;

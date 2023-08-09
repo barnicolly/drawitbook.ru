@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @property string $query
  */
-class SearchArtsHttpRequest extends BaseFormRequest
+final class SearchArtsHttpRequest extends BaseFormRequest
 {
 
     protected array $casts = [

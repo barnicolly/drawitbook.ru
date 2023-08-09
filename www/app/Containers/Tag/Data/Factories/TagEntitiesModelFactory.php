@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 /**
  * @extends Factory<TagEntitiesModel>
  */
-class TagEntitiesModelFactory extends Factory
+final class TagEntitiesModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

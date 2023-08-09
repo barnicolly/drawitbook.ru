@@ -6,7 +6,7 @@ namespace App\Containers\Picture\Data\Dto;
 
 use App\Ship\Parents\Dto\Dto;
 
-class ArtDto extends Dto
+final class ArtDto extends Dto
 {
     public int $id;
 

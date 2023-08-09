@@ -9,7 +9,7 @@ use App\Containers\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserModelFactory extends Factory
+final class UserModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

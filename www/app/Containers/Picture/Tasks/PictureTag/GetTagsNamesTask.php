@@ -12,7 +12,7 @@ use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
 
-class GetTagsNamesTask extends Task
+final class GetTagsNamesTask extends Task
 {
     public function __construct(private readonly GetHiddenTagsIdsTask $getHiddenTagsIdsTask)
     {

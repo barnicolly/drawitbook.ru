@@ -13,7 +13,7 @@ use App\Containers\Vk\Tasks\VkAlbum\GetVkAlbumByIdTask;
 use App\Containers\Vk\Tasks\VkAlbumPicture\CreateVkAlbumPictureTask;
 use App\Ship\Parents\Actions\Action;
 
-class AttachPictureOnAlbumAction extends Action
+final class AttachPictureOnAlbumAction extends Action
 {
     public function __construct(
         private readonly PhotoService $apiPhotoService,

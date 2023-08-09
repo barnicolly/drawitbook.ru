@@ -15,7 +15,7 @@ use App\Ship\ViewComposers\HeaderComposer;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
-class HeaderComposerTest extends TestCase
+final class HeaderComposerTest extends TestCase
 {
     use CreateMenuLevelTrait;
     use CreateTagTrait;

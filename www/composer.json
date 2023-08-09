@@ -121,6 +121,7 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "ecs:sniffer": "php -d xdebug.mode=off ./vendor/bin/ecs check --config ecs.sniffer.php"
+        "ecs:sniffer": "php -d xdebug.mode=off ./vendor/bin/ecs check --config ecs.sniffer.php",
+        "ecs:php-cs-fixer": "php -d xdebug.mode=off ./vendor/bin/ecs check --config ecs.php-cs-fixer.php"
     }
 }

@@ -14,7 +14,7 @@ use App\Ship\Parents\Actions\Action;
 use Prettus\Repository\Exceptions\RepositoryException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class GetTaggedCellPicturesSliceAction extends Action
+final class GetTaggedCellPicturesSliceAction extends Action
 {
     public function __construct(
         private readonly GetPaginatedCellArtsByTagTask $getPaginatedCellArtsByTagTask,

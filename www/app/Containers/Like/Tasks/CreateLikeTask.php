@@ -9,7 +9,7 @@ use App\Containers\User\Data\Dto\UserDto;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Facades\DB;
 
-class CreateLikeTask extends Task
+final class CreateLikeTask extends Task
 {
     public function run(int $pictureId, UserDto $userDto): ?LikesModel
     {

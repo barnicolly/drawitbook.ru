@@ -15,7 +15,7 @@ use App\Ship\Services\Route\RouteService;
 use Prettus\Repository\Exceptions\RepositoryException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class GetArtAction extends Action
+final class GetArtAction extends Action
 {
     public function __construct(
         private readonly GetPopularTagsAction $getPopularTagsAction,

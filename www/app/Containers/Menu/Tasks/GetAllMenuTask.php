@@ -11,7 +11,7 @@ use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Models\CoreModel;
 use App\Ship\Parents\Tasks\Task;
 
-class GetAllMenuTask extends Task
+final class GetAllMenuTask extends Task
 {
     public function __construct(private readonly MenuLevelsRepository $repository)
     {

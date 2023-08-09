@@ -7,7 +7,7 @@ namespace App\Containers\Admin\Providers;
 use Config;
 use Illuminate\Support\ServiceProvider;
 
-class AdminServiceProvider extends ServiceProvider
+final class AdminServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

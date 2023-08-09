@@ -18,7 +18,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class CellHttpController extends HttpController
+final class CellHttpController extends HttpController
 {
     public function __construct(private readonly RouteService $routeService)
     {

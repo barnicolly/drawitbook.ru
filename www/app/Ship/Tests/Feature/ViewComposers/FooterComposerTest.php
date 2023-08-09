@@ -16,7 +16,7 @@ use App\Ship\ViewComposers\FooterComposer;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
-class FooterComposerTest extends TestCase
+final class FooterComposerTest extends TestCase
 {
     use CreateMenuLevelTrait;
     use CreateTagTrait;

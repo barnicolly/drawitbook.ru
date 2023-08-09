@@ -7,7 +7,7 @@ namespace App\Containers\Authorization\Listeners;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
 
-class LogSuccessfulLogin
+final class LogSuccessfulLogin
 {
     /**
      * Create the event listener.

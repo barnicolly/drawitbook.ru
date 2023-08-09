@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @property TagsModel $tag
  */
-class TagEntitiesModel extends CoreModel
+final class TagEntitiesModel extends CoreModel
 {
     use HasFactory;
 

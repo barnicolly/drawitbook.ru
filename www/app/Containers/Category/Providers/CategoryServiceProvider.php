@@ -7,7 +7,7 @@ namespace App\Containers\Category\Providers;
 use Config;
 use Illuminate\Support\ServiceProvider;
 
-class CategoryServiceProvider extends ServiceProvider
+final class CategoryServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

@@ -12,7 +12,7 @@ use Waavi\Translation\Middleware\TranslationMiddleware;
 use Waavi\Translation\Repositories\LanguageRepository;
 use Waavi\Translation\UriLocalizer;
 
-class CustomTranslationMiddleware extends TranslationMiddleware
+final class CustomTranslationMiddleware extends TranslationMiddleware
 {
     public UriLocalizer $uriLocalizer;
     public Config $config;

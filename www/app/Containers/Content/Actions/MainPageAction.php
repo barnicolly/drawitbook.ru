@@ -11,7 +11,7 @@ use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Route\RouteService;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class MainPageAction extends Action
+final class MainPageAction extends Action
 {
     public function __construct(
         private readonly RouteService $routeService,

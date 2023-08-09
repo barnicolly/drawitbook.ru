@@ -7,7 +7,7 @@ namespace App\Containers\Menu\Providers;
 use Config;
 use Illuminate\Support\ServiceProvider;
 
-class MenuServiceProvider extends ServiceProvider
+final class MenuServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

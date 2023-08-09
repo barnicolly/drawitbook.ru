@@ -10,7 +10,7 @@ use App\Ship\Parents\Tests\MiddlewareTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
-class WithoutGetTest extends MiddlewareTestCase
+final class WithoutGetTest extends MiddlewareTestCase
 {
     private string $url = '/ru/dummy-test-route';
     private static string $correctWord = 'абстрактность';

@@ -9,7 +9,7 @@ use App\Containers\Picture\Models\PictureModel;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class GetPictureByIdTask extends Task
+final class GetPictureByIdTask extends Task
 {
     /**
      * @throws NotFoundPicture

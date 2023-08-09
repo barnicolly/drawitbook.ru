@@ -32,7 +32,7 @@ use App\Ship\Middlewares\InLowerCase;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Foundation\Http\Kernel as LaravelHttpKernel;
 
-class HttpKernel extends LaravelHttpKernel
+final class HttpKernel extends LaravelHttpKernel
 {
     /**
      * The application's global HTTP middleware stack.

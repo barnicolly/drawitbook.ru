@@ -6,7 +6,7 @@ namespace App\Containers\Vk\Tasks;
 
 use App\Ship\Parents\Tasks\Task;
 
-class FormHashTagsTask extends Task
+final class FormHashTagsTask extends Task
 {
     public function run(array $tags): string
     {

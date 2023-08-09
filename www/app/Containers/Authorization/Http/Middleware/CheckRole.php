@@ -7,7 +7,7 @@ namespace App\Containers\Authorization\Http\Middleware;
 use Illuminate\Http\Request;
 use Closure;
 
-class CheckRole
+final class CheckRole
 {
     /**
      * Handle an incoming request.

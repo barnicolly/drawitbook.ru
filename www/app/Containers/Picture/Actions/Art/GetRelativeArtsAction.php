@@ -9,7 +9,7 @@ use App\Containers\Picture\Tasks\Picture\GetInterestingPictureIdsTask;
 use App\Containers\Search\Tasks\SearchInElasticSearchTask;
 use App\Ship\Parents\Actions\Action;
 
-class GetRelativeArtsAction extends Action
+final class GetRelativeArtsAction extends Action
 {
     public function __construct(
         private readonly GetInterestingPictureIdsTask $getInterestingPictureIdsTask,

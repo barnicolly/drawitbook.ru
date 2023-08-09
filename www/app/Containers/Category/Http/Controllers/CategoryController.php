@@ -6,6 +6,6 @@ namespace App\Containers\Category\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 
-class CategoryController extends Controller
+final class CategoryController extends Controller
 {
 }

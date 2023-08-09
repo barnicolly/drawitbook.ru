@@ -10,7 +10,7 @@ use App\Ship\Parents\Tests\MiddlewareTestCase;
 use App\Ship\Parents\Tests\Traits\RequestsTrait;
 use Symfony\Component\HttpFoundation\Response;
 
-class OnlyAjaxTest extends MiddlewareTestCase
+final class OnlyAjaxTest extends MiddlewareTestCase
 {
     use RequestsTrait;
 

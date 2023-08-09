@@ -10,7 +10,7 @@ use App\Containers\Tag\Models\TagsModel;
 use App\Containers\Tag\Tasks\GetPopularTagsTask;
 use App\Ship\Parents\Actions\Action;
 
-class GetPopularTagsAction extends Action
+final class GetPopularTagsAction extends Action
 {
     public function __construct(private readonly GetPopularTagsTask $getPopularTagsTask)
     {

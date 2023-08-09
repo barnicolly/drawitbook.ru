@@ -7,7 +7,7 @@ namespace App\Ship\Parents\Criterias;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
-class WhereNotNullCriteria extends Criteria
+final class WhereNotNullCriteria extends Criteria
 {
     public function __construct(private readonly string $field)
     {

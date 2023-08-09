@@ -15,7 +15,7 @@ use App\Ship\Parents\Tests\TestCase;
 /**
  * @see SearchController::index()
  */
-class ShowSearchIndexPageTest extends TestCase
+final class ShowSearchIndexPageTest extends TestCase
 {
     use CreateTagTrait;
     use CreatePictureWithRelationsTrait;

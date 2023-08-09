@@ -11,7 +11,7 @@ use App\Ship\Parents\Tasks\Task;
 use Illuminate\Contracts\Database\Query\Builder as BuilderContract;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class GetPaginatedPicturesIdsByTagIdTask extends Task
+final class GetPaginatedPicturesIdsByTagIdTask extends Task
 {
     public function run(int $tagId, int $perPage): LengthAwarePaginator
     {

@@ -9,7 +9,7 @@ use App\Containers\Claim\Models\UserClaimModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserClaimModelFactory extends Factory
+final class UserClaimModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

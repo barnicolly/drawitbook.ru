@@ -12,7 +12,7 @@ use App\Ship\Parents\Actions\Action;
 use Prettus\Repository\Exceptions\RepositoryException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class GetArtByIdWithFilesAction extends Action
+final class GetArtByIdWithFilesAction extends Action
 {
     public function __construct(private readonly GetPictureByIdTask $getPictureByIdTask)
     {

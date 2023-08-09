@@ -16,7 +16,7 @@ use Illuminate\Support\Arr;
 /**
  * @see SearchController::slice()
  */
-class GetSearchPageSliceTest extends TestCase
+final class GetSearchPageSliceTest extends TestCase
 {
     use CreateTagTrait;
     use CreatePictureWithRelationsTrait;

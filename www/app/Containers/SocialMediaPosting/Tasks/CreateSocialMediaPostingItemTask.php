@@ -8,7 +8,7 @@ use App\Containers\SocialMediaPosting\Data\Repositories\SocialMediaPostingHistor
 use App\Containers\SocialMediaPosting\Models\SocialMediaPostingHistoryModel;
 use App\Ship\Parents\Tasks\Task;
 
-class CreateSocialMediaPostingItemTask extends Task
+final class CreateSocialMediaPostingItemTask extends Task
 {
     public function __construct(protected SocialMediaPostingHistoryRepository $repository)
     {

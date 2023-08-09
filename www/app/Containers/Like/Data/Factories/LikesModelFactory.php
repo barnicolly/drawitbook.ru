@@ -9,7 +9,7 @@ use App\Containers\Like\Models\LikesModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class LikesModelFactory extends Factory
+final class LikesModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

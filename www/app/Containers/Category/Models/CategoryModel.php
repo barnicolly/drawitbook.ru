@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @method static CategoryModelFactory factory
  */
-class CategoryModel extends CoreModel
+final class CategoryModel extends CoreModel
 {
     use HasFactory;
 

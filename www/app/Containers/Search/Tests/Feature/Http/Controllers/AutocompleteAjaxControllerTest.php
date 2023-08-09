@@ -13,7 +13,7 @@ use App\Ship\Parents\Tests\TestCase;
 /**
  * @see SearchController::autocomplete()
  */
-class AutocompleteAjaxControllerTest extends TestCase
+final class AutocompleteAjaxControllerTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
     use CreateTagTrait;

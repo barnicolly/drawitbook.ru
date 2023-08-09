@@ -14,7 +14,7 @@ use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
 use Prettus\Repository\Exceptions\RepositoryException;
 
-class GetPopularTagsTask extends Task
+final class GetPopularTagsTask extends Task
 {
     public function __construct(protected TagRepository $repository)
     {

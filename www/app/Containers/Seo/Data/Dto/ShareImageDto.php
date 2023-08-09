@@ -6,7 +6,7 @@ namespace App\Containers\Seo\Data\Dto;
 
 use App\Ship\Parents\Dto\Dto;
 
-class ShareImageDto extends Dto
+final class ShareImageDto extends Dto
 {
     public string $relativePath;
 

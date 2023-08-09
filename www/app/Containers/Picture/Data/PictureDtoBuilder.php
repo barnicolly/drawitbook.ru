@@ -15,7 +15,7 @@ use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class PictureDtoBuilder extends Task
+final class PictureDtoBuilder extends Task
 {
     private ?string $alt = null;
 

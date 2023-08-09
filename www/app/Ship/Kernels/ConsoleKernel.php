@@ -8,7 +8,7 @@ use App\Containers\SocialMediaPosting\Console\VkPostingCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as LaravelConsoleKernel;
 
-class ConsoleKernel extends LaravelConsoleKernel
+final class ConsoleKernel extends LaravelConsoleKernel
 {
     /**
      * The Artisan commands provided by your application.

@@ -8,7 +8,7 @@ use Prettus\Repository\Exceptions\RepositoryException;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tasks\Task;
 
-class FindRedirectTagSlugByLocaleTask extends Task
+final class FindRedirectTagSlugByLocaleTask extends Task
 {
     public function __construct(private readonly GetTagBySeoNameTask $getTagBySeoNameTask)
     {

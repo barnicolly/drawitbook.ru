@@ -16,7 +16,7 @@ use App\Ship\Parents\Tests\TestCase;
 /**
  * @see ArtController::attachPictureOnAlbum()
  */
-class AttachPictureOnAlbumTest extends TestCase
+final class AttachPictureOnAlbumTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
     use CreateVkAlbumTrait;

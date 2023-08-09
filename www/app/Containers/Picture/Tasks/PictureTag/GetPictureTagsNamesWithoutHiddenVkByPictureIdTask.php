@@ -11,7 +11,7 @@ use App\Containers\Tag\Enums\TagsColumnsEnum;
 use App\Containers\Tag\Tasks\GetHiddenVkTagsIdsTask;
 use App\Ship\Parents\Tasks\Task;
 
-class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
+final class GetPictureTagsNamesWithoutHiddenVkByPictureIdTask extends Task
 {
     public function __construct(
         private readonly GetHiddenVkTagsIdsTask $getHiddenVkTagsIdsTask,

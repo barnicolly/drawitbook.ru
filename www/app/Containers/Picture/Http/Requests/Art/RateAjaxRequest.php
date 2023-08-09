@@ -13,7 +13,7 @@ use Illuminate\Validation\Rule;
  * @property int $id
  * @property string $off
  */
-class RateAjaxRequest extends BaseFormRequest
+final class RateAjaxRequest extends BaseFormRequest
 {
 
     protected array $casts = [

@@ -11,7 +11,7 @@ use App\Ship\Parents\Criterias\WhereArrayCriteria;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
 
-class GetVkAlbumPicturesByVkAlbumIdsAndPictureIdTask extends Task
+final class GetVkAlbumPicturesByVkAlbumIdsAndPictureIdTask extends Task
 {
     public function __construct(protected VkAlbumPictureRepository $repository)
     {

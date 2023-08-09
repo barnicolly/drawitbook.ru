@@ -10,7 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
-class LoginController extends parentLoginController
+final class LoginController extends parentLoginController
 {
     public function showLoginForm(): View|Factory|\Illuminate\View\View|Application
     {

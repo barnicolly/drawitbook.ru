@@ -8,7 +8,7 @@ use App\Containers\Vk\Data\Repositories\VkAlbumRepository;
 use App\Containers\Vk\Models\VkAlbumModel;
 use App\Ship\Parents\Tasks\Task;
 
-class GetAllVkAlbumTask extends Task
+final class GetAllVkAlbumTask extends Task
 {
     public function __construct(protected VkAlbumRepository $repository)
     {

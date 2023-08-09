@@ -7,7 +7,7 @@ namespace App\Containers\Tag\Providers;
 use Config;
 use Illuminate\Support\ServiceProvider;
 
-class TagServiceProvider extends ServiceProvider
+final class TagServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

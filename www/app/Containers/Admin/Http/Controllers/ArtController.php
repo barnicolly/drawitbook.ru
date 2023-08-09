@@ -19,7 +19,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class ArtController extends HttpController
+final class ArtController extends HttpController
 {
     /**
      * @see \App\Containers\Admin\Tests\Feature\Http\Controllers\SetVkPostingOnTest

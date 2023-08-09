@@ -12,7 +12,7 @@ use App\Ship\Dto\PaginationDto;
 use App\Ship\Parents\Actions\Action;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class SearchPageSliceAction extends Action
+final class SearchPageSliceAction extends Action
 {
     public function __construct(
         private readonly SearchPicturesAction $searchPicturesAction,

@@ -9,7 +9,7 @@ use App\Ship\Parents\Actions\Action;
 use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Facades\Cache;
 
-class GetListPopularTagsWithCountArtsAction extends Action
+final class GetListPopularTagsWithCountArtsAction extends Action
 {
     public function __construct(
         private readonly RouteService $routeService,

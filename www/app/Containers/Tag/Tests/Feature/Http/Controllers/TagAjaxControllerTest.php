@@ -13,7 +13,7 @@ use Cache;
 /**
  * @see TagAjaxController::getListPopularTagsWithCountArts()
  */
-class TagAjaxControllerTest extends TestCase
+final class TagAjaxControllerTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
     use CreateTagTrait;

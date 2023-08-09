@@ -8,7 +8,7 @@ use App\Containers\Picture\Exceptions\NotFoundPicture;
 use App\Ship\Parents\Actions\Action;
 use Illuminate\Support\Arr;
 
-class GetArtByIdAction extends Action
+final class GetArtByIdAction extends Action
 {
     public function __construct(private readonly GetArtsByIdsAction $getArtsByIdsAction)
     {

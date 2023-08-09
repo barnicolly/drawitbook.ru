@@ -11,7 +11,7 @@ use App\Ship\Enums\FlagsEnum;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Facades\DB;
 
-class GetPictureIdForPostingTask extends Task
+final class GetPictureIdForPostingTask extends Task
 {
     /**
      * @throws NotFoundPictureIdForPostingException

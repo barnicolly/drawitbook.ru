@@ -7,7 +7,7 @@ namespace App\Containers\Search\Tests\Feature\Http\Middlewares;
 use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Tests\TestCase;
 
-class RouteHasMiddlewareTest extends TestCase
+final class RouteHasMiddlewareTest extends TestCase
 {
     public function testRouteHasMiddlewares(): void
     {

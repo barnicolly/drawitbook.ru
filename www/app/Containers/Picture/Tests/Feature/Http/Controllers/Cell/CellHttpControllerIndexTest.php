@@ -11,7 +11,7 @@ use App\Ship\Parents\Tests\TestCase;
 /**
  * @see CellHttpController::index()
  */
-class CellHttpControllerIndexTest extends TestCase
+final class CellHttpControllerIndexTest extends TestCase
 {
     /**
      * @dataProvider \App\Containers\Translation\Tests\Providers\CommonProvider::providerLanguages

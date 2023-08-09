@@ -11,7 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class ArtHttpController extends HttpController
+final class ArtHttpController extends HttpController
 {
     /**
      * @see \App\Containers\Picture\Tests\Feature\Http\Controllers\Art\ArtHttpControllerTest

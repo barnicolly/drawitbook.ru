@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Ship\Services\Route;
 
-class RouteService
+final class RouteService
 {
     public function getRouteHome(array $parameters = [], bool $absolute = true, string $lang = null): string
     {

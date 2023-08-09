@@ -11,7 +11,7 @@ use App\Ship\Parents\Resources\JsonResource;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
-class TagAjaxController extends HttpController
+final class TagAjaxController extends HttpController
 {
     /**
      * @see \App\Containers\Tag\Tests\Feature\Http\Controllers\TagAjaxControllerTest::testGetListPopularTagsWithCountArtsOk()

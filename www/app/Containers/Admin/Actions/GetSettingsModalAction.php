@@ -11,7 +11,7 @@ use App\Containers\Vk\Tasks\VkAlbum\GetAllVkAlbumTask;
 use App\Containers\Vk\Tasks\VkAlbumPicture\GetVkAlbumPicturesByVkAlbumIdsAndPictureIdTask;
 use App\Ship\Parents\Actions\Action;
 
-class GetSettingsModalAction extends Action
+final class GetSettingsModalAction extends Action
 {
     public function __construct(
         private readonly GetAllVkAlbumTask $getAllVkAlbumTask,

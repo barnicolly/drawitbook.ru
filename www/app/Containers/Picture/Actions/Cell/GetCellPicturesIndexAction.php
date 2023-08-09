@@ -15,7 +15,7 @@ use App\Ship\Services\Route\RouteService;
 use Illuminate\Support\Collection;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class GetCellPicturesIndexAction extends Action
+final class GetCellPicturesIndexAction extends Action
 {
     public function __construct(
         private readonly SeoService $seoService,

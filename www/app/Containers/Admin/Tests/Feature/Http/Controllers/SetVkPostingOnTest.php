@@ -12,7 +12,7 @@ use App\Ship\Parents\Tests\TestCase;
 /**
  * @see ArtController::setVkPostingOn()
  */
-class SetVkPostingOnTest extends TestCase
+final class SetVkPostingOnTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
 

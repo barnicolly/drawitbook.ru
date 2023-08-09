@@ -11,7 +11,7 @@ use App\Containers\Vk\Models\VkAlbumPictureModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class VkAlbumPictureModelFactory extends Factory
+final class VkAlbumPictureModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

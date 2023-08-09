@@ -14,7 +14,7 @@ use App\Ship\Parents\Tests\TestCase;
 /**
  * @see CellAjaxController::slice()
  */
-class CellAjaxControllerTest extends TestCase
+final class CellAjaxControllerTest extends TestCase
 {
     use CreateTagTrait;
     use CreatePictureWithRelationsTrait;

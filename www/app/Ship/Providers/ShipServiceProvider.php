@@ -6,7 +6,7 @@ namespace App\Ship\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class ShipServiceProvider extends ServiceProvider
+final class ShipServiceProvider extends ServiceProvider
 {
     public function register(): void
     {

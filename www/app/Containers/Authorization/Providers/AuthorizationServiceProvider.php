@@ -7,7 +7,7 @@ namespace App\Containers\Authorization\Providers;
 use Config;
 use Illuminate\Support\ServiceProvider;
 
-class AuthorizationServiceProvider extends ServiceProvider
+final class AuthorizationServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

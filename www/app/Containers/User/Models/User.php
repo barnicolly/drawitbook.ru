@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @method static UserModelFactory factory
  */
-class User extends UserModel
+final class User extends UserModel
 {
     use HasFactory;
 

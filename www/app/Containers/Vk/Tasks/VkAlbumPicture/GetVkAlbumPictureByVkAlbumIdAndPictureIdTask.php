@@ -12,7 +12,7 @@ use App\Containers\Vk\Exceptions\NotFoundVkAlbumPictureException;
 use App\Containers\Vk\Models\VkAlbumPictureModel;
 use App\Ship\Parents\Tasks\Task;
 
-class GetVkAlbumPictureByVkAlbumIdAndPictureIdTask extends Task
+final class GetVkAlbumPictureByVkAlbumIdAndPictureIdTask extends Task
 {
     public function __construct(protected VkAlbumPictureRepository $repository)
     {

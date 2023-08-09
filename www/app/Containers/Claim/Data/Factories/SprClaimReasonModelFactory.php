@@ -9,7 +9,7 @@ use App\Containers\Claim\Models\SprClaimReasonModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class SprClaimReasonModelFactory extends Factory
+final class SprClaimReasonModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

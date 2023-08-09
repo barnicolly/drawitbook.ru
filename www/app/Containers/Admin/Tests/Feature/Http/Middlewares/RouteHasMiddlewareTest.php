@@ -6,7 +6,7 @@ namespace App\Containers\Admin\Tests\Feature\Http\Middlewares;
 
 use App\Ship\Parents\Tests\TestCase;
 
-class RouteHasMiddlewareTest extends TestCase
+final class RouteHasMiddlewareTest extends TestCase
 {
     public function testRouteHasMiddlewares(): void
     {

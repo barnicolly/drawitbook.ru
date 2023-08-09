@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 /**
  * @extends Factory<ImageEntitiesModel>
  */
-class ImageEntitiesModelFactory extends Factory
+final class ImageEntitiesModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

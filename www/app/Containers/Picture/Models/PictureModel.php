@@ -30,7 +30,7 @@ use Spatie\ModelFlags\Models\Flag;
  * @property TagsModel[] | Collection tags
  * @property Flag[] | Collection flags
  */
-class PictureModel extends CoreModel implements SearchContract
+final class PictureModel extends CoreModel implements SearchContract
 {
     use HasFactory;
     use HasFlags;

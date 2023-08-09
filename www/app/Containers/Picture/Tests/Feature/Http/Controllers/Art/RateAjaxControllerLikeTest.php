@@ -12,7 +12,7 @@ use App\Ship\Parents\Tests\TestCase;
 /**
  * @see \App\Containers\Picture\Http\Controllers\Art\RateAjaxController::like
  */
-class RateAjaxControllerLikeTest extends TestCase
+final class RateAjaxControllerLikeTest extends TestCase
 {
     use CreatePictureWithRelationsTrait;
     use CreateLikesTrait;

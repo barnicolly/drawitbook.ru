@@ -6,7 +6,7 @@ namespace App\Containers\Translation\Services;
 
 use App\Containers\Translation\Enums\LangEnum;
 
-class TranslationService
+final class TranslationService
 {
     public function getPluralForm(int $number, LangEnum $locale): string
     {

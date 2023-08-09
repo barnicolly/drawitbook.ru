@@ -6,7 +6,7 @@ namespace App\Containers\Translation\Tests\Providers;
 
 use App\Containers\Translation\Enums\LangEnum;
 
-class CommonProvider
+final class CommonProvider
 {
     public static function providerLanguages(): array
     {

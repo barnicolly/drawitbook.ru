@@ -10,7 +10,7 @@ use App\Ship\ViewComposers\FooterComposer;
 use App\Ship\ViewComposers\HeaderComposer;
 use Illuminate\Support\ServiceProvider;
 
-class ComposerServiceProvider extends ServiceProvider
+final class ComposerServiceProvider extends ServiceProvider
 {
     public function register(): void
     {

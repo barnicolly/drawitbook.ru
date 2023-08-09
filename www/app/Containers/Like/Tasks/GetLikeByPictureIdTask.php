@@ -13,7 +13,7 @@ use App\Ship\Parents\Criterias\WhereIntCriteria;
 use App\Ship\Parents\Tasks\Task;
 use Prettus\Repository\Exceptions\RepositoryException;
 
-class GetLikeByPictureIdTask extends Task
+final class GetLikeByPictureIdTask extends Task
 {
     public function __construct(protected LikesRepository $repository)
     {

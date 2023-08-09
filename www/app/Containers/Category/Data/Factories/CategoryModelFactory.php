@@ -11,7 +11,7 @@ use App\Containers\Tag\Models\TagsModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class CategoryModelFactory extends Factory
+final class CategoryModelFactory extends Factory
 {
     /**
      * @var class-string<Model>

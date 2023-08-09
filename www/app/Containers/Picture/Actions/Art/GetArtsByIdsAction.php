@@ -8,7 +8,7 @@ use App\Containers\Picture\Tasks\Picture\FormPicturesDtoTask;
 use App\Containers\Picture\Tasks\Picture\GetPicturesByIdsTask;
 use App\Ship\Parents\Actions\Action;
 
-class GetArtsByIdsAction extends Action
+final class GetArtsByIdsAction extends Action
 {
     public function __construct(
         private readonly GetPicturesByIdsTask $getPicturesByIdsTask,

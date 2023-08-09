@@ -10,7 +10,7 @@ use App\Containers\SocialMediaPosting\Models\SocialMediaPostingHistoryModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
-class SocialMediaPostingHistoryModelFactory extends Factory
+final class SocialMediaPostingHistoryModelFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

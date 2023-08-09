@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @method static SocialMediaPostingHistoryModelFactory factory
  */
-class SocialMediaPostingHistoryModel extends CoreModel
+final class SocialMediaPostingHistoryModel extends CoreModel
 {
     use HasFactory;
 

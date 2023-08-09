@@ -10,7 +10,7 @@ use JsonSerializable;
 use App\Ship\Dto\PaginationDto;
 use Illuminate\Http\Resources\Json\JsonResource as LaravelJsonResource;
 
-class JsonResource extends LaravelJsonResource
+final class JsonResource extends LaravelJsonResource
 {
     private ?PaginationDto $paginationMetaDto = null;
 

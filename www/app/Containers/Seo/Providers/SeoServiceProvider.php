@@ -7,7 +7,7 @@ namespace App\Containers\Seo\Providers;
 use Config;
 use Illuminate\Support\ServiceProvider;
 
-class SeoServiceProvider extends ServiceProvider
+final class SeoServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

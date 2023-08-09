@@ -8,7 +8,7 @@ use Config;
 use Illuminate\Support\ServiceProvider;
 use Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider;
 
-class TranslationServiceProvider extends ServiceProvider
+final class TranslationServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

@@ -10,7 +10,7 @@ use App\Ship\Parents\Requests\BaseFormRequest;
 /**
  * @property int $id
  */
-class GetSettingsModalRequest extends BaseFormRequest
+final class GetSettingsModalRequest extends BaseFormRequest
 {
 
     protected array $casts = [

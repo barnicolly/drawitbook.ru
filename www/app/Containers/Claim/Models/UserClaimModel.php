@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @method static UserClaimModelFactory factory()->create()
  */
-class UserClaimModel extends CoreModel
+final class UserClaimModel extends CoreModel
 {
     use HasFactory;
 

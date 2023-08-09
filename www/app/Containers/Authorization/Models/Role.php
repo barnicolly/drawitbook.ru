@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @method static RoleModelFactory factory
  */
-class Role extends Model
+final class Role extends Model
 {
     use HasFactory;
 

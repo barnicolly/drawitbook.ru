@@ -11,7 +11,7 @@ use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapIndex;
 use Spatie\Sitemap\Tags\Url;
 
-class CreateSitemapTask extends Task
+final class CreateSitemapTask extends Task
 {
     public function __construct(private readonly RouteService $routeService)
     {

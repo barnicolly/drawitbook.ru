@@ -7,7 +7,7 @@ namespace App\Containers\SocialMediaPosting\Providers;
 use Config;
 use Illuminate\Support\ServiceProvider;
 
-class SocialMediaPostingServiceProvider extends ServiceProvider
+final class SocialMediaPostingServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName

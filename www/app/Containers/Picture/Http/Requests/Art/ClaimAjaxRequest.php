@@ -12,7 +12,7 @@ use App\Ship\Parents\Requests\BaseFormRequest;
  * @property int $id
  * @property int $reason
  */
-class ClaimAjaxRequest extends BaseFormRequest
+final class ClaimAjaxRequest extends BaseFormRequest
 {
     protected array $casts = [
         'id' => 'int',

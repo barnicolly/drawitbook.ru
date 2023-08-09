@@ -8,7 +8,7 @@ use App\Containers\Translation\Enums\LangEnum;
 use App\Ship\Parents\Seeders\Seeder;
 use Waavi\Translation\Models\Language;
 
-class TranslatorLanguagesSeeder extends Seeder
+final class TranslatorLanguagesSeeder extends Seeder
 {
     public function run(): void
     {

@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @method static ImageEntitiesModelFactory factory()
  */
-class ImageEntitiesModel extends CoreModel
+final class ImageEntitiesModel extends CoreModel
 {
     use HasFactory;
 
