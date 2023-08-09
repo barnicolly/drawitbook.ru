@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Containers\SocialMediaPosting\Tests\Feature\Services;
 
+use Mockery\MockInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\SocialMediaPosting\Exceptions\NotFoundPictureIdForPostingException;
@@ -26,8 +27,11 @@ final class BroadcastPostingServiceTest extends TestCase
 
     public function testExpectNotFoundPictureIdForPostingException(): void
     {
-        $mock = $this->createMock(VkWallPostingStrategy::class);
-        $this->app->bind(VkWallPostingStrategy::class, static fn (): MockObject&VkWallPostingStrategy => $mock);
+        $this->mock(VkWallPostingStrategy::class, function (MockInterface $mock) {
+            $mock
+                ->shouldReceive('run')
+                ->andReturn([]);
+        });
 
         $this->expectException(NotFoundPictureIdForPostingException::class);
         $command = app(BroadcastPostingService::class);

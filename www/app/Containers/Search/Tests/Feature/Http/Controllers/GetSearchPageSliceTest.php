@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Containers\Search\Tests\Feature\Http\Controllers;
 
 use App\Containers\Search\Tasks\SearchInElasticSearchTask;
-use PHPUnit\Framework\MockObject\MockObject;
+use Mockery\MockInterface;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
 use App\Containers\Search\Http\Controllers\SearchController;
 use App\Containers\Tag\Tests\Traits\CreateTagTrait;
@@ -35,11 +35,11 @@ final class GetSearchPageSliceTest extends TestCase
             $this->createPictureTag($picture, $tag);
             $pictureIds[] = $picture->id;
         }
-        $mock = $this->createMock(SearchInElasticSearchTask::class);
-        $mock->method('run')
-            ->willReturn($pictureIds);
-        $this->app->bind(SearchInElasticSearchTask::class, static fn (): MockObject&SearchInElasticSearchTask => $mock);
-
+        $this->mock(SearchInElasticSearchTask::class, function (MockInterface $mock) use ($pictureIds) {
+            $mock
+                ->shouldReceive('run')
+                ->andReturn($pictureIds);
+        });
         $response = $this->ajaxGet($url);
 
         $response->assertOk()

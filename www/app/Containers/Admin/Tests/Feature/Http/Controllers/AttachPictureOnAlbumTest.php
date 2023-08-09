@@ -24,8 +24,7 @@ final class AttachPictureOnAlbumTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $mock = $this->createMock(VkApi::class);
-        $this->app->bind(VkApi::class, static fn (): MockObject&VkApi => $mock);
+        $this->mock(VkApi::class);
     }
 
     private function formUrl(int $pictureId): string

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Containers\Admin\Tests\Feature\Http\Controllers;
 
+use Mockery\MockInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use App\Containers\Admin\Http\Controllers\ArtController;
 use App\Containers\Picture\Tests\Traits\CreatePictureWithRelationsTrait;
@@ -26,8 +27,7 @@ final class DetachPictureFromAlbumTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $mock = $this->createMock(VkApi::class);
-        $this->app->bind(VkApi::class, static fn (): MockObject&VkApi => $mock);
+        $this->mock(VkApi::class);
     }
 
     private function formUrl(int $pictureId): string
@@ -43,9 +43,10 @@ final class DetachPictureFromAlbumTest extends TestCase
         $vkAlbumPictures->push($this->createVkAlbumPicture($vkAlbum));
         $vkAlbumPictures->push($this->createVkAlbumPicture($vkAlbum));
 
-        $mock = $this->createMock(PhotoService::class);
-        $mock->method('delete');
-        $this->app->bind(PhotoService::class, static fn (): MockObject&PhotoService => $mock);
+        $this->mock(PhotoService::class, function (MockInterface $mock) {
+            $mock
+                ->shouldReceive('delete');
+        });
 
         /** @var VkAlbumPictureModel $vkAlbumPictureForDelete */
         $vkAlbumPictureForDelete = $vkAlbumPictures->shift();
