@@ -42,7 +42,7 @@ final class DetachPictureFromAlbumTest extends TestCase
         $vkAlbumPictures->push($this->createVkAlbumPicture($vkAlbum));
         $vkAlbumPictures->push($this->createVkAlbumPicture($vkAlbum));
 
-        $this->mock(PhotoService::class, static function (MockInterface $mock) : void {
+        $this->mock(PhotoService::class, static function (MockInterface $mock): void {
             $mock
                 ->shouldReceive('delete');
         });
