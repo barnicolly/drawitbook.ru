@@ -7,7 +7,7 @@
 
 1. придерживаюсь архитектуры [Porto](https://github.com/Mahmoudz/Porto)
 2. вся инфраструктура изолирована в docker
-3. написаны тесты на phpunit и laravel dusk
+3. написаны тесты на phpunit и laravel dusk (несколько для проверки инструмента)
 4. автоформатирование кода к стандарту PSR-12
 5. код актуализируется через phprector
 6. проверки в github actions после каждой отправки
@@ -30,6 +30,7 @@
       2. Tasks - мелкие программные единицы с единственной ответственностью
       3. Actions - композиция тасков
    2. app/Ship - общие/родительские классы для модулей и глобальные обработчики
+   3. tests/Browser - e2e тесты laravel dusk
 4. docker-compose.yml - локальная среда разработки
 5. code style (файлы phpstorm_codestyle.xml и .editorconfig - PSR-12 с небольшими изменениями)
 6. jenkins/Jenkinsfile
